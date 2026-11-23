@@ -2699,3 +2699,28 @@ body { line-height: 1.5; }
 .ask-nova-starters { display: grid; gap: 8px; }
 .ask-nova-tip { margin: 0; text-align: center; }
 .ask-nova .nova-says { margin-top: 18px; }
+
+/* Home: Nova up top with her tip, under the greeting. Room above for her handles and bow. */
+.home-nova { padding-top: 26px; }
+.home-nova .nova-bubble { font-size: 1.08rem; }
+
+/* Nova's step-by-step walkthrough: a card that follows you onto the real screen. */
+.nova-guide { position: fixed; right: 22px; bottom: 104px; z-index: 41; width: min(380px, calc(100vw - 28px)); padding: 14px 16px 16px; border-radius: 18px;
+  background: var(--surface); border: 1px solid var(--border-strong); box-shadow: 0 18px 50px rgba(0, 0, 0, .5), 0 0 0 1px rgba(242, 193, 78, .25); animation: pop-in .22s var(--ease); }
+.nova-guide-head { display: flex; align-items: baseline; gap: 10px; }
+.nova-guide-count { flex: none; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); }
+.nova-guide-title { flex: 1; min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nova-guide-x { flex: none; width: 36px; height: 36px; margin: -8px -8px 0 0; border: 0; border-radius: 50%; background: none; color: var(--muted); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+.nova-guide-dots { display: flex; gap: 4px; margin: 8px 0 4px; }
+.nova-guide-dots i { flex: 1; height: 4px; border-radius: 2px; background: var(--border-strong); }
+.nova-guide-dots i.on { background: var(--gold); }
+.nova-guide .nova-says { margin-top: 16px; }
+.nova-guide .nova-bubble { font-size: 1.05rem; }
+.nova-guide-go { display: flex; justify-content: space-between; gap: 10px; margin-top: 12px; }
+@media (max-width: 899px) { .nova-guide { right: 14px; left: 14px; width: auto; bottom: calc(170px + var(--safe-b)); } }
+/* Nova points at the button to tap next. */
+.nova-point { position: relative; z-index: 5; outline: 3px solid var(--gold) !important; outline-offset: 3px; border-radius: 12px; animation: nova-point 1.2s ease-in-out infinite; }
+@keyframes nova-point { 0%, 100% { box-shadow: 0 0 0 0 rgba(242, 193, 78, .55); } 50% { box-shadow: 0 0 0 10px rgba(242, 193, 78, 0); } }
+@media (prefers-reduced-motion: reduce) { .nova-point { animation: none; } }
+.ask-nova-steps { margin: 10px 0 0; padding-left: 22px; line-height: 1.5; }
+.ask-nova-steps li + li { margin-top: 4px; }
