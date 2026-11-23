@@ -1283,3 +1283,32 @@ button.mock-btn:hover { border-color: var(--gold); }
 .lesson-hero > .grow { min-width: 0; }
 .lesson-hero .btn { white-space: normal; text-align: left; }
 @media (max-width: 640px) { .lesson-hero { align-items: stretch; } .academy-stats { flex-wrap: wrap; } }
+
+/* ---------- On-stream product card + live control ---------- */
+html.overlay-mode { color-scheme: normal; }
+html.overlay-mode, html.overlay-mode body, html.overlay-mode #root { background: transparent !important; }
+.overlay-root { position: fixed; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding: 0 3vw 4vh; pointer-events: none; font-family: inherit; }
+.overlay-card { display: flex; align-items: center; gap: 2.2vh; width: min(94vw, 900px); padding: 1.6vh 2.4vh; border-radius: 2.4vh; background: linear-gradient(135deg, rgba(20,14,10,.92), rgba(48,32,18,.92)); border: 2px solid #d9b45a; box-shadow: 0 1vh 4vh rgba(0,0,0,.45); color: #fff8ea; animation: overlay-in .45s cubic-bezier(.2,.9,.3,1.2); }
+@keyframes overlay-in { from { transform: translateY(120%); opacity: 0 } to { transform: none; opacity: 1 } }
+.overlay-photo { width: 14vh; height: 14vh; border-radius: 1.6vh; object-fit: cover; flex: none; background: #2a1d12; border: 2px solid rgba(217,180,90,.6); }
+.overlay-photo.blank { display: grid; place-items: center; font-size: 7vh; }
+.overlay-info { display: flex; flex-direction: column; min-width: 0; flex: 1; line-height: 1.05; }
+.overlay-tag { font-size: 2.2vh; font-weight: 800; letter-spacing: .4vh; color: #d9b45a; }
+.overlay-num { font-size: 9vh; font-weight: 900; letter-spacing: .2vh; font-variant-numeric: tabular-nums; }
+.overlay-name { font-size: 2.8vh; opacity: .92; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.overlay-price { flex: none; font-size: 6vh; font-weight: 900; color: #1b130b; background: #d9b45a; border-radius: 1.6vh; padding: 1vh 2.4vh; }
+
+.live-control { display: grid; gap: 16px; }
+@media (min-width: 900px) { .live-control { grid-template-columns: 1fr 1fr; } .live-control > details { grid-column: 1 / -1; } }
+.num-input { width: 7.5ch; font-size: 1.6rem; font-weight: 800; letter-spacing: 3px; text-align: center; font-variant-numeric: tabular-nums; }
+.mic-btn[aria-pressed="true"] { animation: pulse 1.4s ease-in-out infinite; }
+.now-showing { display: flex; gap: 12px; align-items: center; padding: 10px; border-radius: 16px; border: 1px solid var(--gold); background: var(--surface-2, var(--surface)); }
+.now-showing img, .now-showing .ns-blank { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; display: grid; place-items: center; font-size: 2rem; background: var(--surface); flex: none; }
+.now-showing > div { display: flex; flex-direction: column; }
+.now-showing b { font-size: 1.6rem; }
+.quick-nums { display: flex; flex-wrap: wrap; gap: 8px; }
+.quick-nums .chip-sub { opacity: .75; font-weight: 400; margin-left: 4px; max-width: 14ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: bottom; }
+.comment-feed { max-height: 420px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+.comment { padding: 8px 12px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); font-size: .95rem; }
+.comment.claim { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 16%, var(--surface)); }
+.plain-steps { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
