@@ -36,7 +36,7 @@ const lesson: Lesson = {
         { text: 'Walk it to a bin now: scan the bin label, scan the tag, Done', best: true, feedback: 'Fifteen seconds and it\'s home, findable and sellable again.' },
         { text: 'Put it in your purse so you don\'t lose it', feedback: 'Your purse isn\'t a bin the app knows about! Scan it home.' },
       ] },
-    { chapter: 'Scanners', kind: 'learn', title: 'Which scanner?', text: 'Any USB or Bluetooth scanner works, because they type like a keyboard. Android scanner phones work in the browser. On an iPhone, tap Use camera.',
+    { chapter: 'Scanners', kind: 'learn', title: 'Which scanner?', text: 'Any USB or Bluetooth scanner works, because they type like a keyboard. Android scanner phones work in the browser. On an iPhone, pair a Bluetooth scanner or tap Use camera. Recommended gear (in the More menu) lists three we trust, from budget to pro, and has a scanner test box that tells you if yours is set up right.',
       table: { head: ['Scanner', 'Good for', 'Watch out for'], rows: [
         ['USB corded', 'A desk or packing table. Cheapest and never needs charging', 'The cord limits how far you walk'],
         ['Bluetooth or wireless', 'Walking the shelves', 'Charge it overnight'],
@@ -46,7 +46,7 @@ const lesson: Lesson = {
       tip: 'A clip-on scanner for your iPhone makes picking fast and keeps the big screen in your hand.' },
     { kind: 'quiz', q: 'You do most of your scanning walking up and down the shelves. Best pick?', options: ['A USB corded scanner', 'A Bluetooth scanner or an Android scanner phone', 'A desktop computer webcam'], answer: 1, why: 'Wireless goes where you go. Save the corded one for the packing table.' },
     { kind: 'learn', title: 'Set up a new scanner', text: 'Most scanners work out of the box. If yours doesn\'t, the fix is almost always in the little manual that came with it. It has setup barcodes you scan to change settings.',
-      points: ['Pair Bluetooth scanners in your device\'s Bluetooth settings, like headphones', 'Make sure it sends "Enter" after each scan. The manual calls it an Enter or CR suffix.', 'Set it to US keyboard if numbers come out wrong', 'Test it in a notes app first: scan a tag and the code should appear and jump to a new line'] },
+      points: ['Pair Bluetooth scanners in your device\'s Bluetooth settings, like headphones', 'Make sure it sends "Enter" after each scan. The manual calls it an Enter or CR suffix. (Scanners that send Tab instead work too: the scan box treats Tab like Enter.)', 'Set it to US keyboard if numbers come out wrong', 'Test it in a notes app first: scan a tag and the code should appear and jump to a new line'] },
     { kind: 'scenario', title: 'The scanner beeps but nothing happens', situation: 'Your new Bluetooth scanner beeps when you scan a tag, but nothing shows up in the app.',
       options: [
         { text: 'Return it, it\'s broken', feedback: 'It beeps, so it\'s reading the barcode. The problem is where the text is going.' },

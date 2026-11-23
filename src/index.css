@@ -2357,3 +2357,51 @@ button.uni-step:hover, button.uni-step:focus-visible { transform: translateY(-2p
 .uni-door b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.35rem; color: var(--t3); }
 .uni-door span { font-size: 1rem; line-height: 1.4; color: var(--u-ink-2); }
 .uni-door:hover, .uni-door:focus-visible { transform: translateY(-2px); border-color: var(--t1); color: var(--u-ink); }
+/* ---------- 4×4 bin label (thermal roll) ---------- */
+.bin44 { width: 4in; height: 4in; padding: .2in .22in; display: flex; flex-direction: column; align-items: center; justify-content: space-between; font-family: Arial, Helvetica, sans-serif; color: #000; text-align: center; }
+.bin44-head { width: 100%; display: flex; justify-content: space-between; font-size: 10pt; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; border-bottom: 3px solid #000; padding-bottom: .05in; }
+.bin44-code { font-weight: 900; line-height: 1; letter-spacing: 1px; white-space: nowrap; }
+.bin44-parts { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: .07in; }
+.bin44-parts div { border: 2px solid #000; border-radius: 6px; display: flex; flex-direction: column; align-items: center; padding: .03in 0; }
+.bin44-parts span { font-size: 7.5pt; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; }
+.bin44-parts b { font-size: 22pt; line-height: 1; }
+.bin44-foot { font-size: 8pt; font-weight: 700; }
+
+/* ---------- Test prints and receipts ---------- */
+.testlabel { width: 100%; height: 100%; border: 2px solid #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .04in; font-family: Arial, Helvetica, sans-serif; color: #000; text-align: center; position: relative; padding: .06in; }
+.testlabel b { font-weight: 900; line-height: 1; }
+.testlabel small { font-weight: 700; line-height: 1.1; }
+.testlabel i { position: absolute; width: .14in; height: .14in; border: 0 solid #000; }
+.testlabel i:nth-child(1) { top: .05in; left: .05in; border-top-width: 3px; border-left-width: 3px; }
+.testlabel i:nth-child(2) { top: .05in; right: .05in; border-top-width: 3px; border-right-width: 3px; }
+.testlabel i:nth-child(3) { bottom: .05in; left: .05in; border-bottom-width: 3px; border-left-width: 3px; }
+.testlabel i:nth-child(4) { bottom: .05in; right: .05in; border-bottom-width: 3px; border-right-width: 3px; }
+.receipt { font-family: Arial, Helvetica, sans-serif; color: #000; padding: .12in .1in .3in; display: flex; flex-direction: column; gap: .07in; font-size: 9pt; line-height: 1.25; }
+.receipt.wide { font-size: 10.5pt; padding: .14in .16in .35in; }
+.receipt-shop { text-align: center; font-size: 1.45em; font-weight: 900; }
+.receipt-center { text-align: center; }
+.receipt-rule { border-top: 1.5px dashed #000; }
+.receipt-line { display: flex; justify-content: space-between; gap: .08in; }
+.receipt-line span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.receipt-line span:last-child { flex: none; font-weight: 700; }
+.receipt-total { font-size: 1.3em; font-weight: 900; }
+.receipt .crisp-barcode { margin: 0 auto; }
+
+/* ---------- Recommended gear ---------- */
+.gear-hero { background: var(--sunset); color: #fff; border: none; padding: 22px; display: flex; flex-direction: column; gap: 8px; }
+.gear-hero h1 { color: #fff; }
+.gear-hero p { font-size: 1.05rem; max-width: 640px; }
+.gear-group-head { display: flex; align-items: center; gap: 12px; }
+.gear-group-ico { width: 46px; height: 46px; border-radius: 14px; background: var(--goldgrad); color: #2A1A0C; display: grid; place-items: center; flex: none; }
+.gear-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+.gear-card { display: flex; flex-direction: column; gap: 10px; font-size: 1.02rem; }
+.gear-card h3 { margin: 0; font-size: 1.15rem; line-height: 1.25; }
+.gear-badge { align-self: flex-start; padding: 4px 12px; border-radius: 999px; background: rgba(255, 211, 110, .16); color: var(--gold); font-weight: 700; font-size: .85rem; }
+.gear-card details summary { cursor: pointer; font-weight: 700; color: var(--gold); min-height: 44px; display: flex; align-items: center; }
+.gear-card ol { margin: 4px 0 0; padding-left: 1.3em; display: flex; flex-direction: column; gap: 6px; color: var(--text-2); }
+.gear-card .btn { margin-top: auto; }
+.scan-test-out { font-size: 1.6rem; font-weight: 800; word-break: break-all; }
+.scan-test-ok { color: #6FD19B; font-weight: 700; }
+.size-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.size-chips .chip { min-height: 48px; font-size: 1rem; }
+@media (max-width: 560px) { .gear-grid { grid-template-columns: 1fr; } }

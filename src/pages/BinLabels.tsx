@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import SaveForPrinterApp from '../components/SaveForPrinterApp'
 import JsBarcode from 'jsbarcode'
 import { loadBins, type Bin } from '../lib/locations'
 import { useSession } from '../lib/session'
@@ -20,8 +21,25 @@ function LandscapeBin({ b, shop }: { b: Bin; shop: string }) {
   )
 }
 
+/** 4×4 bin label: our recommended bin size (MUNBYN 4×4 roll). Big code you can read across the room. */
+function SquareBin({ b, shop }: { b: Bin; shop: string }) {
+  const parts: [string, string | number | null][] = [['Aisle', b.aisle], ['Sec', b.section], ['Level', b.level], ['Bin', b.bin_no]]
+  return (
+    <div className="bin44">
+      <div className="bin44-head"><span>{shop}</span><span>Bin</span></div>
+      <div className="bin44-code" style={{ fontSize: `${Math.min(60, Math.floor(250 / (b.code.length * 0.64)))}pt` }}>{b.code}</div>
+      <div className="bin44-parts">
+        {parts.map(([k, v]) => <div key={k}><span>{k}</span><b>{v ?? '—'}</b></div>)}
+      </div>
+      <CrispBarcode value={b.code} heightIn={1.05} maxWidthIn={3.5} maxDots={4} />
+      <div className="bin44-foot">Scan this label, then scan items to put them away here.</div>
+    </div>
+  )
+}
+
 const FORMATS = {
-  landscape4x6: { name: '4×6 shipping label printer, landscape, 1 bin per label (recommended)', page: { w: 4, h: 6 }, cols: 1, rows: 1, label: { w: 4, h: 6 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 } },
+  roll4x4: { name: 'Thermal roll 4×4 in, one bin per label (recommended)', page: { w: 4, h: 4 }, cols: 1, rows: 1, label: { w: 4, h: 4 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 } },
+  landscape4x6: { name: '4×6 shipping label printer, landscape, 1 bin per label', page: { w: 4, h: 6 }, cols: 1, rows: 1, label: { w: 4, h: 6 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 } },
   roll2x1: { name: 'Thermal roll 2×1 in, one bin per label', page: { w: 2, h: 1 }, cols: 1, rows: 1, label: { w: 2, h: 1 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 } },
   sheet10: { name: 'Letter sheet, 10 per page (4×2 in, Avery 5163 size)', page: { w: 8.5, h: 11 }, cols: 2, rows: 5, label: { w: 4, h: 2 }, margin: { top: 0.5, left: 0.156 }, gap: { x: 0.188, y: 0 } },
   thermal4x6: { name: '4×6 shipping label printer, 1 bin per label', page: { w: 4, h: 6 }, cols: 1, rows: 1, label: { w: 4, h: 6 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 } },
@@ -42,7 +60,7 @@ export default function BinLabels() {
   const [bins, setBins] = useState<Bin[]>([])
   const [aisle, setAisle] = useState<string>('all')
   const [format, setFormat] = useState<FormatKey>(() => {
-    try { const f = localStorage.getItem('binLabelFormat') as FormatKey; return f && f in FORMATS ? f : 'landscape4x6' } catch { return 'landscape4x6' }
+    try { const f = localStorage.getItem('binLabelFormat') as FormatKey; return f && f in FORMATS ? f : 'roll4x4' } catch { return 'roll4x4' }
   })
   useEffect(() => { try { localStorage.setItem('binLabelFormat', format) } catch { /* ignore */ } }, [format])
   useEffect(() => { loadBins().then(setBins) }, [])
@@ -76,8 +94,10 @@ export default function BinLabels() {
               </select>
             </label>
           )}
-          <p className="muted small">{list.length} label{list.length === 1 ? '' : 's'} on {pages.length} page{pages.length === 1 ? '' : 's'}. Print at 100% / Actual size with margins set to None.{land ? ' Landscape labels are turned sideways for the printer automatically.' : ''}{format === 'roll2x1' ? ' Use the same 2×1 roll as your item tags: set paper size to 2 x 1 in (50.8 x 25.4 mm) in the print window. Tip: a bigger bin label is easier to scan from a distance; the 4×6 options are still here when you want one.' : ''}</p>
+          <p className="muted small">{list.length} label{list.length === 1 ? '' : 's'} on {pages.length} page{pages.length === 1 ? '' : 's'}. Print at 100% / Actual size with margins set to None.{land ? ' Landscape labels are turned sideways for the printer automatically.' : ''}{format === 'roll4x4' ? ' Load the 4×4 roll and set paper size to 4 x 4 in (101.6 x 101.6 mm) in the print window.' : ''}{format === 'roll2x1' ? ' Use the same 2×1 roll as your item tags: set paper size to 2 x 1 in (50.8 x 25.4 mm) in the print window. Tip: a bigger bin label is easier to scan from a distance; the 4×4 roll is our recommended bin size.' : ''}</p>
           <button className="btn primary big" disabled={!list.length} onClick={() => window.print()}>Print</button>
+          <SaveForPrinterApp name="bin-labels" disabled={!list.length} />
+          <p className="muted small">Need a printer or labels? See <Link to="/gear">Recommended gear</Link>.</p>
         </div>
       </div>
       <div className="print-area">
@@ -87,7 +107,9 @@ export default function BinLabels() {
         {!land && pages.map((p, pi) => (
           <div key={pi} className="sheet" style={{ width: `${f.page.w}in`, height: `${f.page.h}in`, paddingTop: `${f.margin.top}in`, paddingLeft: `${f.margin.left}in` }}>
             <div className="sheet-grid" style={{ gridTemplateColumns: `repeat(${f.cols}, ${f.label.w}in)`, gridAutoRows: `${f.label.h}in`, columnGap: `${f.gap.x}in` }}>
-              {p.map(b => format === 'roll2x1' ? (
+              {p.map(b => format === 'roll4x4' ? (
+                <div key={b.id} className="slot"><SquareBin b={b} shop={shop?.name ?? ''} /></div>
+              ) : format === 'roll2x1' ? (
                 <div key={b.id} className="slot">
                   <div className="bin21">
                     <div className="bin21-code">{b.code}</div>
