@@ -34,6 +34,12 @@ import Lessons from './pages/Lessons'
 import LessonPlayer from './pages/LessonPlayer'
 import Planner from './pages/Planner'
 import LivePlan from './pages/LivePlan'
+import SharedPage from './pages/SharedPage'
+import OnAir from './pages/OnAir'
+import OnAirBar from './components/OnAirBar'
+import Profile from './pages/Profile'
+import FinishSignup from './pages/FinishSignup'
+import Legal from './pages/Legal'
 
 export function Crown({ size = 28 }: { size?: number }) {
   return (
@@ -54,12 +60,14 @@ const STOCK = [
 const SELL = [
   { to: '/planner', label: 'Live Planner', icon: 'sparkle' },
   { to: '/calendar', label: 'Live calendar', icon: 'calendar' },
+  { to: '/shared-page', label: 'Shared Page lives', icon: 'clock' },
   { to: '/live', label: 'Get ready for live', icon: 'live' },
   { to: '/orders', label: 'Pick and pack', icon: 'pack' },
   { to: '/shipping', label: 'Shipping', icon: 'truck' },
   { to: '/customers', label: 'Customers', icon: 'users' },
 ]
 const MORE = [
+  { to: '/profile', label: 'My profile', icon: 'users' },
   { to: '/reports', label: 'Reports', icon: 'reports' },
   { to: '/lessons', label: 'Dazzle Academy', icon: 'lessons' },
   { to: '/settings', label: 'Settings', icon: 'settings' },
@@ -83,13 +91,54 @@ function ScrollTop() {
   return null
 }
 
+const STREAM_NAV = [
+  { to: '/', label: 'Live calendar', end: true, icon: 'calendar' },
+  { to: '/profile', label: 'My profile', icon: 'users' },
+]
+
+/** The free "just stream" account: the shared live calendar, On Air, and a profile. */
+function StreamShell() {
+  return (
+    <div className="shell">
+      <ScrollTop />
+      <aside className="dock no-print" aria-label="Main menu">
+        <NavLink to="/" className="dock-logo" aria-label="Home"><Crown size={26} /></NavLink>
+        {STREAM_NAV.map(n => <NavLink key={n.to} to={n.to} end={n.end} className="dock-link"><Icon name={n.icon} size={22} /><span>{n.label}</span></NavLink>)}
+      </aside>
+      <header className="mobile-top no-print">
+        <NavLink to="/" className="brand"><span className="dock-logo small"><Crown size={20} /></span><span className="brand-text"><b>Dynamic Dazzle</b></span></NavLink>
+        <NavLink to="/profile" className="btn ghost small">My profile</NavLink>
+      </header>
+      <main className="content">
+        <OnAirBar />
+        <Routes>
+          <Route path="/on-air/:id" element={<OnAir />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/terms" element={<Legal which="terms" />} />
+          <Route path="/privacy" element={<Legal which="privacy" />} />
+          <Route path="*" element={<SharedPage />} />
+        </Routes>
+      </main>
+      <nav className="tabbar no-print">
+        {STREAM_NAV.map(n => <NavLink key={n.to} to={n.to} end={n.end}><Icon name={n.icon} size={22} /><span>{n.label}</span></NavLink>)}
+      </nav>
+    </div>
+  )
+}
+
 function Shell() {
-  const { session, shop, loading } = useSession()
+  const { session, shop, loading, profile } = useSession()
   const [menu, setMenu] = useState(false)
   const { pathname } = useLocation()
   useEffect(() => { setMenu(false) }, [pathname])
+  if (pathname === '/terms' || pathname === '/privacy') {
+    if (!session || !shop) return <main className="content solo"><Legal which={pathname === '/terms' ? 'terms' : 'privacy'} /></main>
+  }
   if (loading) return <div className="center-page"><div className="brand-mark pulse"><Crown size={40} /></div></div>
   if (!session) return <Login />
+  // profile === undefined means the profiles table isn't set up yet; carry on as before.
+  if (profile === null) return <FinishSignup />
+  if (!shop && profile?.account_type === 'stream') return <StreamShell />
   if (!shop) return <CreateShop />
 
   return (
@@ -118,6 +167,7 @@ function Shell() {
       </Sheet>
 
       <main className="content">
+        <OnAirBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/intake" element={<Intake />} />
@@ -132,6 +182,11 @@ function Shell() {
           <Route path="/receive/bulk" element={<BulkReceive />} />
           <Route path="/live" element={<LivePrep />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/shared-page" element={<SharedPage />} />
+          <Route path="/on-air/:id" element={<OnAir />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/terms" element={<Legal which="terms" />} />
+          <Route path="/privacy" element={<Legal which="privacy" />} />
           <Route path="/lives/:id" element={<LiveDetail />} />
           <Route path="/lives/:id/plan" element={<LivePlan />} />
           <Route path="/planner" element={<Planner />} />
