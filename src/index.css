@@ -1437,6 +1437,14 @@ button.mock-btn:hover { border-color: var(--gold); }
 .nova-dots i:nth-child(2) { animation-delay: .2s; } .nova-dots i:nth-child(3) { animation-delay: .4s; }
 .nova-badge { position: absolute; right: -4px; top: -4px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--coral); color: #fff; font-weight: 800; font-size: .85rem; box-shadow: 0 4px 10px rgba(0, 0, 0, .3); }
 @media (prefers-reduced-motion: reduce) { .nova-ring, .nova-fx path, .nova-dots i { animation: none !important; } }
+/* 3D Nova: she stands in a golden-hour glow and pops out over the top of her frame. */
+.nova-3d { position: absolute; left: -22%; top: -34%; width: 144%; height: 144%; z-index: 1; opacity: 0; pointer-events: none; touch-action: pan-y; cursor: grab; transition: opacity .35s ease; -webkit-tap-highlight-color: transparent; }
+.nova-3d:active { cursor: grabbing; }
+.nova-live .nova-3d { opacity: 1; pointer-events: auto; }
+.nova-live .nova-ring { position: relative; animation: none !important; transform: none !important; }
+.nova-live .nova-ring img { opacity: 0; }
+.nova-live .nova-ring::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: radial-gradient(circle at 50% 38%, #FFE7B0 0%, #F2B25C 30%, #B8572E 62%, #4A1C16 100%); }
+.nova-fx, .nova-dots, .nova-badge { z-index: 2; }
 
 /* ===== FOIL ===== */
 .foil { background: linear-gradient(100deg, #9C7A33 0%, #F5D58A 22%, #B8862B 40%, #FFF1C1 52%, #C9993C 66%, #F5D58A 82%, #8A6A2A 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
