@@ -115,7 +115,7 @@ export default function Home() {
     if (next && isToday(next.starts_at)) return <>Let's make <em>tonight</em> count.</>
     if (next) {
       const days = Math.ceil((new Date(next.starts_at).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 864e5)
-      return days === 1 ? <>You go live <em>tomorrow</em>.</> : <><em>{days} days</em> to your next live.</>
+      return days === 1 ? <>You go live <em>tomorrow</em>.</> : <><em>{days} days</em> until your next live.</>
     }
     return <>Let's get you <em>live</em> this week.</>
   }

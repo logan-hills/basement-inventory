@@ -1,0 +1,23 @@
+import type { Lesson } from './types'
+import tour from './tour'
+import settings from './settings'
+import receive from './receive'
+import bulk from './bulk'
+import labels from './labels'
+import warehouse from './warehouse'
+import scan from './scan'
+import damaged from './damaged'
+import planner from './planner'
+import calendar from './calendar'
+import liveprep from './liveprep'
+import bot from './bot'
+import sale from './sale'
+import upload from './upload'
+import pick from './pick'
+import shipping from './shipping'
+import customers from './customers'
+import reports from './reports'
+
+export const LESSONS: Lesson[] = [tour, settings, receive, bulk, labels, warehouse, scan, damaged, planner, calendar, liveprep, bot, sale, upload, pick, shipping, customers, reports]
+export const lessonById = (id?: string) => LESSONS.find(l => l.id === id)
+export * from './types'
