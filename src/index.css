@@ -2273,3 +2273,87 @@ input, select, textarea { min-height: 48px; font-size: 17px; }
 .consult-small { margin: 0; font-size: .95rem; color: var(--u-muted); line-height: 1.45; }
 @media (max-width: 560px) { .consult-hero { padding: 20px 16px; } .consult-form { padding: 16px 12px; } }
 .consult .uni-sub a { color: #A3005A; font-weight: 700; }
+
+/* ===== University, simplified: brand bar, big tabs, one section at a time ===== */
+.uni-bar-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.uni-brand { display: flex; align-items: center; gap: 14px; border: 0; background: none; padding: 0; cursor: pointer; text-align: left; color: var(--u-ink); font: inherit; }
+.uni-brand-mark { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; font-family: 'Bodoni Moda', Georgia, serif; font-weight: 700; font-size: 1.3rem; color: #3B2600; background: var(--u-foil); box-shadow: 0 8px 18px rgba(185, 134, 43, .35); }
+.uni-brand b { display: block; font-family: 'Bodoni Moda', Didot, Georgia, serif; font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1; letter-spacing: -.5px; }
+.uni-brand b em { font-style: italic; color: #C4006C; }
+.uni-brand small { display: block; margin-top: 4px; font-size: .92rem; color: var(--u-muted); }
+.uni-mini-ring { flex: none; transform: scale(.62); transform-origin: right center; margin: -24px -6px -24px -40px; }
+.uni-mini-ring .ring-track { stroke: #F6E3EC; }
+.uni-mini-ring .ring-fill { stroke: #E3007D; filter: none; }
+.uni-mini-ring .ring-center b { color: var(--u-ink); }
+.uni-mini-ring .ring-center small { color: var(--u-muted); }
+
+@media (max-width: 420px) { .uni-mini-ring { display: none; } .uni-brand-mark { width: 48px; height: 48px; } }
+
+.uni-hero-home .uni-portrait { width: min(240px, 30%); }
+.uni-title.uni-title-sm { font-size: clamp(2rem, 4.6vw, 3.1rem); line-height: 1.04; letter-spacing: -1px; }
+.uni-resume-meta { font-size: 1rem; font-weight: 700; color: #FFE7A3; }
+.uni-resume-bar { display: block; height: 10px; max-width: 420px; border-radius: 99px; background: rgba(255, 255, 255, .25); overflow: hidden; }
+.uni-resume-bar i { display: block; height: 100%; background: #fff; border-radius: 99px; }
+.btn.uni-cta.uni-cta-xl { font-size: 1.25rem; padding: 1rem 2.2rem; min-height: 60px; }
+
+.uni-path { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.uni-step { display: flex; align-items: center; gap: 18px; padding: 18px 20px; border-radius: 20px; background: #fff; border: 1px solid var(--u-line); box-shadow: 0 10px 28px rgba(120, 40, 70, .06); border-left: 6px solid var(--t1); }
+.uni-step > div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.uni-step h3 { margin: 0; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.5rem; color: var(--t3); }
+.uni-step p { margin: 0; font-size: 1.05rem; line-height: 1.45; color: var(--u-ink-2); }
+.uni-step small { font-size: .95rem; font-weight: 700; color: var(--u-muted); }
+.uni-step-no { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.7rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--t2), var(--t1)); }
+.uni-step-bar { display: block; height: 8px; max-width: 360px; margin-top: 4px; border-radius: 99px; background: #F4ECE3; overflow: hidden; }
+.uni-step-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--t1), var(--t2)); }
+.btn.uni-step-btn { flex: none; min-height: 52px; padding: .8rem 1.3rem; font-size: 1.05rem; font-weight: 700; border-radius: 999px; color: #fff; border: 0; background: linear-gradient(135deg, var(--t1, #C4006C), var(--t2, #F2751B)); text-decoration: none; }
+.btn.uni-step-btn:hover { color: #fff; filter: brightness(1.06); }
+@media (max-width: 640px) { .uni-step { flex-wrap: wrap; gap: 12px; padding: 16px 14px; } .uni-step-no { width: 46px; height: 46px; font-size: 1.4rem; } .btn.uni-step-btn { width: 100%; justify-content: center; } }
+
+.bag-row.bag-row-fit { grid-auto-columns: minmax(200px, 1fr); }
+
+/* Orientation modules as an accordion */
+.uni-module .uni-module-head { width: 100%; border: 0; background: none; padding: 0; cursor: pointer; font: inherit; color: inherit; text-align: left; align-items: center; }
+.uni-module-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.uni-module-text b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.55rem; color: var(--t3); }
+.uni-module-text > span:not(.uni-module-meta) { font-size: 1.02rem; line-height: 1.45; color: var(--u-ink-2); }
+.uni-module-chev { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; font-size: 1.6rem; font-weight: 700; color: var(--t3); background: color-mix(in srgb, var(--t1) 10%, #fff); }
+.uni-module.open .uni-module-chev { color: #fff; background: linear-gradient(135deg, var(--t1), var(--t2)); }
+
+/* Simple list rows (search results, school course list) */
+.uni-rows { display: flex; flex-direction: column; gap: 8px; }
+.uni-row { display: flex; align-items: center; gap: 14px; min-height: 72px; padding: 12px 16px; border-radius: 16px; background: #fff; border: 1px solid var(--u-line); color: var(--u-ink); text-decoration: none; transition: border-color .2s, transform .2s var(--ease); }
+.uni-row:hover, .uni-row:focus-visible { border-color: var(--t1, #C4006C); transform: translateX(3px); color: var(--u-ink); }
+.uni-row-ico { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; color: #fff; background: linear-gradient(135deg, var(--t2, #FF4FA3), var(--t1, #C4006C)); }
+.uni-row-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.uni-row-text b { font-size: 1.12rem; line-height: 1.3; }
+.uni-row-text small { font-size: .95rem; color: var(--u-muted); }
+.uni-row-go { flex: none; font-size: 1.8rem; line-height: 1; color: var(--t1, #C4006C); }
+.uni-school .uni-rows { margin: 12px 0 0; }
+
+.btn.uni-back, .btn.uni-ghost-dark { align-self: flex-start; min-height: 52px; padding: .7rem 1.3rem; font-size: 1.08rem; font-weight: 700; border-radius: 999px; background: #fff; color: #A3005A; border: 1px solid var(--u-line); }
+.btn.uni-back:hover, .btn.uni-ghost-dark:hover { border-color: #C4006C; color: #7A0045; }
+.uni-help-more { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 18px 20px; border-radius: 20px; background: #fff; border: 1px solid var(--u-line); --t1: #6A2BD8; --t2: #B07BFF; }
+.uni-help-more b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.4rem; }
+.uni-help-more span { flex: 1 1 240px; font-size: 1.05rem; color: var(--u-ink-2); }
+.uni .uni-fix summary { font-size: 1.1rem; min-height: 56px; align-items: center; }
+.bag-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 46px 26px; padding: 46px 6px 18px; }
+@media (max-width: 480px) { .bag-grid { grid-template-columns: 1fr 1fr; gap: 40px 14px; } .bag-grid .bag-body { min-height: 230px; padding: 24px 12px 18px; } .bag-grid .bag-title { font-size: 1.1rem; } .bag-grid .bag-why { display: none; } }
+.uni-crumbs { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; }
+.uni-crumb-here { display: inline-flex; align-items: center; gap: 8px; font-size: 1.05rem; font-weight: 700; color: var(--u-ink-2); }
+.uni-h3 { margin: 6px 0 0; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.45rem; color: var(--u-ink); }
+.uni-start-with { display: flex; flex-direction: column; gap: 10px; }
+.uni-path li { list-style: none; }
+button.uni-step { width: 100%; font: inherit; text-align: left; cursor: pointer; color: inherit; transition: transform .2s var(--ease), box-shadow .2s; }
+button.uni-step:hover, button.uni-step:focus-visible { transform: translateY(-2px); box-shadow: 0 16px 34px color-mix(in srgb, var(--t1) 22%, transparent); }
+.uni-step-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.uni-step-text > b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.5rem; color: var(--t3); }
+.uni-step-text > span:not(.uni-step-bar) { font-size: 1.05rem; line-height: 1.45; color: var(--u-ink-2); }
+.uni-step-text small { font-size: .95rem; font-weight: 700; color: var(--u-muted); }
+.uni-step-go { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; font-size: 1.9rem; line-height: 1; color: #fff; background: linear-gradient(135deg, var(--t1), var(--t2)); }
+@media (max-width: 640px) { button.uni-step { flex-wrap: nowrap; } .uni-step-go { width: 42px; height: 42px; font-size: 1.5rem; } .uni-step-text > b { font-size: 1.3rem; } }
+.uni-doors { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 12px; }
+.uni-door { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 18px; min-height: 120px; border-radius: 20px; border: 1px solid var(--u-line); background: #fff; color: var(--u-ink); font: inherit; text-align: left; text-decoration: none; cursor: pointer; transition: transform .2s var(--ease), border-color .2s; }
+.uni-door svg { color: var(--t1); }
+.uni-door b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.35rem; color: var(--t3); }
+.uni-door span { font-size: 1rem; line-height: 1.4; color: var(--u-ink-2); }
+.uni-door:hover, .uni-door:focus-visible { transform: translateY(-2px); border-color: var(--t1); color: var(--u-ink); }
