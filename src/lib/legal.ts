@@ -1,7 +1,7 @@
-// DRAFT legal text. Have a lawyer review before launch. Words in [brackets] still need filling in.
+// DRAFT legal text. Have a lawyer review before launch.
 export const LEGAL_UPDATED = 'November 23, 2026'
-export const COMPANY = '[Company legal name]'
-export const CONTACT = '[support email]'
+export const COMPANY = 'Logan Hills'
+export const CONTACT = 'info@inkandembersociety.com'
 
 export type LegalDoc = { title: string; intro: string; sections: { h: string; p: string[] }[] }
 
@@ -82,7 +82,7 @@ export const TERMS: LegalDoc = {
     {
       h: '10. Changes and contact',
       p: [
-        'We may update these Terms. If the change is important we will tell you in the App and ask you to agree again. These Terms are governed by the laws of [State].',
+        'We may update these Terms. If the change is important we will tell you in the App and ask you to agree again. These Terms are governed by the laws of the Commonwealth of Pennsylvania.',
         `Questions: ${CONTACT}.`,
       ],
     },
