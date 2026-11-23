@@ -1,6 +1,7 @@
 import { Capacitor } from '@capacitor/core'
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import GiveawayStage from '../components/GiveawayStage'
+import Sheet from '../components/Sheet'
 import { supabase } from '../lib/supabase'
 import { useToast } from '../lib/toast'
 import { chime } from '../lib/stage'
@@ -23,6 +24,7 @@ export default function Giveaways() {
   const [winners, setWinners] = useState<WinnerLog[]>(loadWinners)
   const [full, setFull] = useState(false)
   const [sound, setSound] = useState(true)
+  const [panel, setPanel] = useState<null | 'announce' | 'stream' | 'winners'>(null)
   const [token, setToken] = useState<string | null>(null)
   const [synced, setSynced] = useState<boolean | null>(null)
   const [name, setName] = useState('')
@@ -189,6 +191,16 @@ export default function Giveaways() {
             </div>
           )}
           {show.winner && <button type="button" className="btn ghost" onClick={() => setShow(s => ({ ...s, winner: null }))}>Hide the winner banner</button>}
+          <div className="gw-tools">
+            <button type="button" className={`gw-switch ${show.visible ? 'on' : ''}`} role="switch" aria-checked={show.visible} onClick={() => setShow(s => ({ ...s, visible: !s.visible }))}>
+              <span /> {show.visible ? 'Showing on stream' : 'Hidden from stream'}
+            </button>
+            <div className="row-gap">
+              <button type="button" className="btn ghost small" onClick={() => setPanel('announce')}>🎉 Announce a winner</button>
+              <button type="button" className="btn ghost small" onClick={() => setPanel('winners')}>Today's winners{winners.length ? ` · ${winners.length}` : ''}</button>
+              <button type="button" className="btn ghost small" onClick={() => setPanel('stream')}>Stream setup</button>
+            </div>
+          </div>
         </div>
 
         <div className="stack">
@@ -277,8 +289,11 @@ export default function Giveaways() {
             </div>
           )}
 
-          <form className="card stack" onSubmit={sendWinner}>
-            <h2>Announce a winner</h2>
+        </div>
+      </div>
+
+      <Sheet open={panel === 'announce'} onClose={() => setPanel(null)} title="Announce a winner">
+          <form className="stack" onSubmit={e => { sendWinner(e); setPanel(null) }}>
             <p className="muted small">Pops a big "We have a winner!" banner with confetti for 30 seconds. Use it for the closest number, a box prize, or the first comment.</p>
             <div className="row2">
               <label>Winner's name<input value={announce.name} onChange={e => setAnnounce(a => ({ ...a, name: e.target.value }))} placeholder="Keisha M." /></label>
@@ -286,10 +301,12 @@ export default function Giveaways() {
             </div>
             <button className="btn primary" type="submit" disabled={!announce.name.trim()}>🎉 Show the winner</button>
           </form>
+      </Sheet>
 
-          <div className="card stack">
+      <Sheet open={panel === 'stream'} onClose={() => setPanel(null)} title="Stream setup" wide>
+          <div className="stack">
             <div className="row-between">
-              <h2>On your live</h2>
+              <span className="muted small">Turn it on when you want the giveaway on your video.</span>
               <button type="button" className={`gw-switch ${show.visible ? 'on' : ''}`} role="switch" aria-checked={show.visible} onClick={() => setShow(s => ({ ...s, visible: !s.visible }))}>
                 <span /> {show.visible ? 'Showing on stream' : 'Hidden from stream'}
               </button>
@@ -311,10 +328,12 @@ export default function Giveaways() {
             ) : <p className="muted small">Your overlay link shows up here once you're signed in and online.</p>}
             {synced === false && <p className="gw-note">Stream popups need a one-time setup step from your admin (database update 015). Full screen works right now.</p>}
           </div>
+      </Sheet>
 
-          <div className="card stack">
+      <Sheet open={panel === 'winners'} onClose={() => setPanel(null)} title="Today's winners">
+          <div className="stack">
             <div className="row-between">
-              <h2>Today's winners</h2>
+              <span className="muted small">{winners.length} winner{winners.length === 1 ? '' : 's'} on this device</span>
               {winners.length > 0 && <div className="row-gap">
                 <button type="button" className="btn ghost small" onClick={() => copy(winners.map(w => `${when(w.at)}  ${w.name}  (${w.game}${w.prize ? `, ${w.prize}` : ''})`).join('\n'), 'Winners list')}>Copy list</button>
                 <button type="button" className="link-btn" onClick={() => { if (confirm('Clear the winners list on this device?')) { setWinners([]); saveWinners([]) } }}>Clear</button>
@@ -324,8 +343,7 @@ export default function Giveaways() {
               <ul className="gw-winners">{winners.slice(0, 20).map((w, i) => <li key={`${w.at}-${i}`}><span className="muted small">{when(w.at)}</span><b>{w.name}</b><span className="muted small">{w.game}{w.prize ? ` · ${w.prize}` : ''}</span></li>)}</ul>
             ) : <p className="muted small">Winners land here automatically so you can message them and ship their prize.</p>}
           </div>
-        </div>
-      </div>
+      </Sheet>
 
       {full && (
         <div className="gw-fullscreen" ref={fullRef}>

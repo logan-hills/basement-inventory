@@ -218,7 +218,7 @@ export default function LivePlan() {
               </section>
             )
           })}
-          <p className="muted small">Want different steps on every live? Change them in <Link to="/settings">Settings</Link>.</p>
+          <p className="muted small">Want different steps on every live? Change them in <Link to="/settings/checklist">Settings, Live checklists</Link>.</p>
         </div>
       )}
     </div>

@@ -25,11 +25,11 @@ const lesson: Lesson = {
       ] },
       tip: 'Fresh stock is what keeps buyers coming back. Moving old stock pays for it.' },
 
-    { chapter: 'The alert', kind: 'learn', title: 'The alert', text: 'When pieces pass your old-stock age (set in Settings), Home and Get ready for live show how many and nudge you to run a sale.',
-      screen: { title: 'Home', rows: ['56 items have been in stock 60+ days'], buttons: ['Run a sale'], highlight: 'Run a sale' } },
+    { chapter: 'The alert', kind: 'learn', title: 'The alert', text: 'When pieces pass your old-stock age (set in Settings), Home puts it on Your to-do list, and Get ready for live shows a Run a sale banner at the top.',
+      screen: { title: 'Home · Your to-do list', rows: ['56 items sitting 60+ days', 'Run a sale to turn them back into cash'], buttons: ['56 items sitting 60+ days →'], highlight: '56 items sitting 60+ days →' } },
     { kind: 'learn', title: 'Oldest first', text: 'Run a sale opens Sale mode: oldest stock first. Tap Add all to put them in your cart, or pick the ones you want, then set your sale prices at checkout as live prices.' },
     { kind: 'quiz', q: 'What starts the old-stock alert?', options: ['Items older than your days in Settings', 'Items with no photo', 'Damaged items'], answer: 0, why: 'You set the age in Settings → Goals, alerts and defaults.' },
-    { kind: 'tap', title: 'Practice', prompt: 'Home says 56 items are past 60 days. You want to start a sale. Tap…', screen: { title: 'Home', rows: ['56 items have been in stock 60+ days'], buttons: ['Plan a live', 'Run a sale', 'Reports'] }, answer: 'Run a sale', hint: 'Run a sale opens Get ready for live in sale mode, oldest first.' },
+    { kind: 'tap', title: 'Practice', prompt: 'Your to-do list on Home says 56 items are sitting 60+ days. You want to start a sale. Tap…', screen: { title: 'Home · Your to-do list', buttons: ['4 orders to pick', '56 items sitting 60+ days', '12 items to put away'] }, answer: '56 items sitting 60+ days', hint: 'That card opens Get ready for live in sale mode, oldest first.' },
 
     { chapter: 'Price it right', kind: 'learn', title: 'A markdown ladder', text: 'Don\'t guess every time. Decide your steps once, then follow them. Here\'s a ladder many resellers use, counting from the day it arrived.',
       table: { head: ['Age', 'Price', 'Where'], rows: [

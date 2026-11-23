@@ -74,7 +74,7 @@ export default function Intake() {
 
   return (
     <form onSubmit={save} className="stack">
-      <div className="page-head"><div><span className="eyebrow">Stock</span><h1>Receive items</h1></div><Link to="/receive/bulk" className="btn outline-gold">Bulk receive from CSV</Link></div>
+      <div className="page-head"><div><h1>Receive items</h1></div><Link to="/receive/bulk" className="btn outline-gold">Bulk receive from CSV</Link></div>
 
       <section className="card stack">
         <label>Item name<input required value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Nike Air Max 90" /></label>

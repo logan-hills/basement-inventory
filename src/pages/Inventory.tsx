@@ -10,6 +10,8 @@ import CategoryRail from '../components/CategoryRail'
 import Sheet from '../components/Sheet'
 import DamageQtySheet, { type DamageLine } from '../components/DamageQtySheet'
 import BulkEditSheet from '../components/BulkEditSheet'
+import MoreActions from '../components/ActionSheet'
+import Icon from '../components/Icon'
 
 type Sort = 'newest' | 'oldest' | 'name' | 'live' | 'price_hi' | 'price_lo' | 'stock_hi' | 'stock_lo' | 'value' | 'margin'
 const SORTS: { key: Sort; label: string }[] = [
@@ -146,37 +148,30 @@ export default function Inventory() {
   return (
     <div className="stack inv">
       <div className="page-head">
-        <div><span className="eyebrow">Stock</span><h1>Inventory</h1></div>
-        <div className="row-gap">
-          <Link to="/scan" className="btn outline-gold">Scan</Link>
-          <Link to="/receive/bulk" className="btn outline-gold">Bulk upload CSV</Link>
-          <Link to="/intake" className="btn primary">+ Add item</Link>
+        <div><h1>Inventory</h1></div>
+        <div className="page-actions">
+          <MoreActions title="More for your stock" items={[
+            { label: 'Scan a tag or bin', hint: 'Look up an item, or put items away', icon: 'scan', to: '/scan' },
+            { label: 'Bulk upload a CSV', hint: 'Add lots of items at once from a spreadsheet', icon: 'upload', to: '/receive/bulk' },
+            { label: 'Download this list', hint: `A spreadsheet of the ${shown.length} variation${shown.length === 1 ? '' : 's'} showing now`, icon: 'download', onClick: exportCsv, disabled: !shown.length },
+            { label: 'Print bin labels', hint: 'Labels for your shelves and bins', icon: 'print', to: '/bin-labels' },
+          ]} />
+          <Link to="/intake" className="btn primary"><Icon name="plus" size={18} />Add item</Link>
         </div>
       </div>
       {all.length > 0 && <CategoryRail cats={catStats} active={cat} onPick={setCat} money={money} />}
 
-      <div className="inv-toolbar">
-        <input type="search" className="search" placeholder="Search name, Live #, brand, color, bin, SKU…" value={q} onChange={e => setQ(e.target.value)} aria-label="Search inventory" />
-        <div className="inv-controls">
-          <div className="seg" role="group" aria-label="Stock">
-            {([['in', 'In stock'], ['out', 'Sold out'], ['all', 'All']] as const).map(([k, l]) => <button key={k} className={stockView === k ? 'on' : ''} aria-pressed={stockView === k} onClick={() => setStockView(k)}>{l}</button>)}
-          </div>
-          <select value={sort} onChange={e => setSort(e.target.value as Sort)} aria-label="Sort by" className="inv-sort">
-            {SORTS.map(s => <option key={s.key} value={s.key}>{s.label}</option>)}
-          </select>
-          <button className={`btn ${active.length ? 'gold' : 'outline-gold'}`} onClick={() => setShowFilters(true)}>Filters{active.length ? ` · ${active.length}` : ''}</button>
-          <div className="seg" role="group" aria-label="Layout">
-            <button className={view === 'list' ? 'on' : ''} aria-pressed={view === 'list'} onClick={() => setView('list')}>List</button>
-            <button className={view === 'grid' ? 'on' : ''} aria-pressed={view === 'grid'} onClick={() => setView('grid')}>Grid</button>
-          </div>
-        </div>
+      <div className="toolbar-simple">
+        <input type="search" className="search" placeholder="Search name, Live #, brand, color, bin…" value={q} onChange={e => setQ(e.target.value)} aria-label="Search inventory" />
+        <button className={`btn ${active.length || stockView !== 'in' ? 'gold' : 'ghost'}`} onClick={() => setShowFilters(true)}><Icon name="filter" size={18} />Sort and filter{active.length ? ` · ${active.length}` : ''}</button>
       </div>
 
-      {(active.length > 0 || cat) && (
+      {(active.length > 0 || cat || stockView !== 'in') && (
         <div className="chip-list">
+          {stockView !== 'in' && <button className="chip-mini removable" onClick={() => setStockView('in')}>{stockView === 'out' ? 'Sold out only' : 'In stock and sold out'} ×</button>}
           {cat && <button className="chip-mini removable" onClick={() => setCat('')}>Category: {cat} ×</button>}
           {active.map(k => <button key={k} className="chip-mini removable" onClick={() => setF(x => ({ ...x, [k]: '' }))}>{chipText(k)} ×</button>)}
-          <button className="link-btn small" onClick={() => { setF(NO_FILTERS); setCat('') }}>Clear all</button>
+          <button className="link-btn small" onClick={() => { setF(NO_FILTERS); setCat(''); setStockView('in') }}>Clear all</button>
         </div>
       )}
 
@@ -248,19 +243,41 @@ export default function Inventory() {
         <div className="action-bar floating inv-actions">
           <span><b className="gold">{sel.size}</b> selected{sel.size < shown.length && !allShownOn ? <> · <button className="link-btn" onClick={() => selectShown(true)}>Select all {shown.length}</button></> : null}</span>
           <div className="row-gap">
-            <Link className="btn gold" to={`/labels?variants=${ids}`}>Print tags</Link>
-            <Link className="btn sale-btn" to={`/labels?variants=${ids}&style=sale`}>Sale tags</Link>
-            <button className="btn danger" onClick={() => setDamage(picked.map(r => ({ variantId: r.id, itemId: r.item.id, name: r.item.name, label: r.label, live: r.live_number, inStock: r.inStock })))}>Damage out</button>
+            <Link className="btn gold" to={`/labels?variants=${ids}`}><Icon name="print" size={18} />Print tags</Link>
             <button className="btn outline-gold" onClick={() => setEdit(picked)}>Edit</button>
-            <button className="btn ghost" onClick={exportCsv}>Download CSV</button>
-            <button className="link-btn" onClick={() => setSel(new Set())}>Clear</button>
+            <MoreActions title={`${sel.size} selected`} items={[
+              { label: 'Print yellow sale tags', hint: 'Tags that show the sale price', icon: 'tag', tone: 'sale', to: `/labels?variants=${ids}&style=sale` },
+              { label: 'Download as a spreadsheet', hint: 'A CSV of just these items', icon: 'download', onClick: exportCsv },
+              { label: 'Damage out', hint: 'Take broken or missing pieces out of stock', icon: 'damaged', tone: 'danger', onClick: () => setDamage(picked.map(r => ({ variantId: r.id, itemId: r.item.id, name: r.item.name, label: r.label, live: r.live_number, inStock: r.inStock }))) },
+              { label: 'Clear selection', hint: 'Untick everything', icon: 'plus', onClick: () => setSel(new Set()) },
+            ]} />
           </div>
         </div>
       )}
-      {sel.size === 0 && shown.length > 0 && <button className="link-btn self-start small" onClick={exportCsv}>Download this list as CSV</button>}
 
-      <Sheet open={showFilters} onClose={() => setShowFilters(false)} title="Filter inventory">
+      <Sheet open={showFilters} onClose={() => setShowFilters(false)} title="Sort and filter">
         <div className="stack">
+          <div className="sheet-section"><span className="sheet-label">Show</span>
+            <div className="chips">
+              {([['in', 'In stock'], ['out', 'Sold out'], ['all', 'Everything']] as const).map(([k, l]) => <button key={k} className={`chip ${stockView === k ? 'on' : ''}`} aria-pressed={stockView === k} onClick={() => setStockView(k)}>{l}</button>)}
+            </div>
+          </div>
+          <div className="sheet-section">
+            <div className="row2">
+              <label>Sort by
+                <select value={sort} onChange={e => setSort(e.target.value as Sort)}>
+                  {SORTS.map(s => <option key={s.key} value={s.key}>{s.label}</option>)}
+                </select>
+              </label>
+              <div className="stack tight-gap"><span className="label-text">Layout</span>
+                <div className="seg" role="group" aria-label="Layout">
+                  <button className={view === 'list' ? 'on' : ''} aria-pressed={view === 'list'} onClick={() => setView('list')}>List</button>
+                  <button className={view === 'grid' ? 'on' : ''} aria-pressed={view === 'grid'} onClick={() => setView('grid')}>Photos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="sheet-section"><span className="sheet-label">Filter by</span>
           <div className="row2">
             {(['brand', 'tag', 'condition', 'department', 'color', 'season', 'supplier'] as const).map(k => (
               <label key={k}>{FILTER_LABEL[k]}
@@ -278,6 +295,7 @@ export default function Inventory() {
               </select>
             </label>
           </div>
+          </div>
           <div className="stack tight-gap"><span className="label-text">Age</span>
             <div className="chips">
               {([['', 'Any'], ['new', 'New this week'], ['old', `${oldDays}+ days (old stock)`]] as const).map(([k, l]) => <button key={k} className={`chip ${f.age === k ? 'on' : ''}`} onClick={() => setF(x => ({ ...x, age: k }))}>{l}</button>)}
@@ -289,7 +307,7 @@ export default function Inventory() {
             </div>
           </div>
           <div className="row-between">
-            <button className="link-btn" onClick={() => setF(NO_FILTERS)}>Clear filters</button>
+            <button className="link-btn" onClick={() => { setF(NO_FILTERS); setStockView('in') }}>Clear filters</button>
             <button className="btn primary" onClick={() => setShowFilters(false)}>Show {shown.length}</button>
           </div>
         </div>
