@@ -37,7 +37,7 @@ export default function Damaged() {
   return (
     <div className="stack">
       <div className="page-head">
-        <div><span className="eyebrow">Stock</span><h1>Damaged</h1></div>
+        <div><h1>Damaged</h1></div>
         {rows && rows.length > 0 && <span className="muted">{rows.length} removed · {money(lost)} retail value</span>}
       </div>
       {!rows ? <p className="muted">Loading…</p> : rows.length === 0 ? (

@@ -17,7 +17,7 @@ const lesson: Lesson = {
   slides: [
     { chapter: 'The big numbers', kind: 'learn', title: 'Why numbers, honestly', nova: 'Don\'t worry, no accounting degree needed. Just a few numbers that tell you the truth.',
       text: 'A live can feel amazing and still lose money. Another can feel slow and be your most profitable night. Reports (Money in the dock) tells you which is which, so you decide with facts instead of feelings.' },
-    { kind: 'learn', title: 'Sales numbers', text: 'Pick a date range at the top (Last 30 days, Last 90 days, Last 12 months, All time). The top row shows how that time went.',
+    { kind: 'learn', title: 'Sales numbers', text: 'Pick a date range at the top (Last 30 days, Last 90 days, Last 12 months, All time). Big numbers shows how that time went, with the Sales by live and Stock age charts under it. Every other report has its own page: tap it in the More reports list, and ‹ Reports brings you back.',
       table: { head: ['Number', 'Plain words'], rows: [
         ['Sales', 'All the money buyers paid for pieces'],
         ['Gross profit', 'Sales minus what you paid for those pieces'],
@@ -74,7 +74,7 @@ const lesson: Lesson = {
     { kind: 'quiz', q: 'Where do you find out which bag style sold best?', options: ['Open Handbags in Top categories', 'Stock age', 'Damage by reason'], answer: 0, why: 'Tap a category in Top categories to see each piece\'s share inside it.' },
     { kind: 'learn', title: 'Categories, customers and damage', text: 'Stock by category shows how much is tied up in each category, and the margin there. Top customers lists your biggest buyers. Damage by reason shows what\'s going wrong most. Every report has Download CSV if you want it in a spreadsheet.' },
     { chapter: 'Print your reports', kind: 'learn', title: 'Print all of them, or just a few', nova: 'Paper still wins at the kitchen table. Print what you need and grab a highlighter.',
-      text: 'Tap Print reports at the top of Money. Tick the reports you want (Select all and Clear help), then tap Print. Only the ones you ticked print, in a clean black-and-white layout with your shop name, the date range and today\'s date on top. To print just one, tap the Print button on that report. Pick your date range first, because it prints with that range.',
+      text: 'Tap Print reports at the top of Money. Tick the reports you want (Select all and Clear help), then tap Print. Only the ones you ticked print, in a clean black-and-white layout with your shop name, the date range and today\'s date on top. To print just one, open that report from More reports and tap Print at the top. Pick your date range first, because it prints with that range.',
       tip: 'In the print window, choose "Save as PDF" to keep a copy for your records or email it to your bookkeeper.' },
     { kind: 'quiz', q: 'You only want Top categories and Best sellers for last month on paper. What do you do?', options: ['Print the whole page and throw the rest away', 'Set the range to Last 30 days, tap Print reports, tick only those two, then Print', 'Take a screenshot'], answer: 1, why: 'Set the range first, then tick only the reports you want. Nothing else prints.' },
     { kind: 'scenario', title: 'Read the signs', situation: 'In the last 90 days: Bags have a 62% margin and sell fast. Sunglasses have a 28% margin and Oldest stock is full of them. Your next supplier order is $400.',

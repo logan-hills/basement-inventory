@@ -33,12 +33,8 @@ export default function Calendar() {
   return (
     <div className="stack wide-gap">
       <div className="page-head">
-        <div><span className="eyebrow">Sell</span><h1>Live calendar</h1></div>
-        <div className="row-gap">
-          <Link className="btn ghost" to="/shared-page">Shared Page slots</Link>
-          <Link className="btn ghost" to="/live">Plan items</Link>
-          <button className="btn primary" onClick={() => setForm({ day: null })}>+ Schedule a live</button>
-        </div>
+        <div><h1>Live calendar</h1></div>
+        <button className="btn primary" onClick={() => setForm({ day: null })}>+ Schedule a live</button>
       </div>
       {err && <p className="danger-text">{err.includes('lives') ? 'The calendar needs a quick database update. Claude is running it.' : err}</p>}
 

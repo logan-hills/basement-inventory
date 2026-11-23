@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Pack each box so it arrives looking like a gift',
   ],
   route: { to: '/orders', label: 'Open Pick and pack' },
-  covers: ['src/pages/Pick.tsx', 'src/pages/Orders.tsx', 'src/pages/BoxLabels.tsx', 'src/pages/OrderDetail.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/Pick.tsx', 'src/pages/Orders.tsx', 'src/pages/BoxLabels.tsx', 'src/pages/OrderDetail.tsx', 'src/pages/Receipt.tsx'], updated: '2026-11-23',
   slides: [
     { chapter: 'Why scan twice', kind: 'learn', title: 'The grocery store way', nova: 'This is the part that makes buyers trust you. Let\'s make it foolproof.',
       text: 'At the grocery store, every item gets scanned at the register, so you pay for exactly what\'s in your cart. Pick and pack works the same way: scan the piece, then scan the buyer\'s box. The two scans together prove the right piece went to the right person.' },
@@ -25,7 +25,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'number', title: 'Add it up', q: 'You pack 200 boxes a month. Without scanning, 2% go wrong. At about $12 each, what do mistakes cost you a month?', prefix: '$', answer: 48, hint: '2% of 200 boxes is how many? Then multiply by $12.', why: '200 × 0.02 = 4 wrong boxes × $12 = $48 a month, plus 4 buyers who may not come back. Two quick scans make it nearly zero.' },
 
-    { chapter: 'Set up', kind: 'learn', title: 'Label the boxes first', text: 'Go to Pick and pack and tap Print box labels for the orders you\'re packing. Each label has the customer\'s name and the order barcode (DD-…). Print on a 4×6 shipping label printer (one box per label) or a letter sheet of 10.',
+    { chapter: 'Set up', kind: 'learn', title: 'Label the boxes first', text: 'Go to Pick and pack and tap Print box labels for the orders you\'re packing. Each label has the customer\'s name and the order barcode (DD-…). Print on a 4×6 shipping label printer (one box per label, roll or fan-fold) or a letter sheet of 10. Selling at a pop-up or doing local pickup? Open the order and tap Print receipt for a receipt on a 2¼ or 3⅛ inch receipt roll.',
       screen: { title: 'Orders', rows: ['To pick · 14', 'Packed · 0'], buttons: ['Print box labels', 'Upload live sales'], highlight: 'Print box labels' } },
     { kind: 'learn', title: 'Lay out the boxes', text: 'Stick a label on each open mailer or box and line them up in one place, in the same order as the labels. You\'ll walk the shelves with the pieces, then come back and drop each one in.',
       points: ['A long table, or the floor along a wall', 'Labels facing you so you can read the names', 'Bigger orders at the end of the row, so they don\'t block the small ones', 'Thank-you cards and tissue already within reach'] },

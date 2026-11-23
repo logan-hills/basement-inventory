@@ -10,6 +10,7 @@ import { useCart } from '../lib/cart'
 import { loadLives, liveWhen, type Live } from '../lib/lives'
 import { loadStock, margin, type StockRow } from '../lib/stock'
 import CategoryRail from '../components/CategoryRail'
+import Icon from '../components/Icon'
 
 type Sort = 'newest' | 'oldest' | 'margin' | 'price_hi' | 'price_lo' | 'stock'
 
@@ -26,6 +27,7 @@ export default function LivePrep() {
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('')
   const [tag, setTag] = useState('')
+  const [showSort, setShowSort] = useState(false)
   const [sort, setSort] = useState<Sort>(params.get('sale') ? 'oldest' : 'newest')
   const [oldOnly, setOldOnly] = useState(!!params.get('sale'))
   const [showCart, setShowCart] = useState(false)
@@ -106,11 +108,8 @@ export default function LivePrep() {
   return (
     <div className="stack wide-gap">
       <div className="page-head">
-        <div><span className="eyebrow">Sell</span><h1>Get ready for live</h1>{forLive && targetLive && <span className="muted">Picking items for {targetLive.title}</span>}</div>
-        <div className="row-gap">
-          <Link className="btn ghost" to="/calendar">Calendar</Link>
-          <button className="btn gold" onClick={() => setShowCart(true)}>Cart · {cart.count}</button>
-        </div>
+        <div><h1>Get ready for live</h1>{forLive && targetLive ? <span className="muted">Picking items for {targetLive.title}</span> : <span className="muted">Add the pieces you want to sell to your cart, then check out to a live.</span>}</div>
+        <button className="btn gold" onClick={() => setShowCart(true)}><Icon name="cart" size={18} />Cart · {cart.count}</button>
       </div>
 
       {oldCount > 0 && !oldOnly && (
@@ -130,14 +129,25 @@ export default function LivePrep() {
       )}
 
       {rows && rows.length > 0 && <CategoryRail cats={catStats} active={cat} onPick={setCat} money={money} />}
-      <div className="filter-bar">
-        <input type="search" className="search grow" placeholder="Search name, brand or Live #" value={q} onChange={e => setQ(e.target.value)} />
-        <select value={tag} onChange={e => setTag(e.target.value)} aria-label="Tag"><option value="">All tags</option>{settings.itemTags.map(c => <option key={c}>{c}</option>)}</select>
-        <select value={sort} onChange={e => setSort(e.target.value as Sort)} aria-label="Sort">
-          <option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="margin">Best profit margin</option>
-          <option value="price_hi">Price: high to low</option><option value="price_lo">Price: low to high</option><option value="stock">Most in stock</option>
-        </select>
+      <div className="toolbar-simple">
+        <input type="search" className="search" placeholder="Search name, brand or Live #" value={q} onChange={e => setQ(e.target.value)} />
+        <button className={`btn ${tag ? 'gold' : 'ghost'}`} onClick={() => setShowSort(true)}><Icon name="filter" size={18} />Sort and filter{tag ? ' · 1' : ''}</button>
       </div>
+      {tag && <div className="chip-list"><button className="chip-mini removable" onClick={() => setTag('')}>Tag: {tag} ×</button></div>}
+      <Sheet open={showSort} onClose={() => setShowSort(false)} title="Sort and filter">
+        <div className="stack">
+          <label>Sort by
+            <select value={sort} onChange={e => setSort(e.target.value as Sort)}>
+              <option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="margin">Best profit margin</option>
+              <option value="price_hi">Price: high to low</option><option value="price_lo">Price: low to high</option><option value="stock">Most in stock</option>
+            </select>
+          </label>
+          <div className="sheet-section"><span className="sheet-label">Item tag</span>
+            <div className="chips">{['', ...settings.itemTags].map(t => <button key={t || 'all'} className={`chip ${tag === t ? 'on' : ''}`} onClick={() => setTag(t)}>{t || 'All tags'}</button>)}</div>
+          </div>
+          <button className="btn primary big" onClick={() => setShowSort(false)}>Show {shown.length}</button>
+        </div>
+      </Sheet>
       {err && <p className="danger-text">{err}</p>}
 
       {!rows ? <div className="skeleton-list"><div /><div /><div /></div> : shown.length === 0 ? (
@@ -159,11 +169,9 @@ export default function LivePrep() {
                   <span className="muted small">{[r.item.brand, r.item.category].filter(Boolean).join(' · ')}</span>
                   <div className="shop-money">
                     <span className="gold shop-price">{money(r.price)}</span>
-                    <span className="muted small">cost {r.cost != null ? money(r.cost) : '—'}</span>
                     {m != null && <span className={`margin-pill ${m >= 0.5 ? 'good' : m >= 0.25 ? 'ok' : 'low'}`}>{Math.round(m * 100)}%</span>}
                   </div>
-                  <span className="small"><b className="shelf-count">{r.inStock} on shelf</b>{r.bins.length ? <span className="muted">{` · ${r.bins.slice(0, 2).join(', ')}${r.bins.length > 2 ? '…' : ''}`}</span> : null}</span>
-                  {r.item.tags.length > 0 && <div className="chip-list">{r.item.tags.map(t => <span key={t} className="chip-mini">{t}</span>)}</div>}
+                  <span className="small"><b className="shelf-count">{r.inStock} on shelf</b></span>
                   {n ? (
                     <div className="stepper">
                       <button onClick={() => cart.set(r.id, { qty: n - 1 })} aria-label="One less">−</button>

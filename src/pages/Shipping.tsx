@@ -61,7 +61,7 @@ export default function Shipping() {
   return (
     <div className="stack wide-gap">
       <div className="page-head">
-        <div><span className="eyebrow">Sell</span><h1>Shipping</h1></div>
+        <div><h1>Shipping</h1></div>
         {tab === 'ready' && <button className="btn primary" disabled={!list.length} onClick={pirateShipCsv}>Download for Pirate Ship{chosen.length ? ` (${chosen.length})` : ''}</button>}
       </div>
       <div className="seg" role="tablist">
