@@ -6,6 +6,8 @@ import { SessionProvider, useSession } from './lib/session'
 import { ToastProvider } from './lib/toast'
 import { supabase } from './lib/supabase'
 import Login from './pages/Login'
+import NewPassword from './pages/NewPassword'
+import { useRecovering } from './lib/recovery'
 import CreateShop from './pages/CreateShop'
 import Home from './pages/Home'
 import Intake from './pages/Intake'
@@ -132,6 +134,7 @@ function Shell() {
   const { session, shop, loading, profile } = useSession()
   const [menu, setMenu] = useState(false)
   const { pathname } = useLocation()
+  const recovering = useRecovering()
   useEffect(() => { setMenu(false) }, [pathname])
   // The on-stream product card for Prism / OBS: public, no sign-in, nothing else on the page.
   if (pathname.startsWith('/overlay/')) return <Routes><Route path="/overlay/:token" element={<Overlay />} /></Routes>
@@ -140,6 +143,7 @@ function Shell() {
   }
   if (loading) return <div className="center-page"><div className="brand-mark pulse"><Crown size={40} /></div></div>
   if (!session) return <Login />
+  if (recovering) return <NewPassword />
   // profile === undefined means the profiles table isn't set up yet; carry on as before.
   if (profile === null) return <FinishSignup />
   if (!shop && profile?.account_type === 'stream') return <StreamShell />
