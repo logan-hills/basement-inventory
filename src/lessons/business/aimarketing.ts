@@ -1,0 +1,97 @@
+import type { Lesson } from '../types'
+
+const lesson: Lesson = {
+  id: 'aimarketing', kind: 'course', school: 'Brand and marketing', title: 'AI marketing: a week of marketing in one hour', track: 'Business', icon: 'sparkle',
+  why: 'Marketing is the job most live sellers push to "later," because it never ends. With the right AI routine, one focused hour a week covers your posters, posts, Reels, reminders and a look at what worked.',
+  outcomes: [
+    'Run a one-hour weekly marketing block with AI doing the first drafts',
+    'Turn one live into ten pieces of marketing',
+    'Use Meta\'s free AI tools to see what your Facebook and Instagram posts are really doing',
+    'Know when to trust AI for market research, and when to ask real buyers',
+    'Keep every AI-made piece honest: real product photos, labeled AI images',
+  ],
+  route: { to: '/planner', label: 'Open Live Planner' },
+  sources: [
+    { org: 'Harvard Business School', title: 'Using LLMs for market research (Brand, Israeli and Ngwe), via Poets&Quants, May 2026', url: 'https://poetsandquants.com/2026/05/12/new-harvard-business-school-research-takes-aim-at-some-of-ais-biggest-assumptions/' },
+    { org: 'UC Berkeley Haas and Harvard Business School', title: 'Gen AI experiment shows mixed results in helping small businesses grow', url: 'https://newsroom.haas.berkeley.edu/research/gen-ai-experiment-shows-mixed-results-in-helping-small-businesses-grow/' },
+    { org: 'Small Business Trends', title: 'Meta AI adds small business tools for ads, analytics and reports (August 2026)', url: 'https://smallbiztrends.com/meta-ai-adds-small-business-tools-for-ads-analytics-and-reports/' },
+    { org: 'Meta', title: 'Our approach to labeling AI-generated content', url: 'https://about.fb.com/news/2024/04/metas-approach-to-labeling-ai-generated-content-and-manipulated-media/' },
+    { org: 'Federal Trade Commission', title: 'Consumer Reviews and Testimonials Rule: questions and answers', url: 'https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers' },
+  ],
+  covers: [], updated: '2026-11-23',
+  slides: [
+    { chapter: 'The one-hour week', kind: 'learn', title: 'Why marketing falls off the list', nova: 'Marketing isn\'t hard, boss. It\'s just endless. Let\'s put a fence around it.',
+      text: 'Most live sellers don\'t skip marketing because they don\'t know how. They skip it because it\'s never "done." The fix is a weekly block with a clear finish line. AI writes the first drafts, you add the heart, and then you stop.',
+      table: { head: ['Without a system', 'With a one-hour AI block'], rows: [
+        ['Posting when you remember', 'Posts scheduled for the whole week'],
+        ['A poster the morning of the live', 'Posters done on Sunday'],
+        ['Reels "someday"', 'Two Reels cut from last week\'s live'],
+        ['Guessing what works', 'A five-minute look at last week\'s numbers'],
+      ] } },
+    { kind: 'learn', title: 'The Sunday hour, minute by minute', text: 'Set a timer for each step. When the timer rings, move on. Good and done beats perfect and late.',
+      table: { head: ['Minutes', 'Step', 'AI does', 'You do'], rows: [
+        ['0 to 5', 'Look back', 'Meta AI sums up last week\'s posts', 'Circle your best post and why it worked'],
+        ['5 to 15', 'Plan', 'Suggests themes and a post calendar', 'Pick what fits your stock'],
+        ['15 to 30', 'Posters', 'Canva drafts from your brand kit', 'Swap in your real product photos'],
+        ['30 to 45', 'Words', 'Captions, hooks and a VIP text', 'Make them sound like you'],
+        ['45 to 55', 'Reels', 'Picks moments from your live transcript', 'Trim and add captions'],
+        ['55 to 60', 'Schedule', 'Nothing', 'Schedule it all in Meta Business Suite'],
+      ] },
+      tip: 'Meta Business Suite is free and schedules posts to both Facebook and Instagram at once.' },
+    { kind: 'order', title: 'Put the hour in order', prompt: 'Put the Sunday marketing hour in order.', steps: ['Look back at last week', 'Plan this week\'s themes', 'Make the posters', 'Write captions and hooks', 'Cut Reels from the live', 'Schedule everything'] },
+
+    { chapter: 'One live, ten pieces', kind: 'learn', title: 'Your live is a content goldmine', text: 'You already made an hour of video. AI helps you slice it. Paste your live transcript (buyer names removed) and ask for the pieces below. You film nothing new.',
+      table: { head: ['From one live', 'How AI helps'], rows: [
+        ['3 Reels of your best moments', 'Finds the funniest, most exciting minutes in the transcript'],
+        ['2 "story behind the piece" posts', 'Turns what you said about a bag into a short story'],
+        ['1 sold-out recap', '"Look what went home with y\'all" post from your sold list'],
+        ['1 sneak peek for next week', 'A teaser from the pieces you held back'],
+        ['1 VIP text or Messenger note', 'A short thank-you with next week\'s date'],
+        ['1 poll', 'A question for your buyers about what they want next'],
+        ['1 behind-the-scenes post', 'A caption for a photo of you packing'],
+      ] } },
+    { kind: 'script', title: 'Prompts for the goldmine', text: 'Copy these into your AI assistant after each live.', lines: [
+      '"Here\'s my live transcript, names removed. Find the 3 most exciting 30-second moments and give me the start time and a hook for each."',
+      '"Write a 4-sentence story post about the [bag] from tonight, in my voice: warm, playful, church-to-brunch."',
+      '"Here are the 12 pieces that sold. Write a fun recap post that thanks buyers without naming anyone."',
+      '"Write a 2-line VIP text: thank them for coming, and tell them Thursday 7 PM Eastern is Emerald Night."',
+      '"Give me 4 poll questions to ask my buyers what they want to see next. Keep them short."',
+    ], tip: 'Save these in a note so the whole routine is copy, paste, edit.' },
+    { kind: 'number', title: 'Hours back', q: 'Making ten posts from scratch takes you about 15 minutes each. With AI drafts from your live, it\'s about 4 minutes each. How many minutes do you save each week?', suffix: 'minutes', answer: 110, hint: '(15 − 4) × 10.', why: '11 minutes saved per post × 10 posts = 110 minutes. Almost two hours, every week.' },
+
+    { chapter: 'Read the numbers', kind: 'learn', title: 'Let Meta AI read your results', text: 'In 2026 Meta added free AI tools for small businesses. Connect your Facebook Page and Instagram, then ask Meta AI questions in plain words. It looks at reach, saves, shares, comments and profile visits, and can compare you with similar brands. It can even send you a report every Monday.',
+      table: { head: ['Ask Meta AI', 'What you learn'], rows: [
+        ['"Which posts got the most saves and shares last month?"', 'What buyers want more of'],
+        ['"What time do my followers engage most?"', 'When to schedule'],
+        ['"Compare my Reels with my photo posts."', 'Which format to make more of'],
+        ['"Send me a short report every Monday morning."', 'A weekly check-in you don\'t have to remember'],
+      ] },
+      tip: 'Meta says heavier use will move to a paid plan. Start free and see if it earns its keep.' },
+    { kind: 'learn', title: 'Which numbers matter', text: 'Likes feel good, but some numbers predict sales better. For a live seller, these four tell the story.',
+      table: { head: ['Number', 'Why it matters'], rows: [
+        ['Saves and shares', 'People want to come back to it, or show a friend'],
+        ['Comments', 'Conversations turn into buyers on live'],
+        ['Live viewers in the first 10 minutes', 'Your marketing got them there on time'],
+        ['Buyers from the post (ask "how\'d you hear?")', 'The truest test of all'],
+      ] } },
+    { kind: 'quiz', q: 'Which number best tells you a post made people want to come back to it?', options: ['Likes', 'Saves', 'How long your caption was'], answer: 1, why: 'A save means "I want this later." That\'s strong interest, and it often turns into a buyer.' },
+
+    { chapter: 'AI research vs real buyers', kind: 'learn', title: 'Don\'t let AI pretend to be your customers', text: 'Harvard Business School researchers tested whether AI can stand in for customer surveys. Sometimes it came close. Other times it got the answer backwards, saying people would like more of something when real people wanted less. Their advice: use AI to brainstorm questions, then ask real people.',
+      points: ['Use AI to write poll questions, not to answer them', 'Ask your buyers in a poll, a live, or a Messenger note', 'Watch what people actually buy, not just what they say', 'When AI and buyers disagree, trust your buyers'] },
+    { kind: 'learn', title: 'AI advice helps the boss who checks it', text: 'A study by UC Berkeley and Harvard Business School gave small business owners in Kenya an AI business mentor. Owners who were already doing well grew about 20%. Owners who were struggling did about 10% worse. The difference was judgment: strong owners picked the advice that fit their shop; others followed generic tips that didn\'t.',
+      example: 'Before you act on an AI marketing idea, ask: does this fit my buyers, my stock and my style? If not, skip it.' },
+    { kind: 'scenario', title: 'The AI said "go Gen Z"', situation: 'Your AI assistant says your next big move is TikTok dances for Gen Z buyers. Your regulars are women 40 and up who love church-to-brunch style.',
+      options: [
+        { text: 'Start dancing on TikTok tomorrow', feedback: 'That\'s generic advice that doesn\'t fit your buyers. The study showed that\'s where AI advice hurts.' },
+        { text: 'Ask your buyers in a poll what they\'d like more of, then test one idea for two weeks', best: true, feedback: 'Real buyers first, small test second. That\'s how strong owners use AI advice.' },
+        { text: 'Ask three more AI apps until one agrees with you', feedback: 'Shopping for an answer wastes time. Your buyers already know what they want.' },
+      ] },
+
+    { chapter: 'Honest AI marketing', kind: 'learn', title: 'Keep it real', text: 'AI marketing still has to tell the truth. Facebook labels content it detects as AI, and the FTC bans fake reviews, including AI-written ones. A few rules keep your marketing trusted.',
+      points: ['Product photos are always the real item', 'Label realistic AI images "AI illustration"', 'Never post AI-written reviews or comments as if from buyers', 'If a brand paid you, disclose it, whoever wrote the caption', 'Read every AI caption out loud before it posts'] },
+    { kind: 'tap', title: 'Practice: pick the honest post', prompt: 'Which post is ready to schedule?', screen: { title: 'Ready to post?', buttons: ['AI photo of a bag you don\'t have', 'Real photo + AI-drafted caption you edited', '"5-star review" AI wrote for you', 'AI image of a model, no label'] }, answer: 'Real photo + AI-drafted caption you edited', hint: 'Real item, your words, nothing fake.' },
+    { kind: 'reflect', title: 'Your Sunday hour', prompt: 'Write when your marketing hour will be, and the first three prompts you\'ll use.', placeholder: 'My hour: … Prompt 1: … Prompt 2: … Prompt 3: …', example: 'Sunday 6 to 7 PM. 1) "Find the 3 best moments in this transcript." 2) "Write a recap post." 3) "Write a VIP text for Thursday\'s live."' },
+    { kind: 'checklist', title: 'AI marketing plan', prompt: 'Tick these off this week.', items: ['Block one hour on my calendar for marketing', 'Save my goldmine prompts in a note', 'Connect my Page to Meta AI and ask for last month\'s best posts', 'Turn last live into at least five pieces', 'Ask buyers a real poll question', 'Schedule the week in Meta Business Suite'] },
+  ],
+}
+export default lesson

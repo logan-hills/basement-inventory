@@ -2666,3 +2666,9 @@ body { line-height: 1.5; }
   .data-table td { font-size: .95rem; }
 }
 @media (max-width: 560px) { .shop-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .shop-grid .btn { padding: 0 10px; font-size: .9rem; white-space: normal; line-height: 1.2; } }
+/* ---------- Print nudge ---------- */
+.nudge { border: 1px solid var(--border-strong); border-radius: 14px; padding: 4px 14px; }
+.nudge summary { cursor: pointer; font-weight: 700; color: var(--gold); min-height: 48px; display: flex; align-items: center; }
+.nudge-body { display: flex; flex-direction: column; gap: 10px; padding-bottom: 12px; }
+.nudge-pad { display: grid; grid-template-columns: repeat(3, minmax(0, 120px)); gap: 8px; }
+.nudge-pad .btn { min-height: 52px; font-size: 1rem; padding: 0 8px; }

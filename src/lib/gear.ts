@@ -10,7 +10,10 @@ export type Gear = {
   name: string
   /** Short badge, like "Best for iPhone". */
   badge: string
-  asin: string
+  /** Amazon product ID. Leave out for gear sold elsewhere (then set `store`). */
+  asin?: string
+  /** Where to buy it when it isn't on Amazon, like "Walmart". */
+  store?: string
   /** One plain sentence on what it's for. */
   why: string
   /** Label size or connection, shown as chips. */
@@ -66,7 +69,19 @@ export const GEAR: Gear[] = [
       'On a computer: install the Nelko driver from nelko.net, connect by USB, and pick it in the print window.',
       'On a phone: install the Nelko app and pair the printer inside that app.',
       'Load your roll, then hold the feed button until a label feeds out so it learns the size.',
-      'In Dazzle Warehouse, use Test print on the Recommended gear page to check each size before a big batch.',
+      'In Dazzle Warehouse, use Test print on the Recommended gear page to check each size before a big batch. If a size prints a little off, tap Nudge it.',
+    ],
+    useIn: [{ to: '/labels', label: 'Print tags' }, { to: '/bin-labels', label: 'Bin labels' }, { to: '/box-labels', label: 'Box labels' }],
+  },
+  {
+    id: 'core-innovations', group: 'Label printer', name: 'Core Innovations Bluetooth 4×6 thermal printer', badge: 'Our own printer', store: 'Walmart',
+    why: 'The printer we use every day at the Basement. Same job as the Nelko: 2×1 tags, 4×4 bin labels and 4×6 shipping and box labels on one machine.',
+    facts: ['Bluetooth and USB', 'Labels up to 4 inches wide', '203 dpi, direct thermal'],
+    setup: [
+      'On a computer: install the driver from the quick-start card in the box, connect by USB, and pick it in the print window.',
+      'On a phone: install the printer\'s app named on the quick-start card and pair the printer inside that app (not in Bluetooth settings).',
+      'For a 2×1 or 4×4 roll, slide the guides in snug so the roll sits in the middle, then hold the feed button so it learns the label size.',
+      'Print a test label below. If the print sits a little to one side (common with 2 inch rolls on a 4 inch printer), use Nudge it to line it up once.',
     ],
     useIn: [{ to: '/labels', label: 'Print tags' }, { to: '/bin-labels', label: 'Bin labels' }, { to: '/box-labels', label: 'Box labels' }],
   },
@@ -113,7 +128,7 @@ export const GEAR: Gear[] = [
 
 export const GEAR_GROUPS: { id: GearGroup; blurb: string; icon: string }[] = [
   { id: 'Scanners', blurb: 'Any scanner that "types" like a keyboard works. Here are three we trust, from budget to pro.', icon: 'scan' },
-  { id: 'Label printer', blurb: 'One thermal printer handles every label in your business. Just swap the roll.', icon: 'print' },
+  { id: 'Label printer', blurb: 'One thermal printer handles every label in your business. Just swap the roll. Both of these are checked with every label size in the app.', icon: 'print' },
   { id: 'Labels', blurb: 'Four sizes, four jobs. Stick to these and everything lines up the first time.', icon: 'tag' },
   { id: 'Selling in person', blurb: 'Taking your boutique on the road? Print receipts right at your table.', icon: 'cart' },
 ]
