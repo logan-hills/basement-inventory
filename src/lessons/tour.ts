@@ -54,9 +54,19 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Home is your coach', text: 'Home counts down to your next live, shows your monthly goal, the profit sitting on your shelves, and the checklist for your next show. Tick steps right there. When stock gets old, Home tells you and offers Run a sale. Scroll down for theme ideas for your next live: this month\'s picks first, then tap a group or Show me more.',
       tip: 'Your monthly goal lives in Settings. Set one that stretches you a little.' },
     { kind: 'quiz', q: 'Where do you see how much profit is sitting on your shelves right now?', options: ['Home', 'Scan', 'Shipping'], answer: 0, why: 'Home shows profit sitting on the shelf, plus your goal and next live.' },
-    { kind: 'learn', title: 'Meet Nova', nova: "That's me! Go ahead, give me a spin. I don't mind.", text: 'Nova the handbag is your guide. She shares a tip on Home every day and teaches every lesson and course in Dazzle University. She\'s a real 3D handbag, so play with her. Stuck on a screen? Search the University for it.',
-      points: ['Tap Nova on Home or in the University for another tip. She does a little twirl and peeks over her shades.', 'Drag her sideways with your finger or mouse to spin her all the way around. Let go and she turns back to face you.', 'Move your mouse or finger nearby and she turns to look at you.', 'On an older phone she shows as her picture instead, and everything works the same.'] },
-    { kind: 'quiz', q: 'You want to see the back of Nova\'s bag. What do you do?', options: ['Drag her sideways', 'Tap Settings', 'Close the app and open it again'], answer: 0, why: 'Drag Nova sideways to spin her around. Let go and she turns back to face you. A quick tap gives you a new tip instead.' },
+    { kind: 'learn', title: 'Meet Nova', nova: "That's me! Go ahead, give me a spin. I don't mind.", text: 'Nova the handbag is your guide, straight from the Dynamic Dazzle art: green bag, gold bow and crown, cat-eye shades, white gloves, camo sneakers and her little black bag that says Deals, Good Vibes, Amazing People. She shares a tip on Home every day and teaches every lesson and course in Dazzle University. She\'s a real 3D handbag, so play with her. Stuck on a screen? Search the University for it.',
+      table: { head: ['Tap or do this', 'Nova does this'], rows: [
+        ['Tap her body', 'A hop and a twirl, and a new tip on Home or in the University'],
+        ['Tap her shades', 'Slides them down her nose and peeks over the top'],
+        ['Tap her bow', 'Wiggles her bow and bounces her little crown, with confetti'],
+        ['Tap her peace sign', 'Waves at you'],
+        ['Tap her little black bag', 'Holds it up to show it off'],
+        ['Tap her sneakers', 'A little happy dance, with confetti'],
+        ['Drag her sideways', 'Spins all the way around, then turns back to face you'],
+      ] },
+      points: ['When she talks, her mouth moves while her words type out.', 'Move your mouse or finger nearby and she turns to look at you.', 'On an older phone she shows as her picture instead, and everything works the same.'] },
+    { kind: 'quiz', q: 'You want to see the back of Nova\'s bag. What do you do?', options: ['Drag her sideways', 'Tap Settings', 'Close the app and open it again'], answer: 0, why: 'Drag Nova sideways to spin her around. Let go and she turns back to face you. A quick tap gives you a reaction and a new tip instead.' },
+    { kind: 'quiz', q: 'What does Nova do when you tap her shades?', options: ['She waves', 'She slides them down and peeks over the top', 'She dances'], answer: 1, why: 'Shades get a peek. Her peace sign gets a wave, and her sneakers get a dance.' },
 
     { chapter: 'Your first week', kind: 'learn', title: 'Set up in five short sessions', text: "Don't try to do it all in one day. One session a day, about an hour each, and by Friday your shop runs on the system.",
       table: { head: ['Day', 'Do this', 'Lesson'], rows: [
