@@ -168,3 +168,9 @@ drop policy if exists item_photos_rw on storage.objects;
 create policy item_photos_rw on storage.objects for all
   using (bucket_id = 'item-photos' and public.is_shop_member(((storage.foldername(name))[1])::uuid))
   with check (bucket_id = 'item-photos' and public.is_shop_member(((storage.foldername(name))[1])::uuid));
+
+-- ---------- API access (row-level security above still limits what each user sees) ----------
+grant usage on schema public to anon, authenticated;
+grant select, insert, update, delete on all tables in schema public to authenticated;
+grant usage, select on all sequences in schema public to authenticated;
+grant execute on all functions in schema public to authenticated;
