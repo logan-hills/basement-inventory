@@ -62,6 +62,9 @@ const TABS: { id: Tab; label: string; icon: string }[] = [
 /** First courses we suggest, in order, until each is finished. */
 const STARTER_COURSES = ['strategy1', 'liveplan', 'official', 'retention', 'growth', 'finance']
 
+/** A "save my seat" email for a live class, with the class, day and time filled in. */
+const seatLink = (title: string, day: string, label: string, time: string) =>
+  `mailto:${CONTACT}?subject=${encodeURIComponent(`Save my seat: ${title}, ${day} ${label.toLowerCase()} (${time})`)}`
 const hit = (l: Lesson, s: string) => JSON.stringify(l).toLowerCase().includes(s)
 const top = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
@@ -187,11 +190,25 @@ export default function Lessons() {
                   <span className="uni-step-bar"><i style={{ width: pct(done, LESSONS.length) }} /></span><small>{done} of {LESSONS.length} done</small></span>
                 <span className="uni-step-go" aria-hidden="true">›</span>
               </button></li>
-              <li><button type="button" className="uni-step tone-fuchsia" onClick={() => go('classes')}>
+              <li><div className="uni-step uni-step-open tone-fuchsia">
                 <span className="uni-step-no">2</span>
-                <span className="uni-step-text"><b>Join a live class</b><span>Mondays and Wednesdays, day or evening.</span></span>
-                <span className="uni-step-go" aria-hidden="true">›</span>
-              </button></li>
+                <span className="uni-step-text"><b>Join a live class</b><span>Free on camera with our team. Tap a time to save your seat. Times are {CLASS_TZ}.</span></span>
+                <span className="uni-live-wrap">
+                  <span className="uni-live-list">
+                    {LIVE_CLASSES.map(c => (
+                      <span key={c.id} className={`uni-live tone-${c.tone}`}>
+                        <span className="uni-live-what"><small>{c.day}</small><b>{c.title}</b></span>
+                        <span className="uni-live-times">
+                          {c.sessions.map(x => (
+                            <a key={x.label} className="uni-live-time" href={seatLink(c.title, c.day, x.label, x.time)}><small>{x.label}</small><b>{x.time}</b><span>Save my seat ›</span></a>
+                          ))}
+                        </span>
+                      </span>
+                    ))}
+                  </span>
+                  <button type="button" className="uni-live-more" onClick={() => go('classes')}>Class details and 1:1 coaching ›</button>
+                </span>
+              </div></li>
               <li><button type="button" className="uni-step tone-gold" onClick={() => go('business')}>
                 <span className="uni-step-no">3</span>
                 <span className="uni-step-text"><b>Grow your business</b><span>{COURSES.length} business courses.</span>
@@ -429,7 +446,7 @@ function LiveClasses({ isDone }: { isDone: (l: Lesson) => boolean }) {
             <ul className="uni-class-covers">{c.covers.map(x => <li key={x}>{x}</li>)}</ul>
             <div className="uni-class-times">
               {c.sessions.map(s => (
-                <a key={s.label} className="uni-class-time" href={`mailto:${CONTACT}?subject=${encodeURIComponent(`Save my seat: ${c.title}, ${c.day} ${s.label.toLowerCase()} (${s.time})`)}`}>
+                <a key={s.label} className="uni-class-time" href={seatLink(c.title, c.day, s.label, s.time)}>
                   <small>{s.label}</small><b>{s.time}</b><span>Save my seat ›</span>
                 </a>
               ))}

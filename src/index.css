@@ -2585,3 +2585,20 @@ button.uni-step:hover, button.uni-step:focus-visible { transform: translateY(-2p
   .order-line > .hit-text.grow { flex-basis: calc(100% - 70px); min-width: 0; }
   .page-actions { width: 100%; }
 }
+
+/* University home: step 2 stays open with the live class times */
+.uni-step.uni-step-open { cursor: default; flex-wrap: wrap; }
+.uni-live-wrap { flex: 1 1 100%; display: flex; flex-direction: column; padding-left: 74px; }
+.uni-live-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.uni-live { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 12px 14px; border-radius: 16px; background: color-mix(in srgb, var(--t2) 9%, #fff); border: 1px solid color-mix(in srgb, var(--t1) 22%, transparent); }
+.uni-live-what { flex: 1 1 200px; display: flex; flex-direction: column; gap: 2px; }
+.uni-live-what small { font-size: .82rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--t1); }
+.uni-live-what b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.2rem; color: var(--u-ink); }
+.uni-live-times { display: flex; gap: 8px; flex-wrap: wrap; }
+.uni-live-time { display: flex; flex-direction: column; align-items: center; min-width: 120px; min-height: 64px; padding: 8px 14px; border-radius: 14px; text-decoration: none; color: #fff; background: linear-gradient(135deg, var(--t1), var(--t2)); box-shadow: 0 6px 14px color-mix(in srgb, var(--t1) 30%, transparent); transition: transform .15s var(--ease); }
+.uni-live-time:hover { transform: translateY(-2px); }
+.uni .uni-live-time small { font-size: .78rem; font-weight: 700; color: #fff; opacity: .92; }
+.uni-live-time b { font-size: 1.2rem; line-height: 1.2; white-space: nowrap; }
+.uni-live-time span { font-size: .82rem; font-weight: 700; white-space: nowrap; }
+.uni-live-more { align-self: flex-start; margin-top: 8px; padding: 6px 0; border: 0; background: none; font: inherit; font-size: 1rem; font-weight: 700; color: #A3005A; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 640px) { .uni-live-wrap { padding-left: 0; } .uni-live { padding: 12px; } .uni-live-times { width: 100%; } .uni-live-time { flex: 1; min-width: 0; padding: 8px 6px; } }
