@@ -44,7 +44,7 @@ const lesson: Lesson = {
         ['Variation', 'A size or color of that item', 'Gold hoop set · Large'],
         ['Live Number', '4 digits buyers type in comments to claim a variation', '4821'],
         ['Tag', 'One sticker per single piece, with a barcode', '4821-003'],
-        ['Bin', 'A spot on a shelf with its own label', 'A1-02-B-3'],
+        ['Bin', 'A spot on a shelf with its own label', 'A1-S2-B-03'],
         ['Order ID', 'One box for one buyer', 'DD-7K3P9Q'],
       ] } },
     { kind: 'quiz', q: 'Keisha types "sold 4821" in the comments. What is 4821?', options: ['A tag', 'A Live Number', 'A bin'], answer: 1, why: 'Live Numbers are for buyers. Tags (like 4821-003) and bins are for you and your helpers.' },

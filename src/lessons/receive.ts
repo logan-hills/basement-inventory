@@ -64,6 +64,15 @@ const lesson: Lesson = {
     { chapter: 'A receiving station', kind: 'learn', title: 'Receive a haul in one sitting', text: 'Big hauls go fastest when you work in batches, not piece by piece from start to finish.',
       points: ['1. Unpack everything and sort like with like', '2. Check for damage and set those aside', '3. Photograph each group in your photo corner', '4. Add the items and print the tags', '5. Tag every piece', '6. Scan them into bins right away'],
       tip: 'Over 30 items? Use Bulk upload from a spreadsheet instead. It has its own lesson.' },
+    { kind: 'number', title: 'Cost per piece in a lot', q: 'You paid $36 for a mixed lot of 48 pieces of jewelry. What should you enter as the cost for each piece?', prefix: '$', answer: 0.75, tolerance: 0.01, hint: 'Divide what you paid for the lot by the number of pieces.', why: '$36 ÷ 48 = $0.75 each. If the lot had shipping, add that to the $36 first.' },
+    { kind: 'checklist', title: 'Set up your receiving station', prompt: 'Tick what you have. The rest is your shopping or setup list.', items: [
+      'A table where I can sort a whole haul',
+      'A photo corner by a window with a white board',
+      'My label printer or label sheets ready',
+      'A small postal scale',
+      'A "damaged, check later" bin',
+      'Bins labeled and ready for put-away',
+    ] },
     { kind: 'reflect', title: 'Your pricing rule', prompt: 'Write the pricing rule you\'ll use for most pieces, and the exception for special ones.', placeholder: 'Most pieces: … Special pieces: …', example: 'Most pieces: 2.5 times what I paid, rounded to a nice number. Special pieces: what it\'s worth, and I feature it on live.' },
   ],
 }
