@@ -37,6 +37,7 @@ import LivePlan from './pages/LivePlan'
 import LiveBot from './pages/LiveBot'
 import SharedPage from './pages/SharedPage'
 import OnAir from './pages/OnAir'
+import Overlay from './pages/Overlay'
 import OnAirBar from './components/OnAirBar'
 import Profile from './pages/Profile'
 import FinishSignup from './pages/FinishSignup'
@@ -132,6 +133,8 @@ function Shell() {
   const [menu, setMenu] = useState(false)
   const { pathname } = useLocation()
   useEffect(() => { setMenu(false) }, [pathname])
+  // The on-stream product card for Prism / OBS: public, no sign-in, nothing else on the page.
+  if (pathname.startsWith('/overlay/')) return <Routes><Route path="/overlay/:token" element={<Overlay />} /></Routes>
   if (pathname === '/terms' || pathname === '/privacy') {
     if (!session || !shop) return <main className="content solo"><Legal which={pathname === '/terms' ? 'terms' : 'privacy'} /></main>
   }
