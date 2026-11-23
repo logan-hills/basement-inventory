@@ -111,3 +111,42 @@ export function listenToComments(
     if (timer) clearTimeout(timer)
   }
 }
+
+/**
+ * Reading comments through the app's server for one booked slot. Works for the seller who owns the slot
+ * (and for hosts) without anyone in the browser ever holding the Page token. Checks every 3 seconds.
+ */
+export function listenToSlot(
+  slotId: string,
+  onComments: (c: BotComment[], videoId: string | null) => void,
+  onStatus: (s: StreamStatus, detail?: string) => void,
+): () => void {
+  const seen = new Set<string>()
+  let stopped = false
+  let timer: ReturnType<typeof setTimeout> | null = null
+  let failures = 0
+  let since: string | undefined
+  onStatus('connecting')
+
+  async function tick() {
+    if (stopped) return
+    try {
+      const { data, error } = await supabase.functions.invoke('facebook-live-comments', { body: { live_slot_id: slotId, since } })
+      if (error) throw new Error((await (error as any).context?.json?.().catch(() => null))?.error ?? error.message)
+      const list = ((data?.comments ?? []) as RawComment[]).map(toComment).filter(Boolean) as BotComment[]
+      const fresh = list.filter(c => !seen.has(c.id)).sort((a, b) => a.at.localeCompare(b.at))
+      fresh.forEach(c => seen.add(c.id))
+      // Ask again from a little before the newest comment, so nothing slips between checks.
+      if (fresh.length) since = new Date(new Date(fresh[fresh.length - 1].at).getTime() - 10000).toISOString()
+      if (fresh.length) onComments(fresh, data?.fb_live_video_id ?? null)
+      failures = 0
+      onStatus('polling')
+    } catch (e: any) {
+      failures++
+      onStatus('error', e?.message ?? String(e))
+    }
+    if (!stopped) timer = setTimeout(tick, failures ? Math.min(30000, 3000 * 2 ** failures) : 3000)
+  }
+  tick()
+  return () => { stopped = true; if (timer) clearTimeout(timer) }
+}

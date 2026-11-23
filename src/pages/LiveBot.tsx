@@ -8,7 +8,7 @@ import { money } from '../lib/data'
 import { downloadFile, toCsv } from '../lib/csv'
 import { feedbackOk, tap } from '../lib/feedback'
 import { loadLive, liveWhen, type Live } from '../lib/lives'
-import { getPageToken, listenToComments, parseVideoId, type StreamStatus } from '../lib/facebook'
+import { getPageToken, listenToComments, listenToSlot, parseVideoId, type StreamStatus } from '../lib/facebook'
 import {
   allocate, applyComment, buyerKey, DEFAULT_BOT_RULES, parseComment, practiceComments,
   type BotComment, type BotRules, type Claim, type Parsed,
@@ -102,8 +102,17 @@ export default function LiveBot() {
     })
   }, [rules, known, products, shop, id])
 
+  const slotId = params.get('slot')
+
   async function startFacebook() {
     setConnectErr('')
+    if (slotId && !manualToken.trim()) {
+      // A booked slot on the shared Page: the app's server reads the comments for us.
+      stopRef.current?.()
+      setMode('facebook')
+      stopRef.current = listenToSlot(slotId, (cs, vid) => handleComments(cs, 'facebook', vid), (s, detail) => setStatus({ s, detail }))
+      return
+    }
     const vid = parseVideoId(videoInput)
     if (!vid) { setConnectErr('Paste the link to the live video (or its number) from Facebook.'); return }
     const token = manualToken.trim() || await getPageToken()
@@ -243,7 +252,7 @@ export default function LiveBot() {
   if (live === null) return <div className="empty card"><b>That live wasn't found</b><Link className="btn ghost" to="/calendar">Calendar</Link></div>
 
   const statusText = mode === 'practice' ? 'Practice live running'
-    : mode === 'facebook' ? (status?.s === 'live' ? 'Listening to comments' : status?.s === 'polling' ? 'Checking comments every few seconds' : status?.s === 'error' ? `Having trouble: ${status.detail ?? ''}` : 'Connecting to Facebook…')
+    : mode === 'facebook' ? (status?.s === 'live' ? 'Listening to comments' : status?.s === 'polling' ? 'Reading comments (checks every few seconds)' : status?.s === 'error' ? `Having trouble: ${status.detail ?? ''}` : 'Connecting to Facebook…')
     : 'Not listening'
   const practiceCount = claims.filter(c => c.source === 'practice' && !c.order_id).length
   const shown = filter === 'claims' ? feed.filter(f => f.parsed.kind !== 'none') : feed
@@ -275,7 +284,9 @@ export default function LiveBot() {
           <b className="big-text">Start the bot</b>
           <span className="muted">Go live on the Page first, then paste the live’s link here. The bot reads every comment, and when someone writes <b>sold 4821</b> (or just <b>4821</b>), it gives them that item. If more people want it than you have, they wait in line and move up if someone drops out.</span>
           <div className="row-gap">
-            <input className="grow" placeholder="Facebook live link or video number" value={videoInput} onChange={e => setVideoInput(e.target.value)} />
+            {slotId
+              ? <span className="grow muted">Connected to your booked slot on the Page.</span>
+              : <input className="grow" placeholder="Facebook live link or video number" value={videoInput} onChange={e => setVideoInput(e.target.value)} />}
             <button className="btn gold" onClick={startFacebook}>Start listening</button>
           </div>
           {connectErr && <p className="danger-text">{connectErr}</p>}
