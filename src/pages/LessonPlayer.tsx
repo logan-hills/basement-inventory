@@ -216,7 +216,7 @@ function LearnCard({ slide }: { slide: Extract<Slide, { kind: 'learn' }> }) {
           <div className="lesson-table-wrap">
             <table className="lesson-table">
               <thead><tr>{slide.table.head.map(h => <th key={h}>{h}</th>)}</tr></thead>
-              <tbody>{slide.table.rows.map((r, n) => <tr key={n}>{r.map((c, k) => <td key={k}>{c}</td>)}</tr>)}</tbody>
+              <tbody>{slide.table.rows.map((r, n) => <tr key={n} className={/^(total|profit|floor price|result)/i.test(r[0]) ? 'total' : undefined}>{r.map((c, k) => <td key={k}>{c}</td>)}</tr>)}</tbody>
             </table>
           </div>
         )}
