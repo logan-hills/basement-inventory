@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import StreamSetup from '../components/StreamSetup'
+import LiveControl from '../components/LiveControl'
 import { supabase } from '../lib/supabase'
 import {
   loadSlot, loadSlotKey, loadMyStages, pokeTimer, chime, fmtCountdown, fmtTime, fmtDay, SLOT_FIELDS,
@@ -115,6 +116,10 @@ export default function OnAir() {
           <p className="muted">Your Go Live key unlocks 5 minutes before your start time, only on the night you booked, for a private test. You go public at your exact start time. Set up your app now so you just paste and go.</p>
           <StreamSetup url={null} />
         </div>
+      )}
+
+      {!after && slot.status !== 'cancelled' && (
+        <LiveControl slotId={slot.id} liveId={slot.live_id ?? null} active={keyOpen && !!slot.fb_live_video_id} />
       )}
 
       {slot.live_id && slot.fb_live_video_id && (
