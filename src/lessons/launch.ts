@@ -26,7 +26,7 @@ const lesson: Lesson = {
         ['Mondays', 'Implementation meeting', 'Settings done, tags printing, shelves labeled'],
         ['Wednesdays', 'How to go Live', 'A planned live, a calendar slot and the comment bot connected'],
         ['Any day', '1:1 coaching', 'Help with your own stock and your own questions'],
-        ['Any day', 'Schedule time with the Queen', 'A 1:1 strategic planning session for your shop'],
+        ['Any day', 'Schedule time with the Queen', '1:1 business consulting on any topic (paid; first full hour 50% off)'],
       ] },
       tip: 'Take the matching lessons before each class. You\'ll spend class time on your questions instead of the basics.' },
     { kind: 'reflect', title: 'Why you\'re here', prompt: 'In one or two sentences: what do you want your shop to look like 6 months from now?', placeholder: 'In 6 months my shop…', example: 'Two lives a week, 50 orders each, packed in under 2 hours, and $2,000 profit a month so I can cut back my second job.' },

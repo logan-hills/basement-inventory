@@ -2080,3 +2080,32 @@ input, select, textarea { min-height: 48px; font-size: 17px; }
 .uni-queen-first em { font-style: normal; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: var(--u-foil); color: #3B2600; }
 .uni-queen-then { font-size: 1rem; color: rgba(255, 255, 255, .9); text-align: center; }
 .uni-queen .btn.uni-cta { text-align: center; justify-content: center; color: #5A3A0E; }
+
+/* Schedule time with the Queen (Consult page) */
+.consult-hero { padding: 30px; }
+.consult-title { margin: 0; font-family: 'Bodoni Moda', Didot, Georgia, serif; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.02; background: linear-gradient(100deg, #FFE08A, #FFF7DA 40%, #FFD36E 70%, #FFF1C1); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.consult-rates { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 12px; }
+.consult-rates div { display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: 18px; background: #fff; border: 1px solid var(--u-line); box-shadow: 0 10px 28px rgba(120, 40, 70, .06); }
+.consult-rates b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.6rem; color: #6B4A0E; }
+.consult-rates span { font-size: 1rem; line-height: 1.45; color: var(--u-ink-2); }
+.consult-prep { margin: 0; padding: 18px 18px 18px 2.4rem; border-radius: 18px; background: #fff; border: 1px solid var(--u-line); display: flex; flex-direction: column; gap: 8px; font-size: 1.05rem; line-height: 1.45; color: var(--u-ink); }
+.consult-prep li::marker { content: '♛  '; color: #C99A2E; }
+.consult-form { padding: 22px; border-radius: 22px; background: #fff; border: 1px solid var(--u-line); box-shadow: 0 14px 40px rgba(120, 40, 70, .07); gap: 16px; }
+.consult-form fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.consult-form legend, .consult-form label { font-weight: 700; font-size: 1.02rem; color: var(--u-ink); padding: 0; }
+.consult-form label { display: flex; flex-direction: column; gap: 8px; }
+.consult-form textarea { width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--u-line); background: #FFFCF7; color: var(--u-ink); font: inherit; font-size: 1.05rem; font-weight: 400; line-height: 1.5; resize: vertical; }
+.consult-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.consult-chip { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--u-line); background: #fff; color: var(--u-ink); font: inherit; font-size: 1rem; font-weight: 600; cursor: pointer; }
+.consult-chip small { font-size: .85rem; color: var(--u-muted); }
+.consult-chip.on { color: #3B2600; border-color: transparent; background: var(--u-foil); box-shadow: 0 6px 14px rgba(185, 134, 43, .3); }
+.consult-chip.on small { color: #5A3A0E; }
+.consult-total { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; border-radius: 16px; background: linear-gradient(135deg, #1A0F08, #3A250C 60%, #5A3A0E); color: #fff; }
+.consult-total span { font-size: .85rem; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; color: #FFE7A3; }
+.consult-total b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 2.4rem; line-height: 1.1; }
+.consult-total small { font-size: .98rem; line-height: 1.45; color: rgba(255, 255, 255, .9); }
+.consult .btn.uni-cta.consult-send { justify-content: center; text-align: center; color: #5A3A0E; border: 1px solid #E8C56A; }
+.consult .btn.uni-cta.consult-send[disabled] { opacity: .65; cursor: not-allowed; }
+.consult-small { margin: 0; font-size: .95rem; color: var(--u-muted); line-height: 1.45; }
+@media (max-width: 560px) { .consult-hero { padding: 20px 16px; } .consult-form { padding: 16px 12px; } }
+.consult .uni-sub a { color: #A3005A; font-weight: 700; }

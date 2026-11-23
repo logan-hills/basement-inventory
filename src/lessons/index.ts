@@ -18,6 +18,7 @@ import pick from './pick'
 import shipping from './shipping'
 import customers from './customers'
 import reports from './reports'
+import consult from './consult'
 import sharedpage from './sharedpage'
 import profile from './profile'
 import brand from './business/brand'
@@ -52,7 +53,7 @@ import dropship from './business/dropship'
 import launch from './launch'
 import printer from './printer'
 
-export const LESSONS: Lesson[] = [launch, tour, profile, settings, receive, inventory, bulk, printer, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, bot, sale, upload, pick, shipping, customers, reports]
+export const LESSONS: Lesson[] = [launch, tour, profile, settings, receive, inventory, bulk, printer, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, bot, sale, upload, pick, shipping, customers, reports, consult]
 export const COURSES: Lesson[] = [strategy1, strategy2, growth, liveplan, industry, official, salestax, taxes, finance, sourcing, vendors, brand, marketing, social, reels, content, canva, apps, ai, creatorpay, tiktok, dropship, storage, picking, packlive, lean, shipfast, retention, communication]
 export const ALL_LESSONS: Lesson[] = [...LESSONS, ...COURSES]
 export const lessonById = (id?: string) => ALL_LESSONS.find(l => l.id === id)

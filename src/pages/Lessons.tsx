@@ -183,16 +183,16 @@ export default function Lessons() {
             </div>
             <article className="uni-queen">
               <div className="uni-queen-copy">
-                <span className="uni-class-day">1:1 strategic planning</span>
+                <span className="uni-class-day">{QUEEN_SESSION.tagline}</span>
                 <h4>{QUEEN_SESSION.title}</h4>
                 <p>{QUEEN_SESSION.what}</p>
                 <span className="uni-queen-cred">♛ {QUEEN_SESSION.credential}</span>
-                <Link className="uni-queen-prep" to="/lessons/strategy1">Prep with the Strategic planning course ›</Link>
+                <Link className="uni-queen-prep" to="/lessons/consult">Prep with the "Get the most from time with the Queen" lesson ›</Link>
               </div>
               <div className="uni-queen-price">
-                <span className="uni-queen-first"><small>Your first hour</small><b>${QUEEN_SESSION.rate * (1 - QUEEN_SESSION.firstHourOff)}</b><em>{Math.round(QUEEN_SESSION.firstHourOff * 100)}% off</em></span>
-                <span className="uni-queen-then">Each additional hour ${QUEEN_SESSION.rate}</span>
-                <a className="btn uni-cta" href={`mailto:${CONTACT}?subject=${encodeURIComponent('Schedule time with the Queen: 1:1 strategic planning')}`}>♛ Schedule time with the Queen</a>
+                <span className="uni-queen-first"><small>Your first full hour</small><b>${QUEEN_SESSION.rate * (1 - QUEEN_SESSION.firstHourOff)}</b><em>{Math.round(QUEEN_SESSION.firstHourOff * 100)}% off</em></span>
+                <span className="uni-queen-then">Then ${QUEEN_SESSION.rate} an hour, prorated. Use the full hour, it's worth it!</span>
+                <Link className="btn uni-cta" to="/consult">♛ Schedule time with the Queen</Link>
               </div>
             </article>
           </div>
