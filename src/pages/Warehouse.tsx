@@ -52,10 +52,40 @@ export default function Warehouse() {
 
   const existing = useMemo(() => new Set((bins ?? []).map(b => b.code)), [bins])
   const newCount = plan.filter(p => !existing.has(binCode(p.aisle, p.section, p.level, p.bin))).length
+  // Bins in the chosen aisles that the new layout no longer includes.
+  const [removeExtra, setRemoveExtra] = useState(true)
+  const extra = useMemo(() => {
+    if (!plan.length) return { empty: [] as Bin[], full: [] as Bin[] }
+    const want = new Set(plan.map(p => binCode(p.aisle, p.section, p.level, p.bin)))
+    const a1 = plan[0].aisle, a2 = plan[plan.length - 1].aisle
+    const out = (bins ?? []).filter(b => b.aisle != null && b.aisle >= a1 && b.aisle <= a2 && !want.has(b.code))
+    return { empty: out.filter(b => !counts[b.id]), full: out.filter(b => counts[b.id]) }
+  }, [plan, bins, counts])
+  const removeCount = removeExtra ? extra.empty.length : 0
+
+  /** Opens the layout editor pre-filled with what's already set up. */
+  function openLayout() {
+    const bs = (bins ?? []).filter(b => b.aisle != null)
+    if (bs.length) {
+      setAisleFrom(String(Math.min(...bs.map(b => b.aisle!))))
+      setAisleTo(String(Math.max(...bs.map(b => b.aisle!))))
+      setSections(String(Math.max(...bs.map(b => b.section ?? 1))))
+      setLevels(String(Math.max(...bs.map(b => LETTERS.indexOf(b.level ?? 'A') + 1))))
+      setPerLevel(String(Math.max(...bs.map(b => b.bin_no ?? 1))))
+    }
+    setCreating(true)
+  }
 
   async function create() {
     if (!shop) return
     setBusy(true)
+    if (removeCount) {
+      const ids = extra.empty.map(b => b.id)
+      for (let i = 0; i < ids.length; i += 200) {
+        const { error } = await supabase.from('locations').delete().in('id', ids.slice(i, i + 200))
+        if (error) { toast(error.message, { kind: 'bad' }); setBusy(false); return }
+      }
+    }
     const rows = plan
       .map(p => ({ shop_id: shop.id, kind: 'bin', aisle: p.aisle, section: p.section, level: p.level, bin_no: p.bin, code: binCode(p.aisle, p.section, p.level, p.bin), name: binName(p.aisle, p.section, p.level, p.bin) }))
       .filter(r => !existing.has(r.code))
@@ -65,7 +95,7 @@ export default function Warehouse() {
     }
     setBusy(false)
     setCreating(false)
-    toast(`Created ${rows.length} bin${rows.length === 1 ? '' : 's'}`, { kind: 'ok' })
+    toast([rows.length ? `Added ${rows.length} bin${rows.length === 1 ? '' : 's'}` : '', removeCount ? `removed ${removeCount}` : ''].filter(Boolean).join(', ') || 'Layout saved', { kind: 'ok' })
     load()
   }
 
@@ -93,7 +123,7 @@ export default function Warehouse() {
         <div><span className="eyebrow">Stock</span><h1>Warehouse</h1></div>
         <div className="row-gap">
           {bins && bins.length > 0 && <Link className="btn ghost" to="/bin-labels">Print bin labels</Link>}
-          <button className="btn primary" onClick={() => setCreating(true)}>+ Add bins</button>
+          <button className="btn primary" onClick={openLayout}>{bins && bins.length ? 'Edit layout' : '+ Add bins'}</button>
         </div>
       </div>
 
@@ -178,9 +208,9 @@ export default function Warehouse() {
         </>
       )}
 
-      <Sheet open={creating} onClose={() => setCreating(false)} title="Add bins">
+      <Sheet open={creating} onClose={() => setCreating(false)} title={bins && bins.length ? 'Edit warehouse layout' : 'Add bins'}>
         <div className="stack">
-          <p className="muted">Bins that already exist are skipped, so you can add a new aisle any time.</p>
+          <p className="muted">Set how the aisles should look. New bins are added, and bins in these aisles that no longer fit can be removed. To change one aisle only, set First and Last aisle to that number.</p>
           <div className="row2">
             <label>First aisle #<input inputMode="numeric" value={aisleFrom} onChange={e => setAisleFrom(e.target.value.replace(/\D/g, ''))} /></label>
             <label>Last aisle #<input inputMode="numeric" value={aisleTo} onChange={e => setAisleTo(e.target.value.replace(/\D/g, ''))} /></label>
@@ -188,10 +218,16 @@ export default function Warehouse() {
             <label>Shelf levels (A, B, C…)<input inputMode="numeric" value={levels} onChange={e => setLevels(e.target.value.replace(/\D/g, ''))} /></label>
             <label>Bins per level<input inputMode="numeric" value={perLevel} onChange={e => setPerLevel(e.target.value.replace(/\D/g, ''))} /></label>
           </div>
-          {plan.length > 0 && (
-            <p className="muted">Creates <b className="gold">{newCount}</b> bin{newCount === 1 ? '' : 's'}, from <span className="mono">{binCode(plan[0].aisle, 1, 'A', 1)}</span> to <span className="mono">{binCode(plan[plan.length - 1].aisle, plan[plan.length - 1].section, plan[plan.length - 1].level, plan[plan.length - 1].bin)}</span>.</p>
+          {extra.empty.length > 0 && (
+            <label className="check-row"><input type="checkbox" checked={removeExtra} onChange={e => setRemoveExtra(e.target.checked)} /> Remove {extra.empty.length} empty bin{extra.empty.length === 1 ? '' : 's'} that aren't in this layout</label>
           )}
-          <button className="btn primary big" disabled={busy || newCount === 0} onClick={create}>{busy ? 'Creating…' : `Create ${newCount} bins`}</button>
+          {extra.full.length > 0 && (
+            <p className="warn-box">{extra.full.length} bin{extra.full.length === 1 ? ' has' : 's have'} items in it, so {extra.full.length === 1 ? 'it stays' : 'they stay'}: {extra.full.slice(0, 6).map(b => b.code).join(', ')}{extra.full.length > 6 ? '…' : ''}. Move the items out first, then edit again.</p>
+          )}
+          {plan.length > 0 && (
+            <p className="muted">Adds <b className="gold">{newCount}</b>{removeCount ? <>, removes <b className="danger-text">{removeCount}</b></> : ''}. Layout runs from <span className="mono">{binCode(plan[0].aisle, 1, 'A', 1)}</span> to <span className="mono">{binCode(plan[plan.length - 1].aisle, plan[plan.length - 1].section, plan[plan.length - 1].level, plan[plan.length - 1].bin)}</span>.</p>
+          )}
+          <button className="btn primary big" disabled={busy || (newCount === 0 && removeCount === 0)} onClick={create}>{busy ? 'Saving…' : newCount === 0 && removeCount === 0 ? 'Already matches this layout' : `Save layout: add ${newCount}${removeCount ? `, remove ${removeCount}` : ''}`}</button>
         </div>
       </Sheet>
     </div>

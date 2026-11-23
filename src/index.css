@@ -504,3 +504,8 @@ button { font: inherit; cursor: pointer; }
 .link-text { color: var(--gold); }
 .variant-badge { align-self: flex-start; display: inline-block; padding: 2px 10px; border-radius: 8px; background: rgba(226, 190, 90, .16); border: 1px solid rgba(226, 190, 90, .5); color: var(--gold); font-weight: 700; font-size: .85rem; }
 .shelf-count { color: #6FD19B; font-weight: 700; }
+.check-row { flex-direction: row; align-items: center; gap: 10px; color: var(--text); font-size: .9rem; }
+.check-row input { width: 20px; height: 20px; min-height: 0; flex: none; }
+.sheet-panel { overflow-x: hidden; }
+.sheet-panel .row2 > label, .sheet-panel .row3 > label { min-width: 0; }
+.sheet-panel input, .sheet-panel select { min-width: 0; max-width: 100%; }
