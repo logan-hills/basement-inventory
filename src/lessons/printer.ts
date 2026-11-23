@@ -15,7 +15,7 @@ const lesson: Lesson = {
     { org: 'Zebra Technologies', title: 'Direct thermal vs thermal transfer printing', url: 'https://www.zebra.com/us/en/resource-library/faq/printing/difference-between-direct-thermal-and-thermal-transfer-printing.html' },
     { org: 'Zebra Technologies', title: 'Direct thermal FAQ', url: 'https://www.zebra.com/us/en/resource-library/getting-started/direct-thermal-thermal-transfer/direct-thermal-faq.html' },
   ],
-  covers: ['src/pages/Labels.tsx', 'src/pages/BinLabels.tsx', 'src/components/SaveForPrinterApp.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/Labels.tsx', 'src/pages/BinLabels.tsx', 'src/components/SaveForPrinterApp.tsx', 'src/components/PrintNudge.tsx'], updated: '2026-11-23',
   slides: [
     { chapter: 'Know your printer', kind: 'learn', title: 'No ink, ever', nova: 'Let\'s get your printer purring. Once it\'s set up, it\'s set up for good.',
       text: 'Your shipping label printer (like the Core Innovations 4×6 thermal printer from Walmart) is a direct thermal printer. It has no ink or toner. Instead, the labels are coated with a layer that turns black where the print head heats it. That\'s why it\'s cheap to run, and also why the labels need a little care.',
@@ -66,7 +66,12 @@ const lesson: Lesson = {
         ['A blank label between every tag', 'Paper size set taller than the label', 'Set paper size to exactly 2 x 1 in'],
         ['Faint or gray print', 'Darkness set low, or a dirty print head', 'Raise darkness in the printer settings; wipe the head with an alcohol pad'],
         ['Crooked tags', 'Guides not touching the roll', 'Slide the guides in snug'],
+        ['Print sits a few millimeters to one side or cut off at the top', 'Small roll not quite centered in a 4 inch printer', 'Open Nudge it on the print page and move the print until it sits on the label'],
       ] } },
+    { kind: 'learn', title: 'Nudge it into place', text: 'A 2 inch roll in a 4 inch printer (like the Core Innovations or the Nelko) can sit a hair off center, so the print lands a few millimeters to one side. Every print page has a "Print lands a little off the label? Nudge it" box with big Up, Down, Left and Right buttons. Each tap moves the print half a millimeter. Line it up once and the app remembers it for that label size on your device.',
+      screen: { title: 'Nudge it', rows: ['Side to side: 1.5 mm right', 'Up and down: centered'], buttons: ['▲ Up', '◀ Left', 'Reset', 'Right ▶', '▼ Down'], highlight: 'Right ▶' },
+      tip: 'Fix the roll first (guides snug, label size learned), then nudge. Nudging can\'t fix a roll that wobbles.' },
+    { kind: 'tap', title: 'Practice: nudge it', prompt: 'Your test tag prints with the left edge of the barcode cut off. Which way do you nudge?', screen: { title: 'Nudge it', buttons: ['▲ Up', '◀ Left', 'Right ▶', '▼ Down'] }, answer: 'Right ▶', hint: 'The print is hanging off the left side, so move it toward the right.' },
     { kind: 'scenario', title: 'Every other label is blank', situation: 'You print 10 tags and get 20 labels: a tag, a blank, a tag, a blank.',
       options: [
         { text: 'Buy a new roll, this one must be bad', feedback: 'The roll is fine. This is almost always a size setting.' },

@@ -17,7 +17,7 @@ const lesson: Lesson = {
     { org: 'GS1 US', title: 'Barcodes and identification', url: 'https://www.gs1us.org/upcs-barcodes-prefixes' },
     { org: 'Square', title: 'Set up a receipt printer', url: 'https://squareup.com/help/us/en/article/5115-set-up-a-receipt-printer' },
   ],
-  covers: ['src/pages/Gear.tsx', 'src/lib/gear.ts', 'src/lib/scanner.ts', 'src/lib/printImage.ts', 'src/pages/Receipt.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/Gear.tsx', 'src/lib/gear.ts', 'src/lib/scanner.ts', 'src/lib/printImage.ts', 'src/pages/Receipt.tsx', 'src/lib/printNudge.ts'], updated: '2026-11-23',
   slides: [
     { chapter: 'Your starter kit', kind: 'learn', title: 'Three things run the whole warehouse', nova: 'Shopping for gear is the fun part. Let\'s spend smart so every dollar pays you back.',
       text: 'You need three things to run Dazzle Warehouse like the big stores do: a scanner, one thermal label printer, and the right rolls of labels. Everything on the Recommended gear page has been picked to work smoothly with the app, so you\'re not guessing on Amazon at midnight.',
@@ -49,7 +49,7 @@ const lesson: Lesson = {
     { kind: 'quiz', q: 'Your new scanner fills in the code, but the app doesn\'t look it up until you tap Check. What\'s missing?', options: ['The scanner is broken', 'It isn\'t pressing Enter after each scan', 'You need the camera on'], answer: 1, why: 'Scan the "Add Enter" (carriage return) code in the manual and every scan looks itself up.' },
 
     { chapter: 'Labels', kind: 'learn', title: 'Four sizes, four jobs', nova: 'Here\'s my secret: one printer, different rolls. That\'s it.',
-      text: 'Your Nelko thermal printer takes labels up to 4 inches wide, so it prints every label in your business. Just swap the roll.',
+      text: 'Your 4 inch thermal printer, the Nelko or the Core Innovations from Walmart, takes labels up to 4 inches wide, so it prints every label in your business. Just swap the roll. These are the official sizes for Dazzle Warehouse:',
       table: { head: ['Label', 'Size', 'Its job', 'Where in the app'], rows: [
         ['ROLLO 2×1 (white)', '2 × 1 in', 'Item tags', 'Print tags'],
         ['ROLLO-size 2×1 (yellow)', '2 × 1 in', 'Sale tags', 'Print tags, Sale style'],
@@ -66,7 +66,7 @@ const lesson: Lesson = {
 
     { chapter: 'Print it right', kind: 'learn', title: 'Test print before a big batch', text: 'On Recommended gear, Check it works has a Test print for every size: 2×1, 4×4, 4×6 and both receipt widths. The test label has a corner mark in each corner and a barcode. If you see all four corners and the barcode scans, you\'re lined up.',
       screen: { title: 'Test print', buttons: ['2×1 item tag', '4×4 bin label', '4×6 shipping / box label', 'Print test label'], highlight: 'Print test label' },
-      points: ['Corner cut off? Check paper size and margins None', 'Everything tiny? Scale must be 100% (Actual size)', 'Creeping down each label? Let the printer re-learn the label size'] },
+      points: ['Corner cut off on one side? Tap Nudge it and move the print half a millimeter at a time', 'Corner cut off everywhere? Check paper size and margins None', 'Everything tiny? Scale must be 100% (Actual size)', 'Creeping down each label? Let the printer re-learn the label size'] },
     { kind: 'order', title: 'Practice: switch to bin labels', prompt: 'Put the steps in order.', steps: ['Swap in the 4×4 roll', 'Hold the feed button so the printer learns the size', 'Print a 4×4 test label', 'Scan the test barcode', 'Print your bin labels'] },
     { kind: 'learn', title: 'Printing from your phone', text: 'Bluetooth label printers don\'t appear in the iPhone print window, but they all have their own app. Every print screen in Dazzle Warehouse has Save for printer app (phones). It turns each label into a picture at 203 dots per inch, your printer\'s exact resolution, and opens the share sheet so you can send it to the printer\'s app.',
       points: ['On a computer: use Print, and pick the printer in the print window', 'On a phone: tap Save for printer app, then choose the Nelko (or your printer\'s) app', 'In the printer app, pick the same label size and print at 100%'] },
