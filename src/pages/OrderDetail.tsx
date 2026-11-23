@@ -46,6 +46,7 @@ export default function OrderDetail() {
         <div className="row-gap">
           <span className={`status-pill ${order.status}`}>{STATUS_LABEL[order.status]}</span>
           <Link className="btn ghost" to={`/box-labels?ids=${order.id}`}>Print box label</Link>
+          <Link className="btn ghost" to={`/order/${order.code}/receipt`}>Print receipt</Link>
           {left > 0 && order.status !== 'cancelled' && <Link className="btn gold" to={`/pick?orders=${order.id}`}>Pick this order</Link>}
         </div>
       </div>

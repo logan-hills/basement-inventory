@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+import { scanBoxKeyDown } from '../lib/scanner'
 import { Link, useSearchParams } from 'react-router-dom'
 import CameraScanner from '../components/CameraScanner'
 import { supabase } from '../lib/supabase'
@@ -282,7 +283,7 @@ export default function Pick() {
 
       {camera && <CameraScanner onCode={handle} repeatDelay={1500} />}
       <form onSubmit={submit} className="scan-input">
-        <input ref={inputRef} value={manual} onChange={e => setManual(e.target.value)} placeholder={held ? 'Scan the box label (DD-…)' : 'Scan an item tag'} autoComplete="off" autoCapitalize="characters" enterKeyHint="go" aria-label="Scan" />
+        <input ref={inputRef} value={manual} onChange={e => setManual(e.target.value)} onKeyDown={scanBoxKeyDown} placeholder={held ? 'Scan the box label (DD-…)' : 'Scan an item tag'} autoComplete="off" autoCapitalize="characters" enterKeyHint="go" aria-label="Scan" />
         <button className="btn primary">Enter</button>
       </form>
 

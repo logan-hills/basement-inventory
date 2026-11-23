@@ -4,6 +4,7 @@ import JsBarcode from 'jsbarcode'
 import { supabase } from '../lib/supabase'
 import { money } from '../lib/data'
 import CrispBarcode from '../components/CrispBarcode'
+import SaveForPrinterApp from '../components/SaveForPrinterApp'
 
 type Tag = { tag_code: string; live_number: string; name: string; variant: string; price: number | null; sale: number | null }
 type Style = 'regular' | 'sale'
@@ -211,6 +212,8 @@ export default function Labels() {
             )}
             <p className="muted small">{tags.length} tag{tags.length === 1 ? '' : 's'} on {pages.length} page{pages.length === 1 ? '' : 's'}. In the print window, set scale to 100% (or "Actual size") and margins to None.</p>
             <button className={`btn big ${style === 'sale' ? 'sale-btn' : 'primary'}`} onClick={() => window.print()}>Print</button>
+            <SaveForPrinterApp name={style === 'sale' ? 'sale-tags' : 'tags'} />
+            <p className="muted small">Need a printer or labels? See <Link to="/gear">Recommended gear</Link>.</p>
           </div>
         )}
       </div>
