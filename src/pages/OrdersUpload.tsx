@@ -5,6 +5,7 @@ import { useSession } from '../lib/session'
 import { parseCsv, toCsv, downloadFile } from '../lib/csv'
 import { money } from '../lib/data'
 import { feedbackOk } from '../lib/feedback'
+import { blankish, customerMissing, isBackup } from '../lib/customers'
 
 const FIELDS = [
   { key: 'order', label: 'Order / invoice #', hints: ['orderid', 'ordernumber', 'order', 'invoice', 'invoicenumber', 'orderno'] },
@@ -22,7 +23,8 @@ const FIELDS = [
   { key: 'desc', label: 'Item description', hints: ['producttitle', 'description', 'itemname', 'product', 'productname', 'title', 'itemdescription'] },
   { key: 'qty', label: 'Quantity', hints: ['qty', 'quantity', 'count', 'quantitysold', 'qtysold'] },
   { key: 'price', label: 'Price', hints: ['price', 'saleprice', 'itemprice', 'amount', 'soldprice', 'total'] },
-  { key: 'status', label: 'Claim status (waitlist rows are skipped)', hints: ['status', 'claimstatus', 'winner', 'waitlist', 'waitlisted', 'claimtype'] },
+  { key: 'free', label: 'Free item (TRUE = no charge)', hints: ['freeitem', 'free', 'isfree', 'giveaway'] },
+  { key: 'status', label: 'Claim status (1st = winner; 2nd and 3rd+ are backups)', hints: ['status', 'claimstatus', 'winner', 'waitlist', 'waitlisted', 'claimtype'] },
 ] as const
 type FieldKey = typeof FIELDS[number]['key']
 
@@ -40,6 +42,14 @@ function guessMap(headers: string[]): Record<FieldKey, number> {
   return map
 }
 
+type ExistingCustomer = { id: string; name: string; handle: string | null; email: string | null; [k: string]: any }
+function findCustomer(list: ExistingCustomer[], c: Record<string, string>) {
+  return list.find(x =>
+    (c.email && x.email?.toLowerCase() === c.email.toLowerCase()) ||
+    (c.handle && x.handle?.toLowerCase() === c.handle.toLowerCase()) ||
+    (!c.email && !c.handle && c.name && (x.name?.toLowerCase() === c.name.toLowerCase() || x.handle?.toLowerCase() === c.name.toLowerCase())))
+}
+
 type Draft = {
   key: string
   ref: string
@@ -55,9 +65,11 @@ export default function OrdersUpload() {
   const [variants, setVariants] = useState<Map<string, { id: string; name: string }>>(new Map())
   const [liveDate, setLiveDate] = useState(() => new Date().toLocaleDateString('en-CA'))
   const [busy, setBusy] = useState(false)
-  const [done, setDone] = useState<{ ids: string[]; lines: number } | null>(null)
+  const [done, setDone] = useState<{ ids: string[]; lines: number; needs?: number; isNew?: number } | null>(null)
   const [err, setErr] = useState('')
   const [fileName, setFileName] = useState('')
+  const [includeBackups, setIncludeBackups] = useState(false)
+  const [existing, setExisting] = useState<ExistingCustomer[]>([])
 
   async function onFile(f?: File) {
     if (!f) return
@@ -76,18 +88,20 @@ export default function OrdersUpload() {
       m.set(`title:${rec.name.toLowerCase()}`, rec)
     }
     setVariants(m)
+    const { data: cs } = await supabase.from('customers').select('id,name,handle,email,phone,address1,address2,city,state,zip,country')
+    setExisting((cs ?? []) as ExistingCustomer[])
   }
 
   const drafts = useMemo<Draft[]>(() => {
     if (!map) return []
-    const get = (row: string[], k: FieldKey) => (map[k] >= 0 ? (row[map[k]] ?? '').trim() : '')
+    const get = (row: string[], k: FieldKey) => (map[k] >= 0 ? blankish(row[map[k]] ?? '') : '')
     const out = new Map<string, Draft>()
     for (const row of data) {
       const ref = get(row, 'order')
       const name = get(row, 'name'), email = get(row, 'email'), handle = get(row, 'handle')
-      const who = (email || handle || name).toLowerCase()
-      if (!who && !ref) continue
-      const key = ref ? `ref:${ref}` : `who:${who}`
+      if (!(email || handle || name) && !ref) continue
+      if (isBackup(get(row, 'status')) && !includeBackups) continue
+      const key = ref ? `ref:${ref}` : email ? `email:${email.toLowerCase()}` : `who:${(handle || name).toLowerCase()}`
       let d = out.get(key)
       if (!d) {
         d = { key, ref, customer: {}, lines: [] }
@@ -106,12 +120,35 @@ export default function OrdersUpload() {
       const qtyText = get(row, 'qty') || (get(row, 'live').match(/\bq(?:ty|uantity)?\s*(\d+)/i)?.[1] ?? '')
       const qty = parseInt(qtyText.match(/\d+/)?.[0] ?? '1', 10) || 1
       const priceIn = get(row, 'price')
-      const priceRaw = /^free$/i.test(priceIn) ? '0' : priceIn.replace(/[$,\s]/g, '')
+      const priceRaw = /^free$/i.test(priceIn) || /^(true|yes|y|1)$/i.test(get(row, 'free')) ? '0' : priceIn.replace(/[$,\s]/g, '')
       const v = variants.get(live) ?? variants.get(String(Number(liveRaw))) ?? variants.get(`upc:${liveRaw}`) ?? variants.get(`title:${get(row, 'desc').toLowerCase()}`)
       if (live || get(row, 'desc')) d.lines.push({ live, desc: get(row, 'desc'), qty, price: priceRaw ? Number(priceRaw) : null, variantId: v?.id ?? null, itemName: v?.name ?? null })
     }
+    // The same buyer can have an email on some rows and "-" on others: keep them in one order.
+    const byName = new Map<string, Draft>()
+    for (const d of out.values()) if (d.key.startsWith('email:') && (d.customer.name || d.customer.handle)) byName.set((d.customer.name || d.customer.handle).toLowerCase(), d)
+    for (const d of [...out.values()]) {
+      if (!d.key.startsWith('who:')) continue
+      const into = byName.get(d.key.slice(4))
+      if (!into) continue
+      into.lines.push(...d.lines)
+      for (const [k, v] of Object.entries(d.customer)) if (v && !into.customer[k]) into.customer[k] = v
+      out.delete(d.key)
+    }
     return [...out.values()].filter(d => d.lines.length)
-  }, [map, data, variants])
+  }, [map, data, variants, includeBackups])
+
+  const backupRows = useMemo(() => (map && map.status >= 0 ? data.filter(r => isBackup(r[map.status] ?? '')).length : 0), [map, data])
+
+  /** For each order: is the buyer new, and what's still missing once the file and their saved profile are combined. */
+  const who = useMemo(() => new Map(drafts.map(d => {
+    const found = findCustomer(existing, d.customer)
+    const merged: Record<string, any> = { ...(found ?? {}) }
+    for (const [k, v] of Object.entries(d.customer)) if (v) merged[k] = v
+    return [d.key, { isNew: !found, missing: customerMissing(merged) }]
+  })), [drafts, existing])
+  const newCount = [...who.values()].filter(w => w.isNew).length
+  const needCount = [...who.values()].filter(w => w.missing.length).length
 
   const unknown = drafts.reduce((s, d) => s + d.lines.filter(l => !l.variantId).length, 0)
   const lineCount = drafts.reduce((s, d) => s + d.lines.reduce((a, l) => a + l.qty, 0), 0)
@@ -122,15 +159,12 @@ export default function OrdersUpload() {
     setBusy(true); setErr('')
     const ids: string[] = []
     try {
-      const { data: existing } = await supabase.from('customers').select('id,name,handle,email')
-      const custs = (existing ?? []) as any[]
+      const { data: fresh } = await supabase.from('customers').select('id,name,handle,email')
+      const custs = (fresh ?? []) as any[]
       const uploadId = crypto.randomUUID()
       for (const d of drafts) {
         const c = d.customer
-        let cust = custs.find(x =>
-          (c.email && x.email?.toLowerCase() === c.email.toLowerCase()) ||
-          (c.handle && x.handle?.toLowerCase() === c.handle.toLowerCase()) ||
-          (!c.email && !c.handle && c.name && x.name?.toLowerCase() === c.name.toLowerCase()))
+        let cust = findCustomer(custs, c)
         const fields = { name: c.name || c.handle || c.email || 'Customer', handle: c.handle || null, email: c.email || null, phone: c.phone || null, address1: c.address1 || null, address2: c.address2 || null, city: c.city || null, state: c.state || null, zip: c.zip || null, country: c.country || null }
         if (cust) {
           const patch = Object.fromEntries(Object.entries(fields).filter(([, v]) => v))
@@ -152,7 +186,7 @@ export default function OrdersUpload() {
         if (lErr) throw lErr
       }
       feedbackOk()
-      setDone({ ids, lines: lineCount })
+      setDone({ ids, lines: lineCount, needs: needCount, isNew: newCount })
       setData([]); setMap(null)
     } catch (e: any) {
       setErr(`Stopped after ${ids.length} order(s): ${e.message ?? e}`)
@@ -182,6 +216,7 @@ export default function OrdersUpload() {
         <div className="card success-card stack">
           <b className="big-text">Created {done.ids.length} order{done.ids.length === 1 ? '' : 's'}{done.lines ? ` · ${done.lines} items to pick` : ''}</b>
           <span className="muted">Each order has its own ID for its box label, invoice and lookups.</span>
+          {!!done.needs && <p className="warn-box">{done.isNew ? `${done.isNew} new customer${done.isNew === 1 ? '' : 's'} added. ` : ''}{done.needs} customer{done.needs === 1 ? ' is' : 's are'} missing an address or email. <Link to="/customers?needs=1">Fill them in</Link> before you ship.</p>}
           <div className="row-gap">
             <Link className="btn gold" to={`/pick?orders=${done.ids.join(',')}`}>Start picking</Link>
             <Link className="btn ghost" to={`/box-labels?ids=${done.ids.join(',')}`}>Print box labels</Link>
@@ -240,12 +275,16 @@ export default function OrdersUpload() {
               ))}
               <label>Live date<input type="date" value={liveDate} onChange={e => setLiveDate(e.target.value)} /></label>
             </div>
+            {backupRows > 0 && (
+              <label className="check-row"><input type="checkbox" checked={includeBackups} onChange={e => setIncludeBackups(e.target.checked)} /> Also pack the {backupRows} backup claim{backupRows === 1 ? '' : 's'} (marked 2nd or 3rd+). Leave this off to pack only the winners (1st).</label>
+            )}
             {noName && <p className="danger-text">Match at least one of Customer name, Facebook name or Email so orders can be grouped by customer.</p>}
           </div>
 
           <div className="page-head">
-            <div>
+            <div className="stack tight-gap">
               <h2>{drafts.length} order{drafts.length === 1 ? '' : 's'} · {lineCount} item{lineCount === 1 ? '' : 's'}</h2>
+              {(newCount > 0 || needCount > 0) && <span className="muted small">{newCount} new customer{newCount === 1 ? '' : 's'} · {needCount} missing details (flagged below)</span>}
               {unknown > 0 && <span className="danger-text small">{unknown} line{unknown === 1 ? '' : 's'} have a Live # that isn't in inventory. They'll still be added, flagged for you to check.</span>}
             </div>
             <button className="btn primary" disabled={busy || !drafts.length || !!noName} onClick={importAll}>{busy ? 'Creating orders…' : `Create ${drafts.length} orders`}</button>
@@ -256,6 +295,12 @@ export default function OrdersUpload() {
               <div key={d.key} className="card stack tight">
                 <div className="row-between"><b>{d.customer.name || d.customer.handle || d.customer.email}</b>{d.ref && <span className="muted small">#{d.ref}</span>}</div>
                 <span className="muted small">{[d.customer.address1, d.customer.city, d.customer.state].filter(Boolean).join(', ') || 'No address in file'}</span>
+                {(who.get(d.key)?.isNew || !!who.get(d.key)?.missing.length) && (
+                  <div className="row-gap">
+                    {who.get(d.key)?.isNew && <span className="chip-mini">New customer</span>}
+                    {!!who.get(d.key)?.missing.length && <span className="chip-mini warn">Missing {who.get(d.key)!.missing.join(', ')}</span>}
+                  </div>
+                )}
                 {d.lines.map((l, i) => (
                   <div key={i} className="line-row">
                     <span className={l.variantId ? 'gold strong' : 'danger-text strong'}>#{l.live || '—'}</span>

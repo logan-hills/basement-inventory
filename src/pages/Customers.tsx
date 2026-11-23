@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import Sheet from '../components/Sheet'
 import { supabase } from '../lib/supabase'
 import { money } from '../lib/data'
 import { addressLines, STATUS_LABEL, type Customer } from '../lib/orders'
 import { downloadFile, toCsv } from '../lib/csv'
+import { customerMissing } from '../lib/customers'
+import { useToast } from '../lib/toast'
 
 type Row = Customer & { orders: { id: string; code: string; status: string; total: number | null; live_date: string | null; created_at: string }[] }
 
@@ -13,20 +15,37 @@ export default function Customers() {
   const [q, setQ] = useState('')
   const [sort, setSort] = useState<'spent' | 'recent' | 'name' | 'orders'>('spent')
   const [open, setOpen] = useState<Row | null>(null)
+  const [params, setParams] = useSearchParams()
+  const needsOnly = params.get('needs') === '1'
+  const toast = useToast()
+  const [form, setForm] = useState<Record<string, string> | null>(null)
 
-  useEffect(() => {
-    supabase.from('customers').select('*, orders(id,code,status,total,live_date,created_at)').then(({ data }) => setRows((data ?? []) as any))
-  }, [])
+  const load = () => supabase.from('customers').select('*, orders(id,code,status,total,live_date,created_at)').then(({ data }) => setRows((data ?? []) as any))
+  useEffect(() => { load() }, [])
+  const needCount = (rows ?? []).filter(c => customerMissing(c).length).length
+
+  const FIELDS: [string, string][] = [['name', 'Name'], ['handle', 'Facebook name'], ['email', 'Email'], ['phone', 'Phone'], ['address1', 'Address'], ['address2', 'Apt / suite'], ['city', 'City'], ['state', 'State'], ['zip', 'ZIP'], ['country', 'Country']]
+  async function saveCustomer() {
+    if (!open || !form) return
+    const patch = Object.fromEntries(FIELDS.map(([k]) => [k, (form[k] ?? '').trim() || null]))
+    if (!patch.name) { toast('Add a name', { kind: 'bad' }); return }
+    const { error } = await supabase.from('customers').update(patch).eq('id', open.id)
+    if (error) { toast(error.message, { kind: 'bad' }); return }
+    toast('Saved', { kind: 'ok' })
+    const next = { ...open, ...patch } as Row
+    setOpen(next); setForm(null)
+    setRows(list => (list ?? []).map(c => (c.id === open.id ? next : c)))
+  }
 
   const spent = (c: Row) => c.orders.filter(o => o.status !== 'cancelled').reduce((s, o) => s + Number(o.total ?? 0), 0)
   const last = (c: Row) => c.orders.reduce((m, o) => (o.created_at > m ? o.created_at : m), '')
 
   const shown = useMemo(() => {
     const s = q.trim().toLowerCase()
-    const list = (rows ?? []).filter(c => !s || [c.name, c.handle, c.email, c.phone, c.city].some(v => (v ?? '').toLowerCase().includes(s)))
+    const list = (rows ?? []).filter(c => (!needsOnly || customerMissing(c).length) && (!s || [c.name, c.handle, c.email, c.phone, c.city].some(v => (v ?? '').toLowerCase().includes(s))))
     const by = { spent: (a: Row, b: Row) => spent(b) - spent(a), recent: (a: Row, b: Row) => last(b).localeCompare(last(a)), name: (a: Row, b: Row) => a.name.localeCompare(b.name), orders: (a: Row, b: Row) => b.orders.length - a.orders.length }
     return list.sort(by[sort])
-  }, [rows, q, sort])
+  }, [rows, q, sort, needsOnly])
 
   function exportCsv() {
     downloadFile('customers.csv', toCsv([['Name', 'Handle', 'Email', 'Phone', 'Address 1', 'Address 2', 'City', 'State', 'Zip', 'Country', 'Orders', 'Total spent', 'Last order'],
@@ -41,6 +60,7 @@ export default function Customers() {
       </div>
       <div className="filter-bar">
         <input type="search" className="search grow" placeholder="Search name, Facebook name, email or phone" value={q} onChange={e => setQ(e.target.value)} />
+        <button className={`chip ${needsOnly ? 'on' : ''}`} onClick={() => setParams(needsOnly ? {} : { needs: '1' })}>Needs details{needCount ? ` (${needCount})` : ''}</button>
         <select value={sort} onChange={e => setSort(e.target.value as any)} aria-label="Sort">
           <option value="spent">Top spenders</option><option value="recent">Most recent</option><option value="orders">Most orders</option><option value="name">Name A–Z</option>
         </select>
@@ -54,7 +74,7 @@ export default function Customers() {
             <tbody>
               {shown.map(c => (
                 <tr key={c.id} onClick={() => setOpen(c)}>
-                  <td><b>{c.name}</b>{c.handle && c.handle !== c.name ? <span className="muted"> · {c.handle}</span> : null}{c.orders.length >= 3 && <span className="chip-mini vip">Repeat</span>}</td>
+                  <td><b>{c.name}</b>{c.handle && c.handle !== c.name ? <span className="muted"> · {c.handle}</span> : null}{c.orders.length >= 3 && <span className="chip-mini vip">Repeat</span>}{customerMissing(c).length > 0 && <span className="chip-mini warn">Needs {customerMissing(c).join(', ')}</span>}</td>
                   <td className="hide-sm muted">{[c.city, c.state].filter(Boolean).join(', ')}</td>
                   <td>{c.orders.length}</td>
                   <td className="gold">{money(spent(c))}</td>
@@ -66,9 +86,17 @@ export default function Customers() {
         </div>
       )}
 
-      <Sheet open={!!open} onClose={() => setOpen(null)} title={open?.name ?? ''}>
-        {open && (
+      <Sheet open={!!open} onClose={() => { setOpen(null); setForm(null) }} title={open?.name ?? ''}>
+        {open && form && (
           <div className="stack">
+            {FIELDS.map(([k, label]) => <label key={k}>{label}<input value={form[k] ?? ''} onChange={e => setForm({ ...form, [k]: e.target.value })} /></label>)}
+            <div className="row-gap"><button className="btn gold" onClick={saveCustomer}>Save</button><button className="btn ghost" onClick={() => setForm(null)}>Cancel</button></div>
+          </div>
+        )}
+        {open && !form && (
+          <div className="stack">
+            {customerMissing(open).length > 0 && <p className="warn-box">Missing {customerMissing(open).join(', ')}. Add it before you ship.</p>}
+            <button className="btn outline-gold self-start" onClick={() => setForm(Object.fromEntries(FIELDS.map(([k]) => [k, String((open as any)[k] ?? '')])))}>Edit details</button>
             {open.handle && <span className="muted">{open.handle}</span>}
             {addressLines(open).map((a, i) => <span key={i}>{a}</span>)}
             {open.email && <a href={`mailto:${open.email}`}>{open.email}</a>}

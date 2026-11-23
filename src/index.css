@@ -423,6 +423,7 @@ button { font: inherit; cursor: pointer; }
 .chip-mini { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: .74rem; font-weight: 600; border: 1px solid rgba(255, 211, 110, .45); color: var(--gold); margin-left: 6px; white-space: nowrap; }
 .chip-list .chip-mini { margin-left: 0; }
 .chip-mini.vip { border-color: var(--emerald-hi); color: #6FD19B; }
+.chip-mini.warn { border-color: rgba(255, 138, 128, .5); color: var(--danger); }
 .edit-chip { display: inline-flex; align-items: center; gap: 2px; padding: 4px 6px 4px 4px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--raised); font-size: .9rem; }
 .edit-chip button { border: 0; background: none; color: var(--muted); width: 26px; height: 26px; border-radius: 50%; font-size: 1rem; line-height: 1; }
 .edit-chip button:hover:not(:disabled) { background: var(--surface); color: var(--text); }
