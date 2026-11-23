@@ -19,7 +19,7 @@ npm run dev
 2. **Login links:** in Supabase, Authentication → URL Configuration, set Site URL to `https://logan-hills.github.io/basement-inventory/`.
 3. **Hosting:** in GitHub, Settings → Pages → Source: GitHub Actions. Every push to `main` then publishes the app.
 
-**Comment bot:** run `supabase/008_live_bot.sql` in the SQL Editor once. The bot reads Facebook Live comments on a business Page; until the Page is connected it runs in practice mode.
+**Comment bot:** run `supabase/008_live_bot.sql` and `supabase/013_live_claims_realtime.sql` in the SQL Editor once. The bot reads Facebook Live comments on a business Page; until the Page is connected it runs in practice mode.
 
 The Supabase URL and publishable key in `.env` are public by design. Never commit the database password or the `service_role`/secret key.
 
