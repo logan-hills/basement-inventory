@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'ai', kind: 'course', school: 'Tools and AI', title: 'AI assistants for sellers: ChatGPT vs Claude', track: 'Business', icon: 'sparkle',
+  id: 'ai', kind: 'course', school: 'AI know-how', title: 'AI assistants for sellers: ChatGPT vs Claude', track: 'Business', icon: 'sparkle',
   why: 'An AI assistant can write your captions, plan your lives, draft vendor emails and build designs in minutes. Knowing which to use, and how, is a real edge.',
   outcomes: [
     'Know what AI assistants are good at, and where they go wrong',

@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Run a weekly rhythm that leaves no surprises before a live',
   ],
   route: { to: '/', label: 'Go to Home' },
-  covers: ['src/App.tsx', 'src/components/SubNav.tsx', 'src/components/ActionSheet.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/nova3d.ts', 'src/pages/Lessons.tsx'], updated: '2026-11-23',
+  covers: ['src/App.tsx', 'src/components/SubNav.tsx', 'src/components/ActionSheet.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/nova3d.ts', 'src/pages/Lessons.tsx', 'src/components/Certificate.tsx', 'src/lessons/awards.ts'], updated: '2026-11-23',
   slides: [
     { chapter: 'Why a system', kind: 'learn', title: 'From "where is it?" to "got it"', nova: "Welcome, boss! Let's make sure you never dig through a box before a live again.",
       text: "Most live sellers start the same way: pieces in tubs, a notebook of who bought what, and two hours of searching before every show. It works until it doesn't. One lost earring, one wrong box, one buyer who never got her order, and the stress starts eating the fun.",
@@ -71,6 +71,8 @@ const lesson: Lesson = {
       points: ['When she talks, her mouth moves while her words type out.', 'Move your mouse or finger nearby and she turns to look at you.', 'On an older phone she shows as her picture instead, and everything works the same.'] },
     { kind: 'quiz', q: 'You want to see the back of Nova\'s bag. What do you do?', options: ['Drag her sideways', 'Tap Settings', 'Close the app and open it again'], answer: 0, why: 'Drag Nova sideways to spin her around. Let go and she turns back to face you. A quick tap gives you a reaction and a new tip instead.' },
     { kind: 'quiz', q: 'What does Nova do when you tap her shades?', options: ['She waves', 'She slides them down and peeks over the top', 'She dances'], answer: 1, why: 'Shades get a peek. Her peace sign gets a wave, and her sneakers get a dance.' },
+    { kind: 'learn', title: 'Earn certificates as you go', text: 'Every module of Orientation, every business course and every school ends with its own certificate, and milestones like First Step and Dean\'s List earn you a medal. Find them all under University, then My certificates. Tap one to open it, then Print or save as PDF.',
+      points: ['Orientation modules give you a hang-tag certificate, like Stock Room Pro', 'Finish all of Orientation for your gold Orientation Graduate diploma', 'Each business course has its own certificate, in its school\'s colors', 'Finish a whole school for an honors certificate with a laurel'] },
 
     { chapter: 'Your first week', kind: 'learn', title: 'Set up in five short sessions', text: "Don't try to do it all in one day. One session a day, about an hour each, and by Friday your shop runs on the system.",
       table: { head: ['Day', 'Do this', 'Lesson'], rows: [

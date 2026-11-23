@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'apps', kind: 'course', school: 'Tools and AI', title: 'Apps that run your shop', track: 'Business', icon: 'settings',
+  id: 'apps', kind: 'course', school: 'Tools and apps', title: 'Apps that run your shop', track: 'Business', icon: 'settings',
   why: 'The right handful of apps saves hours a week. The wrong pile of subscriptions quietly eats your profit.',
   outcomes: [
     'Build a simple "tool stack" for every job in your shop',
