@@ -10,7 +10,7 @@ import { feedbackOk, tap } from '../lib/feedback'
 import { loadLive, liveWhen, type Live } from '../lib/lives'
 import { getPageToken, listenToComments, listenToSlot, parseVideoId, type StreamStatus } from '../lib/fbcomments'
 import {
-  allocate, applyComment, buyerKey, DEFAULT_BOT_RULES, parseComment, practiceComments,
+  allocate, applyComment, buyerKey, buyerMessage, DEFAULT_BOT_RULES, DEFAULT_BUYER_MESSAGE, parseComment, practiceComments,
   type BotComment, type BotRules, type Claim, type Parsed,
 } from '../lib/livebot'
 
@@ -40,6 +40,8 @@ export default function LiveBot() {
   const [rulesOpen, setRulesOpen] = useState(false)
   const [busy, setBusy] = useState(false)
   const [filter, setFilter] = useState<'all' | 'claims'>('all')
+  const [view, setView] = useState<'items' | 'buyers'>('items')
+  const [sent, setSent] = useState<Set<string>>(new Set())
   const stopRef = useRef<(() => void) | null>(null)
   const queue = useRef<Promise<void>>(Promise.resolve())
 
@@ -68,6 +70,23 @@ export default function LiveBot() {
     setAllClaims((cs ?? []) as Claim[])
   }, [id])
   useEffect(() => { load() }, [load])
+
+  // Everyone helping with the live (host's phone, a helper's laptop) sees the same claims as they happen.
+  useEffect(() => {
+    if (!id) return
+    let t: ReturnType<typeof setTimeout> | null = null
+    const refresh = () => {
+      if (t) clearTimeout(t)
+      t = setTimeout(async () => {
+        const { data } = await supabase.from('live_claims').select(CLAIM_SELECT).eq('live_id', id).order('commented_at')
+        if (data) setAllClaims(data as Claim[])
+      }, 400)
+    }
+    const ch = supabase.channel(`claims-${id}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'live_claims', filter: `live_id=eq.${id}` }, refresh)
+      .subscribe()
+    return () => { if (t) clearTimeout(t); supabase.removeChannel(ch) }
+  }, [id])
   useEffect(() => () => stopRef.current?.(), [])
 
   const known = useMemo(() => new Set(products.keys()), [products])
@@ -248,6 +267,32 @@ export default function LiveBot() {
     }).sort((a, b) => (b.won.length + b.waiting.length) - (a.won.length + a.waiting.length) || a.n.localeCompare(b.n))
   }, [products, claims, alloc])
 
+  // ---- Buyers: each person's cart, with a thank-you message ready to paste into Messenger ----------------------
+  const buyers = useMemo(() => {
+    type B = { key: string; name: string; lines: { liveNumber: string; title: string; qty: number; price: number }[]; waiting: string[]; ordered: boolean }
+    const m = new Map<string, B>()
+    for (const a of alloc.values()) {
+      if (!a.won && !a.waiting) continue
+      const key = a.claim.buyer_fb_id ? buyerKey(a.claim) : `name:${a.claim.buyer_name.trim().toLowerCase()}`
+      const b: B = m.get(key) ?? { key, name: a.claim.buyer_name, lines: [], waiting: [], ordered: true }
+      const p = products.get(a.claim.live_number)
+      if (a.won) {
+        b.lines.push({ liveNumber: a.claim.live_number, title: p ? `${p.name}${p.label && p.label !== 'One size' ? ` - ${p.label}` : ''}` : 'Item', qty: a.won, price: p?.price ?? 0 })
+        if (!a.claim.order_id) b.ordered = false
+      }
+      if (a.waiting) b.waiting.push(a.claim.live_number)
+      m.set(key, b)
+    }
+    const total = (b: B) => b.lines.reduce((s, l) => s + l.qty * l.price, 0)
+    return [...m.values()].sort((x, y) => total(y) - total(x))
+  }, [alloc, products])
+
+  async function copyMessage(b: (typeof buyers)[number]) {
+    const text = buyerMessage(rules.message ?? DEFAULT_BUYER_MESSAGE, { name: b.name, live: live?.title ?? 'our live', lines: b.lines })
+    try { await navigator.clipboard.writeText(text); toast(`Copied ${b.name.split(' ')[0]}’s message`, { kind: 'ok' }) } catch { window.prompt('Copy this message', text) }
+    setSent(s => new Set(s).add(b.key))
+  }
+
   if (live === undefined) return <p className="muted">Loading…</p>
   if (live === null) return <div className="empty card"><b>That live wasn't found</b><Link className="btn ghost" to="/calendar">Calendar</Link></div>
 
@@ -267,7 +312,7 @@ export default function LiveBot() {
           <span className={`bot-status ${mode}`}><span className="bot-dot" />{statusText}</span>
         </div>
         <div className="row-gap">
-          <button className="btn ghost" onClick={() => setRulesOpen(true)}>Claim words</button>
+          <button className="btn ghost" onClick={() => setRulesOpen(true)}>Bot settings</button>
           {mode !== 'idle' && <button className="btn ghost" onClick={stop}>Stop</button>}
         </div>
       </div>
@@ -303,9 +348,34 @@ export default function LiveBot() {
 
       <div className="bot-layout">
         <section className="stack">
-          <div className="row-between"><h2>Who got what</h2><span className="muted small">{board.length} item{board.length === 1 ? '' : 's'}</span></div>
-          {board.length === 0 && <div className="empty card"><b>No items yet</b><span className="muted">Add items to this live, or start the bot and claims will show up here.</span></div>}
-          <div className="bot-board">
+          <div className="row-between">
+            <h2>{view === 'items' ? 'Who got what' : 'Buyers'}</h2>
+            <div className="seg-mini">
+              <button className={view === 'items' ? 'on' : ''} onClick={() => setView('items')}>Items ({board.length})</button>
+              <button className={view === 'buyers' ? 'on' : ''} onClick={() => setView('buyers')}>Buyers ({buyers.length})</button>
+            </div>
+          </div>
+          {view === 'buyers' && buyers.length === 0 && <div className="empty card"><b>No buyers yet</b><span className="muted">Everyone who claims something gets a cart here, with their total and a thank-you message to send.</span></div>}
+          {view === 'buyers' && (
+            <div className="bot-board">
+              {buyers.map(b => {
+                const total = b.lines.reduce((s, l) => s + l.qty * l.price, 0)
+                return (
+                  <div key={b.key} className="card bot-item">
+                    <div className="row-between"><b>{b.name}</b><span className="bot-count">{money(total)}</span></div>
+                    {b.lines.map(l => <span key={l.liveNumber} className="small"><span className="gold strong">#{l.liveNumber}</span> {l.title}{l.qty > 1 ? ` ×${l.qty}` : ''}</span>)}
+                    {b.waiting.length > 0 && <span className="muted small">In line for {b.waiting.map(n => `#${n}`).join(', ')}</span>}
+                    <div className="row-gap">
+                      {b.lines.length > 0 && <button className={`btn small ${sent.has(b.key) ? 'ghost' : 'outline-gold'}`} onClick={() => copyMessage(b)}>{sent.has(b.key) ? 'Copied ✓' : 'Copy message'}</button>}
+                      {b.ordered && b.lines.length > 0 && <span className="status-pill packed">Ordered</span>}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+          {view === 'items' && board.length === 0 && <div className="empty card"><b>No items yet</b><span className="muted">Add items to this live, or start the bot and claims will show up here.</span></div>}
+          {view === 'items' && <div className="bot-board">
             {board.map(({ n, p, won, waiting }) => {
               const sold = won.reduce((s, a) => s + a.won, 0)
               const cap = p?.available ?? 0
@@ -337,7 +407,7 @@ export default function LiveBot() {
                 </div>
               )
             })}
-          </div>
+          </div>}
 
           <div className="card stack">
             <b>Add a claim by hand</b>
@@ -396,16 +466,19 @@ function RulesSheet({ open, rules, onClose, onSave }: { open: boolean; rules: Bo
   const [cancelWords, setCancelWords] = useState(rules.cancelWords.join(', '))
   const [plain, setPlain] = useState(rules.plainNumbers)
   const [prefixes, setPrefixes] = useState((rules.prefixes ?? []).join(', ').toUpperCase())
+  const [message, setMessage] = useState(rules.message ?? DEFAULT_BUYER_MESSAGE)
   const split = (s: string) => s.split(',').map(w => w.trim().toLowerCase()).filter(Boolean)
   return (
-    <Sheet open={open} onClose={onClose} title="Claim words">
+    <Sheet open={open} onClose={onClose} title="Bot settings">
       <div className="stack">
         <label>Words that mean “I want it”<input value={claimWords} onChange={e => setClaimWords(e.target.value)} /></label>
         <label>Your shop code in front of the Live # (like DD in “DD 4821”)<input value={prefixes} onChange={e => setPrefixes(e.target.value)} placeholder="DD" /></label>
         <label>Words that mean “I changed my mind”<input value={cancelWords} onChange={e => setCancelWords(e.target.value)} /></label>
         <label className="check-row"><input type="checkbox" checked={plain} onChange={e => setPlain(e.target.checked)} /> A comment that’s only a Live # (like “4821”) counts as a claim</label>
-        <span className="muted small">Separate words with commas. Quantities work too: “sold 4821 x2”.</span>
-        <button className="btn gold" onClick={() => onSave({ claimWords: split(claimWords), cancelWords: split(cancelWords), plainNumbers: plain, prefixes: split(prefixes) })}>Save</button>
+        <span className="muted small">Separate words with commas. Quantities work too: “sold 4821 x2” or “Q2”.</span>
+        <label>Thank-you message for each buyer<textarea rows={6} value={message} onChange={e => setMessage(e.target.value)} /></label>
+        <span className="muted small">These fill in for each buyer: {'{first}'} first name, {'{name}'} full name, {'{items}'} what they got, {'{count}'} how many pieces, {'{total}'} their total, {'{live}'} the live’s title.</span>
+        <button className="btn gold" onClick={() => onSave({ claimWords: split(claimWords), cancelWords: split(cancelWords), plainNumbers: plain, prefixes: split(prefixes), message: message.trim() || DEFAULT_BUYER_MESSAGE })}>Save</button>
       </div>
     </Sheet>
   )
