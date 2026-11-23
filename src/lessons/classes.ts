@@ -39,11 +39,24 @@ export const ONE_ON_ONE = {
   what: 'Stuck on something, or want a walkthrough with your own stock? Book a private session with the Dynamic Dazzle team, daytime or evening.',
 }
 
-/** Paid 1:1 strategic planning with the Queen. Edit the rate here. */
+/** Paid 1:1 business consult with the Queen. Edit the rates here; the Consult page and lesson read them. */
 export const QUEEN_SESSION = {
   title: 'Schedule time with the Queen',
-  what: 'A private 1:1 strategic planning session for your shop: your goals, your strengths and weak spots, and a plan you can act on this month.',
+  tagline: '1:1 business consulting, on any topic',
+  what: 'Bring your business, your plan and your questions. The Queen works through your challenges with you and hands you the tools to tackle them.',
   credential: 'MBA in business project planning, Capella University',
+  /** Dollars per hour. */
   rate: 100,
+  /** Share off the first full hour. */
   firstHourOff: 0.5,
+  /** About this much per hour of follow-up research, quoted first. */
+  researchRate: 25,
+}
+
+/** What a session costs. The first full hour gets the discount; time is prorated after that.
+    A session shorter than one hour is prorated at the full rate, with no discount. */
+export function consultPrice(hours: number): number {
+  const { rate, firstHourOff } = QUEEN_SESSION
+  if (hours < 1) return Math.round(hours * rate * 100) / 100
+  return Math.round((rate * (1 - firstHourOff) + (hours - 1) * rate) * 100) / 100
 }
