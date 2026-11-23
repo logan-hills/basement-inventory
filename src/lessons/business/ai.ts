@@ -1,0 +1,102 @@
+import type { Lesson } from '../types'
+
+const lesson: Lesson = {
+  id: 'ai', kind: 'course', school: 'Tools and AI', title: 'AI assistants for sellers: ChatGPT vs Claude', track: 'Business', icon: 'sparkle',
+  why: 'An AI assistant can write your captions, plan your lives, draft vendor emails and build designs in minutes. Knowing which to use, and how, is a real edge.',
+  outcomes: [
+    'Know what AI assistants are good at, and where they go wrong',
+    'Compare ChatGPT and Claude fairly, as of November 2026',
+    'Write prompts that get on-brand results the first time',
+    'Use AI for captions, live scripts, product descriptions, emails and planning',
+    'Protect customer privacy and double-check facts',
+  ],
+  route: { to: '/planner', label: 'Open Live Planner' },
+  sources: [
+    { org: 'Canva', title: 'Introducing Canva in Claude Design', url: 'https://canva.com/newsroom/news/canva-claude-design/' },
+    { org: 'Canva', title: 'Connect Canva to an AI assistant', url: 'https://www.canva.com/help/mcp-agent-setup/' },
+    { org: 'Federal Trade Commission', title: 'Disclosures 101 for social media influencers', url: 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers' },
+  ],
+  covers: [], updated: '2026-11-23',
+  slides: [
+    { chapter: 'What AI is good for', kind: 'learn', title: 'Your always-on assistant', nova: 'Full honesty: I\'m a big fan of AI helpers. But they\'re assistants, not the boss. You are.',
+      text: 'AI assistants like ChatGPT (from OpenAI) and Claude (from Anthropic) are chat tools that write, plan, explain and create with you. They\'re best at first drafts and ideas. You bring the taste, the facts and the final say.',
+      table: { head: ['Great for', 'Be careful with'], rows: [
+        ['Captions, hooks and live scripts', 'Facts, prices, laws and tax rules (they can be confidently wrong)'],
+        ['Product descriptions from your notes', 'Brand authenticity claims ("100% genuine")'],
+        ['Vendor and customer emails', 'Anything with customer personal data'],
+        ['Planning themes, calendars and checklists', 'Copying another brand\'s images or words'],
+        ['Explaining a confusing form or policy', 'Final legal or tax decisions'],
+      ] } },
+    { kind: 'quiz', q: 'You ask an AI what Pennsylvania\'s sales tax rate on handbags is. What should you do with the answer?', options: ['Trust it, AI knows everything', 'Check it against the PA Department of Revenue website', 'Ask a second AI and go with the majority'], answer: 1, why: 'AI can be out of date or wrong on facts. For taxes and laws, always confirm with the official source.' },
+
+    { chapter: 'ChatGPT vs Claude', kind: 'learn', title: 'A fair comparison (November 2026)', text: 'Both are excellent and both change fast, often monthly. Here\'s how they compare for a live seller right now. Check each company\'s site for today\'s plans and prices.',
+      table: { head: ['', 'ChatGPT (OpenAI)', 'Claude (Anthropic)'], rows: [
+        ['Free plan', 'Yes', 'Yes'],
+        ['Main paid plan', 'About $20 a month', 'About $20 a month'],
+        ['Writing voice', 'Strong, can lean "salesy"; ask it to tone down', 'Known for natural, warm writing that sounds like a person'],
+        ['Images', 'Makes images and edits photos directly in the chat', 'Creates designs through tools like Canva, plus documents and interactive pages'],
+        ['Canva', 'Connects to Canva', 'Connects to Canva; Canva also powers design inside Claude'],
+        ['Long documents', 'Good', 'Very strong at reading and working with long files'],
+        ['Voice chat on your phone', 'Yes', 'Yes'],
+      ] },
+      tip: 'Others worth knowing: Google Gemini (great if you live in Gmail and Google Docs) and Meta AI (built into Facebook, Instagram and Messenger).' },
+    { kind: 'learn', title: 'Which should you use?', text: 'There\'s no single winner. Many sellers use one for writing and one for images. Try both free for a week on the same tasks and keep what fits your style.',
+      table: { head: ['Your main need', 'A good starting pick'], rows: [
+        ['Captions, scripts and emails that sound like you', 'Claude'],
+        ['Quick product mockup images in the chat', 'ChatGPT'],
+        ['On-brand posters and social graphics', 'Either, connected to Canva'],
+        ['Reading a long vendor contract or tax form', 'Claude'],
+        ['Already all-in on Google tools', 'Gemini'],
+      ] } },
+    { kind: 'scenario', title: 'Picking for your shop', situation: 'Monique mostly needs captions, live scripts and vendor emails that sound warm, not robotic. She already uses Canva for posters.',
+      options: [
+        { text: 'Pay for every AI app at once', feedback: 'That\'s $60+ a month for overlap. Test first.' },
+        { text: 'Start with Claude for writing, connect it to Canva, and try ChatGPT free for images if she needs them', best: true, feedback: 'Matches the tool to the job, and keeps costs down until she knows what she\'ll really use.' },
+        { text: 'Skip AI, it\'s a fad', feedback: 'These tools save real hours on writing and planning. Used carefully, they\'re a big help.' },
+      ] },
+
+    { chapter: 'Prompts that work', kind: 'learn', title: 'Give it a brief, not a word', text: 'The more context you give, the better the result. A good prompt has five parts.',
+      table: { head: ['Part', 'Example'], rows: [
+        ['Who you are', 'I run Dazzle Finds, a live boutique for women 35 to 65 who love church-to-brunch style'],
+        ['The task', 'Write a 3-line caption for a live poster'],
+        ['Details', 'Theme "Emerald City," Thursday 7 PM, green and gold pieces, prices $10 to $45'],
+        ['Voice', 'Warm, fun, a little sassy, no slang overload, short sentences'],
+        ['Format', 'Give me 3 options, under 40 words each, with one emoji max'],
+      ] } },
+    { kind: 'script', title: 'Prompts to steal', text: 'Copy these, fill in the brackets.', lines: [
+      'CAPTIONS: "Write 5 hooks for a Reel showing [piece]. My buyers are [who]. Under 10 words each."',
+      'LIVE SCRIPT: "Write a 30-second pitch for [piece], retail about $[x], my price $[y], Live number [####]. Warm and upbeat."',
+      'DESCRIPTION: "Turn my notes into a 2-sentence product description: [notes]. Mention flaws honestly."',
+      'VENDOR EMAIL: "Draft a polite email asking [vendor] for a lower minimum on my first order. Mention I have a sales tax license."',
+      'PLANNING: "Give me 8 live themes for [month] for a boutique selling [categories]. One sentence each."',
+      'FIX IT: "Make this shorter and warmer, keep my words where you can: [paste]."',
+    ] },
+    { kind: 'order', title: 'Build the prompt', prompt: 'Put the parts of a strong prompt in order.', steps: ['Who you are and who you sell to', 'The exact task', 'The details (theme, date, prices)', 'The voice you want', 'The format of the answer'] },
+
+    { chapter: 'Use it safely', kind: 'learn', title: 'Privacy and honesty', text: 'A few rules keep you and your buyers safe.',
+      points: ['Never paste customer names, addresses or phone numbers into an AI chat', 'Check your AI app\'s data settings (some let you turn off using your chats for training)', 'Use your own real product photos for listings; AI images can mislead buyers about what they\'ll get', 'Don\'t ask AI to copy a brand\'s logo, photos or exact words', 'Fact-check prices, laws, taxes and brand details every time', 'If a brand paid you for a post, the FTC disclosure rules still apply, whoever wrote it'] },
+    { kind: 'reflect', title: 'Your first three tasks', prompt: 'Which three weekly tasks will you hand to an AI assistant first? Write the prompt for one of them.', placeholder: 'Tasks… My prompt…', example: 'Captions, vendor emails, live themes. Prompt: "I run a live boutique for women 40+. Give me 8 December live themes with a one-line hook each. Warm and classy."' },
+    { kind: 'learn', title: 'Case study: a week with AI', text: 'Here\'s how one seller used an assistant for one week and what it saved.',
+      table: { head: ['Task', 'Before', 'With AI'], rows: [
+        ['8 captions', '80 minutes', '20 minutes (then edited)'],
+        ['Live themes for the month', '45 minutes', '10 minutes'],
+        ['Vendor email for lower minimums', '30 minutes', '5 minutes'],
+        ['Product descriptions for 30 pieces', '90 minutes', '30 minutes'],
+        ['Total', '4 hours 5 minutes', '1 hour 5 minutes'],
+      ] },
+      example: 'Three hours saved, and she still reviewed every word before posting.' },
+    { kind: 'learn', title: 'Make it sound like you', text: "AI writing gets generic fast. The fix is to show it your voice. Paste three of your best captions and say \"write like this.\" Then edit what comes back out loud: if you wouldn't say it on live, change it.",
+      points: ["Keep a short 'about me' paragraph: who you sell to, your tone, words you love and words you never use", "Paste 2 or 3 real captions as examples", "Ask for 3 options, not 1, then mix the best lines", "Read it out loud before you post", "Cut anything that sounds like an ad for a bank"],
+      example: "About me: I'm LaVerne's kind of seller. Warm, a little funny, church-to-brunch style. I say 'baby' and 'y'all.' I never say 'elevate your wardrobe.'" },
+    { kind: 'scenario', title: 'The made-up fact', situation: "You ask an AI to write a post about why real leather lasts. It says a famous designer 'confirmed it in 2019.' You can't find that quote anywhere.",
+      options: [
+        { text: "Post it, the AI must know", feedback: "AI tools can state things that sound real but aren't. A fake quote can embarrass you or worse." },
+        { text: "Cut the quote, keep what you can check, and ask the AI for its source next time", best: true, feedback: "Right. Treat AI like a fast helper who sometimes guesses. You're the editor, and facts get checked." },
+        { text: "Stop using AI for anything", feedback: "That throws out hours of saved time. Just keep the facts-check habit." },
+      ] },
+    { kind: 'quiz', q: "Which task is the safest to hand to an AI assistant?", options: ["Pasting in your buyers' home addresses to sort them", "Drafting 10 caption ideas for Thursday's live", "Writing your tax return for you to file without reading"], answer: 1, why: "Ideas and drafts are what AI is best at. Keep private customer data out, and never file anything you haven't checked yourself." },
+    { kind: 'reflect', title: 'Your voice paragraph', prompt: "Write the 'about me' paragraph you'll paste into every AI chat: who you sell to, how you talk, and words you never use.", placeholder: "I sell to… I sound… I never say…", example: "I sell vintage handbags and jewelry to women 40 and up who love a deal and a story. I'm warm and playful. I never say 'slay' or 'elevate.'" },
+    { kind: 'checklist', title: 'AI starter plan', prompt: 'Tick what you\'ll try this week.', items: ['Try Claude and ChatGPT free on the same 3 tasks', 'Save my "who I am" paragraph to paste into prompts', 'Save my 5 favorite prompts as a note', 'Connect my AI assistant to Canva if I use it', 'Turn on the privacy settings I\'m comfortable with', 'Fact-check every price and rule before posting'] },
+  ],
+}
+export default lesson

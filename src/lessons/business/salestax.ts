@@ -1,0 +1,92 @@
+import type { Lesson } from '../types'
+import { NOT_ADVICE } from '../resources'
+
+const lesson: Lesson = {
+  id: 'salestax', kind: 'course', school: 'Make it official', title: 'Sales tax for live sellers: Pennsylvania and every state', track: 'Business', icon: 'dollar',
+  why: 'Sales tax isn\'t your money; you collect it for the state. Getting it right keeps you out of trouble and lets you buy wholesale tax-free.',
+  outcomes: [
+    'Explain who owes sales tax, and who collects it',
+    'Register for a Pennsylvania sales tax license on myPATH',
+    'Know what\'s taxable in PA: clothing usually isn\'t; handbags and jewelry are',
+    'Find your own state\'s version of the sales tax ID',
+    'Use a resale certificate to buy stock without paying sales tax',
+    'Collect, track and file without stress',
+  ],
+  route: { to: '/lessons', label: 'Open the Resource desk' },
+  sources: [
+    { org: 'PA Department of Revenue', title: 'Register my business for taxes (myPATH)', url: 'https://www.pa.gov/en/services/revenue/register-my-business-for-taxes.html' },
+    { org: 'PA Department of Revenue', title: 'Sales, use and hotel occupancy tax', url: 'https://www.pa.gov/en/agencies/revenue/resources/tax-types-and-information/sales-use-and-hotel-occupancy-tax.html' },
+    { org: 'PA Code via Cornell LII', title: '61 Pa. Code § 53.1: Clothing', url: 'https://law.cornell.edu/regulations/pennsylvania/61-Pa-Code-SS-53-1' },
+    { org: 'Streamlined Sales Tax Governing Board', title: 'Sales tax registration system', url: 'https://www.streamlinedsalestax.org/for-businesses/sales-tax-registration-sstrs' },
+  ],
+  covers: ['src/lessons/resources.ts'], updated: '2026-11-23',
+  slides: [
+    { chapter: 'How sales tax works', kind: 'learn', title: 'You\'re the collector', nova: 'Sales tax sounds scary, but it\'s really just: collect it, keep it safe, send it in. Let\'s make it simple.',
+      text: 'The buyer pays sales tax. You collect it at checkout, hold it, and send it to the state on a schedule. It was never your money, so don\'t spend it.',
+      points: ['Your state decides what\'s taxable and the rate', 'Local areas can add on (in PA: +1% Allegheny County, +2% Philadelphia)', 'You file returns on a schedule the state sets, even when you had no taxable sales', 'Keep tax money in a separate savings account until you pay it'],
+      tip: NOT_ADVICE },
+    { kind: 'learn', title: 'Who collects: you or the platform?', text: 'Most states have "marketplace facilitator" laws: when a marketplace runs the checkout, it usually collects and sends the tax for you. When you invoice buyers yourself, you collect.',
+      table: { head: ['How the buyer pays', 'Who usually collects sales tax'], rows: [
+        ['TikTok Shop checkout', 'The marketplace, in most states'],
+        ['Your own invoice (Square, PayPal invoice, your site)', 'You'],
+        ['Facebook live with your own invoices', 'You'],
+        ['Shopify store', 'You (Shopify can calculate it, but you file)'],
+      ] },
+      tip: 'Check each platform\'s seller help page for how it handles tax in your state.' },
+    { kind: 'quiz', q: 'You sell on a Facebook live and send buyers a Square invoice. Who collects the sales tax?', options: ['Facebook', 'Square sends it to the state for you', 'You do: add it to the invoice and file it'], answer: 2, why: 'Square can add tax to the invoice, but it\'s your sale and your responsibility to file and pay it to the state.' },
+
+    { chapter: 'Pennsylvania', kind: 'learn', title: 'Register on myPATH', text: 'Pennsylvania sellers register for a sales tax license through the Department of Revenue\'s online system, myPATH. New businesses can use "Pennsylvania Online Business Tax Registration" without logging in; existing myPATH users log in and use "Register New Business Tax Accounts."',
+      points: ['Have ready: your legal name or LLC name, EIN (or SSN for a sole proprietor), address, start date, and what you sell', 'Choose Sales, Use and Hotel Occupancy Tax', 'The state assigns your filing schedule', 'Display your license and keep a copy for vendors'],
+      tip: 'Use the official pa.gov or mypath.pa.gov site. Ignore companies that charge to "file it for you" unless you really want that help.' },
+    { kind: 'learn', title: 'What\'s taxable in PA', text: 'Here\'s the big one for boutique sellers: in Pennsylvania, everyday clothing and shoes are generally NOT taxed. But many accessories ARE. This comes straight from the PA tax regulation on clothing (61 Pa. Code § 53.1).',
+      table: { head: ['Generally NOT taxed in PA', 'Taxed in PA'], rows: [
+        ['Tops, pants, dresses, everyday coats', 'Handbags, purses, pocketbooks'],
+        ['Everyday shoes', 'Wallets, billfolds, umbrellas'],
+        ['Socks, underwear, everyday outerwear', 'Jewelry, pins, cufflinks'],
+        ['', 'Hair clips, barrettes, wigs'],
+        ['', 'Formal wear: bridal, tuxedos, formal gloves, tiaras'],
+        ['', 'Fur items, costumes, sport-specific gear'],
+      ] } },
+    { kind: 'tap', title: 'Taxable or not?', prompt: 'A Pennsylvania buyer gets a crossbody bag. Is it taxable in PA?', screen: { title: 'PA sales tax', buttons: ['Taxable', 'Not taxable'] }, answer: 'Taxable', hint: 'Handbags and purses are listed as taxable accessories in PA, even though everyday clothing isn\'t.' },
+    { kind: 'tap', title: 'And this one?', prompt: 'A Pennsylvania buyer gets an everyday sweater dress. Taxable in PA?', screen: { title: 'PA sales tax', buttons: ['Taxable', 'Not taxable'] }, answer: 'Not taxable', hint: 'Everyday clothing is generally exempt in PA. Formal and bridal wear are the exceptions.' },
+    { kind: 'number', title: 'Philadelphia order', q: 'A buyer in Philadelphia gets a $40 handbag. Philadelphia\'s total rate is 8% (6% state + 2% local). How much sales tax?', prefix: '$', answer: 3.2, tolerance: 0.01, hint: '$40 × 0.08.', why: '$40 × 8% = $3.20. If the same buyer also got a $25 everyday top, that part is generally not taxed in PA.' },
+
+    { chapter: 'Other states', kind: 'learn', title: 'Same idea, different names', text: 'Every state with a sales tax has its own name for the registration. The Resource desk on the University page lists many of them. A few examples:',
+      table: { head: ['State', 'It\'s called', 'From'], rows: [
+        ['New Jersey', 'Certificate of Authority', 'NJ Division of Revenue'],
+        ['New York', 'Certificate of Authority', 'NYS Tax Department'],
+        ['Ohio', 'Vendor\'s license', 'Ohio Dept. of Taxation'],
+        ['California', 'Seller\'s permit', 'CDTFA'],
+        ['Texas', 'Sales and use tax permit', 'Texas Comptroller'],
+        ['Delaware, Montana, New Hampshire, Oregon', 'No statewide sales tax', '(Alaska: local only)'],
+      ] },
+      tip: 'Not listed? Search "[your state] department of revenue sales tax registration." Many states also accept one registration through the Streamlined Sales Tax Registration System.' },
+    { kind: 'learn', title: 'Selling into other states', text: 'Since a 2018 Supreme Court decision (South Dakota v. Wayfair), states can require out-of-state sellers to collect sales tax once they sell enough into that state. This is called economic nexus. Many states set the line at $100,000 of sales into the state in a year (some also count transactions).',
+      example: 'A PA seller who ships $8,000 a year to New Jersey buyers is usually well under New Jersey\'s threshold. A seller who ships $150,000 a year to Ohio should check Ohio\'s rules.',
+      tip: 'Most small live sellers only need their home state. Check again as you grow, and when sales into one state get big.' },
+
+    { chapter: 'Buy tax-free, file on time', kind: 'learn', title: 'Resale certificates', text: 'When you buy stock to resell, you generally don\'t pay sales tax on it. Your buyer pays tax when you sell it. You give your vendor a resale or exemption certificate with your sales tax number. In Pennsylvania, that\'s the exemption certificate form REV-1220.',
+      points: ['Only for items you\'ll resell, not supplies you use up (tape, mailers, your ring light)', 'Vendors keep your certificate on file', 'Using it for personal purchases is not allowed'] },
+    { kind: 'scenario', title: 'The wholesale order', situation: 'You\'re buying $600 of handbags from a wholesale vendor to resell, plus $80 of mailers and tape for shipping.',
+      options: [
+        { text: 'Use your resale certificate for the whole $680', feedback: 'Mailers and tape are supplies you use, not items you resell. They don\'t qualify.' },
+        { text: 'Use the resale certificate for the $600 of handbags; pay tax on the $80 of supplies', best: true, feedback: 'Exactly. Stock for resale goes tax-free with the certificate; supplies are taxable to you.' },
+        { text: 'Pay sales tax on everything, then charge buyers tax again', feedback: 'That taxes the same handbag twice. The resale certificate exists to prevent that.' },
+      ] },
+    { kind: 'learn', title: 'Filing your return', text: 'Once you\'re registered, the state assigns a filing schedule based on how much tax you collect, and it can change over time. In Pennsylvania you file through myPATH, and you must file even for periods with no taxable sales.',
+      points: ['Know your schedule (monthly, quarterly or yearly) and put every due date on your calendar', 'Pull taxable sales for the period from your records', 'File and pay on time to avoid penalties and interest', 'Keep copies of every return'] },
+    { kind: 'learn', title: 'Set up your categories', text: 'Because PA taxes handbags and jewelry but not most clothing, it helps to track sales by category. Reports in this app shows sales by category, which makes it easy to separate taxable and non-taxable sales.',
+      table: { head: ['Category', 'PA taxable?'], rows: [
+        ['Tops, dresses, pants', 'Generally no'],
+        ['Everyday shoes', 'Generally no'],
+        ['Handbags and wallets', 'Yes'],
+        ['Jewelry', 'Yes'],
+        ['Hair accessories', 'Yes'],
+        ['Bridal and formal wear', 'Yes'],
+      ] } },
+    { kind: 'number', title: 'Collected tax', q: 'This month you sold $1,800 of taxable accessories to buyers outside Allegheny County and Philadelphia (6% rate). How much tax should you have collected?', prefix: '$', answer: 108, hint: '$1,800 × 0.06.', why: '$1,800 × 6% = $108. That money belongs to the state. Move it to your tax savings right away.' },
+    { kind: 'reflect', title: 'Your setup', prompt: 'Which of your categories are taxable in your state, and how will you add tax to invoices?', placeholder: 'Taxable for me… I\'ll add tax by…', example: 'Taxable: handbags, jewelry, hair clips. Not: tops and dresses. I\'ll set tax on those items in Square.' },
+    { kind: 'checklist', title: 'Get sales-tax ready', prompt: 'Tick what you\'ll do.', items: ['Register for my state\'s sales tax ID (PA: myPATH)', 'Mark which of my categories are taxable in my state', 'Set up tax on my invoices or checkout', 'Open a separate savings account for collected tax', 'Put my filing due dates on my calendar', 'Send my resale certificate to my vendors'] },
+  ],
+}
+export default lesson

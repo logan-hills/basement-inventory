@@ -2,7 +2,7 @@ import type { Lesson } from '../types'
 import { PAY_TRENDS as T } from './trends'
 
 const lesson: Lesson = {
-  id: 'creatorpay', kind: 'course', school: 'Platforms and pay', title: 'Who pays creators right now', track: 'Business', icon: 'dollar',
+  id: 'creatorpay', kind: 'course', school: 'Platforms and trends', title: 'Who pays creators right now', track: 'Business', icon: 'dollar',
   why: 'Your videos can sell your lives AND pay you for views. Put your energy where the money is.',
   outcomes: [
     `Know today's top pick (${T.topPick}) and why`,
