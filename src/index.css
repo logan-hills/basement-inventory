@@ -1169,7 +1169,7 @@ button.mock-btn:hover { border-color: var(--gold); }
 .welcome-show { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: clamp(28px, 5vw, 64px); background: radial-gradient(90% 70% at 20% 10%, #4A1A2E, transparent 60%), radial-gradient(80% 60% at 90% 90%, #3A1C5A, transparent 60%), #120A08; }
 .welcome-glow { position: absolute; width: 60vmax; height: 60vmax; left: 30%; top: 20%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 180, 90, .28), transparent 60%); filter: blur(20px); animation: glow-drift 14s ease-in-out infinite alternate; pointer-events: none; }
 @keyframes glow-drift { to { transform: translate(-18%, 12%) scale(1.15); } }
-.welcome-orbit { position: absolute; right: -24%; top: 50%; width: min(40vw, 520px); opacity: .9; aspect-ratio: 1; transform: translateY(-50%); animation: orbit 60s linear infinite; pointer-events: none; }
+.welcome-orbit { position: absolute; right: calc(min(40vw, 520px) / -2); top: 50%; width: min(40vw, 520px); opacity: .9; aspect-ratio: 1; transform: translateY(-50%); animation: orbit 60s linear infinite; pointer-events: none; }
 .orbit-gem { --a: calc(var(--i) * 60deg); position: absolute; left: 50%; top: 50%; width: 112px; height: 132px; margin: -66px 0 0 -56px; display: grid; place-items: center; padding: 14px; border-radius: 4px 22px 4px 22px; color: #FFD36E;
   background: radial-gradient(120% 90% at 80% 10%, rgba(255, 233, 184, .16), transparent 55%), linear-gradient(160deg, var(--tone), var(--tone2)); box-shadow: inset 0 0 0 1px rgba(255, 211, 110, .35), 0 20px 40px rgba(0, 0, 0, .45);
   transform: rotate(var(--a)) translate(min(15vw, 200px)) rotate(calc(-1 * var(--a))); }
@@ -1181,10 +1181,12 @@ button.mock-btn:hover { border-color: var(--gold); }
 .welcome-show::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18, 10, 8, .85) 0%, rgba(18, 10, 8, .4) 45%, transparent 70%); pointer-events: none; }
 .welcome-copy, .founder-note { z-index: 2; }
 .welcome-title { font-family: Fraunces, Georgia, serif; font-size: clamp(3rem, 8vw, 6.4rem); line-height: .92; letter-spacing: -2px; margin: 10px 0 0; color: #FFF3DA; }
-.welcome-title em { display: block; font-style: italic; background: linear-gradient(100deg, #FFD36E, #FF7A59 40%, #E85D8E 70%, #FFD36E); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 7s ease-in-out infinite; }
+.welcome-title em { display: block; font-family: 'Bodoni Moda', Georgia, serif; font-weight: 700; letter-spacing: -1px; padding-right: .08em; font-style: normal; background: linear-gradient(100deg, #FFD36E, #FF7A59 40%, #E85D8E 70%, #FFD36E); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 7s ease-in-out infinite; }
 .welcome-script { display: block; font-family: Caveat, cursive; font-size: clamp(1.8rem, 3.6vw, 2.8rem); color: #FFB49E; margin-top: 4px; }
 .welcome-line { margin-top: 24px; font-size: 1.15rem; color: rgba(251, 239, 220, .85); animation: rise .6s var(--ease); min-height: 1.6em; }
-.founder-note { position: relative; z-index: 1; margin: 40px 0 0; max-width: 460px; padding: 20px 22px; border-radius: 6px 24px 6px 24px; background: rgba(20, 12, 10, .65); backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1px rgba(255, 211, 110, .35); display: grid; gap: 10px; }
+.founder-note { position: relative; z-index: 1; margin: 40px 0 0; max-width: 600px; padding: 20px 22px; border-radius: 6px 24px 6px 24px; background: rgba(20, 12, 10, .8); backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1px rgba(255, 211, 110, .35); display: grid; grid-template-columns: minmax(160px, 240px) minmax(0, 1fr); align-items: center; gap: 10px 20px; }
+.founder-note .founder-art { grid-row: span 2; }
+@media (max-width: 520px) { .founder-note { grid-template-columns: minmax(0, 1fr); } .founder-note .founder-art { grid-row: auto; max-width: 260px; justify-self: center; } }
 .founder-note p { margin: 0; color: rgba(251, 239, 220, .88); line-height: 1.5; }
 .founder-mark { color: #FFD36E; }
 .founder-note figcaption { display: flex; flex-direction: column; }
@@ -1200,7 +1202,6 @@ button.mock-btn:hover { border-color: var(--gold); }
 @media (max-width: 860px) {
   .welcome { grid-template-columns: minmax(0, 1fr); }
   .welcome-show { min-height: 56vh; padding-bottom: 28px; }
-  .welcome-orbit { display: none; }
   .welcome-copy { margin-top: 2vh; }
   .founder-note { margin-top: 24px; }
 }
@@ -1304,14 +1305,14 @@ button.mock-btn:hover { border-color: var(--gold); }
 .academy-title { font-family: 'Bodoni Moda', Didot, Georgia, serif !important; font-weight: 600; letter-spacing: -1px; }
 .academy-title em { font-style: italic; color: var(--gold); }
 .academy-portrait { position: relative; margin: 0; flex: none; width: min(300px, 38%); }
-.academy-portrait img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; box-shadow: 0 0 0 1px rgba(255, 211, 110, .6), 0 0 0 7px #1A120D, 0 0 0 8px rgba(255, 211, 110, .4), 0 26px 50px rgba(0, 0, 0, .55); transform: rotate(2deg); transition: transform .6s var(--ease); }
+.academy-portrait img { display: block; width: 100%; height: auto; object-fit: contain; border-radius: 4px; box-shadow: 0 0 0 1px rgba(255, 211, 110, .6), 0 0 0 7px #1A120D, 0 0 0 8px rgba(255, 211, 110, .4), 0 26px 50px rgba(0, 0, 0, .55); transform: rotate(2deg); transition: transform .6s var(--ease); }
 .academy-portrait:hover img { transform: rotate(0deg) scale(1.02); }
 .academy-portrait figcaption { margin-top: 18px; text-align: center; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.05rem; }
 .academy-portrait figcaption span { display: block; font-family: Caveat, cursive; font-size: 1.3rem; color: var(--coral); }
 .portrait-ring { position: absolute; left: -38px; bottom: 34px; transform: scale(.72); transform-origin: left bottom; border-radius: 50%; background: #140E0B; box-shadow: 0 10px 24px rgba(0, 0, 0, .5); }
 @media (max-width: 640px) { .academy-portrait { width: 100%; max-width: 320px; align-self: center; } .portrait-ring { left: -10px; } }
 .lock-art { width: min(320px, 100%); align-self: center; border-radius: 4px; box-shadow: 0 0 0 1px rgba(255, 211, 110, .6), 0 0 0 7px #1A120D, 0 0 0 8px rgba(255, 211, 110, .4), 0 20px 40px rgba(0, 0, 0, .5); }
-.founder-art { width: 100%; max-height: 220px; object-fit: cover; object-position: 50% 30%; border-radius: 3px 18px 3px 18px; box-shadow: 0 0 0 1px rgba(255, 211, 110, .5); }
+.founder-art { display: block; width: 100%; height: auto; object-fit: contain; border-radius: 3px 18px 3px 18px; box-shadow: 0 0 0 1px rgba(255, 211, 110, .5); }
 
 .lesson-hero > .grow { min-width: 0; }
 .lesson-hero .btn { white-space: normal; text-align: left; }
@@ -1360,3 +1361,6 @@ input, select, textarea { min-height: 48px; font-size: 17px; }
 
 .pick-hero.no-photo { grid-template-columns: minmax(0, 1fr); }
 @media (max-width: 640px) { .pick-where small { letter-spacing: 0; font-size: .72rem; } .pick-where b { font-size: 2rem; } }
+
+/* Sign-in: the gem orbit only shows where there's room beside the words */
+@media (max-width: 1400px) { .welcome-orbit { display: none; } }
