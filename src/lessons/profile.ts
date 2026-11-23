@@ -78,7 +78,7 @@ const lesson: Lesson = {
         'Tap "Forgot password?" next to the Password box',
         'Type the email on your account (or tap "Text me" and type your mobile number, once texting is on)',
         'Tap "Send my code", then open your email or texts. Peek in spam if it\'s not there in a minute.',
-        'Type the code and tap Continue',
+        'Type the code and tap Continue (or just tap the reset link in the email)',
         'Choose a new password, type it again, and tap "Save and sign in"',
       ],
       screen: { title: 'Sign in', rows: ['Email', 'Password'], buttons: ['Forgot password?', 'Sign in', 'Create an account'], highlight: 'Forgot password?' },
