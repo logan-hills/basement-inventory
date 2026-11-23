@@ -129,22 +129,13 @@ export default function Home() {
 
   return (
     <div className="stack wide-gap">
-      <div className="page-head">
-        <div>
+      <div className="page-head home-head">
+        <div className="stack tight-gap">
           <span className="script">{greeting()}, Queen</span>
           <h1>{headline()}</h1>
+          {s && s.livesRecent > 0 && <span className="streak self-start"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2s5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 1-3.5S9 11 11 11c0-4 1-9 1-9z" /></svg> {s.livesRecent} live{s.livesRecent === 1 ? '' : 's'} in the last 4 weeks</span>}
         </div>
-        <div className="page-actions">
-          {s && s.livesRecent > 0 && <span className="streak"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2s5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 1-3.5S9 11 11 11c0-4 1-9 1-9z" /></svg> {s.livesRecent} live{s.livesRecent === 1 ? '' : 's'} in the last 4 weeks</span>}
-          <Link to="/intake" className="btn gold"><Icon name="plus" size={18} />Add stock</Link>
-        </div>
-      </div>
-
-      <div className="nova-strip">
-        <NovaSays mood={HOME_TIPS[tip][0]} key={tip} onNovaClick={() => setTip(t => (t + 1) % HOME_TIPS.length)}>
-          {HOME_TIPS[tip][1]}
-        </NovaSays>
-        {hasAcademy(shop?.plan) && <Link to="/lessons" className="btn ghost small nova-strip-link"><Icon name="lessons" size={16} />Dazzle University</Link>}
+        <Link to="/intake" className="btn gold"><Icon name="plus" size={18} />Add stock</Link>
       </div>
 
       <div className="top-grid">
@@ -154,7 +145,7 @@ export default function Home() {
             <span className="gh-hero-title">{next.title}</span>
             <span>{liveWhen(next)}</span>
             <span><b>{(next.items ?? []).reduce((a, i) => a + i.qty, 0)} items</b> ready · <b>{money(projected(next))}</b> if it all sells</span>
-            <div className="row-gap" style={{ marginTop: 8 }}>
+            <div className="hero-actions">
               <Link to={`/lives/${next.id}/plan`} className="btn gold"><Icon name="sparkle" size={18} />Open the plan</Link>
               <Link to={`/live?for=${next.id}`} className="btn glass">Pick items</Link>
             </div>
@@ -164,13 +155,13 @@ export default function Home() {
             <span className="eyebrow"><span className="live-dot" />Your next live</span>
             <span className="gh-hero-title">{next === null ? "Let's get one on the calendar" : '$2 Tuesday'}</span>
             <span>{next === null ? 'Pick a theme from the idea bank and the planner does the rest.' : nextTuesday()}</span>
-            <div className="row-gap" style={{ marginTop: 8 }}>
+            <div className="hero-actions">
               <Link to="/planner" className="btn gold"><Icon name="sparkle" size={18} />Plan a live</Link>
               <Link to="/planner/ideas" className="btn glass">Theme ideas</Link>
             </div>
           </div>
         )}
-        <section className="card stack">
+        <section className="card stack home-check">
           <div className="row-between"><h2>Live checklist</h2>{next && <Link to={`/lives/${next.id}/plan#tab=check`} className="link-btn">See all</Link>}</div>
           {next ? <MiniChecklist live={next} onChange={plan => setNext({ ...next, plan })} /> : <p className="muted small">Plan a live to get your before, during and after checklist.</p>}
         </section>
@@ -178,7 +169,7 @@ export default function Home() {
 
       {s && (s.old > 0 || work.pick > 0 || work.ship > 0 || s.noBin > 0) && (
         <section className="stack">
-          <h2 className="section-title">Your to-do list</h2>
+          <div className="section-head"><h2 className="section-title">Your to-do list</h2></div>
           <div className="quick-grid two">
             {work.pick > 0 && <Link to="/orders" className="quick todo"><Icon name="pack" size={22} /><div><b>{work.pick} order{work.pick === 1 ? '' : 's'} to pick</b><span className="muted">Scan items into customer boxes</span></div><Icon name="arrow" size={18} /></Link>}
             {work.ship > 0 && <Link to="/shipping" className="quick todo"><Icon name="truck" size={22} /><div><b>{work.ship} box{work.ship === 1 ? '' : 'es'} to ship</b><span className="muted">Export to Pirate Ship</span></div><Icon name="arrow" size={18} /></Link>}
@@ -189,13 +180,22 @@ export default function Home() {
       )}
 
       <section className="stack">
-        <div className="row-between"><h2 className="section-title">Your money</h2><Link to="/reports" className="link-btn">See all your numbers →</Link></div>
+        <div className="section-head"><h2 className="section-title">Your money</h2><Link to="/reports" className="link-btn">See all your numbers →</Link></div>
         <div className="kpi-grid three">
           <div className="kpi gold-tile"><span className="kpi-ico"><Icon name="dollar" /></span><span>Sold this month</span><b>{s ? <CountUp value={s.month} format={whole} /> : '—'}</b>
             <div className="goal-bar"><span style={{ width: `${s ? Math.min(100, (s.month / Math.max(1, settings.monthlyGoal)) * 100) : 0}%` }} /></div>
             <small>{s ? (s.month >= settings.monthlyGoal ? `Goal smashed! ${whole(settings.monthlyGoal)} goal` : `${whole(settings.monthlyGoal - s.month)} to your ${whole(settings.monthlyGoal)} goal`) : ''}</small></div>
           <div className="kpi green-tile"><span className="kpi-ico"><Icon name="trend" /></span><span>Profit sitting on the shelf</span><b>{s ? <CountUp value={s.retail - s.cost} format={whole} /> : '—'}</b><small>{s ? `${s.units} pieces ready to sell` : ''}</small></div>
           <div className="kpi rose-tile"><span className="kpi-ico"><Icon name="tag" /></span><span>Retail value in stock</span><b>{s ? <CountUp value={s.retail} format={whole} /> : '—'}</b><small>{s && s.lastMonth > 0 ? `Last month you sold ${whole(s.lastMonth)}` : 'Every piece is a sale waiting'}</small></div>
+        </div>
+      </section>
+
+      <section className="stack">
+        <div className="section-head"><h2 className="section-title">A tip from Nova</h2>{hasAcademy(shop?.plan) && <Link to="/lessons" className="link-btn"><Icon name="lessons" size={16} /> Dazzle University →</Link>}</div>
+        <div className="nova-strip">
+          <NovaSays mood={HOME_TIPS[tip][0]} key={tip} onNovaClick={() => setTip(t => (t + 1) % HOME_TIPS.length)}>
+            {HOME_TIPS[tip][1]}
+          </NovaSays>
         </div>
       </section>
     </div>
