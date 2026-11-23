@@ -13,6 +13,14 @@
 // SUPABASE_SERVICE_ROLE_KEY.
 import { createClient } from 'npm:@supabase/supabase-js@2'
 
+// Works with both the older keys (anon / service_role) and the newer ones (publishable / secret).
+function envKey(legacy: string, modern: string) {
+  const v = Deno.env.get(legacy)
+  if (v) return v
+  try { const o = JSON.parse(Deno.env.get(modern) ?? '{}'); return (o.default ?? Object.values(o)[0]) as string } catch { return '' }
+}
+const SERVICE_KEY = envKey('SUPABASE_SERVICE_ROLE_KEY', 'SUPABASE_SECRET_KEYS')
+
 const GRAPH = 'https://graph.facebook.com/v21.0'
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type' }
 
@@ -31,7 +39,7 @@ async function graph(path: string, params: Record<string, string>, method = 'POS
 
 Deno.serve(async req => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors })
-  const db = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!)
+  const db = createClient(Deno.env.get('SUPABASE_URL')!, SERVICE_KEY)
   const now = Date.now()
   const log: string[] = []
 

@@ -7,6 +7,15 @@
 // Secrets (Supabase -> Edge Functions -> Secrets): FB_APP_ID, FB_APP_SECRET
 import { createClient } from 'npm:@supabase/supabase-js@2'
 
+// Works with both the older keys (anon / service_role) and the newer ones (publishable / secret).
+function envKey(legacy: string, modern: string) {
+  const v = Deno.env.get(legacy)
+  if (v) return v
+  try { const o = JSON.parse(Deno.env.get(modern) ?? '{}'); return (o.default ?? Object.values(o)[0]) as string } catch { return '' }
+}
+const ANON_KEY = envKey('SUPABASE_ANON_KEY', 'SUPABASE_PUBLISHABLE_KEYS')
+const SERVICE_KEY = envKey('SUPABASE_SERVICE_ROLE_KEY', 'SUPABASE_SECRET_KEYS')
+
 const GRAPH = 'https://graph.facebook.com/v21.0'
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type' }
 const reply = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { ...cors, 'Content-Type': 'application/json' } })
@@ -22,8 +31,8 @@ Deno.serve(async req => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors })
   try {
     const url = Deno.env.get('SUPABASE_URL')!
-    const asUser = createClient(url, Deno.env.get('SUPABASE_ANON_KEY')!, { global: { headers: { Authorization: req.headers.get('Authorization') ?? '' } } })
-    const admin = createClient(url, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!)
+    const asUser = createClient(url, ANON_KEY, { global: { headers: { Authorization: req.headers.get('Authorization') ?? '' } } })
+    const admin = createClient(url, SERVICE_KEY)
     const { data: u } = await asUser.auth.getUser()
     if (!u.user) return reply({ error: 'Please sign in first' }, 401)
 
