@@ -326,6 +326,13 @@ revoke update on public.stages from authenticated;
 grant update (name, warn_min, guidelines, late_cancel_min) on public.stages to authenticated;
 grant execute on function public.join_open_stages(), public.join_stage(text), public.cancel_slot(uuid), public.set_stage_member(uuid, uuid, text, text, boolean) to authenticated;
 
+-- The server timer and Facebook functions run as service_role. Newer Supabase projects don't grant
+-- new tables to it automatically, so grant them here.
+grant usage on schema public to service_role;
+grant all on public.profiles, public.stages, public.stage_members, public.stage_page_tokens, public.live_slots,
+  public.live_slot_keys, public.guideline_acceptances to service_role;
+grant select on public.public_profiles to service_role;
+
 -- Live updates in the app when slots change.
 do $$ begin
   alter publication supabase_realtime add table public.live_slots;
