@@ -2602,3 +2602,67 @@ button.uni-step:hover, button.uni-step:focus-visible { transform: translateY(-2p
 .uni-live-time span { font-size: .82rem; font-weight: 700; white-space: nowrap; }
 .uni-live-more { align-self: flex-start; margin-top: 8px; padding: 6px 0; border: 0; background: none; font: inherit; font-size: 1rem; font-weight: 700; color: #A3005A; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 640px) { .uni-live-wrap { padding-left: 0; } .uni-live { padding: 12px; } .uni-live-times { width: 100%; } .uni-live-time { flex: 1; min-width: 0; padding: 8px 6px; } }
+
+/* ===== ROOMY: more breathing room and no tiny text, for every screen ===== */
+body { line-height: 1.5; }
+.stack { gap: 16px; }
+.wide-gap { gap: 32px; }
+.card { padding: 20px; }
+@media (min-width: 900px) { .content { padding-bottom: 80px; } }
+.page-head { gap: 16px 20px; }
+.page-head h1 { font-size: 2.15rem; line-height: 1.15; }
+.lede, .page-head .muted { font-size: 1.02rem; }
+
+/* Small print stays readable */
+.small, .muted.small, small { font-size: .95rem; }
+.eyebrow, .subnav-area { font-size: .8rem; }
+.data-table th { font-size: .78rem; }
+.data-table td { font-size: 1rem; }
+.chip-mini { font-size: .82rem; }
+.quick span { font-size: .95rem; }
+.kpi > span:not(.kpi-ico) { font-size: .95rem; }
+.kpi small { font-size: .92rem; }
+.kpi b { font-size: 2.1rem; }
+.kpi { padding: 20px; gap: 6px; }
+.dock-link { font-size: .78rem; width: 74px; padding: 10px 0 9px; }
+.tabbar a { font-size: .8rem; }
+.action-text small, .hub-row .action-text small { font-size: .95rem; }
+.label-text, label { font-size: .95rem; }
+.link-btn { font-size: 1rem; }
+
+/* Section headers: title on the left, a quiet link on the right; the link drops under on phones */
+.section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6px 16px; flex-wrap: wrap; }
+.section-title { font-size: 1.6rem; }
+
+/* Lists of tappable rows: taller, roomier */
+.quick { min-height: 84px; padding: 18px 20px; gap: 14px; }
+.quick b { font-size: 1.08rem; }
+.quick-grid, .quick-grid.two { gap: 14px; }
+.hub-list { gap: 14px; }
+
+/* Home */
+.home-head h1 { font-size: 2.5rem; }
+.top-grid { gap: 20px; }
+.gh-hero { padding: 30px; gap: 10px; font-size: 1.05rem; }
+.gh-hero-title { font-size: 2.4rem; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: auto; padding-top: 14px; }
+.home-check .mini-check button { font-size: 1.02rem; padding: 11px 6px; }
+.home-check .plan-progress { height: 10px; }
+.kpi-grid { gap: 16px; }
+.streak { font-size: .95rem; padding: 8px 16px; }
+
+@media (max-width: 899px) {
+  .content { padding-left: 18px; padding-right: 18px; }
+  .wide-gap { gap: 26px; }
+  .card { padding: 18px; }
+  .page-head h1 { font-size: 1.9rem; }
+  .home-head h1 { font-size: 2.1rem; }
+  .home-head > .btn { width: 100%; }
+  .gh-hero { padding: 24px 20px; }
+  .gh-hero-title { font-size: 1.95rem; }
+  .hero-actions .btn { flex: 1 1 140px; }
+  .section-title { font-size: 1.45rem; }
+  .kpi-grid.three { gap: 12px; }
+  .data-table td { font-size: .95rem; }
+}
+@media (max-width: 560px) { .shop-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .shop-grid .btn { padding: 0 10px; font-size: .9rem; white-space: normal; line-height: 1.2; } }

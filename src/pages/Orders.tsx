@@ -86,7 +86,7 @@ export default function Orders() {
                     <tr key={o.id} onClick={() => navigate(`/order/${o.code}`)}>
                       <td onClick={e => e.stopPropagation()}><input type="checkbox" aria-label={`Select ${o.code}`} checked={sel.has(o.id)} onChange={() => toggle(o.id)} /></td>
                       <td className="mono gold">{o.code}</td>
-                      <td>{o.customer?.name ?? '—'}{o.customer?.handle && o.customer.handle !== o.customer.name ? <span className="muted"> · {o.customer.handle}</span> : null}</td>
+                      <td>{o.customer?.name ?? '—'}{o.customer?.handle && o.customer.handle !== o.customer.name ? <span className="muted hide-sm"> · {o.customer.handle}</span> : null}</td>
                       <td>{o.status === 'open' || o.status === 'picking' ? `${picked}/${units}` : units}{left === 0 && units > 0 && o.status !== 'shipped' ? ' ✓' : ''}</td>
                       <td className="hide-sm">{money(o.total)}</td>
                       <td className="hide-sm muted">{o.live_date ? new Date(o.live_date + 'T12:00').toLocaleDateString() : ''}</td>
