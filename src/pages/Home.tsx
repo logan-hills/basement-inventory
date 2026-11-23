@@ -6,7 +6,7 @@ import { money } from '../lib/data'
 import { loadLives, liveWhen, projected, type Live } from '../lib/lives'
 import Icon from '../components/Icon'
 import { BarList, ColumnChart, CountUp, Ring, SegmentBar, type Point } from '../components/Charts'
-import { IDEA_BANK, PALETTES, inspirationOfTheDay, progress, savePlan, stepKey, steps, type Plan } from '../lib/planner'
+import { IDEA_BANK, THEME_CATS, ideasForMonth, swatch, inspirationOfTheDay, progress, savePlan, stepKey, steps, type Plan } from '../lib/planner'
 import { tap } from '../lib/feedback'
 import { NovaSays, burst, type NovaMood } from '../components/Nova'
 import { hasAcademy } from '../lib/plan'
@@ -72,6 +72,34 @@ function MiniChecklist({ live, onChange }: { live: Live & { plan?: Plan }; onCha
 type Stats = {
   units: number; retail: number; cost: number; noBin: number; damaged: number; old: number
   cats: Point[]; age: Point[]; sales30: number; salesByLive: Point[]; month: number; lastMonth: number; livesRecent: number
+}
+
+/** Theme ideas on Home: this month's picks first, filter by group, shuffle for more. */
+function ThemeIdeas() {
+  const month = ideasForMonth()
+  const groups = [...(month.length ? ['This month'] : []), 'All', ...THEME_CATS]
+  const [cat, setCat] = useState(groups[0])
+  const [seed, setSeed] = useState(() => Math.floor(Date.now() / 864e5))
+  const list = cat === 'All' ? IDEA_BANK : cat === 'This month' ? month : IDEA_BANK.filter(i => i.cat === cat)
+  const start = seed % list.length
+  const show = [...list.slice(start), ...list.slice(0, start)].slice(0, 6)
+  return (
+    <section className="stack">
+      <div className="row-between"><div><h2 className="section-title">Theme ideas for your next live</h2><span className="muted small">{IDEA_BANK.length} themes to build a show around</span></div><Link to="/planner" className="link-btn">See them all →</Link></div>
+      <div className="row-between wrap-gap">
+        <div className="chips">{groups.map(g => <button key={g} className={`chip ${cat === g ? 'on' : ''}`} onClick={() => { setCat(g); tap() }}>{g}</button>)}</div>
+        {list.length > 6 && <button className="btn ghost small" onClick={() => { setSeed(x => x + 6); tap() }}><Icon name="sparkle" size={16} />Show me more</button>}
+      </div>
+      <div className="idea-grid">
+        {show.map(i => (
+          <Link key={i.title} to={`/planner?idea=${encodeURIComponent(i.title)}`} className="idea-card">
+            <div className="idea-top" style={swatch(i.palette)}><span className="idea-cat">{i.cat}</span><b>{i.title}</b></div>
+            <div className="idea-body"><span className="small">{i.vibe}</span><span className="muted small">{i.hooks[0]}</span><span className="idea-cta">Plan it →</span></div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )
 }
 
 export default function Home() {
@@ -246,20 +274,7 @@ export default function Home() {
         {s ? <SegmentBar data={s.age} /> : <div className="skeleton-list"><div /></div>}
       </section>
 
-      <section className="stack">
-        <div className="row-between"><h2 className="section-title">Theme ideas for your next live</h2><Link to="/planner" className="link-btn">Idea bank →</Link></div>
-        <div className="idea-grid">
-          {IDEA_BANK.slice(Math.floor(Date.now() / 864e5) % 13, Math.floor(Date.now() / 864e5) % 13 + 3).map(i => {
-            const pal = PALETTES[i.palette].c
-            return (
-              <Link key={i.title} to="/planner" className="idea-card">
-                <div className="idea-top" style={{ background: `linear-gradient(135deg, ${pal[0]}, ${pal[1]} 70%, ${pal[2]})`, color: pal[3] }}><b>{i.title}</b></div>
-                <div className="idea-body"><span className="small">{i.vibe}</span><span className="idea-cta">Plan it →</span></div>
-              </Link>
-            )
-          })}
-        </div>
-      </section>
+      <ThemeIdeas />
 
       <div className="quick-grid">
         <Link to="/intake" className="quick"><Icon name="receive" size={22} /><div><b>Receive items</b><span className="muted">Photos, Live Numbers and tags</span></div></Link>

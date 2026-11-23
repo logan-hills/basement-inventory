@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import LiveForm from '../components/LiveForm'
 import Icon from '../components/Icon'
 import { supabase } from '../lib/supabase'
@@ -8,7 +8,7 @@ import { money } from '../lib/data'
 import { liveWhen, projected, type Live } from '../lib/lives'
 import { NovaSays, burst } from '../components/Nova'
 import { tap } from '../lib/feedback'
-import { ENGAGEMENT_IDEAS, IDEA_BANK, PALETTES, inspirationOfTheDay, progress, type Plan } from '../lib/planner'
+import { ENGAGEMENT_IDEAS, IDEA_BANK, PALETTES, THEME_CATS, findIdea, ideaPreset, ideasForMonth, inspirationOfTheDay, progress, swatch, type Idea, type Plan } from '../lib/planner'
 
 type LiveWithPlan = Live & { plan: Plan }
 
@@ -18,15 +18,22 @@ export default function Planner() {
   const [lives, setLives] = useState<LiveWithPlan[] | null>(null)
   const [preset, setPreset] = useState<{ title: string; theme: string; plan: Plan } | null>(null)
   const [spin, setSpin] = useState<{ i: number; spinning: boolean } | null>(null)
+  const [cat, setCat] = useState<string>('All')
+  const [q, setQ] = useState('')
+  const thisMonth = ideasForMonth()
+  const inCat = (c: string): Idea[] => c === 'All' ? IDEA_BANK : c === 'This month' ? thisMonth : IDEA_BANK.filter(i => i.cat === c)
+  const shown = inCat(cat).filter(i => !q.trim() || `${i.title} ${i.vibe} ${i.hooks.join(' ')}`.toLowerCase().includes(q.trim().toLowerCase()))
+  // The wheel spins through the group that's picked below (or every theme).
+  const wheel = inCat(cat).length ? inCat(cat) : IDEA_BANK
   function spinTheme(e: { clientX: number; clientY: number }) {
     if (spin?.spinning) return
-    const target = Math.floor(Math.random() * IDEA_BANK.length)
+    const target = Math.floor(Math.random() * wheel.length)
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
     if (reduce) { setSpin({ i: target, spinning: false }); return }
-    let n = 0, i = spin?.i ?? 0, delay = 45
+    let n = 0, i = (spin?.i ?? 0) % wheel.length, delay = 45
     const { clientX, clientY } = e
     const step = () => {
-      i = (i + 1) % IDEA_BANK.length; n++
+      i = (i + 1) % wheel.length; n++
       setSpin({ i, spinning: true }); tap()
       if (n > 14 && i === target) { setSpin({ i, spinning: false }); burst(clientX, clientY); return }
       delay = Math.min(delay * 1.12, 220); setTimeout(step, delay)
@@ -43,10 +50,17 @@ export default function Planner() {
   }
   useEffect(() => { load() }, [])
 
-  function useIdea(i: typeof IDEA_BANK[number]) {
-    setPreset({ title: i.title, theme: i.title, plan: { vibe: i.vibe, ideas: i.hooks.map(h => `• ${h}`).join('\n'), poster: { palette: i.palette, headline: i.title } } })
+  function planIdea(i: Idea) {
+    setPreset(ideaPreset(i))
     setForm(true)
   }
+
+  // Home links here with ?idea=Theme name to start planning that theme right away.
+  const [params, setParams] = useSearchParams()
+  useEffect(() => {
+    const i = findIdea(params.get('idea'))
+    if (i) { planIdea(i); setParams({}, { replace: true }) }
+  }, [params]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="stack wide-gap">
@@ -68,7 +82,7 @@ export default function Planner() {
           <div className="plan-grid">
             {lives.map(l => {
               const pr = progress(settings.checklist, l.plan ?? {})
-              const pal = PALETTES[l.plan?.poster?.palette ?? 0]?.c ?? PALETTES[0].c
+              const pal = PALETTES[l.plan?.poster?.palette ?? 6]?.c ?? PALETTES[0].c
               return (
                 <Link key={l.id} to={`/lives/${l.id}/plan`} className="plan-card">
                   <div className="plan-swatch" style={{ background: `linear-gradient(135deg, ${pal[0]}, ${pal[1]} 70%, ${pal[2]})`, color: pal[3] }}>
@@ -91,11 +105,11 @@ export default function Planner() {
 
       <section className="roulette">
         <NovaSays mood={spin?.spinning ? 'wow' : spin ? 'cheer' : 'wink'} key={spin?.spinning ? 'spin' : spin ? `done${spin.i}` : 'idle'}>
-          {spin?.spinning ? 'Ooh, where is it gonna land…' : spin ? `${IDEA_BANK[spin.i].title}! I can already see the poster.` : 'Can\'t pick a theme? Let me spin one for you.'}
+          {spin?.spinning ? 'Ooh, where is it gonna land…' : spin ? `${wheel[spin.i % wheel.length].title}! I can already see the poster.` : `Can't pick a theme? Let me spin one for you${cat === 'All' ? '' : ` from ${cat}`}.`}
         </NovaSays>
         <div className="roulette-stage">
           {(() => {
-            const idea = IDEA_BANK[spin?.i ?? 0]; const pal = PALETTES[idea.palette].c
+            const idea = wheel[(spin?.i ?? 0) % wheel.length]; const pal = PALETTES[idea.palette].c
             return (
               <div className={`roulette-card${spin?.spinning ? ' spinning' : ''}`} key={spin?.i ?? -1} style={{ background: `linear-gradient(135deg, ${pal[0]}, ${pal[1]} 70%, ${pal[2]})`, color: pal[3] }}>
                 <span className="cat-no" style={{ color: 'inherit', opacity: .75 }}>Tonight's theme</span>
@@ -106,30 +120,35 @@ export default function Planner() {
           })()}
           <div className="row-gap">
             <button className="btn gold" onClick={spinTheme} disabled={!!spin?.spinning}><Icon name="sparkle" size={18} />{spin ? 'Spin again' : 'Spin for a theme'}</button>
-            {spin && !spin.spinning && <button className="btn glass" onClick={() => useIdea(IDEA_BANK[spin.i])}>Plan this live →</button>}
+            {spin && !spin.spinning && <button className="btn glass" onClick={() => planIdea(wheel[spin.i % wheel.length])}>Plan this live →</button>}
           </div>
         </div>
       </section>
 
       <section className="stack">
-        <h2 className="section-title">Idea bank</h2>
-        <p className="muted">Tap a theme to plan a live around it. It comes with a vibe, poster colors and hooks to get the comments going.</p>
+        <div className="row-between"><h2 className="section-title">Idea bank</h2><span className="muted small">{IDEA_BANK.length} themes</span></div>
+        <p className="muted">Tap a theme to plan a live around it. It comes with a vibe, a poster look and hooks to get the comments going.</p>
+        <div className="theme-filter">
+          <div className="chips">
+            {['All', ...(thisMonth.length ? ['This month'] : []), ...THEME_CATS].map(c => <button key={c} className={`chip ${cat === c ? 'on' : ''}`} onClick={() => { setCat(c); setSpin(null) }}>{c}</button>)}
+          </div>
+          <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search themes: bags, church, gold…" aria-label="Search themes" />
+        </div>
+        {shown.length === 0 && <div className="empty card"><b>No themes match "{q}"</b><span className="muted">Try another word, or start from scratch with Plan a new live.</span></div>}
         <div className="idea-grid">
-          {IDEA_BANK.map(i => {
-            const pal = PALETTES[i.palette].c
-            return (
-              <button key={i.title} className="idea-card" onClick={() => useIdea(i)}>
-                <div className="idea-top" style={{ background: `linear-gradient(135deg, ${pal[0]}, ${pal[1]} 70%, ${pal[2]})`, color: pal[3] }}>
-                  <b>{i.title}</b>
-                </div>
-                <div className="idea-body">
-                  <span className="small">{i.vibe}</span>
-                  <ul>{i.hooks.slice(0, 2).map(h => <li key={h}>{h}</li>)}</ul>
-                  <span className="idea-cta">Plan this live →</span>
-                </div>
-              </button>
-            )
-          })}
+          {shown.map(i => (
+            <button key={i.title} className="idea-card" onClick={() => planIdea(i)}>
+              <div className="idea-top" style={swatch(i.palette)}>
+                <span className="idea-cat">{i.cat}</span>
+                <b>{i.title}</b>
+              </div>
+              <div className="idea-body">
+                <span className="small">{i.vibe}</span>
+                <ul>{i.hooks.slice(0, 2).map(h => <li key={h}>{h}</li>)}</ul>
+                <span className="idea-cta">Plan this live →</span>
+              </div>
+            </button>
+          ))}
         </div>
       </section>
 
