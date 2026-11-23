@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase'
 import { useSession } from '../lib/session'
 import { addUnits, uploadPhotos } from '../lib/data'
 import { CategorySelect, TagPicker } from '../components/Pickers'
+import { EXTRA_FIELDS, fieldError, type ItemExtra } from '../lib/itemFields'
 
 type Row = { key: number; label: string; price: string; cost: string; qty: string }
 
@@ -19,6 +20,7 @@ export default function Intake() {
   const [brand, setBrand] = useState('')
   const [category, setCategory] = useState('')
   const [description, setDescription] = useState('')
+  const [extra, setExtra] = useState<ItemExtra>({})
   const [rows, setRows] = useState<Row[]>([newRow('One size')])
   const [photos, setPhotos] = useState<File[]>([])
   const [busy, setBusy] = useState(false)
@@ -46,7 +48,7 @@ export default function Intake() {
     try {
       const { data: item, error } = await supabase
         .from('items')
-        .insert({ shop_id: shop.id, name: name.trim(), brand: brand.trim() || null, category: category.trim() || null, description: description.trim() || null, ...(tags.length ? { tags } : {}) })
+        .insert({ shop_id: shop.id, name: name.trim(), brand: brand.trim() || null, category: category.trim() || null, description: description.trim() || null, ...(tags.length ? { tags } : {}), ...Object.fromEntries(Object.entries(extra).filter(([, v]) => v && String(v).trim()).map(([k, v]) => [k, String(v).trim()])) })
         .select('id')
         .single()
       if (error) throw error
@@ -65,7 +67,7 @@ export default function Intake() {
       if (photos.length) await uploadPhotos(shop.id, item.id, photos)
       navigate(`/labels?item=${item.id}`)
     } catch (err: any) {
-      setMsg(err?.message ?? 'Something went wrong saving this item.')
+      setMsg(fieldError(err?.message ?? 'Something went wrong saving this item.'))
       setBusy(false)
     }
   }
@@ -90,6 +92,24 @@ export default function Intake() {
         )}
         <div className="stack tight-gap"><span className="label-text">Tags</span><TagPicker value={tags} onChange={setTags} options={settings.itemTags} /></div>
         <label>Notes<textarea rows={2} value={description} onChange={e => setDescription(e.target.value)} /></label>
+        <details className="more-details">
+          <summary><b>More details</b> <span className="muted small">Optional: condition, color, supplier and more, for sorting and filtering later.</span></summary>
+          <div className="row2">
+            {EXTRA_FIELDS.map(f => (
+              <label key={f.key}>{f.label}
+                {f.options ? (
+                  <select value={extra[f.key] ?? ''} onChange={e => setExtra(x => ({ ...x, [f.key]: e.target.value }))}>
+                    <option value="">Not set</option>
+                    {f.options.map(o => <option key={o} value={o}>{o}</option>)}
+                  </select>
+                ) : (
+                  <input type={f.type} value={extra[f.key] ?? ''} placeholder={f.placeholder ?? 'Optional'} list={f.suggest ? `in-sug-${f.key}` : undefined} onChange={e => setExtra(x => ({ ...x, [f.key]: e.target.value }))} />
+                )}
+                {f.suggest && <datalist id={`in-sug-${f.key}`}>{f.suggest.map(o => <option key={o} value={o} />)}</datalist>}
+              </label>
+            ))}
+          </div>
+        </details>
       </section>
 
       <section className="card stack">

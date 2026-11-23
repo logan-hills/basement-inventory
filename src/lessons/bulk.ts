@@ -37,7 +37,9 @@ const lesson: Lesson = {
         ['Brand, Category, Notes', 'Details', 'Bags'],
         ['Weight (lb)', 'For shipping', '1.6'],
         ['Bin code', 'Where it goes on the shelf', 'A3-S2-C-01'],
-        ['Tags, UPC', 'Tags with commas, product barcode', 'Holiday, New arrival'],
+        ['Tags, UPC', 'Tags with semicolons between, product barcode', 'Holiday; New arrival'],
+        ['Sale price, SKU', 'Price for yellow sale tags, your own code', '12 / BAG-EM-01'],
+        ['Condition, Department, Color, Material, Season, Supplier', 'Optional details you can filter by later', 'New with tags / Women / Emerald'],
       ] } },
     { kind: 'learn', title: 'One row per variation', text: 'Rows with the same Item name become ONE item, with each row as its own variation and Live Number. That\'s how sizes and colors stay together.',
       table: { head: ['Item name', 'Variation', 'Quantity'], rows: [

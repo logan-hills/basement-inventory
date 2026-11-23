@@ -58,6 +58,9 @@ const lesson: Lesson = {
     { chapter: 'Photos and details', kind: 'learn', title: 'Photos help your whole team', text: 'Anyone who scans or looks up a piece sees its photo, so helpers grab the right one fast. Three quick shots are plenty.',
       points: ['The whole piece, on a plain background', 'A close-up of the best detail (stitching, stones, hardware)', 'Any flaw, so nobody is surprised'],
       tip: 'Set up one "photo corner" by a window with a white poster board. Same spot, same light, every time.' },
+    { kind: 'learn', title: 'More details, only if you want them', text: 'Under More details you can add condition, department, color, material, season, supplier and the date you bought it. All optional. Fill in the ones you\'ll actually search by, and Inventory\'s Filters can then show, say, every emerald piece or everything from one supplier.',
+      screen: { title: 'Receive items', rows: ['+ More details', 'Condition: New with tags', 'Color: Emerald', 'Supplier: Atlanta market'], buttons: ['Save and print 3 tags'] },
+      tip: 'Supplier is the one most sellers wish they had started on day one. It tells you which haul actually made money.' },
     { kind: 'learn', title: 'Got a UPC? Add it', text: 'If the product has its own barcode (a UPC), scan or type it on the item page. Pickers can then scan the product\'s barcode instead of the tag, and it shows on the picking screen.' },
     { kind: 'learn', title: 'Add the weight', text: 'On the item page, each variation has a weight in pounds. Weigh one piece in its mailer once. Then every shipping file fills it in for you, and your label prices are right the first time.' },
 

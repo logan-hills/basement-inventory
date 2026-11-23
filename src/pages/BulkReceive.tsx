@@ -6,19 +6,30 @@ import { addUnits, money } from '../lib/data'
 import { downloadFile, parseCsv, toCsv } from '../lib/csv'
 import { loadBins } from '../lib/locations'
 import { feedbackOk } from '../lib/feedback'
+import { fieldError } from '../lib/itemFields'
 
-const COLUMNS = ['Item name', 'Variation', 'Quantity', 'Price', 'Cost', 'Brand', 'Category', 'Weight (lb)', 'Bin code', 'Notes', 'Tags', 'UPC'] as const
-type Key = 'name' | 'variation' | 'qty' | 'price' | 'cost' | 'brand' | 'category' | 'weight' | 'bin' | 'notes' | 'tags' | 'upc'
-const KEYS: Key[] = ['name', 'variation', 'qty', 'price', 'cost', 'brand', 'category', 'weight', 'bin', 'notes', 'tags', 'upc']
+const COLUMNS = ['Item name', 'Variation', 'Quantity', 'Price', 'Cost', 'Brand', 'Category', 'Weight (lb)', 'Bin code', 'Notes', 'Tags', 'UPC', 'Sale price', 'SKU', 'Condition', 'Department', 'Color', 'Material', 'Season', 'Supplier'] as const
+type Key = 'name' | 'variation' | 'qty' | 'price' | 'cost' | 'brand' | 'category' | 'weight' | 'bin' | 'notes' | 'tags' | 'upc' | 'sale' | 'sku' | 'condition' | 'department' | 'color' | 'material' | 'season' | 'supplier'
+const KEYS: Key[] = ['name', 'variation', 'qty', 'price', 'cost', 'brand', 'category', 'weight', 'bin', 'notes', 'tags', 'upc', 'sale', 'sku', 'condition', 'department', 'color', 'material', 'season', 'supplier']
+/** Optional item details carried from the file (need supabase/014). */
+const EXTRA_KEYS = ['condition', 'department', 'color', 'material', 'season', 'supplier'] as const
 
 type Row = Record<Key, string> & { line: number; errors: string[]; binId: string | null }
-type Group = { key: string; name: string; brand: string; category: string; notes: string; tags: string[]; variants: { label: string; qty: number; price: number | null; cost: number | null; weight: number | null; binId: string | null; bin: string; upc: string }[] }
+type Group = { key: string; name: string; brand: string; category: string; notes: string; tags: string[]; extra: Record<string, string>; variants: { label: string; qty: number; price: number | null; cost: number | null; weight: number | null; binId: string | null; bin: string; upc: string; sale: number | null; sku: string }[] }
 
 function headerKey(h: string): Key | null {
   const t = h.toLowerCase().replace(/[^a-z]/g, '')
   if (t.startsWith('itemname') || t === 'name' || t === 'item' || t === 'title') return 'name'
   if (t.startsWith('variation') || t === 'variant' || t === 'size' || t === 'option') return 'variation'
   if (t.startsWith('qty') || t.startsWith('quantity')) return 'qty'
+  if (t.startsWith('saleprice') || t === 'sale') return 'sale'
+  if (t === 'sku' || t.startsWith('yoursku')) return 'sku'
+  if (t.startsWith('condition')) return 'condition'
+  if (t.startsWith('department') || t === 'gender') return 'department'
+  if (t.startsWith('color') || t.startsWith('colour')) return 'color'
+  if (t.startsWith('material')) return 'material'
+  if (t.startsWith('season') || t.startsWith('collection')) return 'season'
+  if (t.startsWith('supplier') || t.startsWith('vendor') || t.startsWith('source')) return 'supplier'
   if (t.startsWith('price')) return 'price'
   if (t.startsWith('cost')) return 'cost'
   if (t.startsWith('brand')) return 'brand'
@@ -64,6 +75,7 @@ export default function BulkReceive() {
       if (!Number.isInteger(q) || q < 1) r.errors.push('Quantity must be a whole number, 1 or more')
       if (r.price && Number.isNaN(num(r.price)!)) r.errors.push('Price is not a number')
       if (r.cost && Number.isNaN(num(r.cost)!)) r.errors.push('Cost is not a number')
+      if (r.sale && Number.isNaN(num(r.sale)!)) r.errors.push('Sale price is not a number')
       if (r.weight && Number.isNaN(num(r.weight)!)) r.errors.push('Weight is not a number')
       if (r.bin) {
         r.binId = binBy.get(r.bin.toUpperCase()) ?? null
@@ -81,11 +93,11 @@ export default function BulkReceive() {
       if (r.errors.length) continue
       const key = `${r.name.toLowerCase()}|${r.brand.toLowerCase()}`
       let g = out.get(key)
-      if (!g) { g = { key, name: r.name, brand: r.brand, category: r.category, notes: r.notes, tags: r.tags.split(/[;|]/).map(t => t.trim()).filter(Boolean), variants: [] }; out.set(key, g) }
+      if (!g) { g = { key, name: r.name, brand: r.brand, category: r.category, notes: r.notes, tags: r.tags.split(/[;|]/).map(t => t.trim()).filter(Boolean), extra: Object.fromEntries(EXTRA_KEYS.filter(k => r[k]).map(k => [k, r[k]])), variants: [] }; out.set(key, g) }
       const label = r.variation || 'One size'
       const existing = g.variants.find(v => v.label.toLowerCase() === label.toLowerCase() && v.binId === r.binId)
       if (existing) existing.qty += Number(r.qty)
-      else g.variants.push({ label, qty: Number(r.qty), price: num(r.price), cost: num(r.cost), weight: num(r.weight), binId: r.binId, bin: r.bin, upc: (r as any).upc ?? '' })
+      else g.variants.push({ label, qty: Number(r.qty), price: num(r.price), cost: num(r.cost), weight: num(r.weight), binId: r.binId, bin: r.bin, upc: r.upc ?? '', sale: num(r.sale), sku: r.sku ?? '' })
     }
     return [...out.values()]
   }, [rows])
@@ -103,13 +115,13 @@ export default function BulkReceive() {
       for (let gi = 0; gi < groups.length; gi++) {
         const g = groups[gi]
         const { data: item, error } = await supabase.from('items')
-          .insert({ shop_id: shop.id, name: g.name, brand: g.brand || null, category: g.category || null, description: g.notes || null, ...(g.tags.length ? { tags: g.tags } : {}) })
+          .insert({ shop_id: shop.id, name: g.name, brand: g.brand || null, category: g.category || null, description: g.notes || null, ...(g.tags.length ? { tags: g.tags } : {}), ...g.extra })
           .select('id').single()
         if (error) throw error
         itemIds.push(item.id)
         const labels = [...new Map(g.variants.map(v => [v.label.toLowerCase(), v])).values()]
         const { data: vs, error: vErr } = await supabase.from('variants')
-          .insert(labels.map(v => ({ shop_id: shop.id, item_id: item.id, label: v.label, price: v.price, cost: v.cost, weight_lb: v.weight, ...(v.upc ? { upc: v.upc.trim() } : {}) })))
+          .insert(labels.map(v => ({ shop_id: shop.id, item_id: item.id, label: v.label, price: v.price, cost: v.cost, weight_lb: v.weight, ...(v.upc ? { upc: v.upc.trim() } : {}), ...(v.sale != null ? { sale_price: v.sale } : {}), ...(v.sku ? { sku: v.sku.trim() } : {}) })))
           .select('id,label,live_number')
         if (vErr) throw vErr
         for (const v of g.variants) {
@@ -127,7 +139,7 @@ export default function BulkReceive() {
       if (newCats.length || newTags.length) updateSettings({ categories: [...settings.categories, ...newCats], itemTags: [...settings.itemTags, ...newTags] }).catch(() => {})
       setRows(null)
     } catch (e: any) {
-      setErr(`Stopped after ${itemIds.length} item(s): ${e.message ?? e}. Items already added are saved; remove them from the file before uploading again.`)
+      setErr(`Stopped after ${itemIds.length} item(s): ${fieldError(String(e.message ?? e))}. Items already added are saved; remove them from the file before uploading again.`)
       if (itemIds.length) setDone({ items: itemIds, variants: 0, tags })
     } finally {
       setBusy(false)
