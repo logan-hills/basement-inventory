@@ -8,6 +8,17 @@ import Icon from '../components/Icon'
 import { BarList, ColumnChart, CountUp, Ring, SegmentBar, type Point } from '../components/Charts'
 import { IDEA_BANK, PALETTES, inspirationOfTheDay, progress, savePlan, stepKey, steps, type Plan } from '../lib/planner'
 import { tap } from '../lib/feedback'
+import { NovaSays, burst, type NovaMood } from '../components/Nova'
+import { hasAcademy } from '../lib/plan'
+
+const HOME_TIPS: [NovaMood, string][] = [
+  ['wink', 'Post your poster two days before the live, then again an hour before. Two touches, more faces.'],
+  ['happy', 'Say your rules at the start AND end of every live: invoicing, when payment is due, and how to pay.'],
+  ['wow', 'A handwritten thank-you in the box costs pennies and brings her back next week.'],
+  ['think', 'Running behind on shipping? Message buyers before they ask. Speaking up early keeps them loyal.'],
+  ['cheer', 'Shout out your top buyers by name on live. People love to be seen.'],
+  ['happy', 'Film one Reel today: hook, close-up, styled on you, then your live day and time.'],
+]
 
 /** Next Tuesday 7 PM Eastern, the shop's regular "$2 Tuesday" live. */
 function nextTuesday() {
@@ -37,8 +48,9 @@ function MiniChecklist({ live, onChange }: { live: Live & { plan?: Plan }; onCha
   const all = steps(settings.checklist, plan).filter(x => x.phase === 'before')
   const pr = progress(settings.checklist, plan)
   const show = [...all.filter(x => plan.checked?.[stepKey(x.phase, x.text)]).slice(-2), ...all.filter(x => !plan.checked?.[stepKey(x.phase, x.text)]).slice(0, 4)]
-  function toggle(text: string) {
+  function toggle(text: string, e?: { clientX: number; clientY: number }) {
     const k = stepKey('before', text)
+    if (!plan.checked?.[k] && e) burst(e.clientX, e.clientY)
     const next = { ...plan, checked: { ...(plan.checked ?? {}), [k]: !plan.checked?.[k] } }
     onChange(next); tap()
     savePlan(live.id, next).catch(() => {})
@@ -46,11 +58,11 @@ function MiniChecklist({ live, onChange }: { live: Live & { plan?: Plan }; onCha
   return (
     <div className="stack tight-gap">
       <div className="plan-progress"><span style={{ width: `${Math.round(pr.pct * 100)}%` }} /></div>
-      <span className="muted small">{pr.done} of {pr.total} steps done{pr.done === pr.total && pr.total ? ". You're ready, Queen! 👑" : ''}</span>
+      <span className="muted small">{pr.done} of {pr.total} steps done{pr.done === pr.total && pr.total ? ". You're ready, Queen!" : ''}</span>
       <div className="mini-check">
         {show.map(x => {
           const on = !!plan.checked?.[stepKey('before', x.text)]
-          return <button key={x.text} className={on ? 'on' : ''} onClick={() => toggle(x.text)}><span className="check-box">{on ? '✓' : ''}</span><span className={on ? 'muted' : ''}>{x.text}</span></button>
+          return <button key={x.text} className={on ? 'on' : ''} onClick={e => toggle(x.text, e)}><span className="check-box">{on ? '✓' : ''}</span><span className={on ? 'muted' : ''}>{x.text}</span></button>
         })}
       </div>
     </div>
@@ -63,7 +75,7 @@ type Stats = {
 }
 
 export default function Home() {
-  const { settings } = useSession()
+  const { settings, shop } = useSession()
   const [s, setS] = useState<Stats | null>(null)
   const [next, setNext] = useState<(Live & { plan?: Plan }) | null | undefined>(undefined)
   const [work, setWork] = useState<{ pick: number; ship: number }>({ pick: 0, ship: 0 })
@@ -110,6 +122,13 @@ export default function Home() {
     }).catch(() => setNext(null))
   }, [settings.oldStockDays])
 
+  const [tip, setTip] = useState(() => new Date().getDate() % HOME_TIPS.length)
+  useEffect(() => {
+    if (!s || s.month < settings.monthlyGoal) return
+    const k = `goalBurst:${new Date().toISOString().slice(0, 7)}`
+    try { if (localStorage.getItem(k)) return; localStorage.setItem(k, '1') } catch { return }
+    setTimeout(() => { burst(); setTimeout(() => burst(window.innerWidth * .25, window.innerHeight * .35), 200) }, 600)
+  }, [s, settings.monthlyGoal])
   const shelved = s && s.units ? (s.units - s.noBin) / s.units : 0
   function headline() {
     if (next && isToday(next.starts_at)) return <>Let's make <em>tonight</em> count.</>
@@ -124,14 +143,21 @@ export default function Home() {
     <div className="stack wide-gap">
       <div className="page-head">
         <div>
-          <span className="script">{greeting()}, Queen ✨</span>
+          <span className="script">{greeting()}, Queen</span>
           <h1>{headline()}</h1>
         </div>
         <div className="row-gap">
-          {s && s.livesRecent > 0 && <span className="streak">🔥 {s.livesRecent} live{s.livesRecent === 1 ? '' : 's'} in the last 4 weeks</span>}
+          {s && s.livesRecent > 0 && <span className="streak"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2s5 5 5 10a5 5 0 0 1-10 0c0-2 1-3.5 1-3.5S9 11 11 11c0-4 1-9 1-9z" /></svg> {s.livesRecent} live{s.livesRecent === 1 ? '' : 's'} in the last 4 weeks</span>}
           <Link to="/scan" className="btn ghost"><Icon name="scan" size={18} />Scan</Link>
           <Link to="/intake" className="btn gold"><Icon name="plus" size={18} />Add stock</Link>
         </div>
+      </div>
+
+      <div className="nova-strip">
+        <NovaSays mood={HOME_TIPS[tip][0]} key={tip} onNovaClick={() => setTip(t => (t + 1) % HOME_TIPS.length)}>
+          {HOME_TIPS[tip][1]}
+        </NovaSays>
+        {hasAcademy(shop?.plan) && <Link to="/lessons" className="btn ghost small nova-strip-link"><Icon name="lessons" size={16} />Dazzle Academy</Link>}
       </div>
 
       <div className="top-grid">
@@ -175,7 +201,7 @@ export default function Home() {
       <div className="kpi-grid">
         <div className="kpi gold-tile"><span className="kpi-ico"><Icon name="dollar" /></span><span>Sold this month</span><b>{s ? <CountUp value={s.month} format={whole} /> : '—'}</b>
           <div className="goal-bar"><span style={{ width: `${s ? Math.min(100, (s.month / Math.max(1, settings.monthlyGoal)) * 100) : 0}%` }} /></div>
-          <small>{s ? (s.month >= settings.monthlyGoal ? `Goal smashed! 🎉 ${whole(settings.monthlyGoal)} goal` : `${whole(settings.monthlyGoal - s.month)} to your ${whole(settings.monthlyGoal)} goal`) : ''}</small></div>
+          <small>{s ? (s.month >= settings.monthlyGoal ? `Goal smashed! ${whole(settings.monthlyGoal)} goal` : `${whole(settings.monthlyGoal - s.month)} to your ${whole(settings.monthlyGoal)} goal`) : ''}</small></div>
         <div className="kpi green-tile"><span className="kpi-ico"><Icon name="trend" /></span><span>Profit sitting on the shelf</span><b>{s ? <CountUp value={s.retail - s.cost} format={whole} /> : '—'}</b><small>{s ? `${s.units} pieces ready to sell` : ''}</small></div>
         <div className="kpi rose-tile"><span className="kpi-ico"><Icon name="tag" /></span><span>Retail value in stock</span><b>{s ? <CountUp value={s.retail} format={whole} /> : '—'}</b><small>{s && s.lastMonth > 0 ? `Last month you sold ${whole(s.lastMonth)}` : 'Every piece is a sale waiting'}</small></div>
         <div className="kpi"><span className="kpi-ico"><Icon name="reports" /></span><span>Sales, last 30 days</span><b>{s ? <CountUp value={s.sales30} format={whole} /> : '—'}</b><small className="muted">{s && s.month > s.lastMonth && s.lastMonth > 0 ? `↑ ${Math.round((s.month / s.lastMonth - 1) * 100)}% vs last month` : 'Keep going live, it adds up'}</small></div>

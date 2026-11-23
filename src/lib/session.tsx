@@ -1,10 +1,11 @@
+import type { Plan } from './plan'
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from './supabase'
 import { saveSettings, withDefaults, type Settings } from './settings'
 import { loadProfile, type Profile } from './profile'
 
-export type Shop = { id: string; name: string; settings: Settings }
+export type Shop = { id: string; name: string; settings: Settings; plan: Plan | null }
 
 type Ctx = {
   session: Session | null
@@ -36,11 +37,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   async function loadShop(s: Session | null) {
     if (!s) { setShop(null); return }
-    let { data, error } = await supabase.from('shops').select('id,name,settings').order('created_at').limit(1)
-    // Before the settings column exists, fall back to the basics.
+    let { data, error } = await supabase.from('shops').select('id,name,settings,plan').order('created_at').limit(1)
+    // Before newer columns exist, fall back step by step.
+    if (error) ({ data, error } = await supabase.from('shops').select('id,name,settings').order('created_at').limit(1) as any)
     if (error) ({ data } = await supabase.from('shops').select('id,name').order('created_at').limit(1) as any)
     const row: any = data?.[0]
-    setShop(row ? { id: row.id, name: row.name, settings: withDefaults(row.settings) } : null)
+    setShop(row ? { id: row.id, name: row.name, settings: withDefaults(row.settings), plan: row.plan ?? null } : null)
   }
 
   useEffect(() => {

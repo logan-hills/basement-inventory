@@ -6,6 +6,8 @@ import { supabase } from '../lib/supabase'
 import { useSession } from '../lib/session'
 import { money } from '../lib/data'
 import { liveWhen, projected, type Live } from '../lib/lives'
+import { NovaSays, burst } from '../components/Nova'
+import { tap } from '../lib/feedback'
 import { ENGAGEMENT_IDEAS, IDEA_BANK, PALETTES, inspirationOfTheDay, progress, type Plan } from '../lib/planner'
 
 type LiveWithPlan = Live & { plan: Plan }
@@ -15,6 +17,22 @@ export default function Planner() {
   const { settings } = useSession()
   const [lives, setLives] = useState<LiveWithPlan[] | null>(null)
   const [preset, setPreset] = useState<{ title: string; theme: string; plan: Plan } | null>(null)
+  const [spin, setSpin] = useState<{ i: number; spinning: boolean } | null>(null)
+  function spinTheme(e: { clientX: number; clientY: number }) {
+    if (spin?.spinning) return
+    const target = Math.floor(Math.random() * IDEA_BANK.length)
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    if (reduce) { setSpin({ i: target, spinning: false }); return }
+    let n = 0, i = spin?.i ?? 0, delay = 45
+    const { clientX, clientY } = e
+    const step = () => {
+      i = (i + 1) % IDEA_BANK.length; n++
+      setSpin({ i, spinning: true }); tap()
+      if (n > 14 && i === target) { setSpin({ i, spinning: false }); burst(clientX, clientY); return }
+      delay = Math.min(delay * 1.12, 220); setTimeout(step, delay)
+    }
+    step()
+  }
   const [form, setForm] = useState(false)
 
   async function load() {
@@ -33,7 +51,7 @@ export default function Planner() {
   return (
     <div className="stack wide-gap">
       <div className="page-head">
-        <div><span className="script">Dream it, plan it, go live ✨</span><h1>Live Planner</h1></div>
+        <div><span className="script">Dream it, plan it, go live</span><h1>Live Planner</h1></div>
         <button className="btn gold" onClick={() => { setPreset(null); setForm(true) }}><Icon name="plus" size={18} />Plan a new live</button>
       </div>
 
@@ -69,6 +87,28 @@ export default function Planner() {
             })}
           </div>
         )}
+      </section>
+
+      <section className="roulette">
+        <NovaSays mood={spin?.spinning ? 'wow' : spin ? 'cheer' : 'wink'} key={spin?.spinning ? 'spin' : spin ? `done${spin.i}` : 'idle'}>
+          {spin?.spinning ? 'Ooh, where is it gonna land…' : spin ? `${IDEA_BANK[spin.i].title}! I can already see the poster.` : 'Can\'t pick a theme? Let me spin one for you.'}
+        </NovaSays>
+        <div className="roulette-stage">
+          {(() => {
+            const idea = IDEA_BANK[spin?.i ?? 0]; const pal = PALETTES[idea.palette].c
+            return (
+              <div className={`roulette-card${spin?.spinning ? ' spinning' : ''}`} key={spin?.i ?? -1} style={{ background: `linear-gradient(135deg, ${pal[0]}, ${pal[1]} 70%, ${pal[2]})`, color: pal[3] }}>
+                <span className="cat-no" style={{ color: 'inherit', opacity: .75 }}>Tonight's theme</span>
+                <b>{spin ? idea.title : '? ? ?'}</b>
+                {spin && !spin.spinning && <span className="roulette-vibe">{idea.vibe}</span>}
+              </div>
+            )
+          })()}
+          <div className="row-gap">
+            <button className="btn gold" onClick={spinTheme} disabled={!!spin?.spinning}><Icon name="sparkle" size={18} />{spin ? 'Spin again' : 'Spin for a theme'}</button>
+            {spin && !spin.spinning && <button className="btn glass" onClick={() => useIdea(IDEA_BANK[spin.i])}>Plan this live →</button>}
+          </div>
+        </div>
       </section>
 
       <section className="stack">
