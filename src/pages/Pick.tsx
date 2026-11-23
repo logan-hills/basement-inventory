@@ -2,7 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } fro
 import { Link, useSearchParams } from 'react-router-dom'
 import CameraScanner from '../components/CameraScanner'
 import { supabase } from '../lib/supabase'
-import { findUnit, type UnitInfo } from '../lib/data'
+import { findUnit, photoUrls, UNIT_SELECT, type UnitInfo } from '../lib/data'
+import JsBarcode from 'jsbarcode'
 import { feedbackBad, feedbackOk } from '../lib/feedback'
 import { isOrderCode, lineRemaining, loadOrders, orderRemaining, orderUnits, type Order, type OrderLine } from '../lib/orders'
 import { useSession } from '../lib/session'
@@ -10,6 +11,24 @@ import { useToast } from '../lib/toast'
 
 type Held = { unit: UnitInfo; fromBin: string | null; fromBinId: string | null }
 type Msg = { kind: 'ok' | 'bad' | 'info'; text: string }
+type Extra = { upc: string | null; photo: string | null }
+
+/** "A3-S2-C-01" → aisle 3, section 2, shelf C, bin 1. */
+function splitBin(code?: string) {
+  const m = code?.match(/^A(\d+)-S(\d+)-([A-Z])-(\d+)$/)
+  return m ? { aisle: m[1], section: m[2], shelf: m[3], bin: String(Number(m[4])) } : null
+}
+
+function UpcBars({ value }: { value: string }) {
+  const ref = useRef<SVGSVGElement>(null)
+  useEffect(() => {
+    if (!ref.current) return
+    const fmt = /^\d{12}$/.test(value) ? 'UPC' : /^\d{13}$/.test(value) ? 'EAN13' : 'CODE128'
+    try { JsBarcode(ref.current, value, { format: fmt, displayValue: false, margin: 0, height: 46, width: 2, background: 'transparent', lineColor: '#1B1210' }) }
+    catch { try { JsBarcode(ref.current, value, { format: 'CODE128', displayValue: false, margin: 0, height: 46, width: 2, background: 'transparent', lineColor: '#1B1210' }) } catch { /* ignore */ } }
+  }, [value])
+  return <svg ref={ref} aria-hidden="true" />
+}
 
 /** Grocery-style picking: scan an item tag, then scan the customer's box label. */
 export default function Pick() {
@@ -21,10 +40,12 @@ export default function Pick() {
   const [orders, setOrders] = useState<Order[] | null>(null)
   const [stock, setStock] = useState<Record<string, { code: string; n: number }[]>>({})
   const [held, setHeld] = useState<Held | null>(null)
-  const [msg, setMsg] = useState<Msg>({ kind: 'info', text: 'Scan an item tag to start.' })
+  const [msg, setMsg] = useState<Msg>({ kind: 'info', text: 'Scan the tag or the product barcode, or tap "Picked it".' })
   const [manual, setManual] = useState('')
   const [camera, setCamera] = useState(() => { try { return localStorage.getItem('scanCamera') === 'on' } catch { return false } })
   const [done, setDone] = useState<string[]>([])
+  const [extra, setExtra] = useState<Record<string, Extra>>({})
+  const [focus, setFocus] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const heldRef = useRef<Held | null>(null)
   heldRef.current = held
@@ -45,6 +66,11 @@ export default function Pick() {
         map[u.variant_id][code] = (map[u.variant_id][code] ?? 0) + 1
       }
       setStock(Object.fromEntries(Object.entries(map).map(([v, m]) => [v, Object.entries(m).map(([code, n]) => ({ code, n })).sort((a, b) => a.code.localeCompare(b.code))])))
+      let { data: vs, error } = await supabase.from('variants').select('id,upc, item:items(photos:item_photos(path,sort))').in('id', variantIds)
+      if (error) ({ data: vs } = await supabase.from('variants').select('id, item:items(photos:item_photos(path,sort))').in('id', variantIds) as any)
+      const firstPhoto = (v: any) => [...(v.item?.photos ?? [])].sort((a: any, b: any) => a.sort - b.sort)[0]?.path ?? null
+      const urls = await photoUrls([...new Set(((vs ?? []) as any[]).map(firstPhoto).filter(Boolean))] as string[])
+      setExtra(Object.fromEntries(((vs ?? []) as any[]).map(v => [v.id, { upc: v.upc ?? null, photo: firstPhoto(v) ? urls[firstPhoto(v)] ?? null : null }])))
     } else setStock({})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idsKey])
@@ -88,7 +114,13 @@ export default function Pick() {
     if (!code) return
     if (isOrderCode(code)) return scanBox(code)
     const unit = await findUnit(code)
-    if (!unit) { feedbackBad(); setMsg({ kind: 'bad', text: `${code} isn't one of your tags.` }); return }
+    if (!unit) {
+      // A product UPC or a Live # works too: grab any in-stock piece of that item.
+      const vid = Object.entries(extra).find(([, x]) => x.upc && x.upc === code)?.[0]
+        ?? tasks.list.find(t => (t.line.variant?.live_number ?? t.line.live_number) === code.padStart(4, '0'))?.vid
+      if (vid) return grab(vid)
+      feedbackBad(); setMsg({ kind: 'bad', text: `${code} isn't one of your tags or products in this pick.` }); return
+    }
     if (unit.status !== 'in_stock') { feedbackBad(); setMsg({ kind: 'bad', text: `${code} isn't in stock (${unit.status}). Grab a different tag of #${unit.variant.live_number}.` }); return }
     const need = needing(unit.variant.id)
     if (!need.length) { feedbackBad(); setMsg({ kind: 'bad', text: `Nobody in this pick needs #${unit.variant.live_number}. Put it back.` }); return }
@@ -97,6 +129,20 @@ export default function Pick() {
     setHeld({ unit, fromBin: unit.location?.code ?? null, fromBinId: (loc as any)?.location_id ?? null })
     const names = need.map(n => `${n.order.customer?.name ?? 'Customer'} (${n.order.code})`)
     setMsg({ kind: 'info', text: need.length === 1 ? `Now scan the box for ${names[0]}.` : `Now scan any of these boxes: ${[...new Set(names)].join(', ')}.` })
+  }
+
+  /** Pick a piece without scanning its tag: takes one in-stock piece of this item (from the first bin). */
+  async function grab(vid: string) {
+    const need = needing(vid)
+    if (!need.length) { feedbackBad(); setMsg({ kind: 'bad', text: 'Nobody in this pick needs that item.' }); return }
+    const { data } = await supabase.from('units').select(UNIT_SELECT + ', location_id').eq('variant_id', vid).eq('status', 'in_stock').limit(50)
+    const list = ((data ?? []) as any[]).sort((a, b) => (a.location?.code ?? 'ZZZ').localeCompare(b.location?.code ?? 'ZZZ'))
+    const u = list[0]
+    if (!u) { feedbackBad(); setMsg({ kind: 'bad', text: 'None of these are in stock. Tap "Can\'t find it".' }); return }
+    const h: Held = { unit: u as UnitInfo, fromBin: u.location?.code ?? null, fromBinId: u.location_id ?? null }
+    if (need.length === 1) return packInto(h, need[0].order, need[0].line)
+    feedbackOk(); setHeld(h)
+    setMsg({ kind: 'info', text: 'Which box does it go in? Scan the box or tap it below.' })
   }
 
   async function scanBox(code: string) {
@@ -176,6 +222,43 @@ export default function Pick() {
       <div className="progress"><span style={{ width: `${pct}%` }} /></div>
       <p className="muted small">{totalUnits - left} of {totalUnits} items packed{left === 0 && totalUnits ? '. Every box is done.' : ''}</p>
 
+      {(() => {
+        const t = held ? tasks.list.find(x => x.vid === held.unit.variant.id) : tasks.list[Math.min(focus, tasks.list.length - 1)]
+        if (!t) return null
+        const x = extra[t.vid] ?? { upc: null, photo: null }
+        const where = splitBin(held?.fromBin ?? t.bins[0]?.code)
+        const live = t.line.variant?.live_number ?? t.line.live_number
+        return (
+          <section className={`pick-hero${held ? ' holding' : ''}${x.photo ? '' : ' no-photo'}`} aria-label="Next item to pick">
+            {x.photo && <div className="pick-photo"><img src={x.photo} alt="" /></div>}
+            <div className="pick-info">
+              <span className="pick-kicker">{held ? 'In your hand' : `Next up · ${Math.min(focus, tasks.list.length - 1) + 1} of ${tasks.list.length}`}</span>
+              <span className="pick-live">#{live}</span>
+              <b className="pick-name">{t.line.variant ? t.line.variant.item.name : t.line.description}</b>
+              <span className="pick-variant">{t.line.variant?.label && t.line.variant.label !== 'One size' ? t.line.variant.label : ''}{t.need > 1 ? `${t.line.variant?.label && t.line.variant.label !== 'One size' ? ' · ' : ''}Grab ${t.need}` : ''}</span>
+              {where ? (
+                <div className="pick-where">
+                  <span><small>Aisle</small><b>{where.aisle}</b></span>
+                  <span><small>Section</small><b>{where.section}</b></span>
+                  <span><small>Shelf</small><b>{where.shelf}</b></span>
+                  <span><small>Bin</small><b>{where.bin}</b></span>
+                </div>
+              ) : <p className="pick-nobin">{t.bins[0] ? `Location: ${t.bins[0].code}` : 'Not in a bin yet. Check the "No bin" pile.'}</p>}
+              {t.bins.length > 1 && <span className="muted small">Also in: {t.bins.slice(1).map(b => b.code).join(', ')}</span>}
+              {x.upc && <div className="pick-upc"><UpcBars value={x.upc} /><span>UPC {x.upc}</span></div>}
+              <span className="pick-for">For {t.orders.map(o => o.customer?.name ?? o.code).join(', ')}</span>
+              {!held && (
+                <div className="pick-actions">
+                  <button className="btn gold big" onClick={() => grab(t.vid)}>Picked it</button>
+                  <button className="btn ghost big" onClick={() => markShort(t)}>Can't find it</button>
+                  {tasks.list.length > 1 && <button className="btn ghost big" onClick={() => setFocus(f => (f + 1) % tasks.list.length)}>Skip for now</button>}
+                </div>
+              )}
+            </div>
+          </section>
+        )
+      })()}
+
       <div className={`pick-step ${held ? 'box' : 'item'}`}>
         <div className="pick-steps">
           <span className={!held ? 'on' : 'done'}>1 · Scan item</span>
@@ -191,8 +274,8 @@ export default function Pick() {
         <p className={`pick-msg ${msg.kind}`}>{msg.text}</p>
         {held && heldNeed.length > 0 && (
           <div className="row-gap">
-            <span className="muted small">No scanner? Tap the box:</span>
-            {heldNeed.map(n => <button key={n.line.id} className="btn ghost" onClick={() => packInto(held, n.order, n.line)}>{n.order.code} · {n.order.customer?.name ?? ''}</button>)}
+            <span className="muted">No scanner? Tap the box:</span>
+            {heldNeed.map(n => <button key={n.line.id} className="btn gold big" onClick={() => packInto(held, n.order, n.line)}>{n.order.code} · {n.order.customer?.name ?? ''}</button>)}
           </div>
         )}
       </div>

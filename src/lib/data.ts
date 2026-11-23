@@ -113,7 +113,7 @@ export type UnitInfo = {
   location: { code: string; name: string } | null
 }
 
-const UNIT_SELECT = 'id, tag_code, status, removed_reason, variant:variants!inner(id,label,live_number,price, item:items!inner(id,name)), location:locations(code,name)'
+export const UNIT_SELECT = 'id, tag_code, status, removed_reason, variant:variants!inner(id,label,live_number,price, item:items!inner(id,name)), location:locations(code,name)'
 
 /** Finds a tag by its barcode (e.g. 4821-001). */
 export async function findUnit(code: string): Promise<UnitInfo | null> {

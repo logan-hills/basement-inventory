@@ -8,6 +8,9 @@ import { money } from '../lib/data'
 import { downloadFile, toCsv } from '../lib/csv'
 import { durationText, liveWhen, loadLive, type Live, type LiveItem } from '../lib/lives'
 
+/** Header row of Loyal Shops' Live Assistant Pro inventory template (loyalshops.com/lapro/templates). */
+export const LOYAL_SHOPS_HEADERS = ['claim_number', 'claim_number_range_end', 'product_title', 'quantity', 'price', 'variant_option1_type', 'variant_option1', 'variant_option2_type', 'variant_option2', 'barcode', 'sku', 'Notes:'] as const
+
 function botValue(key: string, li: LiveItem): string | number | null {
   const v = li.variant, it = v.item
   const inStock = v.units.filter(u => u.status === 'in_stock')
@@ -28,6 +31,7 @@ function botValue(key: string, li: LiveItem): string | number | null {
     case 'weight': return v.weight_lb
     case 'bins': return [...new Set(inStock.map(u => u.location?.code).filter(Boolean))].join(' ')
     case 'description': return it.description
+    case 'upc': return (v as any).upc ?? ''
     case 'sku': return `${v.live_number}${variation ? '-' + variation.toUpperCase().replace(/[^A-Z0-9]+/g, '') : ''}`
     default: return ''
   }
@@ -73,12 +77,24 @@ export default function LiveDetail() {
     navigate('/calendar')
   }
 
+  const fileBase = () => live ? `${live.title.replace(/[^\w$ -]+/g, '').trim().replace(/\s+/g, '-')}-${new Date(live.starts_at).toISOString().slice(0, 10)}` : 'live'
+
+  /** Loyal Shops (Live Assistant Pro) inventory import, using their published template headers.
+      Each variation has its own Live #, so it goes in claim_number and the variant columns stay empty. */
+  function exportLoyalShops() {
+    const rows: (string | number | null)[][] = [[...LOYAL_SHOPS_HEADERS]]
+    for (const li of items) rows.push([
+      String(Number(li.variant.live_number)), '', botValue('title', li), li.qty, botValue('price', li),
+      '', '', '', '', botValue('upc', li), botValue('sku', li), botValue('bins', li),
+    ])
+    downloadFile(`${fileBase()}-loyal-shops.csv`, toCsv(rows) + '\r\n')
+  }
+
   function exportCsv() {
     if (!live) return
     const cols = settings.botColumns
     const rows = [cols.map(c => c.header), ...items.map(li => cols.map(c => botValue(c.key, li)))]
-    const d = new Date(live.starts_at)
-    downloadFile(`${live.title.replace(/[^\w$ -]+/g, '').trim().replace(/\s+/g, '-')}-${d.toISOString().slice(0, 10)}.csv`, toCsv(rows) + '\r\n')
+    downloadFile(`${fileBase()}.csv`, toCsv(rows) + '\r\n')
   }
 
   if (live === undefined) return <p className="muted">Loading…</p>
@@ -103,7 +119,8 @@ export default function LiveDetail() {
           <button className="btn ghost" onClick={() => setEditing(true)}>Edit</button>
           <Link className="btn ghost" to={`/lives/${live.id}/plan`}>Planner & poster</Link>
           <Link className="btn outline-gold" to={`/live?for=${live.id}`}>+ Add items</Link>
-          <button className="btn primary" disabled={!items.length} onClick={exportCsv}>Download bot CSV</button>
+          <button className="btn primary" disabled={!items.length} onClick={exportLoyalShops}>Download for Loyal Shops</button>
+          <button className="btn outline-gold" disabled={!items.length} onClick={exportCsv}>Download my bot CSV</button>
         </div>
       </div>
       {live.notes && <p className="card muted">{live.notes}</p>}

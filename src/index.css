@@ -1312,3 +1312,46 @@ html.overlay-mode, html.overlay-mode body, html.overlay-mode #root { background:
 .comment { padding: 8px 12px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); font-size: .95rem; }
 .comment.claim { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 16%, var(--surface)); }
 .plain-steps { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+/* ===== EASY MODE: larger type and tap targets for everyone ===== */
+html { font-size: 17px; }
+.btn { min-height: 48px; font-size: 1rem; }
+.btn.small { min-height: 42px; font-size: .92rem; }
+.btn.big { min-height: 58px; font-size: 1.12rem; padding: 0 26px; }
+.small, .muted.small { font-size: .9rem; }
+.eyebrow { font-size: .74rem; }
+label { font-size: .9rem; }
+input, select, textarea { min-height: 48px; font-size: 17px; }
+.link-btn { min-height: 40px; }
+.big-steps { margin: 0; padding-left: 1.4rem; display: flex; flex-direction: column; gap: 8px; font-size: 1.05rem; }
+.loyal-card { border-color: rgba(26, 148, 97, .5); background: linear-gradient(135deg, rgba(26, 148, 97, .14), var(--surface)); }
+
+/* ===== PICKING: phone + clip-on scanner ===== */
+.pick-hero { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 22px; padding: 20px; border-radius: 24px; background: var(--surface); box-shadow: inset 0 0 0 2px rgba(255, 211, 110, .45), 0 18px 40px rgba(0, 0, 0, .35); animation: rise .35s var(--ease); }
+.pick-hero.holding { box-shadow: inset 0 0 0 3px var(--emerald-hi), 0 18px 40px rgba(0, 0, 0, .35); }
+.pick-photo { aspect-ratio: 1; border-radius: 18px; overflow: hidden; background: var(--raised); display: grid; place-items: center; color: var(--faint); font-size: 1rem; }
+.pick-photo img { width: 100%; height: 100%; object-fit: cover; }
+.pick-info { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.pick-kicker { font-size: .85rem; letter-spacing: 1.6px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+.pick-live { font-family: Fraunces, Georgia, serif; font-weight: 800; font-size: clamp(3.4rem, 12vw, 5rem); line-height: .95; color: var(--gold); letter-spacing: -1px; }
+.pick-name { font-size: 1.45rem; line-height: 1.2; }
+.pick-variant { font-size: 1.2rem; color: var(--text); font-weight: 600; }
+.pick-where { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 4px; }
+.pick-where span { display: flex; flex-direction: column; align-items: center; padding: 10px 4px; border-radius: 14px; background: #FBEFDC; color: #1B1210; }
+.pick-where small { font-size: .78rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #6B5530; }
+.pick-where b { font-family: Fraunces, Georgia, serif; font-size: 2.3rem; line-height: 1; }
+.pick-nobin { margin: 0; font-size: 1.15rem; color: #FFB49E; }
+.pick-upc { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 10px 14px; border-radius: 12px; background: #fff; color: #1B1210; align-self: flex-start; max-width: 100%; }
+.pick-upc svg { max-width: 100%; height: 46px; }
+.pick-upc span { font-family: ui-monospace, Menlo, monospace; font-size: 1.05rem; letter-spacing: 1.5px; }
+.pick-for { font-size: 1.1rem; color: var(--muted); }
+.pick-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.pick-actions .btn { flex: 1 1 160px; }
+.pick-msg { font-size: 1.15rem !important; }
+@media (max-width: 640px) {
+  .pick-hero { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 14px; }
+  .pick-photo { aspect-ratio: 16 / 10; }
+  .pick-actions .btn { flex: 1 1 100%; }
+}
+
+.pick-hero.no-photo { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 640px) { .pick-where small { letter-spacing: 0; font-size: .72rem; } .pick-where b { font-size: 2rem; } }
