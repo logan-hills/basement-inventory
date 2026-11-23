@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'social', kind: 'course', title: 'Social media that sells', track: 'Business', icon: 'live',
+  id: 'social', kind: 'course', school: 'Brand and marketing', title: 'Social media that sells', track: 'Business', icon: 'live',
   why: 'Social media is your storefront window. Done right, it fills your lives while you sleep.',
   outcomes: [
     'Pick the one or two platforms worth your time',
@@ -9,6 +9,10 @@ const lesson: Lesson = {
     'Film Reels that sell with just a phone and a window',
     'Use five proven video ideas for live sellers',
     'Plan a full week of posts in one sitting',
+  ],
+  sources: [
+    { org: 'HubSpot Academy', title: 'Facebook marketing training (free)', url: 'https://academy.hubspot.com/courses/facebook-marketing-training' },
+    { org: 'Federal Trade Commission', title: 'Disclosures 101 for social media influencers', url: 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers' },
   ],
   covers: [], updated: '2026-11-23',
   slides: [

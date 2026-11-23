@@ -44,6 +44,18 @@ export const GRADED: SlideKind[] = ['tap', 'order', 'quiz', 'scenario', 'number'
 /** Slides that need an answer before Next unlocks. */
 export const INTERACTIVE: SlideKind[] = [...GRADED, 'reflect', 'checklist']
 
+/** A reputable source a course draws on. Shown on the course cover and the finish page. */
+export type Source = { org: string; title: string; url: string }
+
+/** Business courses are grouped into schools on the University page. */
+export type School = 'Brand and marketing' | 'Platforms and pay' | 'Operations' | 'Customer care'
+export const SCHOOLS: { id: School; blurb: string; tone: string }[] = [
+  { id: 'Brand and marketing', blurb: 'Look like the boutique buyers trust, and fill every live.', tone: 'fuchsia' },
+  { id: 'Platforms and pay', blurb: 'Sell where the buyers are and get paid for your content.', tone: 'cobalt' },
+  { id: 'Operations', blurb: 'Store, pick and pack like the big warehouses, minus the waste.', tone: 'emerald' },
+  { id: 'Customer care', blurb: 'Ship fast, talk warm, and turn buyers into regulars.', tone: 'tangerine' },
+]
+
 export type Track = 'Start here' | 'Stock' | 'Sell' | 'Pack and ship' | 'Grow' | 'Business'
 
 export type Lesson = {
@@ -59,12 +71,21 @@ export type Lesson = {
   outcomes?: string[]
   /** Where to try it for real. */
   route?: { to: string; label: string }
+  /** Which school a business course belongs to. */
+  school?: School
+  /** Reputable sources the lesson draws on, cited in the lesson. */
+  sources?: Source[]
   /** Source files this lesson teaches. Used by lessons:check. */
   covers: string[]
   /** Date the lesson was last brought up to date (YYYY-MM-DD). */
   updated: string
   slides: Slide[]
 }
+
+/** One bright color per track, used on the University page and lesson covers. */
+export const TRACK_TONE: Record<Track, string> = { 'Start here': 'violet', Stock: 'emerald', Sell: 'fuchsia', 'Pack and ship': 'cobalt', Grow: 'tangerine', Business: 'gold' }
+/** The color for a lesson: its school's for a course, its track's for an app lesson. */
+export const lessonTone = (l: Lesson) => SCHOOLS.find(s => s.id === l.school)?.tone ?? TRACK_TONE[l.track]
 
 export const TRACKS: Track[] = ['Start here', 'Stock', 'Sell', 'Pack and ship', 'Grow']
 export const COURSE_TRACK: Track = 'Business'
