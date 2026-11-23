@@ -4,7 +4,7 @@ import type { ItemExtra } from './itemFields'
 /** One sellable variation with everything the planning screens need. */
 export type StockRow = {
   id: string; label: string; live_number: string; price: number | null; cost: number | null; weight_lb: number | null
-  /** Optional extras (null until set, or until supabase/013 has been run). */
+  /** Optional extras (null until set, or until supabase/014 has been run). */
   sku: string | null; sale_price: number | null; upc: string | null
   item: { id: string; name: string; brand: string | null; category: string | null; description: string | null; tags: string[]; created_at: string; photo: string | null } & ItemExtra
   inStock: number
