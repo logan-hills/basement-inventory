@@ -21,7 +21,7 @@ const lesson: Lesson = {
     { chapter: 'Welcome to Dazzle', kind: 'learn', title: 'You\'re building a real business', nova: 'Welcome to the family, boss! I\'m Nova, and I\'ll walk with you every step of the way.',
       text: 'Dazzle Warehouse runs the whole trip for every piece you sell: receive it, tag it, shelve it, plan it, sell it live, pick it, pack it, ship it, and see the money. This orientation gets your gear, your space and your first month set up so the app has something solid to run on.',
       points: ['Week 1: gear and space', 'Week 2: settings, shelves and your best sellers', 'Week 3: your first planned live', 'Week 4: review the numbers and tune up'] },
-    { kind: 'learn', title: 'Learn it live with us', text: 'Orientation is more than these lessons. Every week the Dynamic Dazzle team teaches live classes, with a daytime and an evening time so you can come around work and family. Find the times and save your seat on the University page, under Orientation.',
+    { kind: 'learn', title: 'Learn it live with us', text: 'Orientation is more than these lessons. Every week the Dynamic Dazzle team teaches live classes, with a daytime and an evening time so you can come around work and family. The times are right on the University home, in step 2, Join a live class. Tap a time to save your seat.',
       table: { head: ['When', 'Class', 'What you\'ll leave with'], rows: [
         ['Mondays', 'Implementation meeting', 'Settings done, tags printing, shelves labeled'],
         ['Wednesdays', 'How to go Live', 'A planned live, a calendar slot and the comment bot connected'],
