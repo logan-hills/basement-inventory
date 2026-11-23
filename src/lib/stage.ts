@@ -72,7 +72,7 @@ export function pokeTimer() {
 export function friendlySlotError(msg: string) {
   if (msg.includes('live_slots_check')) return 'Book whole hours that start on the hour.'
   if (msg.includes('live_slots_no_overlap')) return 'Someone already has that time. Pick a time that does not overlap.'
-  if (msg.includes('stage') && (msg.includes('does not exist') || msg.includes('schema cache'))) return 'Shared Page needs a quick database update first (supabase/007_shared_page_slots.sql).'
+  if (msg.includes('stage') && (msg.includes('does not exist') || msg.includes('schema cache'))) return 'Shared Page needs a quick database update first (supabase/010_shared_page_slots.sql).'
   return msg
 }
 

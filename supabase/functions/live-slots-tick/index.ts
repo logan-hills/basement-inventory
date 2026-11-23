@@ -1,4 +1,4 @@
-// Shared Page timer. Runs every 15 seconds (see supabase/009_slot_timer.sql) and can also be
+// Shared Page timer. Runs every 15 seconds (see supabase/011_slot_timer.sql) and can also be
 // poked by the app at the exact start or stop second. Each run only does what the schedule says
 // is due, and every step "claims" the slot first, so running it twice at once is harmless.
 //

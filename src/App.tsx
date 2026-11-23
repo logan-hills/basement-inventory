@@ -31,6 +31,7 @@ import Customers from './pages/Customers'
 import Shipping from './pages/Shipping'
 import Reports from './pages/Reports'
 import Lessons from './pages/Lessons'
+import LessonPlayer from './pages/LessonPlayer'
 import Planner from './pages/Planner'
 import LivePlan from './pages/LivePlan'
 import SharedPage from './pages/SharedPage'
@@ -68,7 +69,7 @@ const SELL = [
 const MORE = [
   { to: '/profile', label: 'My profile', icon: 'users' },
   { to: '/reports', label: 'Reports', icon: 'reports' },
-  { to: '/lessons', label: 'Lessons', icon: 'lessons' },
+  { to: '/lessons', label: 'Dazzle Academy', icon: 'lessons' },
   { to: '/settings', label: 'Settings', icon: 'settings' },
 ]
 
@@ -192,6 +193,7 @@ function Shell() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/lessons" element={<Lessons />} />
+          <Route path="/lessons/:id" element={<LessonPlayer />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/upload" element={<OrdersUpload />} />
           <Route path="/order/:code" element={<OrderDetail />} />

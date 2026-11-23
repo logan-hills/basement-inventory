@@ -143,8 +143,15 @@ export default function OrdersUpload() {
     } finally { setBusy(false) }
   }
 
-  function template() {
-    downloadFile('live-sales-template.csv', toCsv([['Order #', 'Customer name', 'Facebook name', 'Email', 'Phone', 'Address', 'Address 2', 'City', 'State', 'ZIP', 'Live #', 'Description', 'Qty', 'Price']]) + '\r\n')
+  const TEMPLATE_HEAD = ['Order #', 'Customer name', 'Facebook name', 'Email', 'Phone', 'Address', 'Address 2', 'City', 'State', 'ZIP', 'Country', 'Live #', 'Description', 'Qty', 'Price']
+  function template(example: boolean) {
+    const rows = [TEMPLATE_HEAD]
+    if (example) rows.push(
+      ['', 'Keisha Johnson', 'Keisha J', 'keisha@example.com', '555-201-3344', '12 Magnolia Ln', '', 'Atlanta', 'GA', '30310', 'US', '4821', 'Gold hoop set', '1', '12'],
+      ['', 'Keisha Johnson', 'Keisha J', 'keisha@example.com', '555-201-3344', '12 Magnolia Ln', '', 'Atlanta', 'GA', '30310', 'US', '3310', 'Rose tote', '1', '18'],
+      ['', 'Monique Reed', 'Mo Reed', '', '', '88 Pine St', 'Apt 4', 'Detroit', 'MI', '48201', 'US', '2207', 'Pearl bracelet', '2', '8'],
+    )
+    downloadFile(example ? 'live-sales-example.csv' : 'live-sales-template.csv', toCsv(rows) + '\r\n')
   }
 
   return (
@@ -166,7 +173,7 @@ export default function OrdersUpload() {
       )}
 
       <div className="card stack">
-        <b>Upload the sales CSV from your live-sale bot</b>
+        <b>Upload the sales CSV from your live-sale bot or the template</b>
         <span className="muted">Any layout works. I match the columns automatically, and you can fix any match below. One order is made per customer (or per order number, if your file has one). Items are matched to inventory by Live #.</span>
         <div className="row-gap">
           <label className="drop grow">
@@ -174,7 +181,19 @@ export default function OrdersUpload() {
             <span>{fileName ? `Choose a different file (${fileName})` : 'Choose the sales CSV'}</span>
           </label>
         </div>
-        <button className="link-btn self-start" onClick={template}>No bot export? Download a blank sales template</button>
+      </div>
+
+      <div className="card template-card">
+        <div className="stack tight-gap">
+          <b>Using a different bot, or writing sales down?</b>
+          <span className="muted">Download the sales template, fill in one row per piece sold, save it as CSV, and upload it above. Rows for the same customer become one order and one box. Leave Order # blank unless your bot gives you one.</span>
+          <div className="template-cols">{TEMPLATE_HEAD.map(h => <span key={h} className="chip-mini">{h}</span>)}</div>
+        </div>
+        <div className="stack tight-gap">
+          <button className="btn gold" onClick={() => template(false)}>Download the sales template</button>
+          <button className="link-btn" onClick={() => template(true)}>See a filled-in example</button>
+          <Link className="link-btn" to="/lessons/upload">Show me how (2 min lesson)</Link>
+        </div>
       </div>
 
       {err && <p className="danger-text">{err}</p>}
