@@ -73,7 +73,7 @@ const SELL = [
 const MORE = [
   { to: '/profile', label: 'My profile', icon: 'users' },
   { to: '/reports', label: 'Reports', icon: 'reports' },
-  { to: '/lessons', label: 'Dazzle Academy', icon: 'lessons' },
+  { to: '/lessons', label: 'Dazzle University', icon: 'lessons' },
   { to: '/settings', label: 'Settings', icon: 'settings' },
 ]
 

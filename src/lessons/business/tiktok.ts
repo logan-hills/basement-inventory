@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'tiktok', kind: 'course', title: 'Selling on TikTok Shop', track: 'Business', icon: 'cart',
+  id: 'tiktok', kind: 'course', school: 'Platforms and pay', title: 'Selling on TikTok Shop', track: 'Business', icon: 'cart',
   why: "TikTok Shop puts your pieces in front of buyers who've never heard of you, and lets them check out without leaving the app.",
   outcomes: [
     'Know what it takes to open a shop, and what to have ready',
@@ -9,6 +9,10 @@ const lesson: Lesson = {
     'Write listings that get found and bought',
     'Use shoppable videos, LIVE and affiliates to drive sales',
     'Protect your shop health with on-time shipping and synced stock',
+  ],
+  sources: [
+    { org: 'TikTok Shop', title: 'Introducing TikTok Shop', url: 'https://business.tiktokshop.com/us/blog/detail/10020329' },
+    { org: 'Federal Trade Commission', title: 'Disclosures 101 for social media influencers', url: 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers' },
   ],
   covers: [], updated: '2026-11-23',
   slides: [

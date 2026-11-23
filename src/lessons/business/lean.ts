@@ -1,0 +1,107 @@
+import type { Lesson } from '../types'
+
+const lesson: Lesson = {
+  id: 'lean', kind: 'course', school: 'Operations', title: 'Cut the wasted time: lean for live sellers', track: 'Business', icon: 'clock',
+  why: 'Toyota became one of the world\'s best carmakers by hunting waste. The same habits can give you back your evenings.',
+  outcomes: [
+    'Spot the 8 kinds of waste in your own week',
+    'Map one live from "box arrives" to "buyer opens it" and find the slow spots',
+    'Use "5 whys" to fix the cause of a problem, not just the symptom',
+    'Turn your best way of doing a task into a checklist anyone can follow',
+    'Make one small improvement every week, and keep it',
+  ],
+  route: { to: '/', label: 'Go to Home' },
+  sources: [
+    { org: 'Toyota', title: 'Toyota Production System', url: 'https://global.toyota/en/company/vision-and-philosophy/production-system/' },
+    { org: 'Lean Enterprise Institute', title: 'Lean lexicon: waste (muda)', url: 'https://www.lean.org/lexicon-terms/waste/' },
+    { org: 'Lean Enterprise Institute', title: 'Lean lexicon: all terms', url: 'https://www.lean.org/explore-lean/lexicon-terms/' },
+    { org: 'ASQ (American Society for Quality)', title: 'What is 5S?', url: 'https://asq.org/quality-resources/five-s-tutorial' },
+  ],
+  covers: [], updated: '2026-11-23',
+  slides: [
+    { chapter: 'What lean means', kind: 'learn', title: 'Value, through your buyer\'s eyes', nova: 'Lean isn\'t about working harder. It\'s about stopping the work that doesn\'t matter.',
+      text: 'Lean thinking grew out of the Toyota Production System. The idea is simple: look at every step through the customer\'s eyes. A step that makes the product better, faster or more trusted adds value. A step the customer would never pay for is waste (the Japanese word is muda). The Lean Enterprise Institute describes the goal as removing waste so the work flows smoothly to the customer.',
+      table: { head: ['Step in your week', 'Would your buyer pay for it?', 'Value or waste?'], rows: [
+        ['Taking a great photo of the piece', 'Yes, it helps her decide', 'Value'],
+        ['Showing the piece up close on live', 'Yes', 'Value'],
+        ['Hunting through tubs for the piece', 'No', 'Waste'],
+        ['Retyping orders from comments', 'No', 'Waste'],
+        ['Packing it neatly with a thank-you card', 'Yes', 'Value'],
+        ['Re-shipping a swapped order', 'No', 'Waste'],
+      ] } },
+    { kind: 'quiz', q: 'Which of these is waste in lean terms?', options: ['Steaming a dress before you show it', 'Walking to the garage three times for tape', 'Writing a thank-you note'], answer: 1, why: 'The buyer gets nothing from your three trips. Keep tape at the packing table and the waste disappears.' },
+
+    { chapter: 'The 8 wastes', kind: 'learn', title: 'Remember DOWNTIME', nova: 'Here\'s the memory trick every lean coach uses.',
+      text: 'Lean teachers list eight kinds of waste. The first seven come from Toyota; the eighth (unused talent) was added later by lean practitioners. The first letters spell DOWNTIME.',
+      table: { head: ['Waste', 'What it looks like for a live seller'], rows: [
+        ['Defects', 'Wrong piece in a box, typo in a price, a missed order'],
+        ['Overproduction', 'Prepping 150 pieces for a live that sells 40'],
+        ['Waiting', 'Sitting idle while labels print one at a time, or waiting on unpaid invoices'],
+        ['Non-used talent', 'Your helper is great on camera but only ever tapes boxes'],
+        ['Transportation', 'Carrying stock between rooms and back again'],
+        ['Inventory', 'Boxes of last season nobody has touched in 6 months'],
+        ['Motion', 'Bending, reaching, digging, walking for supplies'],
+        ['Extra processing', 'Writing orders by hand and then typing them in'],
+      ] } },
+    { kind: 'tap', title: 'Name that waste', prompt: 'You photograph every piece twice: once for the live poster and again, from scratch, for the Facebook post. Which waste is that?', screen: { title: 'The 8 wastes', buttons: ['Defects', 'Waiting', 'Extra processing', 'Inventory'] }, answer: 'Extra processing', hint: 'You\'re doing the same work twice when once would do. Shoot once, use the photo everywhere.' },
+    { kind: 'scenario', title: 'The overflow table', situation: 'Before every live you pull 150 pieces "just in case." You usually show about 60. Afterward it takes an hour to put the rest away.',
+      options: [
+        { text: 'Pull even more so you never run out of things to show', feedback: 'That\'s overproduction, and it makes the put-away worse. More stuff isn\'t more sales.' },
+        { text: 'Plan the live first, pull about 70 pieces with a few backups, and track how many you actually show', best: true, feedback: 'You cut the pull and the put-away, and next time your data tells you the right number.' },
+        { text: 'Leave the extras on the table until the next live', feedback: 'Now they\'re out of their bins, out of your system, and in the way. That\'s inventory waste and motion waste.' },
+      ] },
+
+    { chapter: 'Map your week', kind: 'learn', title: 'Draw the whole trip', text: 'Lean teams use a value stream map: a simple drawing of every step from start to finish, with how long each one takes and how long things sit waiting in between. You can do it on one sheet of paper.',
+      table: { head: ['Step', 'Hands-on time', 'Waiting before the next step'], rows: [
+        ['Haul arrives and gets unboxed', '30 min', '2 days in the box'],
+        ['Tag and shelve 40 pieces', '1 hr', '3 days'],
+        ['Plan the live and pull pieces', '1 hr', '0'],
+        ['Live', '1.5 hrs', '1 day for payments'],
+        ['Pick and pack', '1 hr', '1 day'],
+        ['Ship', '30 min', '3 days in the mail'],
+      ] },
+      example: 'Hands-on time adds up to 5.5 hours, but the whole trip takes about 10 days. Most of the time, the piece is just sitting. The quickest win here: tag the haul the day it arrives, and it can be in a live 2 days sooner.' },
+    { kind: 'number', title: 'Hands-on vs total', q: 'In the map above, hands-on time is 5.5 hours. The total trip is 10 days (240 hours). About what percent of the time is someone actually working on the piece?', answer: 2.3, tolerance: 0.3, suffix: '%', hint: 'Divide 5.5 by 240, then multiply by 100.', why: '5.5 ÷ 240 ≈ 2.3%. That\'s normal! Lean teams find the same thing in factories. The big wins are usually in the waiting, not in working faster.' },
+
+    { chapter: 'Fix the cause', kind: 'learn', title: 'Ask "why?" five times', nova: 'Toddlers already know this trick. Why? Why? Why?',
+      text: 'Toyota made "5 whys" famous: when something goes wrong, ask why, then ask why about that answer, and keep going until you hit a cause you can fix. It stops you from patching the same problem every week.',
+      points: [
+        'Problem: a buyer got the wrong earrings.',
+        'Why? The earrings went in the wrong box.',
+        'Why? Two boxes were sitting side by side with no labels yet.',
+        'Why? Box labels get printed after packing starts.',
+        'Why? The printer is in the other room, so we skip it.',
+        'Fix: move the printer to the packing table and print box labels first, every time.',
+      ] },
+    { kind: 'order', title: 'Practice the whys', prompt: 'Put this chain of "whys" in order, from the problem down to the root cause.', steps: ['A live started 25 minutes late', 'The pieces weren\'t pulled yet', 'Pulling took 2 hours instead of 1', 'Half the pieces had no bin address', 'New hauls get stacked on the floor instead of shelved'] },
+    { kind: 'learn', title: 'Small fixes, every week', text: 'Kaizen means continuous improvement: many small changes instead of one giant makeover. A popular way to run it is Plan, Do, Check, Act.',
+      table: { head: ['Step', 'What you do', 'Example'], rows: [
+        ['Plan', 'Pick one waste and one small fix', 'Keep a tape gun at the table'],
+        ['Do', 'Try it for one week', 'Pack two lives with it'],
+        ['Check', 'Did it help? Time it.', 'Packing went from 80 to 65 minutes'],
+        ['Act', 'Keep it and write it into your routine, or try something else', 'Added it to the pack card'],
+      ] },
+      tip: 'One 10-minute improvement a week adds up to more than 8 hours saved by the end of the year, and they stack.' },
+
+    { chapter: 'Standard work', kind: 'learn', title: 'Write down your best way', text: 'In lean, standardized work means writing down the current best way to do a task, so it\'s done the same way every time, by anyone. It\'s not a cage. It\'s the starting line for the next improvement. Checklists are the simplest version, and they work: pilots and surgeons use them for exactly this reason.',
+      points: ['Write it while you do the task, not from memory', 'Keep it to one page, in plain words', 'Tape it where the work happens', 'When you find a better way, update the sheet the same day'] },
+    { kind: 'script', title: 'Your pre-live checklist', text: 'Copy this, then make it yours. Run it 2 hours before every live.', lines: [
+      '☐ Live planned in the app, pieces added',
+      '☐ Pieces pulled in bin order and on the rack by the camera',
+      '☐ Prices and Live # cards checked against the list',
+      '☐ Phone charged, ring light on, stand steady',
+      '☐ Poster posted and shared 2 days ahead',
+      '☐ Comment bot connected and tested',
+      '☐ Water, notes, and a smile',
+    ], tip: 'If you ever forget something on live, add it to the list that night.' },
+    { kind: 'scenario', title: 'Batch or flow?', situation: 'You have 60 new pieces to photograph, tag and shelve. You could do each piece start to finish, or do all the photos, then all the tags, then all the shelving.',
+      options: [
+        { text: 'Always do one piece completely before the next', feedback: 'One-piece flow is great when steps happen in the same spot. Here you\'d keep switching between the camera, the printer and the shelves.' },
+        { text: 'Batch the photos (one setup), print all tags at once, then shelve by scanning bin then tags', best: true, feedback: 'Right call here. Each step has a big setup (lights, printer, walking), so batching saves the setup time. Lean is about choosing what removes the most waste, not following one rule.' },
+        { text: 'Do whatever feels right that day', feedback: 'That\'s how the same job takes 1 hour one week and 3 the next. Pick a method, time it, and improve it.' },
+      ] },
+    { kind: 'reflect', title: 'Your biggest waste', prompt: 'Of the 8 wastes, which one costs you the most time each week? Write one small fix you\'ll try this week.', placeholder: 'My biggest waste is… My fix is…', example: 'Motion. I walk to the garage for mailers every pack day. Fix: keep a week\'s worth of mailers under the packing table.' },
+    { kind: 'checklist', title: 'Go lean this month', prompt: 'Tick what you\'ll commit to.', items: ['Draw a value stream map of one live, with times', 'Circle the step with the longest wait and fix it', 'Use 5 whys on the next mistake that happens', 'Write a pre-live checklist and a pack card', 'Make one 10-minute improvement every week', 'Ask my helper what she\'s good at and give her a bigger role'] },
+  ],
+}
+export default lesson

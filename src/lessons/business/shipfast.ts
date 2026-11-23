@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'shipfast', kind: 'course', title: 'Ship fast, keep them coming back', track: 'Business', icon: 'truck',
+  id: 'shipfast', kind: 'course', school: 'Customer care', title: 'Ship fast, keep them coming back', track: 'Business', icon: 'truck',
   why: 'Fast shipping is the moment your buyer decides if she\'ll shop with you again.',
   outcomes: [
     'Set a ship-by promise you can keep, and beat it',
@@ -11,6 +11,11 @@ const lesson: Lesson = {
     'Make unboxing feel special for pennies',
   ],
   route: { to: '/orders', label: 'Open Pick and pack' },
+  sources: [
+    { org: 'USPS', title: 'USPS Ground Advantage', url: 'https://www.usps.com/ship/ground-advantage.htm' },
+    { org: 'Pirate Ship', title: 'Upload address spreadsheets', url: 'https://support.pirateship.com/en/articles/1068428-how-do-i-upload-address-spreadsheets-into-pirate-ship' },
+    { org: 'Pirate Ship', title: 'Buy batches of labels at one time', url: 'https://support.pirateship.com/en/articles/1068423-can-i-buy-batches-of-multiple-labels-at-one-time' },
+  ],
   covers: [], updated: '2026-11-23',
   slides: [
     { chapter: 'Speed is service', kind: 'learn', title: 'Why speed wins', nova: 'Think about the last time a package took forever. How did you feel about that seller?',

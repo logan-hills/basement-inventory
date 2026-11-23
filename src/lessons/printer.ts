@@ -1,0 +1,85 @@
+import type { Lesson } from './types'
+
+const lesson: Lesson = {
+  id: 'printer', title: 'Print 2×1 tags on your thermal printer', track: 'Stock', icon: 'print',
+  why: 'A tag that prints crisp and lines up the first time saves you labels, money and a lot of frustration.',
+  outcomes: [
+    'Load a 2×1 inch roll in a 4×6 thermal printer so it feeds straight',
+    'Set the paper size once so every tag and bin label lines up',
+    'Use white tags for regular pieces and yellow tags for sale pieces',
+    'Print bin labels on the same roll',
+    'Fix blank, faded, shifted and skipping labels in a minute',
+  ],
+  route: { to: '/labels', label: 'Open Print tags' },
+  sources: [
+    { org: 'Zebra Technologies', title: 'Direct thermal vs thermal transfer printing', url: 'https://www.zebra.com/us/en/resource-library/faq/printing/difference-between-direct-thermal-and-thermal-transfer-printing.html' },
+    { org: 'Zebra Technologies', title: 'Direct thermal FAQ', url: 'https://www.zebra.com/us/en/resource-library/getting-started/direct-thermal-thermal-transfer/direct-thermal-faq.html' },
+  ],
+  covers: ['src/pages/Labels.tsx', 'src/pages/BinLabels.tsx'], updated: '2026-11-23',
+  slides: [
+    { chapter: 'Know your printer', kind: 'learn', title: 'No ink, ever', nova: 'Let\'s get your printer purring. Once it\'s set up, it\'s set up for good.',
+      text: 'Your shipping label printer (like the Core Innovations 4×6 thermal printer from Walmart) is a direct thermal printer. It has no ink or toner. Instead, the labels are coated with a layer that turns black where the print head heats it. That\'s why it\'s cheap to run, and also why the labels need a little care.',
+      points: ['Only direct thermal labels work. Regular paper or sheet labels won\'t print.', 'The coated side must face the print head', 'Heat and strong sunlight can darken or fade the labels over time, so store rolls and tagged stock out of hot cars and sunny windows', 'The same printer does your 4×6 shipping labels, 2×1 item tags and 2×1 bin labels. Just swap the roll.'],
+      tip: 'Zebra, one of the biggest label printer makers, explains that direct thermal labels are best for short-to-medium life uses like shipping and retail tags. That fits a live seller perfectly.' },
+    { kind: 'quiz', q: 'Your thermal printer runs out of ink. What do you buy?', options: ['An ink cartridge', 'Nothing. It doesn\'t use ink.', 'A toner refill'], answer: 1, why: 'Direct thermal printers use heat, not ink. If prints get faint, it\'s the roll, the darkness setting or a dirty print head, never ink.' },
+    { kind: 'learn', title: 'Two rolls, two jobs', text: 'You have two colors of 2×1 inch direct thermal labels. Give each color one job and stick to it, so anyone can tell a sale piece from across the room.',
+      table: { head: ['Roll', 'Use it for', 'In the app'], rows: [
+        ['White 2×1', 'Regular item tags and all bin labels', 'Tag style: Regular (white roll)'],
+        ['Yellow 2×1', 'Sale tags only', 'Tag style: Sale (yellow roll)'],
+        ['White 4×6', 'Shipping labels and box labels', 'Shipping and Pick and pack'],
+      ] },
+      tip: 'Keep the yellow roll in a labeled bag by the printer. If it\'s loaded when it shouldn\'t be, every regular tag comes out looking like a sale.' },
+
+    { chapter: 'Load the roll', kind: 'learn', title: 'Load a 2×1 roll straight', text: 'Your printer is built for 4 inch wide labels, so a 2 inch roll needs the guides pulled in to hold it in the middle. If the roll can slide side to side, tags will print crooked or off the edge.',
+      points: ['Open the cover and take out the 4×6 roll or stack', 'Drop the 2×1 roll onto the holder with labels coming off the top, coated side up toward the print head', 'Slide both paper guides in until they just touch the roll\'s edges', 'Feed the first label under the print head and close the cover until it clicks', 'Press the feed button once. One label should come out and stop at the tear bar.'],
+      example: 'If a test tag comes out completely blank, the roll is in upside down. Flip it so the shiny coated side faces the print head.' },
+    { kind: 'order', title: 'Practice: load it', prompt: 'Put the steps for swapping to a 2×1 roll in order.', steps: ['Open the cover and remove the 4×6 labels', 'Put the 2×1 roll on, coated side toward the print head', 'Slide the guides in to touch the roll', 'Close the cover until it clicks', 'Let the printer find the new label size', 'Print one test tag'] },
+    { kind: 'learn', title: 'Let it learn the label size', text: 'Thermal printers find the gap between labels with a little sensor. When you change roll sizes, the printer has to re-learn where each label starts. Most do this automatically after you close the cover, or when you hold the feed button until it feeds a few labels and beeps. Your printer\'s quick-start card shows the exact way for your model.',
+      points: ['Do it every time you switch between 4×6 and 2×1', 'A couple of blank labels feeding out during this step is normal', 'If tags start creeping up or down the label, run it again'] },
+
+    { chapter: 'Set it once', kind: 'learn', title: 'Tell the computer the size', text: 'Your computer has to know each label is 2 inches wide and 1 inch tall (50.8 × 25.4 mm). Set it in the print window the first time, and most computers remember it.',
+      table: { head: ['Setting in the print window', 'Set it to'], rows: [
+        ['Printer', 'Your thermal printer'],
+        ['Paper size', '2 x 1 in (50.8 x 25.4 mm). If it\'s not listed, add a custom size in the printer\'s settings.'],
+        ['Scale', '100% or Actual size'],
+        ['Margins', 'None'],
+        ['Headers and footers', 'Off'],
+      ] },
+      tip: 'Printing from a computer with the printer\'s USB cable is the most reliable setup. Phones can print through the printer maker\'s app, but sizes are easier to get right on a computer.' },
+    { kind: 'tap', title: 'Practice: pick the right label type', prompt: 'You\'re printing tags for 12 new tops on your 2×1 white roll. Which label type do you choose on Print tags?', screen: { title: 'Print tags · Label type', buttons: ['Letter sheet, 30 per page', '4×6 shipping label printer, 12 tags per label', 'Thermal roll 2×1 in, one tag per label (recommended)'] }, answer: 'Thermal roll 2×1 in, one tag per label (recommended)', hint: 'Your roll has one 2×1 label at a time, so pick the 2×1 roll option.' },
+    { kind: 'learn', title: 'Sale tags on the yellow roll', text: 'When pieces go on sale, swap in the yellow roll and switch Tag style to Sale (yellow roll). Then pick the sale price: Each item\'s own sale price, Percent off the regular price, or One price for all. In Inventory, you can select several pieces and tap Sale tags to print them all at once.',
+      screen: { title: 'Inventory · 8 selected', buttons: ['Print tags', 'Sale tags', 'Move'], highlight: 'Sale tags' },
+      example: 'Saturday is clearance day. Filter Inventory to pieces older than 90 days, select them, tap Sale tags, and stick a bright yellow tag over each old one. Buyers on live can spot sale pieces instantly.' },
+    { kind: 'tap', title: 'Practice: sale tags', prompt: 'You selected 8 pieces in Inventory for a sale live. Which button prints their yellow tags?', screen: { title: 'Inventory · 8 selected', buttons: ['Print tags', 'Sale tags', 'Move'] }, answer: 'Sale tags', hint: 'Sale tags prints in the sale style, made for the yellow roll.' },
+    { kind: 'learn', title: 'Bin labels on the same roll', text: 'On Bin labels, choose "Thermal roll 2×1 in, one bin per label." Each label gets the bin address and its barcode. Use the white roll, and stick bin labels on the front edge of the shelf, right under the bin, so a scanner can reach them.',
+      tip: 'Put a strip of clear packing tape over bin labels on shelves you touch a lot. It keeps them from smudging and they still scan fine.' },
+
+    { chapter: 'Fix it fast', kind: 'learn', title: 'Troubleshooting', text: 'Almost every printing problem is one of these, and each takes about a minute to fix.',
+      table: { head: ['What you see', 'Most likely cause', 'Fix'], rows: [
+        ['Blank labels', 'Roll upside down', 'Flip the roll so the coated side faces the print head'],
+        ['Print shifts down a little more each tag', 'Printer hasn\'t learned the 2×1 size', 'Run the label size learning step again'],
+        ['Tag is tiny or cut off', 'Paper size or scale is wrong', 'Paper size 2 x 1 in, scale 100%, margins None'],
+        ['A blank label between every tag', 'Paper size set taller than the label', 'Set paper size to exactly 2 x 1 in'],
+        ['Faint or gray print', 'Darkness set low, or a dirty print head', 'Raise darkness in the printer settings; wipe the head with an alcohol pad'],
+        ['Crooked tags', 'Guides not touching the roll', 'Slide the guides in snug'],
+      ] } },
+    { kind: 'scenario', title: 'Every other label is blank', situation: 'You print 10 tags and get 20 labels: a tag, a blank, a tag, a blank.',
+      options: [
+        { text: 'Buy a new roll, this one must be bad', feedback: 'The roll is fine. This is almost always a size setting.' },
+        { text: 'Check the paper size is exactly 2 x 1 in with margins None, then run the label size learning step', best: true, feedback: 'Right. A page set even a little taller than the label spills onto the next one. Fix the size and it prints one tag per label.' },
+        { text: 'Cut the blanks off and keep going', feedback: 'That wastes half your roll. A one-minute settings fix saves dozens of dollars of labels.' },
+      ] },
+    { kind: 'number', title: 'What a tag costs', q: 'Say a roll of 2×1 labels has 2,000 labels and costs $17. About how many cents does one tag cost?', answer: 0.85, tolerance: 0.05, suffix: '¢', hint: 'Divide $17 by 2,000, then multiply by 100 for cents.', why: '$17 ÷ 2,000 = $0.0085, less than one cent per tag. Do the same math with the price and label count on your own box, since rolls vary. Either way, a misprint costs pennies, but a whole wasted roll adds up, so set the size right once.' },
+    { kind: 'learn', title: 'Keep tags looking sharp', text: 'Direct thermal labels react to heat, light and some chemicals. A little care keeps tags readable for as long as the piece sits on your shelf.',
+      points: ['Store rolls in their bag or a drawer, away from heaters and windows', 'Don\'t leave tagged stock or label rolls in a hot car', 'Keep hand sanitizer and cleaning sprays off the printed side', 'Wipe the print head with an alcohol pad every few rolls so the print stays dark', 'If an old tag looks gray or won\'t scan, reprint it from the item page'] },
+    { kind: 'scenario', title: 'Sale day, wrong roll', situation: 'You just printed 30 sale tags and they came out on white labels. The yellow roll was in the drawer.',
+      options: [
+        { text: 'Use the white ones, nobody will notice', feedback: 'The whole point of yellow is that sale pieces jump out on camera and on the shelf. White sale tags blend in with full price.' },
+        { text: 'Swap in the yellow roll, let the printer learn the size, and reprint. Recycle the 30 white ones.', best: true, feedback: 'Right. It costs about 25 cents of labels and keeps your system honest: yellow always means sale.' },
+        { text: 'Color them in with a highlighter', feedback: 'Creative, but ink and solvents can darken thermal labels and smear the barcode. Reprint instead.' },
+      ] },
+    { kind: 'reflect', title: 'Your printing spot', prompt: 'Where will your printer live so it\'s close to both receiving and packing? Where will you keep the spare rolls?', placeholder: 'My printer will sit…', example: 'On the end of the packing table, next to the receiving shelf. Spare white and yellow rolls in a labeled drawer underneath.' },
+    { kind: 'checklist', title: 'Printer setup', prompt: 'Tick these off the first time you set up.', items: ['Load the white 2×1 roll with guides snug', 'Let the printer learn the 2×1 size', 'Print one test tag at 2 x 1 in, 100%, margins None', 'Print one test bin label and scan it', 'Label a bag for the yellow sale roll', 'Store spare rolls away from heat and sunlight'] },
+  ],
+}
+export default lesson

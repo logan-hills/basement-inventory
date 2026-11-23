@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'communication', kind: 'course', title: 'Communication is key', track: 'Business', icon: 'users',
+  id: 'communication', kind: 'course', school: 'Customer care', title: 'Communication is key', track: 'Business', icon: 'users',
   why: 'Delays happen. Silence is what loses customers. When you speak up early, most buyers stay loyal.',
   outcomes: [
     'Set your shop rules so most problems never happen',
@@ -9,6 +9,10 @@ const lesson: Lesson = {
     'Use ready-made messages for the eight situations every seller faces',
     'Turn an upset buyer into a loyal one with L.A.S.T.',
     'Handle non-payers fairly and keep your boundaries',
+  ],
+  sources: [
+    { org: 'Harvard Business School Working Knowledge', title: 'The right way to manage churn for maximum profit', url: 'https://www.library.hbs.edu/working-knowledge/the-right-way-to-manage-churn-for-maximum-profit' },
+    { org: 'U.S. Small Business Administration', title: 'Marketing and sales', url: 'https://www.sba.gov/business-guide/manage-your-business/marketing-sales' },
   ],
   covers: [], updated: '2026-11-23',
   slides: [
