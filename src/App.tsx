@@ -5,6 +5,9 @@ import Login from './pages/Login'
 import CreateShop from './pages/CreateShop'
 import Home from './pages/Home'
 import ComingSoon from './pages/ComingSoon'
+import Intake from './pages/Intake'
+import Inventory from './pages/Inventory'
+import Labels from './pages/Labels'
 
 function Shell() {
   const { session, shop, loading } = useSession()
@@ -14,7 +17,7 @@ function Shell() {
 
   return (
     <div className="shell">
-      <header className="topbar">
+      <header className="topbar no-print">
         <NavLink to="/" className="brand">The Basement</NavLink>
         <nav>
           <NavLink to="/intake">Add</NavLink>
@@ -27,8 +30,9 @@ function Shell() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/intake" element={<ComingSoon title="Add inventory" />} />
-          <Route path="/inventory" element={<ComingSoon title="Inventory" />} />
+          <Route path="/intake" element={<Intake />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/labels" element={<Labels />} />
           <Route path="/locations" element={<ComingSoon title="Warehouse" />} />
           <Route path="/scan" element={<ComingSoon title="Scan" />} />
         </Routes>
