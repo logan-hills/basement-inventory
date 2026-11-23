@@ -1,18 +1,44 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 import novaAvatar from '../assets/nova-avatar.webp'
+import type { NovaHandle } from './nova3d'
+
+/* 3D Nova is loaded on first use and shared by every Nova on screen. Until it's ready, or on a
+   device that can't run it (no WebGL, very old or slow), she shows as her picture. */
+type Nova3D = typeof import('./nova3d')
+let nova3d: Nova3D | null = null
+let loading: Promise<Nova3D | null> | null = null
+const load3d = () => (loading ??= import('./nova3d').then(m => (nova3d = m)).catch(() => null))
 
 /* Nova: the Dazzle University teaching assistant, from the official Dynamic Dazzle art
-   (green bag, gold bow and crown, cat-eye shades, DD crest). Moods change how she moves
-   and what sparkles around her. */
+   (green bag, gold bow and crown, cat-eye shades, DD crest). She's a real 3D handbag:
+   drag to spin her, tap for a twirl, and she turns to follow your finger or mouse.
+   Moods change her face, how she moves and what sparkles around her. */
 export type NovaMood = 'happy' | 'cheer' | 'think' | 'oops' | 'wow' | 'wink'
 
 export function Nova({ mood = 'happy', size = 96, className = '' }: { mood?: NovaMood; size?: number; className?: string }) {
+  const canvas = useRef<HTMLCanvasElement>(null)
+  const handle = useRef<NovaHandle | null>(null)
+  const [live, setLive] = useState(() => !!nova3d?.supported())
+  const moodRef = useRef(mood)
+
+  useEffect(() => {
+    let gone = false
+    load3d().then(m => {
+      if (gone || !m || !canvas.current) return
+      handle.current = m.attach(canvas.current, moodRef.current, () => setLive(false))
+      setLive(!!handle.current)
+    })
+    return () => { gone = true; handle.current?.detach(); handle.current = null }
+  }, [])
+  useEffect(() => { moodRef.current = mood; handle.current?.setMood(mood) }, [mood])
+
   return (
-    <span className={`nova nova-${mood} ${className}`} style={{ width: size, height: size }} role="img" aria-label={`Nova, ${mood}`}>
+    <span className={`nova nova-${mood} ${live ? 'nova-live' : ''} ${className}`} style={{ width: size, height: size }} role="img" aria-label={`Nova, ${mood}${live ? '. Drag to spin her, tap for a twirl.' : ''}`}>
       <span className="nova-ring">
         <img src={novaAvatar} alt="" width={size} height={size} draggable={false} />
       </span>
+      <canvas ref={canvas} className="nova-3d" aria-hidden="true" />
       {(mood === 'cheer' || mood === 'wow') && (
         <svg className="nova-fx" viewBox="0 0 100 100" aria-hidden="true">
           <g fill="#FFD36E">
