@@ -8,12 +8,15 @@ export type BotRules = {
   cancelWords: string[]
   /** Count a comment that is only a Live # (like "4821") as a claim, without a claim word. */
   plainNumbers: boolean
+  /** Shop codes buyers put in front of the Live #, like "DD 4821" or "DD4821". A code + Live # always counts as a claim. */
+  prefixes?: string[]
 }
 
 export const DEFAULT_BOT_RULES: BotRules = {
   claimWords: ['sold', 'mine', 'claim'],
   cancelWords: ['cancel', 'unsold', 'nevermind', 'never mind'],
   plainNumbers: true,
+  prefixes: ['dd'],
 }
 
 export type BotComment = { id: string; text: string; fromId: string | null; fromName: string; at: string }
@@ -66,9 +69,13 @@ export function parseComment(raw: string, rules: BotRules, known: Set<string>): 
 
   if (hasWord(text, rules.cancelWords)) return { kind: 'cancel', items: found }
   if (hasWord(text, rules.claimWords)) return { kind: 'claim', items: found }
+  // "DD 4821", "DD4821", "dd-4821", "DD #4821"
+  const prefixes = (rules.prefixes ?? []).map(p => p.trim().toLowerCase()).filter(Boolean)
+  if (prefixes.some(p => new RegExp(`(^|[^a-z])${esc(p)}[\\s#:-]*\\d`).test(text))) return { kind: 'claim', items: found }
   if (rules.plainNumbers) {
     // Only numbers, #, x, commas, "and", "please" and emoji-ish leftovers: treat as a claim.
-    const leftover = text.replace(/#?\d+|\bx\b|\bqty\b|\band\b|\bplease\b|\bpls\b|\bplz\b|[\s,.&+!()x-]/g, '').replace(/[^a-z]/g, '')
+    const noPrefix = (rules.prefixes ?? []).reduce((t, p) => p.trim() ? t.replace(new RegExp(`(^|[^a-z])${esc(p.trim().toLowerCase())}(?=[\\s#:-]*\\d)`, 'g'), '$1') : t, text)
+    const leftover = noPrefix.replace(/#?\d+|\bx\b|\bqty\b|\band\b|\bplease\b|\bpls\b|\bplz\b|[\s,.&+!()x-]/g, '').replace(/[^a-z]/g, '')
     if (!leftover && real.length) return { kind: 'claim', items: real }
   }
   return { kind: 'none' }
@@ -152,7 +159,7 @@ export function practiceComments(numbers: string[]): Omit<BotComment, 'id' | 'at
     out.push(say(a, k % 2 ? n : `sold ${n}`))            // first one in gets it
     out.push(say(b, k === 1 ? `Sold #${n} x2` : `mine ${n} please`)) // next in line
     out.push(say(a, `sold ${n}`))                        // a repeat doesn't buy a second one
-    out.push(say(c, `${n}`))                             // waits in line if it's sold out
+    out.push(say(c, k === 2 ? `DD ${n}` : `${n}`))       // waits in line if it's sold out
     if (k === 0) out.push(say(a, `cancel ${n}`))         // drops out: the next person moves up
   })
   out.push(say(9, 'Thank you LaVerne!! 💚'))

@@ -39,7 +39,7 @@ export default function LiveBot() {
   const [connectErr, setConnectErr] = useState('')
   const [rulesOpen, setRulesOpen] = useState(false)
   const [busy, setBusy] = useState(false)
-  const [filter, setFilter] = useState<'all' | 'claims'>('claims')
+  const [filter, setFilter] = useState<'all' | 'claims'>('all')
   const stopRef = useRef<(() => void) | null>(null)
   const queue = useRef<Promise<void>>(Promise.resolve())
 
@@ -395,15 +395,17 @@ function RulesSheet({ open, rules, onClose, onSave }: { open: boolean; rules: Bo
   const [claimWords, setClaimWords] = useState(rules.claimWords.join(', '))
   const [cancelWords, setCancelWords] = useState(rules.cancelWords.join(', '))
   const [plain, setPlain] = useState(rules.plainNumbers)
+  const [prefixes, setPrefixes] = useState((rules.prefixes ?? []).join(', ').toUpperCase())
   const split = (s: string) => s.split(',').map(w => w.trim().toLowerCase()).filter(Boolean)
   return (
     <Sheet open={open} onClose={onClose} title="Claim words">
       <div className="stack">
         <label>Words that mean “I want it”<input value={claimWords} onChange={e => setClaimWords(e.target.value)} /></label>
+        <label>Your shop code in front of the Live # (like DD in “DD 4821”)<input value={prefixes} onChange={e => setPrefixes(e.target.value)} placeholder="DD" /></label>
         <label>Words that mean “I changed my mind”<input value={cancelWords} onChange={e => setCancelWords(e.target.value)} /></label>
         <label className="check-row"><input type="checkbox" checked={plain} onChange={e => setPlain(e.target.checked)} /> A comment that’s only a Live # (like “4821”) counts as a claim</label>
         <span className="muted small">Separate words with commas. Quantities work too: “sold 4821 x2”.</span>
-        <button className="btn gold" onClick={() => onSave({ claimWords: split(claimWords), cancelWords: split(cancelWords), plainNumbers: plain })}>Save</button>
+        <button className="btn gold" onClick={() => onSave({ claimWords: split(claimWords), cancelWords: split(cancelWords), plainNumbers: plain, prefixes: split(prefixes) })}>Save</button>
       </div>
     </Sheet>
   )

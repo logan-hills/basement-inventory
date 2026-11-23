@@ -4,7 +4,7 @@ const lesson: Lesson = {
   id: 'receive', title: 'Receive an item', track: 'Stock', icon: 'receive', minutes: 4,
   why: 'Every piece gets a tag, a photo and a price the moment it arrives, so nothing gets lost in a box.',
   route: { to: '/intake', label: 'Receive an item' },
-  covers: ['src/pages/Intake.tsx', 'src/pages/ItemDetail.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/Intake.tsx', 'src/pages/ItemDetail.tsx', 'src/pages/Inventory.tsx'], updated: '2026-11-23',
   slides: [
     { kind: 'learn', title: 'Items, variations and tags', text: 'An item is the product (a gold hoop set). A variation is a size or color, and gets a 4-digit Live Number buyers type in comments. Every single piece gets its own tag, like 4821-003.',
       points: ['Item: what it is', 'Variation: size or color, with its Live #', 'Tag: one per piece, so you know exactly which one sold'] },
