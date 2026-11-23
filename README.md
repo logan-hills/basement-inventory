@@ -20,3 +20,12 @@ npm run dev
 3. **Hosting:** in GitHub, Settings → Pages → Source: GitHub Actions. Every push to `main` then publishes the app.
 
 The Supabase URL and publishable key in `.env` are public by design. Never commit the database password or the `service_role`/secret key.
+
+## iPhone app
+The iPhone app wraps the same web app with Capacitor (`capacitor.config.ts`, Xcode project in `ios/`). Bundle ID: `com.basementinventory.app`.
+
+To build on a Mac with Xcode:
+1. `npm install`, then `npm run ios` (builds the web app and copies it into `ios/`).
+2. Open `ios/App/App.xcodeproj` in Xcode.
+3. Signing & Capabilities: pick your Apple Developer team.
+4. Raise the Build number, then Product → Archive → Distribute App → App Store Connect (TestFlight).

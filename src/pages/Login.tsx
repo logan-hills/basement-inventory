@@ -1,3 +1,4 @@
+import { Capacitor } from '@capacitor/core'
 import { useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
 import { Crown } from '../App'
@@ -14,7 +15,7 @@ export default function Login() {
     setBusy(true); setMsg('')
     const { error } = mode === 'in'
       ? await supabase.auth.signInWithPassword({ email, password })
-      : await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin + window.location.pathname } })
+      : await supabase.auth.signUp({ email, password, options: { emailRedirectTo: Capacitor.isNativePlatform() ? 'https://logan-hills.github.io/basement-inventory/' : window.location.origin + window.location.pathname } })
     setBusy(false)
     if (error) setMsg(error.message)
     else if (mode === 'up') setMsg('Check your email to confirm your account, then sign in.')
