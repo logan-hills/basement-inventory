@@ -36,7 +36,7 @@ export default function Customers() {
   return (
     <div className="stack wide-gap">
       <div className="page-head">
-        <div><span className="eyebrow">Sell</span><h1>Customers</h1></div>
+        <div><h1>Customers</h1></div>
         <div className="row-gap"><button className="btn ghost" disabled={!shown.length} onClick={exportCsv}>Download CSV</button></div>
       </div>
       <div className="filter-bar">

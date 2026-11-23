@@ -14,7 +14,7 @@ const lesson: Lesson = {
   covers: ['src/pages/LiveBot.tsx', 'src/lib/livebot.ts', 'src/lib/fbcomments.ts'], updated: '2026-11-23',
   slides: [
     { chapter: 'Meet the bot', kind: 'learn', title: 'Where it lives', text: 'Open a live on your calendar and tap Comment bot. If you booked a slot on the shared Page, the On Air screen takes you straight there.',
-      screen: { title: '$2 Tuesday', buttons: ['Edit', 'Planner & poster', 'Comment bot', 'Download bot CSV'], highlight: 'Comment bot' } },
+      screen: { title: '$2 Tuesday', buttons: ['More', 'Add items', 'Comment bot'], highlight: 'Comment bot' } },
     { kind: 'learn', title: 'How buyers claim', text: 'Tell viewers to comment the Live # they want. The bot understands all of these:',
       points: ['sold 4821', '4821', 'DD 4821 (your shop code, set under Bot settings)', 'Wanted 4821 or Claim 4821 (the same words Loyal Shops uses)', 'Sold 4821 Blue M (extra words like a color or size are fine)', 'Sold #4821 x2 or Sold 4821 Q2 (two of them)', 'mine 4821 please', 'cancel 4821 (changed their mind)'],
       tip: 'Saying “sold 4821” twice does not buy two. They need to write x2 or Q2.' },

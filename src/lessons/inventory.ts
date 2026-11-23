@@ -33,8 +33,8 @@ const lesson: Lesson = {
       tip: 'Check Sold out before you shop a haul. Your best reorders are the pieces that sold out fast.' },
     { kind: 'quiz', q: 'You want a list of what to buy more of. Which view?', options: ['In stock', 'Sold out', 'All'], answer: 1, why: 'Sold out shows what\'s gone. Sort it by Newest first and the fastest sellers jump out.' },
 
-    { chapter: 'Filter and sort', kind: 'learn', title: 'Filters answer questions', text: 'Tap Filters to narrow the list by brand, tag, condition, department, color, season, supplier or bin. You can also filter by age (new this week, or old stock) and by missing info. Each active filter shows as a chip under the search. Tap a chip\'s × to remove it, or Clear all.',
-      screen: { title: 'Filter inventory', rows: ['Supplier: Atlanta market', 'Condition: New with tags', 'Age: 60+ days (old stock)'], buttons: ['Clear filters', 'Show 14'], highlight: 'Show 14' } },
+    { chapter: 'Filter and sort', kind: 'learn', title: 'Filters answer questions', text: 'Tap Sort and filter. It opens one pop-up with everything: show In stock, Sold out or Everything, sort the list, switch between List and Photos, and narrow the list by brand, tag, condition, department, color, season, supplier or bin. You can also filter by age (new this week, or old stock) and by missing info. Each active filter shows as a chip under the search. Tap a chip\'s × to remove it, or Clear all.',
+      screen: { title: 'Sort and filter', rows: ['Supplier: Atlanta market', 'Condition: New with tags', 'Age: 60+ days (old stock)'], buttons: ['Clear filters', 'Show 14'], highlight: 'Show 14' } },
     { kind: 'learn', title: 'Sort to see what matters', text: 'The sort menu puts the list in the order you need. Sizes and colors of the same item stay together.',
       table: { head: ['Sort', 'Use it to'], rows: [
         ['Newest first', 'See what just came in'],
@@ -52,19 +52,19 @@ const lesson: Lesson = {
       ] },
     { kind: 'tap', title: 'Practice', prompt: 'You want to see where most of your money is sitting. In the sort menu, tap…', screen: { title: 'Sort by', buttons: ['Newest first', 'Name A to Z', 'Shelf value (price × stock)', 'Live # low to high'] }, answer: 'Shelf value (price × stock)', hint: 'Shelf value multiplies price by how many you have.' },
 
-    { chapter: 'Select and act', kind: 'learn', title: 'One, a few, or everything', text: 'Tick a row\'s box to select it. Tick more for a few. Select all ticks every row you can see right now, so filter first, then select all. A bar appears with what you can do to everything selected.',
+    { chapter: 'Select and act', kind: 'learn', title: 'One, a few, or everything', text: 'Tick a row\'s box to select it. Tick more for a few. Select all ticks every row you can see right now, so filter first, then select all. A bar appears with the two you use most, Print tags and Edit. Everything else is under More in that bar.',
       table: { head: ['Button', 'What it does'], rows: [
         ['Print tags', 'Prints tags for every piece in stock on those rows'],
-        ['Sale tags', 'Prints yellow sale tags with the sale price and old price crossed out'],
-        ['Damage out', 'Lets you set how many of each are damaged, then removes them'],
         ['Edit', 'Changes details on all of them at once: category, brand, condition, tags, sale price, bin'],
-        ['Download CSV', 'Saves the selected rows as a spreadsheet'],
+        ['More → Print yellow sale tags', 'Prints yellow sale tags with the sale price and old price crossed out'],
+        ['More → Download as a spreadsheet', 'Saves the selected rows as a CSV'],
+        ['More → Damage out', 'Lets you set how many of each are damaged, then removes them'],
       ] } },
     { kind: 'learn', title: 'Edit many at once', text: 'Edit changes only the fields you touch. Everything left as is stays the same. Use it to add a "Holiday" tag to 40 pieces, set a 30% off sale price across a clearance rack, mark a whole lot as Gently used, or move everything selected into one bin.',
       example: 'You bought 25 pieces from a new supplier and forgot to note it. Search the haul\'s name, Select all, Edit, Supplier: "Fashion Mart". Done in 20 seconds.' },
     { kind: 'order', title: 'Tag a holiday rack', prompt: 'Put these steps in order to add the Holiday tag to all your red jewelry.', steps: [
       'Tap the Jewelry tile',
-      'Open Filters and pick Color: Red',
+      'Open Sort and filter and pick Color: Red',
       'Tap Select all',
       'Tap Edit and choose Add a tag: Holiday',
       'Tap Save changes',
@@ -90,7 +90,7 @@ const lesson: Lesson = {
         { text: 'Reorder from all three equally', feedback: 'You\'d keep buying the slow sellers. The supplier filter shows you which one is pulling its weight.' },
       ] },
 
-    { chapter: 'Tidy-up habits', kind: 'learn', title: 'The 10-minute weekly tidy', text: 'Open Filters, use Missing info, and fix one list at a time. Pieces with no price can\'t go to a live. Pieces not in a bin can\'t be picked fast. Ten minutes a week keeps the list clean.',
+    { chapter: 'Tidy-up habits', kind: 'learn', title: 'The 10-minute weekly tidy', text: 'Open Sort and filter, use Missing info, and fix one list at a time. Pieces with no price can\'t go to a live. Pieces not in a bin can\'t be picked fast. Ten minutes a week keeps the list clean.',
       screen: { title: 'Missing info (to tidy up)', rows: [], buttons: ['No photo', 'No price', 'No cost', 'Not in a bin', 'No category', 'No weight'], highlight: 'Not in a bin' } },
     { kind: 'learn', title: 'Count a little, often', text: 'Big warehouses don\'t shut down to count everything once a year. They do cycle counts: a small section every week, so the whole store gets counted every month or two. You can too.',
       points: ['Each week, filter to one bin or one aisle', 'Count what\'s really there and compare to the Stock column', 'Missing? Search the inbox spot, then damage it out as Missing', 'Extra? Scan it, it may be in the wrong bin'],

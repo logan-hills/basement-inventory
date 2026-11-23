@@ -63,9 +63,9 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Check out to a live', text: 'Open the cart, set any live prices, choose the live, and tap Check out to this live. The items are now on that live\'s list, and the live shows Projected sales and Projected profit: what you\'d make if everything sells.' },
     { kind: 'order', title: 'Practice', prompt: 'Put the steps in order.', steps: ['Tap a category and pick items', 'Add to cart', 'Set live prices', 'Pick the live and check out', 'Download the file for your bot'] },
 
-    { chapter: 'Send it to your bot', kind: 'learn', title: 'Send the list to your bot', text: 'Open the live from the Calendar and pick your bot.',
+    { chapter: 'Send it to your bot', kind: 'learn', title: 'Send the list to your bot', text: 'Open the live from the Calendar, tap More, and pick your bot. The main buttons on a live are Add items and Comment bot; the downloads wait under More.',
       points: ['Loyal Shops: tap Download for Loyal Shops, then upload it in Loyal Shops\' Upload Inventory List box before the live', 'Another bot: tap Download my bot CSV (change its columns in Settings → Bot CSV columns)', 'Our Comment bot: nothing to download, it already knows the list'],
-      screen: { title: '$2 Tuesday', buttons: ['Download for Loyal Shops', 'Download my bot CSV'], highlight: 'Download for Loyal Shops' } },
+      screen: { title: '$2 Tuesday, More', buttons: ['Download for Loyal Shops', 'Download my bot CSV', 'Planner and poster', 'Edit the details'], highlight: 'Download for Loyal Shops' } },
     { kind: 'learn', title: 'Lay out the table', text: 'Your cart is also your pull list. Pull every piece, then lay them out on your table in the order of your run of show. Put door-openers closest to you, showstoppers to the side, bundles at the end.',
       tip: 'Pull pieces the night before or the morning of, never in the last hour. Last-minute pulling is how lives start late.' },
     { kind: 'reflect', title: 'Your next lineup', prompt: 'For your next live: how many pieces, which tiers, which old pieces will you mix in, and what\'s your showstopper?', placeholder: 'Next live I\'ll bring…', example: '48 pieces. 15 door-openers at $5, 24 core at $12 to $18, 6 showstoppers, 3 bundles. 8 pieces over 60 days old mixed in. Showstopper: the croc tote.' },

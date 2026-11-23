@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
+import Icon from '../components/Icon'
+import MoreActions from '../components/ActionSheet'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import LiveForm from '../components/LiveForm'
 import { supabase } from '../lib/supabase'
@@ -115,13 +117,20 @@ export default function LiveDetail() {
           <h1>{live.title}</h1>
           <span className="muted">{liveWhen(live)} · {durationText(live.duration_min)}</span>
         </div>
-        <div className="row-gap">
-          <button className="btn ghost" onClick={() => setEditing(true)}>Edit</button>
-          <Link className="btn ghost" to={`/lives/${live.id}/plan`}>Planner & poster</Link>
+        <div className="page-actions">
+          <MoreActions title="More for this live" items={[
+            { label: 'Download for Loyal Shops', hint: 'The item file Loyal Shops imports', icon: 'download', onClick: exportLoyalShops, disabled: !items.length },
+            { label: 'Download my bot CSV', hint: 'For any other comment bot, using your columns', icon: 'download', onClick: exportCsv, disabled: !items.length },
+            { label: 'Planner and poster', hint: 'Theme, run of show, poster and checklist', icon: 'sparkle', to: `/lives/${live.id}/plan` },
+            { label: 'Edit the details', hint: 'Title, date, time, host and notes', icon: 'calendar', onClick: () => setEditing(true) },
+            live.status === 'planned'
+              ? { label: 'Mark live as done', hint: 'Moves it out of your upcoming lives', icon: 'sparkle', onClick: () => setStatus('done') }
+              : { label: 'Back to planned', hint: 'Puts it back on your upcoming lives', icon: 'calendar', onClick: () => setStatus('planned') },
+            ...(live.status === 'planned' ? [{ label: 'Cancel live', hint: 'Keeps it on the calendar, marked cancelled', icon: 'clock', onClick: () => setStatus('cancelled') }] : []),
+            { label: 'Delete this live', hint: 'Removes it for good', icon: 'damaged', tone: 'danger' as const, onClick: del },
+          ]} />
+          <Link className="btn outline-gold" to={`/live?for=${live.id}`}><Icon name="plus" size={18} />Add items</Link>
           <Link className="btn gold" to={`/lives/${live.id}/bot`}>Comment bot</Link>
-          <Link className="btn outline-gold" to={`/live?for=${live.id}`}>+ Add items</Link>
-          <button className="btn primary" disabled={!items.length} onClick={exportLoyalShops}>Download for Loyal Shops</button>
-          <button className="btn outline-gold" disabled={!items.length} onClick={exportCsv}>Download my bot CSV</button>
         </div>
       </div>
       {live.notes && <p className="card muted">{live.notes}</p>}
@@ -135,7 +144,7 @@ export default function LiveDetail() {
       {short.length > 0 && <p className="warn-box">{short.length} item{short.length === 1 ? ' has' : 's have'} fewer in stock than planned: {short.map(s => `#${s.variant.live_number}`).join(', ')}.</p>}
 
       <div className="card stack">
-        <div className="row-between"><span className="eyebrow">Item list · this is what goes in the bot CSV</span><Link className="link-btn" to="/settings">Change CSV columns</Link></div>
+        <div className="row-between"><span className="eyebrow">Item list · this is what goes in the bot CSV</span><Link className="link-btn" to="/settings/bot">Change CSV columns</Link></div>
         {items.length === 0 && (
           <div className="empty"><b>No items yet</b><span className="muted">Pick items in Get ready for live, add them to your cart, then check out to this live.</span><Link className="btn gold" to={`/live?for=${live.id}`}>Pick items</Link></div>
         )}
@@ -155,12 +164,6 @@ export default function LiveDetail() {
             </div>
           )
         })}
-      </div>
-
-      <div className="row-gap">
-        {live.status === 'planned' ? <button className="btn ghost" onClick={() => setStatus('done')}>Mark live as done</button> : <button className="btn ghost" onClick={() => setStatus('planned')}>Back to planned</button>}
-        {live.status === 'planned' && <button className="link-btn" onClick={() => setStatus('cancelled')}>Cancel live</button>}
-        <button className="link-btn danger-text" onClick={del}>Delete</button>
       </div>
 
       <LiveForm open={editing} live={live} onClose={() => setEditing(false)} onSaved={() => load()} />
