@@ -10,7 +10,7 @@ const dateStr = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
 const timeStr = (d: Date) => `${pad(d.getHours())}:${pad(d.getMinutes())}`
 
 /** Create or edit a live. `day` pre-fills the date when adding from the calendar. */
-export default function LiveForm({ open, onClose, live, day, onSaved }: { open: boolean; onClose: () => void; live?: Live | null; day?: Date | null; onSaved: (id: string) => void }) {
+export default function LiveForm({ open, onClose, live, day, preset, onSaved }: { open: boolean; onClose: () => void; live?: Live | null; day?: Date | null; preset?: { title?: string; theme?: string; plan?: Record<string, unknown> } | null; onSaved: (id: string) => void }) {
   const { shop, settings } = useSession()
   const toast = useToast()
   const [title, setTitle] = useState('')
@@ -31,10 +31,10 @@ export default function LiveForm({ open, onClose, live, day, onSaved }: { open: 
       setDuration(String(live.duration_min)); setNotes(live.notes ?? ''); setRepeat('1')
     } else {
       const d = day ?? new Date()
-      setTitle(''); setTheme(settings.liveThemes[0] ?? ''); setHost(settings.hosts[0] ?? ''); setDate(dateStr(d)); setTime('19:00')
+      setTitle(preset?.title ?? ''); setTheme(preset?.theme ?? settings.liveThemes[0] ?? ''); setHost(settings.hosts[0] ?? ''); setDate(dateStr(d)); setTime('19:00')
       setDuration(String(settings.liveDurationMin)); setNotes(''); setRepeat('1')
     }
-  }, [open, live, day, settings])
+  }, [open, live, day, settings, preset])
 
   async function save(e: FormEvent) {
     e.preventDefault()
@@ -48,7 +48,7 @@ export default function LiveForm({ open, onClose, live, day, onSaved }: { open: 
       if (error) { toast(error.message, { kind: 'bad' }); setBusy(false); return }
     } else {
       const n = Math.max(1, Math.min(520, parseInt(repeat, 10) || 1))
-      const rows = Array.from({ length: n }, (_, i) => ({ ...base, starts_at: new Date(start.getTime() + i * 7 * 86400000).toISOString() }))
+      const rows = Array.from({ length: n }, (_, i) => ({ ...base, ...(preset?.plan ? { plan: preset.plan } : {}), starts_at: new Date(start.getTime() + i * 7 * 86400000).toISOString() }))
       const { data, error } = await supabase.from('lives').insert(rows).select('id')
       if (error) { toast(error.message.includes('lives') ? 'The calendar needs a quick database update first.' : error.message, { kind: 'bad' }); setBusy(false); return }
       id = data![0].id

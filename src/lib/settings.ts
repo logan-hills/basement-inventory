@@ -10,6 +10,8 @@ export type Settings = {
   oldStockDays: number
   liveDurationMin: number
   botColumns: BotColumn[]
+  checklist: { before: string[]; during: string[]; after: string[] }
+  monthlyGoal: number
 }
 
 /** Every field the live-sale bot CSV can include. */
@@ -30,7 +32,14 @@ export const BOT_FIELDS: { key: string; label: string; sample: string }[] = [
   { key: 'bins', label: 'Bin location', sample: 'A1-S2-B-03' },
   { key: 'description', label: 'Description', sample: 'Gold chain strap' },
   { key: 'sku', label: 'SKU (Live # + variation)', sample: '4821-BLACK' },
+  { key: 'upc', label: 'UPC / barcode', sample: '012345678905' },
 ]
+
+export const DEFAULT_CHECKLIST: Settings['checklist'] = {
+  before: ['Pick a theme and title', 'Make and post the poster', 'Pull the items and check their tags', 'Set live prices and download the bot CSV', 'Upload the item list to the bot', 'Charge the phone and ring light', 'Test lighting, sound and internet', 'Set up the display table and props', 'Water and snacks within reach', 'Share the live link in your groups'],
+  during: ['Greet viewers by name as they join', 'Explain how to claim: comment the Live #', 'Show each piece up close, front and back', 'Say the Live # and price clearly, twice', 'Shout out new viewers and buyers', 'Run the giveaway', 'Remind everyone of the payment and shipping cutoff', 'Thank everyone and tease the next live'],
+  after: ['Download the sales file from the bot', 'Upload sales to Pick and pack', 'Send invoices', 'Print box labels and pick orders', 'Put unsold items back on the shelves', 'Post a thank-you and the replay link', 'Write down what sold best'],
+}
 
 export const DEFAULT_SETTINGS: Settings = {
   categories: ['Jewelry', 'Bags', 'Apparel', 'Accessories', 'Shoes', 'Home'],
@@ -45,11 +54,14 @@ export const DEFAULT_SETTINGS: Settings = {
     { key: 'price', header: 'Price' },
     { key: 'qty', header: 'Quantity' },
   ],
+  checklist: DEFAULT_CHECKLIST,
+  monthlyGoal: 1000,
 }
 
 export function withDefaults(raw: Partial<Settings> | null | undefined): Settings {
   const s = { ...DEFAULT_SETTINGS, ...(raw ?? {}) }
   if (!Array.isArray(s.botColumns) || !s.botColumns.length) s.botColumns = DEFAULT_SETTINGS.botColumns
+  s.checklist = { ...DEFAULT_CHECKLIST, ...(s.checklist ?? {}) }
   return s
 }
 

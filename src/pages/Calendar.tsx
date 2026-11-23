@@ -35,6 +35,7 @@ export default function Calendar() {
       <div className="page-head">
         <div><span className="eyebrow">Sell</span><h1>Live calendar</h1></div>
         <div className="row-gap">
+          <Link className="btn ghost" to="/shared-page">Shared Page slots</Link>
           <Link className="btn ghost" to="/live">Plan items</Link>
           <button className="btn primary" onClick={() => setForm({ day: null })}>+ Schedule a live</button>
         </div>

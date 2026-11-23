@@ -99,7 +99,7 @@ export async function loadItems(): Promise<Item[]> {
 }
 
 export function money(n: number | null | undefined) {
-  return n == null ? '' : `$${Number(n).toFixed(2)}`
+  return n == null ? '' : `$${Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 }
 
 export const DAMAGE_REASONS = ['Damaged', 'Stained', 'Missing', 'Defective', 'Other'] as const
@@ -113,7 +113,7 @@ export type UnitInfo = {
   location: { code: string; name: string } | null
 }
 
-const UNIT_SELECT = 'id, tag_code, status, removed_reason, variant:variants!inner(id,label,live_number,price, item:items!inner(id,name)), location:locations(code,name)'
+export const UNIT_SELECT = 'id, tag_code, status, removed_reason, variant:variants!inner(id,label,live_number,price, item:items!inner(id,name)), location:locations(code,name)'
 
 /** Finds a tag by its barcode (e.g. 4821-001). */
 export async function findUnit(code: string): Promise<UnitInfo | null> {

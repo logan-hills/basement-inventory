@@ -9,6 +9,7 @@ import { tap } from '../lib/feedback'
 import { useCart } from '../lib/cart'
 import { loadLives, liveWhen, type Live } from '../lib/lives'
 import { loadStock, margin, type StockRow } from '../lib/stock'
+import CategoryRail from '../components/CategoryRail'
 
 type Sort = 'newest' | 'oldest' | 'margin' | 'price_hi' | 'price_lo' | 'stock'
 
@@ -43,6 +44,12 @@ export default function LivePrep() {
   useEffect(() => { if (!target && lives[0]) setTarget(lives[0].id) }, [lives, target])
 
   const oldDays = settings.oldStockDays
+  const catStats = useMemo(() => {
+    const m = new Map<string, { pieces: number; value: number; photo: string | null }>()
+    for (const c of settings.categories) m.set(c, { pieces: 0, value: 0, photo: null })
+    for (const r of rows ?? []) { if (r.inStock <= 0 || !r.item.category) continue; const x = m.get(r.item.category) ?? { pieces: 0, value: 0, photo: null }; x.pieces += r.inStock; x.value += r.inStock * (r.price ?? 0); if (!x.photo && r.item.photo && urls[r.item.photo]) x.photo = urls[r.item.photo]; m.set(r.item.category, x) }
+    return [...m].map(([name, v]) => ({ name, ...v }))
+  }, [rows, settings.categories, urls])
   const shown = useMemo(() => {
     const s = q.trim().toLowerCase()
     const list = (rows ?? []).filter(r => r.inStock > 0 &&
@@ -122,9 +129,9 @@ export default function LivePrep() {
         </div>
       )}
 
+      {rows && rows.length > 0 && <CategoryRail cats={catStats} active={cat} onPick={setCat} money={money} />}
       <div className="filter-bar">
         <input type="search" className="search grow" placeholder="Search name, brand or Live #" value={q} onChange={e => setQ(e.target.value)} />
-        <select value={cat} onChange={e => setCat(e.target.value)} aria-label="Category"><option value="">All categories</option>{settings.categories.map(c => <option key={c}>{c}</option>)}</select>
         <select value={tag} onChange={e => setTag(e.target.value)} aria-label="Tag"><option value="">All tags</option>{settings.itemTags.map(c => <option key={c}>{c}</option>)}</select>
         <select value={sort} onChange={e => setSort(e.target.value as Sort)} aria-label="Sort">
           <option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="margin">Best profit margin</option>

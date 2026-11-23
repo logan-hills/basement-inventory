@@ -9,7 +9,7 @@ import SwipeRow from '../components/SwipeRow'
 import { CategorySelect, TagPicker } from '../components/Pickers'
 
 type UnitRow = { id: string; tag_code: string; status: string; removed_reason: string | null; location: { name: string } | null }
-type VariantRow = { id: string; label: string; live_number: string; price: number | null; cost: number | null; weight_lb: number | null; units: UnitRow[] }
+type VariantRow = { id: string; label: string; live_number: string; price: number | null; cost: number | null; weight_lb: number | null; upc?: string | null; units: UnitRow[] }
 type ItemRow = { id: string; name: string; brand: string | null; category: string | null; description: string | null; tags?: string[]; created_at: string; variants: VariantRow[]; photos: { id: string; path: string; sort: number }[] }
 
 export default function ItemDetail() {
@@ -28,7 +28,7 @@ export default function ItemDetail() {
   const load = useCallback(async () => {
     const { data, error } = await supabase
       .from('items')
-      .select('*, variants(id,label,live_number,price,cost,weight_lb, units(id,tag_code,status,removed_reason, location:locations(name))), photos:item_photos(id,path,sort)')
+      .select('*, variants(id,label,live_number,price,cost,weight_lb,upc, units(id,tag_code,status,removed_reason, location:locations(name))), photos:item_photos(id,path,sort)')
       .eq('id', id!)
       .single()
     if (error) { toast(error.message, { kind: 'bad' }); return }
@@ -66,6 +66,14 @@ export default function ItemDetail() {
     const { error } = await supabase.from('variants').update({ weight_lb: val }).eq('id', v.id)
     if (error) toast(error.message, { kind: 'bad' })
     else { toast(val === null ? 'Weight cleared' : `Weight saved: ${val} lb`, { kind: 'ok' }); load() }
+  }
+
+  async function saveUpc(v: VariantRow, raw: string) {
+    const val = raw.replace(/\s+/g, '') || null
+    if (val === (v.upc ?? null)) return
+    const { error } = await supabase.from('variants').update({ upc: val }).eq('id', v.id)
+    if (error) toast(error.message, { kind: 'bad' })
+    else { toast(val ? `UPC saved: ${val}` : 'UPC cleared', { kind: 'ok' }); load() }
   }
 
   async function addMore(v: VariantRow) {
@@ -148,6 +156,9 @@ export default function ItemDetail() {
                     <input inputMode="decimal" defaultValue={v.weight_lb ?? ''} placeholder="0.0" onBlur={e => saveWeight(v, e.target.value)} />
                     <span>lb</span>
                   </span>
+                </label>
+                <label>UPC / barcode on the product (optional)
+                  <input inputMode="numeric" defaultValue={v.upc ?? ''} placeholder="Scan or type it" onBlur={e => saveUpc(v, e.target.value)} onKeyDown={e => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur() }} />
                 </label>
                 <label>Add more tags
                   <span className="input-suffix">

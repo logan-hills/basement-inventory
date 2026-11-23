@@ -8,13 +8,15 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "ios": "npm run build && cap sync ios"
+    "ios": "npm run build && cap sync ios",
+    "lessons:check": "node scripts/lessons-check.mjs"
   },
   "dependencies": {
     "@capacitor/core": "^8.6.2",
     "@capacitor/haptics": "^8.0.2",
     "@supabase/supabase-js": "^2.119.2",
     "barcode-detector": "^3.2.4",
+    "html-to-image": "^1.11.11",
     "jsbarcode": "^3.12.3",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
