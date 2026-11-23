@@ -47,6 +47,8 @@ import SubNav, { sectionOf } from './components/SubNav'
 import Profile from './pages/Profile'
 import FinishSignup from './pages/FinishSignup'
 import Legal from './pages/Legal'
+import Gear from './pages/Gear'
+import Receipt from './pages/Receipt'
 
 export function Crown({ size = 28 }: { size?: number }) {
   return (
@@ -80,6 +82,7 @@ const MORE = [
   { to: '/reports', label: 'Reports', icon: 'reports' },
   { to: '/profile', label: 'My profile', icon: 'users' },
   { to: '/lessons', label: 'Dazzle University', icon: 'lessons' },
+  { to: '/gear', label: 'Recommended gear', icon: 'scan' },
   { to: '/consult', label: 'Time with the Queen', icon: 'sparkle' },
   { to: '/settings', label: 'Settings', icon: 'settings' },
 ]
@@ -220,6 +223,8 @@ function Shell() {
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/upload" element={<OrdersUpload />} />
           <Route path="/order/:code" element={<OrderDetail />} />
+          <Route path="/order/:code/receipt" element={<Receipt />} />
+          <Route path="/gear" element={<Gear />} />
           <Route path="/pick" element={<Pick />} />
           <Route path="/box-labels" element={<BoxLabels />} />
           <Route path="/shipping" element={<Shipping />} />

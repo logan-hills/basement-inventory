@@ -1,0 +1,90 @@
+import type { Lesson } from './types'
+
+const lesson: Lesson = {
+  id: 'gear', title: 'Pick and set up your gear', track: 'Start here', icon: 'scan',
+  why: 'The right scanner, printer and labels turn hours of typing and cutting into a few happy beeps.',
+  outcomes: [
+    'Choose a scanner that fits how you work, from budget to pro',
+    'Know which label size does which job: 2×1, 4×4 and 4×6',
+    'Pair a Bluetooth scanner and prove it works with the scanner test',
+    'Run a test print for every label size before a big batch',
+    'Print from a phone through your printer\'s own app',
+    'Print receipts when you sell in person',
+  ],
+  route: { to: '/gear', label: 'Open Recommended gear' },
+  sources: [
+    { org: 'Zebra Technologies', title: 'Direct thermal vs thermal transfer printing', url: 'https://www.zebra.com/us/en/resource-library/faq/printing/difference-between-direct-thermal-and-thermal-transfer-printing.html' },
+    { org: 'GS1 US', title: 'Barcodes and identification', url: 'https://www.gs1us.org/upcs-barcodes-prefixes' },
+    { org: 'Square', title: 'Set up a receipt printer', url: 'https://squareup.com/help/us/en/article/5115-set-up-a-receipt-printer' },
+  ],
+  covers: ['src/pages/Gear.tsx', 'src/lib/gear.ts', 'src/lib/scanner.ts', 'src/lib/printImage.ts', 'src/pages/Receipt.tsx'], updated: '2026-11-23',
+  slides: [
+    { chapter: 'Your starter kit', kind: 'learn', title: 'Three things run the whole warehouse', nova: 'Shopping for gear is the fun part. Let\'s spend smart so every dollar pays you back.',
+      text: 'You need three things to run Dazzle Warehouse like the big stores do: a scanner, one thermal label printer, and the right rolls of labels. Everything on the Recommended gear page has been picked to work smoothly with the app, so you\'re not guessing on Amazon at midnight.',
+      points: ['A scanner, so you never type a code again', 'One thermal printer for tags, bin labels, box labels and shipping labels', 'Labels in four sizes, each with one job', 'Optional: a receipt printer if you sell at pop-ups and markets'],
+      screen: { title: 'Recommended gear', rows: ['Scanners', 'Label printer', 'Labels', 'Selling in person'], buttons: ['View on Amazon', 'Test print'] },
+      tip: 'Start with a scanner and the printer. Add rolls as you grow. You don\'t have to buy everything on day one.' },
+    { kind: 'quiz', q: 'You\'re just starting and money is tight. What do you buy first?', options: ['Every item on the list', 'A scanner, the thermal printer and a roll of 2×1 tags', 'Only the receipt printer'], answer: 1, why: 'Tags and a scanner are what you use every single day. Bin labels, shipping rolls and receipts can come next.' },
+
+    { chapter: 'Scanners', kind: 'learn', title: 'How a scanner talks to the app', text: 'Every scanner we recommend acts like a keyboard. It reads the barcode, "types" the code faster than any person could, then presses Enter. That\'s why there\'s nothing to install: if your phone or computer has a keyboard, it can use a scanner.',
+      points: ['USB scanners: plug in and go', 'Bluetooth scanners: pair them like headphones, in keyboard (HID) mode', 'The 2.4G kind: plug in the little dongle', 'Android scanner phones: the scanner types into the app\'s scan box', 'Some scanners press Tab instead of Enter. Dazzle Warehouse treats Tab like Enter, so those work too.'],
+      tip: 'If a scanner types into a notes app, it will work in Dazzle Warehouse.' },
+    { kind: 'learn', title: 'Three scanners, three budgets', text: 'Pick the one that fits how you work.',
+      table: { head: ['Scanner', 'Best for', 'Good to know'], rows: [
+        ['Eyoyo Bluetooth pocket scanner', 'iPhone picking. Clip it to your phone.', 'Pairs by Bluetooth. Can hide the iPhone keyboard while paired.'],
+        ['NetumScan handheld', 'The receiving table, on a budget', 'USB plug and play. Reads regular barcodes.'],
+        ['Pro wireless 1D/2D scanner', 'Big warehouses and busy weeks', 'Longer range, faster reads, all-day battery'],
+      ] },
+      example: 'Dee tags at her dining table with the NetumScan plugged into her laptop, and picks orders in the basement with the Eyoyo clipped to her iPhone. Two scanners, under $80 together.' },
+    { kind: 'scenario', title: 'Which scanner for Mrs. Pat?', situation: 'Mrs. Pat sells from a spare bedroom, does everything on her iPhone, and doesn\'t own a computer.',
+      options: [
+        { text: 'The NetumScan USB scanner', feedback: 'That one shines plugged into a computer. Without one, she\'d need adapters and it still wouldn\'t go where she goes.' },
+        { text: 'The Eyoyo Bluetooth pocket scanner', best: true, feedback: 'Right. It pairs with her iPhone and clips on, so she can scan and see the screen in one hand.' },
+        { text: 'No scanner, just type every code', feedback: 'She can use her phone camera in a pinch, but typing every code is the slow road. A small Bluetooth scanner pays for itself in a week.' },
+      ] },
+    { kind: 'order', title: 'Practice: pair a Bluetooth scanner', prompt: 'Put the steps in order.', steps: ['Charge the scanner', 'Scan the Bluetooth keyboard (HID) setup code in its manual', 'Pair it in your phone\'s Bluetooth settings', 'Open Recommended gear and scan into the scanner test box', 'See "It works!"'] },
+    { kind: 'learn', title: 'The scanner test', text: 'On Recommended gear, scroll to Check it works and scan anything into the test box. The app watches how fast the code arrives. A scanner types a whole code in a blink, so if it came that fast and ended with Enter (or Tab), you get a green "It works!".',
+      screen: { title: 'Test your scanner', rows: ['4821-003', 'It works! Your scanner typed that in a flash and pressed Enter.'], buttons: ['Check'] },
+      points: ['Nothing showed up? Tap inside the box first, then check Bluetooth pairing', 'Code shows but nothing happens? Scan the "Add Enter" code in the manual', 'Odd characters instead of numbers? Scan the "US keyboard" code in the manual', 'On iPhone, the on-screen keyboard hides while a scanner is paired. Double-press the scanner button to bring it back.'] },
+    { kind: 'quiz', q: 'Your new scanner fills in the code, but the app doesn\'t look it up until you tap Check. What\'s missing?', options: ['The scanner is broken', 'It isn\'t pressing Enter after each scan', 'You need the camera on'], answer: 1, why: 'Scan the "Add Enter" (carriage return) code in the manual and every scan looks itself up.' },
+
+    { chapter: 'Labels', kind: 'learn', title: 'Four sizes, four jobs', nova: 'Here\'s my secret: one printer, different rolls. That\'s it.',
+      text: 'Your Nelko thermal printer takes labels up to 4 inches wide, so it prints every label in your business. Just swap the roll.',
+      table: { head: ['Label', 'Size', 'Its job', 'Where in the app'], rows: [
+        ['ROLLO 2×1 (white)', '2 × 1 in', 'Item tags', 'Print tags'],
+        ['ROLLO-size 2×1 (yellow)', '2 × 1 in', 'Sale tags', 'Print tags, Sale style'],
+        ['MUNBYN 4×4', '4 × 4 in', 'Bin labels', 'Bin labels, 4×4 roll'],
+        ['MFLABEL 4×6 roll or MUNBYN fan-fold', '4 × 6 in', 'Shipping and box labels', 'Box labels, Shipping'],
+      ] },
+      tip: 'Keep each roll in its own labeled bag. Grabbing the wrong roll is the number one printing mix-up.' },
+    { kind: 'tap', title: 'Practice: the bin label size', prompt: 'You\'re labeling 40 new shelf spots. Which label type do you pick on Bin labels?', screen: { title: 'Bin labels · Label type', buttons: ['Thermal roll 2×1 in, one bin per label', 'Thermal roll 4×4 in, one bin per label (recommended)', 'Letter sheet, 10 per page'] }, answer: 'Thermal roll 4×4 in, one bin per label (recommended)', hint: '4×4 is our bin label size: big enough to read across the room.' },
+    { kind: 'learn', title: 'Why 4×4 for bins', text: 'A bin label has to work from a distance. The 4×4 label prints the bin code big and bold, shows Aisle, Section, Level and Bin in four boxes, and puts a tall barcode underneath so a scanner reads it from an arm\'s length away.',
+      example: 'On live night, Tasha calls out "A3-S2" from across the basement and her helper finds the shelf without walking up to read it. That\'s the 4×4 label doing its job.' },
+    { kind: 'learn', title: 'Roll or fan-fold for shipping?', text: 'Both are 4×6. A roll sits inside the printer and is easy to swap. Fan-fold labels sit in a stack behind the printer and feed through a slot, so you can print hundreds without stopping.',
+      points: ['Small weeks: the MFLABEL roll is plenty', 'Big shipping days: fan-fold, so you never stop to reload', 'Same print settings for both: 4 x 6 in, 100%, margins None'] },
+    { kind: 'number', title: 'Bin label math', q: 'Your warehouse has 3 aisles, each with 4 sections, 3 levels and 2 bins per level. How many 4×4 bin labels do you need?', answer: 72, hint: 'Multiply aisles × sections × levels × bins.', why: '3 × 4 × 3 × 2 = 72 labels. Grab a roll with a few extra for new shelves.' },
+
+    { chapter: 'Print it right', kind: 'learn', title: 'Test print before a big batch', text: 'On Recommended gear, Check it works has a Test print for every size: 2×1, 4×4, 4×6 and both receipt widths. The test label has a corner mark in each corner and a barcode. If you see all four corners and the barcode scans, you\'re lined up.',
+      screen: { title: 'Test print', buttons: ['2×1 item tag', '4×4 bin label', '4×6 shipping / box label', 'Print test label'], highlight: 'Print test label' },
+      points: ['Corner cut off? Check paper size and margins None', 'Everything tiny? Scale must be 100% (Actual size)', 'Creeping down each label? Let the printer re-learn the label size'] },
+    { kind: 'order', title: 'Practice: switch to bin labels', prompt: 'Put the steps in order.', steps: ['Swap in the 4×4 roll', 'Hold the feed button so the printer learns the size', 'Print a 4×4 test label', 'Scan the test barcode', 'Print your bin labels'] },
+    { kind: 'learn', title: 'Printing from your phone', text: 'Bluetooth label printers don\'t appear in the iPhone print window, but they all have their own app. Every print screen in Dazzle Warehouse has Save for printer app (phones). It turns each label into a picture at 203 dots per inch, your printer\'s exact resolution, and opens the share sheet so you can send it to the printer\'s app.',
+      points: ['On a computer: use Print, and pick the printer in the print window', 'On a phone: tap Save for printer app, then choose the Nelko (or your printer\'s) app', 'In the printer app, pick the same label size and print at 100%'] },
+    { kind: 'tap', title: 'Practice: phone printing', prompt: 'You only have your phone and the Bluetooth printer. Which button do you tap on Bin labels?', screen: { title: 'Bin labels', buttons: ['Print', 'Save for printer app (phones)'] }, answer: 'Save for printer app (phones)', hint: 'Phones print to Bluetooth label printers through the printer\'s own app.' },
+
+    { chapter: 'Selling in person', kind: 'learn', title: 'Receipts at your table', text: 'Selling at a church bazaar, a pop-up or doing local pickup? A mobile receipt printer prints receipts right at your table.',
+      points: ['Square sales: pair the printer in the Square app (Settings, then Hardware, then Printers). Square prints its own receipts.', 'Dazzle orders: open the order and tap Print receipt. Pick 2¼ in (58 mm) or 3⅛ in (80 mm) to match your roll.', 'The receipt lists each piece with its Live #, the total, and the order barcode, so a scan pulls the order back up.'],
+      screen: { title: 'Order DD-7KQ2MX', buttons: ['Print box label', 'Print receipt', 'Pick this order'], highlight: 'Print receipt' } },
+    { kind: 'quiz', q: 'Your receipt roll is 2¼ inches wide. Which paper do you choose on Print receipt?', options: ['3⅛ in roll (80 mm)', '2¼ in roll (58 mm)', '4×6 label'], answer: 1, why: '2¼ inches is the 58 mm roll. Pick the wrong one and the right side of the receipt gets cut off.' },
+    { kind: 'scenario', title: 'Pop-up day', situation: 'You\'re at a Saturday market. A buyer pays with Square and wants a receipt, and another picks up her live order and asks for one too.',
+      options: [
+        { text: 'Print the Square receipt from the Square app, and the pickup receipt from the order in Dazzle Warehouse', best: true, feedback: 'Right. Square handles its own sales, and Print receipt on the order covers your live buyers.' },
+        { text: 'Write both receipts by hand', feedback: 'It works, but it\'s slow and looks less professional than a printed receipt.' },
+        { text: 'Tell them you\'ll email something later', feedback: 'Buyers at a table like to walk away with a receipt in hand. You have the printer, use it.' },
+      ] },
+
+    { chapter: 'Your plan', kind: 'reflect', title: 'Your shopping list', prompt: 'Which scanner, printer and labels will you get first, and what will you add once sales grow?', placeholder: 'First I\'ll get…', example: 'First the Eyoyo scanner, the Nelko printer and white and yellow 2×1 rolls. Next month, the 4×4 bin roll. Fan-fold labels once I ship 50 boxes a week.' },
+    { kind: 'checklist', title: 'Gear setup checklist', prompt: 'Tick these off when your gear arrives.', items: ['Pair or plug in the scanner', 'Get "It works!" on the scanner test', 'Print a 2×1 test tag', 'Print a 4×4 test bin label and scan it', 'Print a 4×6 test label', 'Try Save for printer app from your phone', 'Print a test receipt (if you sell in person)'] },
+  ],
+}
+export default lesson

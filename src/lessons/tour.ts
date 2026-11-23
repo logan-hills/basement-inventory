@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Run a weekly rhythm that leaves no surprises before a live',
   ],
   route: { to: '/', label: 'Go to Home' },
-  covers: ['src/App.tsx', 'src/components/SubNav.tsx', 'src/components/ActionSheet.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/nova3d.ts'], updated: '2026-11-23',
+  covers: ['src/App.tsx', 'src/components/SubNav.tsx', 'src/components/ActionSheet.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/nova3d.ts', 'src/pages/Lessons.tsx'], updated: '2026-11-23',
   slides: [
     { chapter: 'Why a system', kind: 'learn', title: 'From "where is it?" to "got it"', nova: "Welcome, boss! Let's make sure you never dig through a box before a live again.",
       text: "Most live sellers start the same way: pieces in tubs, a notebook of who bought what, and two hours of searching before every show. It works until it doesn't. One lost earring, one wrong box, one buyer who never got her order, and the stress starts eating the fun.",
@@ -58,7 +58,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Home is your coach', text: 'Home counts down to your next live, shows your monthly goal, the profit sitting on your shelves, and the checklist for your next show. Tick steps right there. Under that, Your to-do list shows only what needs you today: orders to pick, boxes to ship, old stock to put on sale and pieces to put away. Tap one and it takes you straight there. Want charts and the full numbers? Tap See all your numbers to open Reports.',
       tip: 'Your monthly goal lives in Settings. Set one that stretches you a little.' },
     { kind: 'quiz', q: 'Where do you see how much profit is sitting on your shelves right now?', options: ['Home', 'Scan', 'Shipping'], answer: 0, why: 'Home shows profit sitting on the shelf, plus your goal and next live.' },
-    { kind: 'learn', title: 'Meet Nova', nova: "That's me! Go ahead, give me a spin. I don't mind.", text: 'Nova the handbag is your guide. She shares a tip on Home every day and teaches every lesson and course in Dazzle University. She\'s a real 3D handbag, so play with her. Stuck on a screen? Search the University for it.',
+    { kind: 'learn', title: 'Meet Nova', nova: "That's me! Go ahead, give me a spin. I don't mind.", text: 'Nova the handbag is your guide. She shares a tip on Home every day and teaches every lesson and course in Dazzle University. She\'s a real 3D handbag, so play with her. The University home keeps it simple: pick up where you left off, then three steps: Learn the app, Join a live class, Grow your business. Stuck on a screen? Search the University for it.',
       points: ['Tap Nova on Home or in the University for another tip. She does a little twirl and peeks over her shades.', 'Drag her sideways with your finger or mouse to spin her all the way around. Let go and she turns back to face you.', 'Move your mouse or finger nearby and she turns to look at you.', 'On an older phone she shows as her picture instead, and everything works the same.'] },
     { kind: 'quiz', q: 'You want to see the back of Nova\'s bag. What do you do?', options: ['Drag her sideways', 'Tap Settings', 'Close the app and open it again'], answer: 0, why: 'Drag Nova sideways to spin her around. Let go and she turns back to face you. A quick tap gives you a new tip instead.' },
 
