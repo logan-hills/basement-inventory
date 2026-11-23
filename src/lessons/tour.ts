@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Run a weekly rhythm that leaves no surprises before a live',
   ],
   route: { to: '/', label: 'Go to Home' },
-  covers: ['src/App.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/nova3d.ts', 'src/pages/Lessons.tsx'], updated: '2026-11-23',
+  covers: ['src/App.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/nova3d.ts', 'src/pages/Lessons.tsx', 'src/components/Certificate.tsx', 'src/lessons/awards.ts'], updated: '2026-11-23',
   slides: [
     { chapter: 'Why a system', kind: 'learn', title: 'From "where is it?" to "got it"', nova: "Welcome, boss! Let's make sure you never dig through a box before a live again.",
       text: "Most live sellers start the same way: pieces in tubs, a notebook of who bought what, and two hours of searching before every show. It works until it doesn't. One lost earring, one wrong box, one buyer who never got her order, and the stress starts eating the fun.",
@@ -57,6 +57,8 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Meet Nova', nova: "That's me! Go ahead, give me a spin. I don't mind.", text: 'Nova the handbag is your guide. She shares a tip on Home every day and teaches every lesson and course in Dazzle University. She\'s a real 3D handbag, so play with her. The University home keeps it simple: pick up where you left off, then three steps: Learn the app, Join a live class, Grow your business. Stuck on a screen? Search the University for it.',
       points: ['Tap Nova on Home or in the University for another tip. She does a little twirl and peeks over her shades.', 'Drag her sideways with your finger or mouse to spin her all the way around. Let go and she turns back to face you.', 'Move your mouse or finger nearby and she turns to look at you.', 'On an older phone she shows as her picture instead, and everything works the same.'] },
     { kind: 'quiz', q: 'You want to see the back of Nova\'s bag. What do you do?', options: ['Drag her sideways', 'Tap Settings', 'Close the app and open it again'], answer: 0, why: 'Drag Nova sideways to spin her around. Let go and she turns back to face you. A quick tap gives you a new tip instead.' },
+    { kind: 'learn', title: 'Earn certificates as you go', text: 'Every module of Orientation, every business course and every school ends with its own certificate, and milestones like First Step and Dean\'s List earn you a medal. Find them all under University, then My certificates. Tap one to open it, then Print or save as PDF.',
+      points: ['Orientation modules give you a hang-tag certificate, like Stock Room Pro', 'Finish all of Orientation for your gold Orientation Graduate diploma', 'Each business course has its own certificate, in its school\'s colors', 'Finish a whole school for an honors certificate with a laurel'] },
 
     { chapter: 'Your first week', kind: 'learn', title: 'Set up in five short sessions', text: "Don't try to do it all in one day. One session a day, about an hour each, and by Friday your shop runs on the system.",
       table: { head: ['Day', 'Do this', 'Lesson'], rows: [

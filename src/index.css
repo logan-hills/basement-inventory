@@ -1797,15 +1797,16 @@ input, select, textarea { min-height: 48px; font-size: 17px; }
   box-shadow: 0 30px 80px rgba(0, 0, 0, .35);
 }
 @media (max-width: 640px) { .uni { margin: -6px -6px 0; padding: 14px; border-radius: 22px; } }
-.uni .tone-fuchsia, .uni-tab.tone-fuchsia, .bag-wrap.tone-fuchsia, .uni-cover.tone-fuchsia { --t1: #E3007D; --t2: #FF4FA3; --t3: #8A0050; }
-.uni .tone-cobalt, .uni-tab.tone-cobalt, .bag-wrap.tone-cobalt, .uni-cover.tone-cobalt { --t1: #2346D8; --t2: #5B86FF; --t3: #12257A; }
-.uni .tone-emerald, .uni-tab.tone-emerald, .bag-wrap.tone-emerald, .uni-cover.tone-emerald { --t1: #00956A; --t2: #2BD397; --t3: #04553D; }
-.uni .tone-tangerine, .uni-tab.tone-tangerine, .bag-wrap.tone-tangerine, .uni-cover.tone-tangerine { --t1: #F2510F; --t2: #FFA63D; --t3: #8F2A00; }
-.uni .tone-violet, .uni-tab.tone-violet, .bag-wrap.tone-violet, .uni-cover.tone-violet { --t1: #6A2BD8; --t2: #B07BFF; --t3: #351170; }
-.uni .tone-gold, .uni-tab.tone-gold, .bag-wrap.tone-gold, .uni-cover.tone-gold { --t1: #B8862B; --t2: #F2C94C; --t3: #6B4A0E; }
-.uni .tone-teal, .uni-tab.tone-teal, .bag-wrap.tone-teal, .uni-cover.tone-teal { --t1: #00838F; --t2: #2EC4C9; --t3: #00474F; }
-.uni .tone-crimson, .uni-tab.tone-crimson, .bag-wrap.tone-crimson, .uni-cover.tone-crimson { --t1: #C8102E; --t2: #FF5A6E; --t3: #6E0618; }
-.uni .tone-onyx, .uni-tab.tone-onyx, .bag-wrap.tone-onyx, .uni-cover.tone-onyx { --t1: #2A2230; --t2: #6B5A72; --t3: #120C16; }
+.uni .tone-fuchsia, .uni-tab.tone-fuchsia, .bag-wrap.tone-fuchsia, .uni-cover.tone-fuchsia, .cert.tone-fuchsia, .medal.tone-fuchsia { --t1: #E3007D; --t2: #FF4FA3; --t3: #8A0050; }
+.uni .tone-cobalt, .uni-tab.tone-cobalt, .bag-wrap.tone-cobalt, .uni-cover.tone-cobalt, .cert.tone-cobalt, .medal.tone-cobalt { --t1: #2346D8; --t2: #5B86FF; --t3: #12257A; }
+.uni .tone-emerald, .uni-tab.tone-emerald, .bag-wrap.tone-emerald, .uni-cover.tone-emerald, .cert.tone-emerald, .medal.tone-emerald { --t1: #00956A; --t2: #2BD397; --t3: #04553D; }
+.uni .tone-tangerine, .uni-tab.tone-tangerine, .bag-wrap.tone-tangerine, .uni-cover.tone-tangerine, .cert.tone-tangerine, .medal.tone-tangerine { --t1: #F2510F; --t2: #FFA63D; --t3: #8F2A00; }
+.uni .tone-violet, .uni-tab.tone-violet, .bag-wrap.tone-violet, .uni-cover.tone-violet, .cert.tone-violet, .medal.tone-violet { --t1: #6A2BD8; --t2: #B07BFF; --t3: #351170; }
+.uni .tone-gold, .uni-tab.tone-gold, .bag-wrap.tone-gold, .uni-cover.tone-gold, .cert.tone-gold, .medal.tone-gold { --t1: #B8862B; --t2: #F2C94C; --t3: #6B4A0E; }
+.uni .tone-teal, .uni-tab.tone-teal, .bag-wrap.tone-teal, .uni-cover.tone-teal, .cert.tone-teal, .medal.tone-teal { --t1: #00838F; --t2: #2EC4C9; --t3: #00474F; }
+.uni .tone-crimson, .uni-tab.tone-crimson, .bag-wrap.tone-crimson, .uni-cover.tone-crimson, .cert.tone-crimson, .medal.tone-crimson { --t1: #C8102E; --t2: #FF5A6E; --t3: #6E0618; }
+.uni .tone-onyx, .uni-tab.tone-onyx, .bag-wrap.tone-onyx, .uni-cover.tone-onyx, .cert.tone-onyx, .medal.tone-onyx { --t1: #2A2230; --t2: #6B5A72; --t3: #120C16; }
+.uni .tone-plum, .uni-tab.tone-plum, .bag-wrap.tone-plum, .uni-cover.tone-plum, .cert.tone-plum, .medal.tone-plum { --t1: #8E1F7A; --t2: #E06CC4; --t3: #4A0A3E; }
 
 /* Hero */
 .uni-hero { position: relative; display: flex; gap: 28px; align-items: center; padding: 34px; border-radius: 24px; overflow: hidden; color: #fff;
@@ -2405,3 +2406,120 @@ button.uni-step:hover, button.uni-step:focus-visible { transform: translateY(-2p
 .size-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .size-chips .chip { min-height: 48px; font-size: 1rem; }
 @media (max-width: 560px) { .gear-grid { grid-template-columns: 1fr; } }
+
+/* ===== UNIVERSITY: certificates, medals and milestones ===== */
+.cert { --paper: #FFFBF2; --ink: #2A1A0C; --foil: #B8862B; position: relative; color: var(--ink); background: var(--paper); font-family: 'Cormorant Garamond', Georgia, serif; text-align: center; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
+.cert-crest { font-family: Cinzel, Georgia, serif; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; font-size: .9rem; color: var(--t3, var(--foil)); }
+.cert-kick { font-family: Cinzel, Georgia, serif; font-size: .78rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--t1, var(--foil)); }
+.cert-kick.soft { color: #7A6A58; letter-spacing: 1.5px; text-transform: none; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.15rem; }
+.cert-name { font-family: 'Pinyon Script', cursive; font-size: clamp(2.4rem, 6vw, 3.4rem); line-height: 1.15; color: var(--ink); padding: 0 .4em; border-bottom: 1px solid color-mix(in srgb, var(--t1, #B8862B) 40%, transparent); }
+.cert-title { font-family: 'Bodoni Moda', Didot, Georgia, serif; font-weight: 700; font-size: clamp(1.5rem, 4vw, 2.2rem); line-height: 1.1; margin: 2px 0; color: var(--t3, var(--ink)); }
+.cert-line { margin: 0; font-size: 1.2rem; font-style: italic; color: #5A4A3A; }
+.cert-meta { font-family: Inter, sans-serif; font-size: .72rem; letter-spacing: 1px; text-transform: uppercase; color: #8A7A66; }
+.cert-sig { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+.cert-sig b { font-family: Caveat, cursive; font-size: 2.1rem; color: var(--t3, var(--ink)); padding: 0 24px 2px; border-bottom: 1px solid #C9B99F; }
+.cert-sig small { font-family: Inter, sans-serif; font-size: .66rem; letter-spacing: 1.5px; text-transform: uppercase; color: #8A7A66; margin-top: 5px; }
+.cert-foot { width: 100%; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+.cert-corner { position: absolute; width: 150px; height: 150px; color: var(--t2, var(--foil)); opacity: .55; pointer-events: none; }
+.cert-corner.tl { top: -50px; left: -50px; } .cert-corner.tr { top: -50px; right: -50px; } .cert-corner.br { bottom: -50px; right: -50px; }
+
+/* Course: ivory certificate with a double frame and a rosette */
+.cert-course { padding: 14px; border-radius: 6px; box-shadow: 0 30px 70px rgba(40, 10, 20, .35); background: linear-gradient(135deg, var(--t1), var(--t3)); }
+.cert-frame { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 34px 30px 22px; background: var(--paper); border-radius: 3px; box-shadow: inset 0 0 0 2px var(--foil), inset 0 0 0 7px var(--paper), inset 0 0 0 8px color-mix(in srgb, var(--t1) 55%, transparent); overflow: hidden; }
+.cert-outcomes-new { list-style: none; margin: 4px 0; padding: 0; display: flex; flex-direction: column; gap: 3px; font-size: 1.08rem; color: #4A3A2A; max-width: 560px; }
+.cert-outcomes-new li::before { content: '✦ '; color: var(--t1); }
+.cert-rosette { position: relative; display: inline-block; flex: none; }
+.cert-rosette svg { display: block; overflow: visible; filter: drop-shadow(0 6px 10px rgba(40, 10, 20, .3)); }
+.cert-rosette .rib { fill: var(--t1); } .cert-rosette .edge { fill: var(--t2); } .cert-rosette .face { fill: var(--t1); }
+.cert-rosette .engr { color: rgba(255, 255, 255, .5); } .cert-rosette .core { fill: var(--t3); }
+.cert-rosette-ico { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); color: #FFE7A3; display: grid; }
+
+/* Module: a big hang tag */
+.cert-tag { background: transparent; padding-top: 50px; }
+.cert-tag-string { position: absolute; top: 0; left: 50%; width: 60px; height: 70px; transform: translateX(-50%); }
+.cert-tag-string path { fill: none; stroke: #C99A2E; stroke-width: 2.5; stroke-linecap: round; }
+.cert-tag-body { position: relative; width: min(380px, 100%); display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0 26px 24px; background: var(--paper); overflow: hidden;
+  clip-path: polygon(22% 0, 78% 0, 100% 9%, 100% 100%, 0 100%, 0 9%); filter: drop-shadow(0 20px 40px rgba(40, 10, 20, .35)); box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--t1) 40%, transparent); }
+.cert-tag-hole { width: 22px; height: 22px; margin-top: 16px; border-radius: 50%; background: #2A1A0C; box-shadow: 0 0 0 5px #E6C66A, 0 0 0 7px #B8862B; z-index: 1; }
+.cert-tag-band { width: calc(100% + 52px); margin: 14px 0 6px; padding: 10px; color: #fff; background: linear-gradient(135deg, var(--t1), var(--t3)); display: flex; flex-direction: column; }
+.cert-tag-band small { font-family: Cinzel, serif; letter-spacing: 2px; font-size: .68rem; text-transform: uppercase; opacity: .9; }
+.cert-tag-band b { font-family: 'Bodoni Moda', serif; font-size: 1.7rem; font-style: italic; }
+.cert-tag-ico { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; color: var(--t1); background: color-mix(in srgb, var(--t2) 18%, #fff); box-shadow: inset 0 0 0 2px var(--t2); }
+.cert-tag-pattern { position: absolute; bottom: -70px; left: 50%; width: 260px; height: 260px; transform: translateX(-50%); color: var(--t2); opacity: .16; pointer-events: none; }
+.cert-tag .cert-sig, .cert-tag .cert-meta { position: relative; margin-top: 6px; }
+
+/* Diploma and school honors: gold foil with a laurel */
+.cert-diploma { gap: 6px; padding: 34px 28px 22px; border-radius: 6px; box-shadow: 0 30px 70px rgba(40, 10, 20, .35), inset 0 0 0 3px var(--t1), inset 0 0 0 9px var(--paper), inset 0 0 0 10px var(--t2); }
+.cert-diploma.foil { background: radial-gradient(90% 60% at 50% 0%, #FFF3CF, transparent 70%), var(--paper); box-shadow: 0 30px 70px rgba(40, 10, 20, .35), inset 0 0 0 3px #B8862B, inset 0 0 0 9px var(--paper), inset 0 0 0 10px #E6C66A; }
+.cert-diploma.foil .cert-title { background: linear-gradient(100deg, #8A5A12, #D9A93A 40%, #8A5A12 70%, #C99A2E); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: clamp(1.9rem, 5vw, 2.8rem); }
+.cert-wreath { position: relative; display: grid; place-items: center; color: var(--t1); margin: -4px 0 -10px; }
+.cert-diploma.foil .cert-wreath { color: #B8862B; }
+.cert-wreath-star { position: absolute; top: 46%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, var(--t1), var(--t3)); box-shadow: 0 8px 20px rgba(40, 10, 20, .3), inset 0 0 0 3px rgba(255, 231, 163, .7); }
+.cert-diploma.foil .cert-wreath-star { background: linear-gradient(135deg, #D9A93A, #8A5A12); }
+
+/* Milestone: a medal */
+.cert-medal { gap: 6px; padding: 28px 24px 22px; border-radius: 24px; background: radial-gradient(80% 60% at 50% 0%, color-mix(in srgb, var(--t2) 22%, #fff), transparent 70%), var(--paper); box-shadow: 0 30px 70px rgba(40, 10, 20, .35); }
+.medal { position: relative; display: inline-block; flex: none; }
+.medal svg { display: block; overflow: visible; }
+.medal .rib.a { fill: var(--t1); } .medal .rib.b { fill: var(--t3); }
+.medal .edge { fill: #E6C66A; stroke: #B8862B; stroke-width: 2; } .medal .face { fill: var(--t1); } .medal .engr { color: rgba(255, 255, 255, .4); }
+.medal-ico { position: absolute; left: 50%; top: 64.6%; transform: translate(-50%, -50%); color: #FFF3CF; display: grid; }
+.medal:not(.earned) { filter: grayscale(1); opacity: .45; }
+
+/* The secondary window */
+.cert-window { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 16px; overflow-y: auto; background: rgba(20, 8, 14, .72); backdrop-filter: blur(6px); animation: cert-fade .25s ease; }
+.cert-window-inner { width: min(760px, 100%); display: flex; flex-direction: column; gap: 16px; animation: cert-pop .35s cubic-bezier(.2, 1.3, .4, 1); }
+.cert-window-inner > .cert-tag, .cert-window-inner > .cert-medal { align-self: center; width: min(440px, 100%); }
+.cert-window-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.cert-window-actions .btn.uni-ghost-dark { align-self: auto; color: #fff; background: transparent; border-color: rgba(255, 255, 255, .55); }
+@keyframes cert-fade { from { opacity: 0; } }
+@keyframes cert-pop { from { opacity: 0; transform: scale(.92) translateY(14px); } }
+@media (max-width: 560px) { .cert-frame { padding: 28px 16px 18px; } .cert-foot { justify-content: center; } .cert-corner { width: 110px; height: 110px; } }
+@media print {
+  body.cert-open > *:not(.cert-window) { display: none !important; }
+  body.cert-open .cert-window { position: static; background: none; backdrop-filter: none; padding: 0; }
+  body.cert-open .cert-window-actions { display: none !important; }
+  .cert { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-shadow: none !important; }
+}
+
+/* My certificates page */
+.uni-awards-head { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.uni-medals { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.uni-medal { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 10px 14px; border: 1px solid var(--u-line); border-radius: 20px; background: #fff; color: var(--u-ink); font: inherit; text-align: center; cursor: pointer; transition: transform .2s var(--ease), box-shadow .2s; }
+.uni-medal:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(120, 40, 70, .14); }
+.uni-medal:disabled { cursor: default; }
+.uni-medal b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.12rem; line-height: 1.15; }
+.uni-medal small { color: var(--u-muted); font-size: .9rem; line-height: 1.3; }
+.uni-medal .uni-step-bar { width: 80%; }
+.uni-next-award .uni-step-bar { width: 100%; }
+.uni-certs { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.uni-cert-card { position: relative; display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 18px; border: 1px solid var(--u-line); background: #fff; color: var(--u-ink); font: inherit; text-align: left; cursor: pointer; overflow: hidden; transition: transform .2s var(--ease), box-shadow .2s; }
+.uni-cert-card::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 6px; background: linear-gradient(180deg, var(--t1), var(--t3)); }
+.uni-cert-card:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(120, 40, 70, .14); }
+.uni-cert-card:disabled { cursor: default; opacity: .6; }
+.uni-cert-card .ico { flex: none; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, var(--t1), var(--t3)); }
+.uni-cert-card:disabled .ico { background: #CFC6CC; }
+.uni-cert-card span:last-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.uni-cert-card b { font-size: 1.05rem; line-height: 1.25; }
+.uni-cert-card small { color: var(--u-muted); font-size: .9rem; }
+.uni-next-award { display: flex; align-items: center; gap: 16px; padding: 16px 18px; border-radius: 22px; border: 1px solid var(--u-line); background: #fff; color: var(--u-ink); font: inherit; text-align: left; cursor: pointer; width: 100%; }
+.uni-next-award:hover { box-shadow: 0 14px 30px rgba(120, 40, 70, .14); }
+.uni-next-award .txt { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.uni-next-award b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.25rem; }
+.uni-next-award small { color: var(--u-muted); font-size: .95rem; }
+.uni-earned-now { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.uni-earned-now .row-gap { justify-content: center; }
+.lesson-cert { width: min(760px, 100%); margin: 6px auto; }
+.lesson-finish .uni-medal { background: #fff; }
+.lesson-finish .uni-earned-now > b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.3rem; color: var(--gold); }
+@media (max-width: 560px) {
+  .cert-crest { font-size: .78rem; letter-spacing: 3px; }
+  .cert-kick { font-size: .66rem; letter-spacing: 1.5px; }
+  .cert-kick.soft { font-size: 1rem; }
+  .cert-name { font-size: 2.3rem; }
+  .cert-title { font-size: 1.35rem; }
+  .cert-outcomes-new { font-size: .95rem; }
+  .cert-line { font-size: 1.05rem; }
+  .cert-sig b { font-size: 1.7rem; }
+}
+@media (max-width: 560px) { .uni-medals { grid-template-columns: repeat(2, 1fr); gap: 10px; } .uni-medal small { font-size: .84rem; } }

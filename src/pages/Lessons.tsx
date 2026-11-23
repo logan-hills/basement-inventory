@@ -11,6 +11,8 @@ import { NovaSays, type NovaMood } from '../components/Nova'
 import AcademyLocked from '../components/AcademyLocked'
 import CourseBag from '../components/CourseBag'
 import LessonTag from '../components/LessonTag'
+import { CertificateWindow, Medal } from '../components/Certificate'
+import { awardStatus, type AwardStatus } from '../lessons/awards'
 import { CLASS_TZ, LIVE_CLASSES, ONE_ON_ONE, QUEEN_SESSION } from '../lessons/classes'
 import { CONTACT } from '../lib/legal'
 import novaLaverne from '../assets/nova-laverne.webp'
@@ -46,13 +48,14 @@ const MODULE_BLURB: Record<Track, string> = {
   Business: '',
 }
 
-type Tab = 'home' | 'orientation' | 'classes' | 'business' | 'resources' | 'help'
+type Tab = 'home' | 'orientation' | 'classes' | 'business' | 'awards' | 'resources' | 'help'
 /** The University's sub-pages. Home links to each one; each one has a way back home. */
 const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: 'home', label: 'University home', icon: 'dashboard' },
   { id: 'orientation', label: 'Orientation', icon: 'sparkle' },
   { id: 'classes', label: 'Live classes', icon: 'live' },
   { id: 'business', label: 'Business school', icon: 'trend' },
+  { id: 'awards', label: 'My certificates', icon: 'gift' },
   { id: 'resources', label: 'Resource desk', icon: 'lessons' },
   { id: 'help', label: 'Help desk', icon: 'settings' },
 ]
@@ -72,6 +75,9 @@ export default function Lessons() {
   const [q, setQ] = useState('')
   const [tip, setTip] = useState(0)
   const [st, setSt] = useState('Pennsylvania')
+  const [cert, setCert] = useState<AwardStatus | null>(null)
+  const [showAllCerts, setShowAllCerts] = useState(false)
+  const awards = useMemo(() => awardStatus(progress), [progress])
   const s = q.trim().toLowerCase()
   const lessonHits = useMemo(() => (s ? LESSONS.filter(l => hit(l, s)) : []), [s])
   const courseHits = useMemo(() => (s ? COURSES.filter(l => hit(l, s)) : []), [s])
@@ -90,6 +96,9 @@ export default function Lessons() {
   const state = STATE_SALES_TAX.find(x => x.state === st) ?? STATE_SALES_TAX[0]
   const go = (next: Tab, extra?: Record<string, string>) => { setQ(''); setParams({ tab: next, ...extra }); top() }
   const pct = (a: number, b: number) => `${Math.round((a / Math.max(1, b)) * 100)}%`
+  const earned = awards.filter(a => a.earned)
+  // The next award to aim for: the one closest to done (by share), skipping single-course certificates.
+  const nextAward = awards.filter(a => !a.earned && a.kind !== 'course').sort((a, b) => b.have / b.need - a.have / a.need || a.need - b.need)[0]
   const kindOf = (l: Lesson) => (l.kind === 'course' ? `Business course · ${l.school}` : `Orientation · ${l.track}`)
 
   const bag = (l: Lesson) => {
@@ -108,6 +117,13 @@ export default function Lessons() {
       </Link>
     )
   }
+
+  const certCard = (a: AwardStatus) => (
+    <button key={a.id} type="button" className={`uni-cert-card tone-${a.tone}`} disabled={!a.earned} onClick={() => setCert(a)}>
+      <span className="ico"><Icon name={a.earned ? a.icon : 'clock'} size={24} /></span>
+      <span><b>{a.title}</b><small>{a.earned ? `${a.line} · Open ›` : `${a.line} · ${a.have} of ${a.need}`}</small></span>
+    </button>
+  )
 
   return (
     <div className="uni stack wide-gap">
@@ -183,6 +199,19 @@ export default function Lessons() {
                 <span className="uni-step-go" aria-hidden="true">›</span>
               </button></li>
             </ol>
+          </section>
+
+          <section className="stack">
+            <div className="uni-section-head"><span className="uni-eyebrow">Milestones</span><h2 className="uni-h2">Your certificates</h2></div>
+            <button type="button" className={`uni-next-award tone-${(nextAward ?? earned[earned.length - 1])?.tone ?? 'gold'}`} onClick={() => go('awards')}>
+              {nextAward ? <Medal a={nextAward} size={64} /> : <Medal a={earned[earned.length - 1]} size={64} />}
+              <span className="txt">
+                <b>{earned.length ? `${earned.length} earned` : 'Earn your first one today'}</b>
+                {nextAward && <small>Next: {nextAward.title} · {nextAward.have} of {nextAward.need}</small>}
+                {nextAward && <span className="uni-step-bar"><i style={{ width: pct(nextAward.have, nextAward.need) }} /></span>}
+              </span>
+              <span className="uni-step-go" aria-hidden="true">›</span>
+            </button>
           </section>
 
           <section className="stack">
@@ -287,6 +316,46 @@ export default function Lessons() {
             </>
           )}
         </section>
+      ) : tab === 'awards' ? (
+        <section className="stack wide-gap">
+          <div className="uni-section-head">
+            <span className="uni-eyebrow">My certificates</span>
+            <h2 className="uni-h2">{earned.length ? `You've earned ${earned.length}` : 'Your first one is close'}</h2>
+            <p className="uni-sub">Tap anything you've earned to open it, then print it or save it as a PDF.</p>
+          </div>
+
+          <h3 className="uni-h3">Milestones</h3>
+          <div className="uni-medals">
+            {awards.filter(a => a.kind === 'milestone').map(a => (
+              <button key={a.id} type="button" className={`uni-medal tone-${a.tone}`} disabled={!a.earned} onClick={() => setCert(a)}>
+                <Medal a={a} size={78} />
+                <b>{a.title}</b>
+                <small>{a.line}</small>
+                {!a.earned && <><span className="uni-step-bar"><i style={{ width: pct(a.have, a.need) }} /></span><small>{a.have} of {a.need}</small></>}
+              </button>
+            ))}
+          </div>
+
+          <h3 className="uni-h3">Orientation</h3>
+          <div className="uni-certs">
+            {awards.filter(a => a.kind === 'module' || a.kind === 'orientation').map(a => certCard(a))}
+          </div>
+
+          <h3 className="uni-h3">Business school</h3>
+          {(() => {
+            const schools = awards.filter(a => a.kind === 'school' && a.have > 0)
+            const courses = awards.filter(a => a.kind === 'course' && a.earned)
+            const shown = showAllCerts ? courses : courses.slice(0, 4)
+            return (
+              <>
+                {schools.length > 0 && <div className="uni-certs">{schools.map(a => certCard(a))}</div>}
+                <p className="uni-sub">Finish every course in a school to earn its honors certificate. Each course you finish adds its own certificate below.</p>
+                {courses.length > 0 && <div className="uni-certs">{shown.map(a => certCard(a))}</div>}
+                {courses.length > shown.length && <button type="button" className="btn uni-ghost-dark" onClick={() => setShowAllCerts(true)}>Show all {courses.length} course certificates</button>}
+              </>
+            )
+          })()}
+        </section>
       ) : tab === 'resources' ? (
         <section className="stack wide-gap">
           <div className="uni-section-head">
@@ -338,6 +407,7 @@ export default function Lessons() {
           </div>
         </section>
       )}
+      {cert && <CertificateWindow a={cert} shopName={shop?.name ?? ''} shopId={shop?.id} onClose={() => setCert(null)} />}
     </div>
   )
 }

@@ -8,6 +8,8 @@ import { useSession } from '../lib/session'
 import { hasAcademy } from '../lib/plan'
 import { feedbackBad, feedbackOk, tap } from '../lib/feedback'
 import AcademyLocked from '../components/AcademyLocked'
+import { Certificate, CertificateWindow, Medal } from '../components/Certificate'
+import { awardStatus, type AwardStatus } from '../lessons/awards'
 
 /** Stable shuffle so practice order doesn't jump around on re-render. */
 function shuffle<T>(arr: T[], seed: string): T[] {
@@ -273,6 +275,7 @@ function Player({ id }: { id?: string }) {
   const [i, setI] = useState(() => saved && !saved.completed_at ? Math.min(saved.step, (lesson?.slides.length ?? 1) - 1) : 0)
   const [results, setResults] = useState<Record<number, boolean>>({})
   const [finished, setFinished] = useState(false)
+  const [cert, setCert] = useState<AwardStatus | null>(null)
   const [react, setReact] = useState<{ mood: NovaMood; line: string } | null>(null)
 
   if (!hasAcademy(shop?.plan)) return <AcademyLocked />
@@ -302,7 +305,7 @@ function Player({ id }: { id?: string }) {
     setReact(null)
     if (n >= lesson!.slides.length) {
       const score = total ? Math.round((right / total) * 100) : 100
-      save(lesson!.id, { step: lesson!.slides.length, score, completed_at: new Date().toISOString() })
+      save(lesson!.id, { step: lesson!.slides.length, score, completed_at: saved?.completed_at ?? new Date().toISOString() })
       feedbackOk(); setFinished(true); setTimeout(() => { burst(); setTimeout(() => burst(window.innerWidth * .3, window.innerHeight * .4), 180); setTimeout(() => burst(window.innerWidth * .7, window.innerHeight * .4), 320) }, 120); return
     }
     setI(n); tap(); window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -311,17 +314,18 @@ function Player({ id }: { id?: string }) {
 
   if (finished) {
     const score = total ? Math.round((right / total) * 100) : 100
+    const all = awardStatus(progress)
+    const courseCert = all.find(a => a.id === `course-${lesson.id}` && a.earned)
+    // Milestones, modules and schools this lesson just completed (they include it, and are earned).
+    const newAwards = all.filter(a => a.earned && a.kind !== 'course' && a.lessons.includes(lesson.id) && a.date === progress[lesson.id]?.completed_at)
     return (
       <div className="lesson-player stack wide-gap">
-        <div className={`lesson-finish card${isCourse ? ' certificate' : ''}`}>
-          {isCourse ? (
+        {cert && <CertificateWindow a={cert} shopName={shop?.name ?? ''} shopId={shop?.id} onClose={() => setCert(null)} />}
+        <div className="lesson-finish card">
+          {isCourse && courseCert ? (
             <>
-              <span className="cert-kicker">Dazzle University · Certificate of completion</span>
-              <Nova mood="cheer" size={120} />
-              <h1>{lesson.title}</h1>
-              <p className="muted">Awarded to <b className="gold">{shop?.name ?? 'you'}</b> on {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
-              {lesson.outcomes && <ul className="cert-outcomes">{lesson.outcomes.map(o => <li key={o}>{o}</li>)}</ul>}
-              <span className="cert-sign">Nova <small>Head of Dazzle University</small></span>
+              <span className="script">You earned a certificate!</span>
+              <div className="lesson-cert"><Certificate a={courseCert} shopName={shop?.name ?? ''} shopId={shop?.id} /></div>
             </>
           ) : (
             <>
@@ -330,11 +334,23 @@ function Player({ id }: { id?: string }) {
               <h1>{lesson.title}</h1>
             </>
           )}
+          {newAwards.length > 0 && (
+            <div className="uni-earned-now no-print">
+              <b>{newAwards.length === 1 ? 'And a new milestone!' : `And ${newAwards.length} new milestones!`}</b>
+              <div className="row-gap">
+                {newAwards.map(a => (
+                  <button key={a.id} type="button" className="uni-medal" onClick={() => setCert(a)}>
+                    <Medal a={a} size={70} /><b>{a.title}</b><small>Tap to open</small>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           <p className="big-text">{total ? <>You got <b className="gold">{right} of {total}</b> right on the first try.</> : 'All done.'}</p>
           {score < 80 && <p className="muted">Take it again any time. Practice makes it second nature.</p>}
           <div className="row-gap center-row no-print">
             {lesson.route && <Link className="btn gold" to={lesson.route.to}>Try it for real: {lesson.route.label}</Link>}
-            {isCourse && <button className="btn outline-gold" onClick={() => window.print()}>Print certificate</button>}
+            {isCourse && courseCert && <button className="btn outline-gold" onClick={() => setCert(courseCert)}>Print certificate</button>}
             {nextLesson && nextLesson !== lesson && <Link className="btn ghost" to={`/lessons/${nextLesson.id}`}>Next: {nextLesson.title} →</Link>}
           </div>
           <div className="row-gap center-row no-print">

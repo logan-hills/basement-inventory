@@ -1,0 +1,84 @@
+import type { Lesson } from '../types'
+
+const lesson: Lesson = {
+  id: 'aiedge', kind: 'course', school: 'AI know-how', title: 'Use AI to your advantage: the seller\'s playbook', track: 'Business', icon: 'trend',
+  why: 'Harvard and Boston Consulting Group found that people using AI on the right tasks finished more work, faster and better. On the wrong tasks they did worse. This course shows you which is which for a live shop.',
+  outcomes: [
+    'Explain the "jagged frontier": where AI makes you better and where it makes you worse',
+    'Use AI in six workflows that pay off for live sellers',
+    'Turn one live into a week of posts with AI',
+    'Use AI to read your numbers without sharing private buyer data',
+    'Write a one-page "how we do it" guide for a helper in minutes',
+  ],
+  route: { to: '/reports', label: 'Open Reports' },
+  sources: [
+    { org: 'Harvard Business School', title: 'Navigating the jagged technological frontier (working paper, Dell\'Acqua and others)', url: 'https://www.hbs.edu/faculty/Pages/item.aspx?num=64700' },
+    { org: 'Yale School of Management', title: 'Teaching through a technological revolution (2026)', url: 'https://som.yale.edu/story/2026/teaching-through-technological-revolution' },
+    { org: 'Federal Reserve Bank of San Francisco', title: 'Early findings on small business use of AI (2026)', url: 'https://www.frbsf.org/research-and-insights/publications/community-articles/2026/03/ai-and-small-businesses/' },
+    { org: 'JPMorganChase Institute', title: 'Small business in the age of AI', url: 'https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/small-business-in-the-age-of-ai' },
+  ],
+  covers: [], updated: '2026-11-23',
+  slides: [
+    { chapter: 'The jagged frontier', kind: 'learn', title: 'What Harvard found', nova: 'This is the study every business school talks about. And it\'s simpler than it sounds.',
+      text: 'Researchers from Harvard Business School and Boston Consulting Group gave 758 consultants real work, some with AI and some without. On tasks AI is good at, the AI group finished more, faster, and better. On one task AI is bad at, the AI group got it wrong more often, because they trusted it.',
+      table: { head: ['Result', 'Tasks inside AI\'s strengths', 'A task outside them'], rows: [
+        ['Tasks finished', '12% more', 'n/a'],
+        ['Speed', '25% faster', 'n/a'],
+        ['Quality', 'More than 40% higher', 'People were 19 points less likely to get it right'],
+      ] },
+      tip: 'They called it a "jagged frontier": AI is great at some things and poor at others that look just as easy. Your job is knowing where the line is.' },
+    { kind: 'learn', title: 'Where the line is for a live seller', text: 'Here\'s the frontier, drawn for your shop. Inside: words, ideas, structure. Outside: facts you can\'t see, money decisions, and anything only you know.',
+      table: { head: ['Inside: AI makes you better', 'Outside: AI can make you worse'], rows: [
+        ['Captions, hooks, scripts, emails', 'Today\'s tax rates, laws and shipping prices'],
+        ['Turning notes into clean descriptions', 'Whether a piece is authentic'],
+        ['Organizing a messy list into steps', 'What your buyers really want (ask them)'],
+        ['Explaining a confusing form in plain words', 'Final numbers on your profit and taxes'],
+        ['Brainstorming themes and giveaways', 'Anything that needs a photo of the real item'],
+      ] } },
+    { kind: 'quiz', q: 'In the Harvard study, what happened when people used AI on a task outside its strengths?', options: ['They did just as well', 'They were more likely to get it wrong', 'The AI refused to help'], answer: 1, why: 'They trusted a confident answer that was wrong. Inside the frontier AI helps; outside, check everything.' },
+
+    { chapter: 'Six workflows that pay', kind: 'learn', title: 'Workflow 1: one live, a week of posts', text: 'Your live is full of great lines. Facebook lets you download your live video, and many phones can make a transcript. Paste the transcript (no buyer names) into your AI assistant and let it pull out a week of posts.',
+      points: ['Save the live, or turn on your phone\'s transcript', 'Delete buyer names and comments from what you paste', 'Ask: "From this live, give me 5 short posts and 3 Reel hooks. Keep my words where you can."', 'Pick the best 3 and schedule them', 'Post the best moments as clips with your own captions'],
+      example: 'Kim\'s Thursday live gave her a Saturday "story behind the bag" post, a Monday sneak peek and a Wednesday reminder.' },
+    { kind: 'learn', title: 'Workflow 2: listings from your notes', text: 'Type quick notes while you tag: brand, color, size, flaws, what you love about it. AI turns them into clean descriptions in your voice, all at once.',
+      example: 'Notes: "black leather crossbody, gold hardware, small scuff on back corner, fits a phone, adjustable strap." Result: "Classic black leather crossbody with warm gold hardware. Fits your phone and the essentials, with an adjustable strap. Honest note: a small scuff on the back corner."',
+      tip: 'Always keep the flaws in. AI likes to smooth them out, and buyers trust you because you tell them.' },
+    { kind: 'learn', title: 'Workflow 3: read your numbers safely', text: 'AI is good at spotting patterns in totals. Copy totals from Reports, not your buyer list. No names, addresses or phone numbers, ever.',
+      table: { head: ['Paste this', 'Never paste this'], rows: [
+        ['Sales by week for 8 weeks', 'Your customer list'],
+        ['Average order by live theme', 'Buyer names with what they bought'],
+        ['Sell-through by category', 'Addresses, phone numbers or emails'],
+      ] },
+      example: 'Prompt: "Here are my sales by live theme for two months. Which themes do best, and what should I test next? Show your thinking simply."' },
+    { kind: 'learn', title: 'Workflows 4, 5 and 6', text: 'Three more jobs that save real hours every month.',
+      table: { head: ['Workflow', 'What to ask', 'Check before using'], rows: [
+        ['4. Helper guide', '"Turn these notes into a one-page step-by-step guide for packing orders, in plain words."', 'Walk through it once yourself'],
+        ['5. Explain it simply', '"Explain this 1099-K letter like I\'m new to business. What do I need to do?"', 'Confirm the steps on irs.gov or with your tax pro'],
+        ['6. Tough conversations', '"Help me write a kind, firm reply to a buyer who wants a refund on a final-sale item."', 'Read it out loud; make it sound like you'],
+      ] } },
+    { kind: 'order', title: 'Turn a live into posts', prompt: 'Put workflow 1 in order.', steps: ['Save the live or its transcript', 'Remove buyer names and comments', 'Ask AI for posts and Reel hooks', 'Pick the best three', 'Schedule them for the week'] },
+    { kind: 'number', title: 'What it\'s worth', q: 'These workflows save you about 3 hours a week. If your time is worth $20 an hour, what\'s that worth over a year (52 weeks)?', prefix: '$', answer: 3120, hint: '3 hours × $20 × 52 weeks.', why: '3 × $20 = $60 a week, × 52 = $3,120 a year of your time back.' },
+
+    { chapter: 'Get better answers', kind: 'learn', title: 'Work with it, not just at it', text: 'Researchers saw two winning styles. Some people split the work: AI drafts, they decide. Others went back and forth, building on each answer. Both beat "ask once and paste."',
+      points: ['Give it your context: who you sell to, your voice, your price range', 'Ask for 3 options, then say what you like about one', 'Say "shorter," "warmer," or "more like me" and let it try again', 'Ask "What did you assume?" to catch guesses', 'Ask it to criticize your plan, not just praise it (Yale\'s tip)'] },
+    { kind: 'script', title: 'Power prompts for sellers', text: 'Copy these. Fill in the brackets.', lines: [
+      'THE COACH: "Be my honest business coach. Here\'s my plan: [plan]. List the 3 biggest risks and one way to test it small."',
+      'THE INTERVIEW: "Ask me 5 questions, one at a time, so you understand my shop before you give advice."',
+      'THE CHECK: "What in your answer might be out of date or wrong? What should I verify, and where?"',
+      'THE TEACHER: "Teach me [topic] in 5 short steps with one example from a live boutique."',
+      'THE EDITOR: "Make this 30% shorter and warmer. Keep my own words where you can: [paste]."',
+    ], tip: 'Save these in a note on your phone so they\'re one tap away during your AI block.' },
+    { kind: 'scenario', title: 'The price check', situation: 'Shay asks an AI what a vintage Dooney & Bourke bag sells for. It says "$180 to $250." She was about to start it at $25.',
+      options: [
+        { text: 'Price it at $250 because the AI said so', feedback: 'That\'s outside the frontier. AI can\'t see her bag\'s condition and may be guessing.' },
+        { text: 'Use the AI to learn what affects the price, then check real sold listings for the same style and condition', best: true, feedback: 'AI teaches her what to look for; sold listings give the real number. Inside and outside, used right.' },
+        { text: 'Ignore it and start at $25 anyway', feedback: 'She might leave real money on the table. A five-minute check is worth it.' },
+      ] },
+
+    { chapter: 'Your advantage', kind: 'learn', title: 'Why small sellers can win with AI', text: 'Big companies need months to change how they work. You can change by Sunday. JPMorganChase research also shows small business owners are adopting AI steadily, so the edge goes to those who use it well, not just first.',
+      points: ['You know your buyers by name; AI handles the busywork so you have more time for them', 'You can test a new idea on one live and keep it if it works', 'You decide your rules on privacy and honesty, and buyers notice', 'Your voice is the brand. AI drafts; you make it sound like you'] },
+    { kind: 'reflect', title: 'Your first workflow', prompt: 'Pick the one workflow you\'ll try this week. Write the exact prompt you\'ll use.', placeholder: 'Workflow… My prompt…', example: 'Workflow 1. "Here\'s the transcript of my Thursday live, names removed. Give me 5 short posts and 3 Reel hooks in my voice: warm, playful, church-to-brunch."' },
+    { kind: 'checklist', title: 'AI advantage plan', prompt: 'Tick these off this month.', items: ['Turn one live into a week of posts', 'Write descriptions from my tagging notes', 'Ask AI to read my weekly totals, no names', 'Make a one-page helper guide', 'Use "the coach" prompt on my next big idea', 'Verify every fact that\'s outside the frontier'] },
+  ],
+}
+export default lesson

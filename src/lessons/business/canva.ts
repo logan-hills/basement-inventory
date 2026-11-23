@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'canva', kind: 'course', school: 'Tools and AI', title: 'Design like a pro in Canva', track: 'Business', icon: 'sparkle',
+  id: 'canva', kind: 'course', school: 'Tools and apps', title: 'Design like a pro in Canva', track: 'Business', icon: 'sparkle',
   why: 'Polished graphics make a small shop look like a boutique. Canva makes that possible without a designer.',
   outcomes: [
     'Set up your brand colors, fonts and logo once',
