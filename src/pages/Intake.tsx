@@ -4,14 +4,16 @@ import { loadBins, type Bin } from '../lib/locations'
 import { supabase } from '../lib/supabase'
 import { useSession } from '../lib/session'
 import { addUnits, uploadPhotos } from '../lib/data'
+import { CategorySelect, TagPicker } from '../components/Pickers'
 
-type Row = { key: number; label: string; price: string; qty: string }
+type Row = { key: number; label: string; price: string; cost: string; qty: string }
 
 let nextKey = 1
-const newRow = (label = '', price = ''): Row => ({ key: nextKey++, label, price, qty: '1' })
+const newRow = (label = '', price = '', cost = ''): Row => ({ key: nextKey++, label, price, cost, qty: '1' })
 
 export default function Intake() {
-  const { shop } = useSession()
+  const { shop, settings } = useSession()
+  const [tags, setTags] = useState<string[]>([])
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [brand, setBrand] = useState('')
@@ -44,14 +46,14 @@ export default function Intake() {
     try {
       const { data: item, error } = await supabase
         .from('items')
-        .insert({ shop_id: shop.id, name: name.trim(), brand: brand.trim() || null, category: category.trim() || null, description: description.trim() || null })
+        .insert({ shop_id: shop.id, name: name.trim(), brand: brand.trim() || null, category: category.trim() || null, description: description.trim() || null, ...(tags.length ? { tags } : {}) })
         .select('id')
         .single()
       if (error) throw error
 
       const { data: variants, error: vErr } = await supabase
         .from('variants')
-        .insert(rows.map((r, i) => ({ shop_id: shop.id, item_id: item.id, label: labels[i], price: r.price ? Number(r.price) : null })))
+        .insert(rows.map((r, i) => ({ shop_id: shop.id, item_id: item.id, label: labels[i], price: r.price ? Number(r.price) : null, cost: r.cost ? Number(r.cost) : null })))
         .select('id,label,live_number')
       if (vErr) throw vErr
 
@@ -76,7 +78,7 @@ export default function Intake() {
         <label>Item name<input required value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Nike Air Max 90" /></label>
         <div className="row2">
           <label>Brand<input value={brand} onChange={e => setBrand(e.target.value)} /></label>
-          <label>Category<input value={category} onChange={e => setCategory(e.target.value)} placeholder="Shoes, tops, home…" /></label>
+          <label>Category<CategorySelect value={category} onChange={setCategory} options={settings.categories} /></label>
         </div>
         {bins.length > 0 && (
           <label>Put in bin (optional)
@@ -86,6 +88,7 @@ export default function Intake() {
             </select>
           </label>
         )}
+        <div className="stack tight-gap"><span className="label-text">Tags</span><TagPicker value={tags} onChange={setTags} options={settings.itemTags} /></div>
         <label>Notes<textarea rows={2} value={description} onChange={e => setDescription(e.target.value)} /></label>
       </section>
 
@@ -110,16 +113,17 @@ export default function Intake() {
 
       <section className="card stack">
         <h2>Variations</h2>
-        <p className="muted small">Each variation (size, color…) gets its own Live Number. Quantity is how many tags to print.</p>
+        <p className="muted small">Each variation (size, color…) gets its own Live Number. Cost is what you paid, so the app can show your profit. Quantity is how many tags to print.</p>
         {rows.map(r => (
           <div key={r.key} className="variant-row">
             <label>Variation<input value={r.label} onChange={e => update(r.key, { label: e.target.value })} placeholder="Large / Red" /></label>
             <label>Price<input inputMode="decimal" value={r.price} onChange={e => update(r.key, { price: e.target.value.replace(/[^0-9.]/g, '') })} placeholder="0.00" /></label>
+            <label>Cost<input inputMode="decimal" value={r.cost} onChange={e => update(r.key, { cost: e.target.value.replace(/[^0-9.]/g, '') })} placeholder="Paid" /></label>
             <label>Qty<input inputMode="numeric" value={r.qty} onChange={e => update(r.key, { qty: e.target.value.replace(/\D/g, '') })} /></label>
             {rows.length > 1 && <button type="button" className="icon-btn" onClick={() => setRows(rs => rs.filter(x => x.key !== r.key))} aria-label="Remove variation">×</button>}
           </div>
         ))}
-        <button type="button" className="btn dashed" onClick={() => setRows(rs => [...rs, newRow('', rs[rs.length - 1]?.price ?? '')])}>+ Add variation</button>
+        <button type="button" className="btn dashed" onClick={() => setRows(rs => [...rs, newRow('', rs[rs.length - 1]?.price ?? '', rs[rs.length - 1]?.cost ?? '')])}>+ Add variation</button>
       </section>
 
       {msg && <p className="danger-text">{msg}</p>}

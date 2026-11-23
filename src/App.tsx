@@ -1,12 +1,12 @@
 import { HashRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import Sheet from './components/Sheet'
 import { SessionProvider, useSession } from './lib/session'
 import { ToastProvider } from './lib/toast'
 import { supabase } from './lib/supabase'
 import Login from './pages/Login'
 import CreateShop from './pages/CreateShop'
 import Home from './pages/Home'
-import ComingSoon from './pages/ComingSoon'
 import Intake from './pages/Intake'
 import Inventory from './pages/Inventory'
 import Labels from './pages/Labels'
@@ -22,6 +22,14 @@ import OrdersUpload from './pages/OrdersUpload'
 import OrderDetail from './pages/OrderDetail'
 import Pick from './pages/Pick'
 import BoxLabels from './pages/BoxLabels'
+import Settings from './pages/Settings'
+import Calendar from './pages/Calendar'
+import LiveDetail from './pages/LiveDetail'
+import LivePrep from './pages/LivePrep'
+import Customers from './pages/Customers'
+import Shipping from './pages/Shipping'
+import Reports from './pages/Reports'
+import Lessons from './pages/Lessons'
 
 export function Crown({ size = 28 }: { size?: number }) {
   return (
@@ -40,10 +48,16 @@ const STOCK = [
   { to: '/damaged', label: 'Damaged' },
 ]
 const SELL = [
+  { to: '/calendar', label: 'Live calendar' },
   { to: '/live', label: 'Get ready for live' },
   { to: '/orders', label: 'Pick and pack' },
   { to: '/shipping', label: 'Shipping' },
   { to: '/customers', label: 'Customers' },
+]
+const MORE = [
+  { to: '/reports', label: 'Reports' },
+  { to: '/lessons', label: 'Lessons' },
+  { to: '/settings', label: 'Settings' },
 ]
 
 function ScrollTop() {
@@ -54,6 +68,9 @@ function ScrollTop() {
 
 function Shell() {
   const { session, shop, loading } = useSession()
+  const [menu, setMenu] = useState(false)
+  const { pathname } = useLocation()
+  useEffect(() => { setMenu(false) }, [pathname])
   if (loading) return <div className="center-page"><div className="brand-mark pulse"><Crown size={40} /></div></div>
   if (!session) return <Login />
   if (!shop) return <CreateShop />
@@ -70,6 +87,8 @@ function Shell() {
         {STOCK.map(n => <NavLink key={n.to} to={n.to} end={n.end} className="nav-link">{n.label}</NavLink>)}
         <span className="nav-group">Sell</span>
         {SELL.map(n => <NavLink key={n.to} to={n.to} className="nav-link">{n.label}</NavLink>)}
+        <span className="nav-group">Manage</span>
+        {MORE.map(n => <NavLink key={n.to} to={n.to} className="nav-link">{n.label}</NavLink>)}
         <div className="sidebar-foot">
           <span className="muted small">{session.user.email}</span>
           <button className="link-btn" onClick={() => supabase.auth.signOut()}>Sign out</button>
@@ -78,8 +97,19 @@ function Shell() {
 
       <header className="mobile-top no-print">
         <NavLink to="/" className="brand"><span className="gold"><Crown size={24} /></span><span className="brand-text"><b>Dynamic Dazzle</b></span></NavLink>
-        <button className="link-btn" onClick={() => supabase.auth.signOut()}>Sign out</button>
+        <button className="btn ghost small" onClick={() => setMenu(true)} aria-label="Open menu">☰ Menu</button>
       </header>
+      <Sheet open={menu} onClose={() => setMenu(false)} title="Menu">
+        <div className="menu-sheet">
+          {[['Stock', STOCK], ['Sell', SELL], ['Manage', MORE]].map(([name, list]) => (
+            <div key={name as string} className="stack tight-gap">
+              <span className="nav-group">{name as string}</span>
+              <div className="menu-links">{(list as typeof STOCK).map(n => <NavLink key={n.to} to={n.to} end={n.end} className="menu-link">{n.label}</NavLink>)}</div>
+            </div>
+          ))}
+          <div className="row-between"><span className="muted small">{session.user.email}</span><button className="link-btn" onClick={() => supabase.auth.signOut()}>Sign out</button></div>
+        </div>
+      </Sheet>
 
       <main className="content">
         <Routes>
@@ -94,14 +124,19 @@ function Shell() {
           <Route path="/bin/:id" element={<BinDetail />} />
           <Route path="/bin-labels" element={<BinLabels />} />
           <Route path="/receive/bulk" element={<BulkReceive />} />
-          <Route path="/live" element={<ComingSoon title="Get ready for live" />} />
+          <Route path="/live" element={<LivePrep />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/lives/:id" element={<LiveDetail />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/lessons" element={<Lessons />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/upload" element={<OrdersUpload />} />
           <Route path="/order/:code" element={<OrderDetail />} />
           <Route path="/pick" element={<Pick />} />
           <Route path="/box-labels" element={<BoxLabels />} />
-          <Route path="/shipping" element={<ComingSoon title="Shipping" />} />
-          <Route path="/customers" element={<ComingSoon title="Customers" />} />
+          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/customers" element={<Customers />} />
         </Routes>
       </main>
 

@@ -6,14 +6,15 @@ import { useToast } from '../lib/toast'
 import { addUnits, money, photoUrls, restoreUnit, uploadPhotos } from '../lib/data'
 import DamageSheet from '../components/DamageSheet'
 import SwipeRow from '../components/SwipeRow'
+import { CategorySelect, TagPicker } from '../components/Pickers'
 
 type UnitRow = { id: string; tag_code: string; status: string; removed_reason: string | null; location: { name: string } | null }
-type VariantRow = { id: string; label: string; live_number: string; price: number | null; weight_lb: number | null; units: UnitRow[] }
-type ItemRow = { id: string; name: string; brand: string | null; category: string | null; description: string | null; variants: VariantRow[]; photos: { id: string; path: string; sort: number }[] }
+type VariantRow = { id: string; label: string; live_number: string; price: number | null; cost: number | null; weight_lb: number | null; units: UnitRow[] }
+type ItemRow = { id: string; name: string; brand: string | null; category: string | null; description: string | null; tags?: string[]; created_at: string; variants: VariantRow[]; photos: { id: string; path: string; sort: number }[] }
 
 export default function ItemDetail() {
   const { id } = useParams()
-  const { shop } = useSession()
+  const { shop, settings } = useSession()
   const toast = useToast()
   const [item, setItem] = useState<ItemRow | null>(null)
   const [urls, setUrls] = useState<Record<string, string>>({})
@@ -26,7 +27,7 @@ export default function ItemDetail() {
   const load = useCallback(async () => {
     const { data, error } = await supabase
       .from('items')
-      .select('id,name,brand,category,description, variants(id,label,live_number,price,weight_lb, units(id,tag_code,status,removed_reason, location:locations(name))), photos:item_photos(id,path,sort)')
+      .select('*, variants(id,label,live_number,price,cost,weight_lb, units(id,tag_code,status,removed_reason, location:locations(name))), photos:item_photos(id,path,sort)')
       .eq('id', id!)
       .single()
     if (error) { toast(error.message, { kind: 'bad' }); return }
@@ -39,6 +40,23 @@ export default function ItemDetail() {
   }, [id, toast])
 
   useEffect(() => { load() }, [load])
+
+  async function saveItem(patch: Record<string, unknown>, msg: string) {
+    if (!item) return
+    setItem({ ...item, ...patch } as ItemRow)
+    const { error } = await supabase.from('items').update(patch).eq('id', item.id)
+    if (error) { toast(error.message.includes('tags') ? 'Tags need a quick database update first.' : error.message, { kind: 'bad' }); load() }
+    else toast(msg, { kind: 'ok' })
+  }
+
+  async function saveMoney(v: VariantRow, field: 'price' | 'cost', raw: string) {
+    const val = raw.trim() === '' ? null : Number(raw.replace(/[$,]/g, ''))
+    if (val !== null && Number.isNaN(val)) return
+    if (val === v[field]) return
+    const { error } = await supabase.from('variants').update({ [field]: val }).eq('id', v.id)
+    if (error) toast(error.message, { kind: 'bad' })
+    else { toast(`${field === 'price' ? 'Price' : 'Cost'} saved`, { kind: 'ok' }); load() }
+  }
 
   async function saveWeight(v: VariantRow, raw: string) {
     const val = raw.trim() === '' ? null : Number(raw)
@@ -93,6 +111,12 @@ export default function ItemDetail() {
           <span className="eyebrow">{[item.brand, item.category].filter(Boolean).join(' · ') || 'Item'}</span>
           <h1>{item.name}</h1>
           {item.description && <p className="muted">{item.description}</p>}
+          <span className="muted small">Received {new Date(item.created_at).toLocaleDateString()} · {Math.floor((Date.now() - new Date(item.created_at).getTime()) / 86400000)} days in stock</span>
+        </div>
+
+        <div className="card stack">
+          <label>Category<CategorySelect value={item.category ?? ''} onChange={v => saveItem({ category: v || null }, 'Category saved')} options={settings.categories} /></label>
+          <div className="stack tight-gap"><span className="label-text">Tags</span><TagPicker value={item.tags ?? []} onChange={tags => saveItem({ tags }, 'Tags saved')} options={settings.itemTags} /></div>
         </div>
 
         {item.variants.map(v => {
@@ -104,6 +128,18 @@ export default function ItemDetail() {
                 <span className="live-num">#{v.live_number}</span>
                 <div className="hit-text"><b>{v.label}</b><span className="muted">{money(v.price)} · {inStock.length} in stock</span></div>
                 <Link to={`/labels?variant=${v.id}`} className="btn ghost">Print tags</Link>
+              </div>
+              <div className="row3">
+                <label>Price
+                  <input inputMode="decimal" defaultValue={v.price ?? ''} placeholder="0.00" onBlur={e => saveMoney(v, 'price', e.target.value)} />
+                </label>
+                <label>Cost (paid)
+                  <input inputMode="decimal" defaultValue={v.cost ?? ''} placeholder="0.00" onBlur={e => saveMoney(v, 'cost', e.target.value)} />
+                </label>
+                <div className="margin-box">
+                  <span className="label-text">Profit each</span>
+                  {v.price != null && v.cost != null ? <b className={v.price - v.cost >= 0 ? 'ok-text' : 'danger-text'}>{money(v.price - v.cost)}{v.price > 0 ? ` · ${Math.round(((v.price - v.cost) / v.price) * 100)}%` : ''}</b> : <span className="muted">Add a cost</span>}
+                </div>
               </div>
               <div className="row2">
                 <label>Weight per item (optional)

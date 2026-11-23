@@ -7,12 +7,12 @@ import { downloadFile, parseCsv, toCsv } from '../lib/csv'
 import { loadBins } from '../lib/locations'
 import { feedbackOk } from '../lib/feedback'
 
-const COLUMNS = ['Item name', 'Variation', 'Quantity', 'Price', 'Cost', 'Brand', 'Category', 'Weight (lb)', 'Bin code', 'Notes'] as const
-type Key = 'name' | 'variation' | 'qty' | 'price' | 'cost' | 'brand' | 'category' | 'weight' | 'bin' | 'notes'
-const KEYS: Key[] = ['name', 'variation', 'qty', 'price', 'cost', 'brand', 'category', 'weight', 'bin', 'notes']
+const COLUMNS = ['Item name', 'Variation', 'Quantity', 'Price', 'Cost', 'Brand', 'Category', 'Weight (lb)', 'Bin code', 'Notes', 'Tags'] as const
+type Key = 'name' | 'variation' | 'qty' | 'price' | 'cost' | 'brand' | 'category' | 'weight' | 'bin' | 'notes' | 'tags'
+const KEYS: Key[] = ['name', 'variation', 'qty', 'price', 'cost', 'brand', 'category', 'weight', 'bin', 'notes', 'tags']
 
 type Row = Record<Key, string> & { line: number; errors: string[]; binId: string | null }
-type Group = { key: string; name: string; brand: string; category: string; notes: string; variants: { label: string; qty: number; price: number | null; cost: number | null; weight: number | null; binId: string | null; bin: string }[] }
+type Group = { key: string; name: string; brand: string; category: string; notes: string; tags: string[]; variants: { label: string; qty: number; price: number | null; cost: number | null; weight: number | null; binId: string | null; bin: string }[] }
 
 function headerKey(h: string): Key | null {
   const t = h.toLowerCase().replace(/[^a-z]/g, '')
@@ -25,6 +25,7 @@ function headerKey(h: string): Key | null {
   if (t.startsWith('category')) return 'category'
   if (t.startsWith('weight')) return 'weight'
   if (t.startsWith('bin') || t.startsWith('location')) return 'bin'
+  if (t.startsWith('tag')) return 'tags'
   if (t.startsWith('note') || t.startsWith('description')) return 'notes'
   return null
 }
@@ -32,7 +33,7 @@ function headerKey(h: string): Key | null {
 const num = (v: string) => (v.trim() === '' ? null : Number(v.replace(/[$,\s]/g, '')))
 
 export default function BulkReceive() {
-  const { shop } = useSession()
+  const { shop, settings, updateSettings } = useSession()
   const [rows, setRows] = useState<Row[] | null>(null)
   const [fileName, setFileName] = useState('')
   const [busy, setBusy] = useState(false)
@@ -79,7 +80,7 @@ export default function BulkReceive() {
       if (r.errors.length) continue
       const key = `${r.name.toLowerCase()}|${r.brand.toLowerCase()}`
       let g = out.get(key)
-      if (!g) { g = { key, name: r.name, brand: r.brand, category: r.category, notes: r.notes, variants: [] }; out.set(key, g) }
+      if (!g) { g = { key, name: r.name, brand: r.brand, category: r.category, notes: r.notes, tags: r.tags.split(/[;|]/).map(t => t.trim()).filter(Boolean), variants: [] }; out.set(key, g) }
       const label = r.variation || 'One size'
       const existing = g.variants.find(v => v.label.toLowerCase() === label.toLowerCase() && v.binId === r.binId)
       if (existing) existing.qty += Number(r.qty)
@@ -101,7 +102,7 @@ export default function BulkReceive() {
       for (let gi = 0; gi < groups.length; gi++) {
         const g = groups[gi]
         const { data: item, error } = await supabase.from('items')
-          .insert({ shop_id: shop.id, name: g.name, brand: g.brand || null, category: g.category || null, description: g.notes || null })
+          .insert({ shop_id: shop.id, name: g.name, brand: g.brand || null, category: g.category || null, description: g.notes || null, ...(g.tags.length ? { tags: g.tags } : {}) })
           .select('id').single()
         if (error) throw error
         itemIds.push(item.id)
@@ -119,6 +120,10 @@ export default function BulkReceive() {
       }
       feedbackOk()
       setDone({ items: itemIds, variants: totalVariants, tags })
+      // New categories and tags from the file join the Settings lists.
+      const newCats = [...new Set(groups.map(g => g.category).filter(c => c && !settings.categories.some(x => x.toLowerCase() === c.toLowerCase())))]
+      const newTags = [...new Set(groups.flatMap(g => g.tags).filter(t => !settings.itemTags.some(x => x.toLowerCase() === t.toLowerCase())))]
+      if (newCats.length || newTags.length) updateSettings({ categories: [...settings.categories, ...newCats], itemTags: [...settings.itemTags, ...newTags] }).catch(() => {})
       setRows(null)
     } catch (e: any) {
       setErr(`Stopped after ${itemIds.length} item(s): ${e.message ?? e}. Items already added are saved; remove them from the file before uploading again.`)
@@ -169,7 +174,7 @@ export default function BulkReceive() {
                 </tbody>
               </table>
             </div>
-            <span className="muted small">Only Item name and Quantity are required. Bin code is optional and must match a bin you've created. Save as CSV when you're done.</span>
+            <span className="muted small">Only Item name and Quantity are required. Bin code is optional and must match a bin you've created. Separate several tags with a semicolon, like New arrival; Clearance. Save as CSV when you're done.</span>
           </div>
         </li>
         <li className="card">

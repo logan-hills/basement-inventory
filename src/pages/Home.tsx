@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useSession } from '../lib/session'
 import { money } from '../lib/data'
+import { loadLives, liveWhen, projected, type Live } from '../lib/lives'
 
 /** Next Tuesday 7 PM Eastern, the shop's regular "$2 Tuesday" live. */
 function nextLive() {
@@ -18,12 +19,14 @@ function nextLive() {
 }
 
 export default function Home() {
-  const { shop } = useSession()
-  const [stats, setStats] = useState<{ units: number; value: number; noLoc: number; damaged: number } | null>(null)
+  const { shop, settings } = useSession()
+  const [stats, setStats] = useState<{ units: number; value: number; noLoc: number; damaged: number; old: number } | null>(null)
+  const [next, setNext] = useState<Live | null | undefined>(undefined)
+  const [work, setWork] = useState<{ pick: number; ship: number }>({ pick: 0, ship: 0 })
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase.from('units').select('status, location_id, removed_at, variant:variants!inner(price)')
+      const { data } = await supabase.from('units').select('status, location_id, removed_at, created_at, variant:variants!inner(price)')
       const rows = (data ?? []) as any[]
       const inStock = rows.filter(r => r.status === 'in_stock')
       const monthAgo = Date.now() - 30 * 864e5
@@ -32,9 +35,13 @@ export default function Home() {
         value: inStock.reduce((s, r) => s + (Number(r.variant.price) || 0), 0),
         noLoc: inStock.filter(r => !r.location_id).length,
         damaged: rows.filter(r => r.status === 'removed' && r.removed_at && Date.parse(r.removed_at) > monthAgo).length,
+        old: inStock.filter(r => Date.parse(r.created_at) < Date.now() - settings.oldStockDays * 864e5).length,
       })
+      const { data: o } = await supabase.from('orders').select('status').in('status', ['open', 'picking', 'packed'])
+      setWork({ pick: (o ?? []).filter((x: any) => x.status !== 'packed').length, ship: (o ?? []).filter((x: any) => x.status === 'packed').length })
     })()
-  }, [])
+    loadLives(new Date(Date.now() - 4 * 3600e3)).then(l => setNext(l.find(x => x.status === 'planned') ?? null)).catch(() => setNext(null))
+  }, [settings.oldStockDays])
 
   return (
     <div className="stack wide-gap">
@@ -53,12 +60,36 @@ export default function Home() {
         <Link to="/damaged" className="stat"><span>Damaged out (30 days)</span><b className={stats?.damaged ? 'danger-text' : ''}>{stats ? stats.damaged : '—'}</b></Link>
       </div>
 
+      {stats && stats.old > 0 && (
+        <div className="alert-card">
+          <div><b>{stats.old} item{stats.old === 1 ? ' has' : 's have'} been in stock {settings.oldStockDays}+ days</b><span className="muted small">Old stock ties up cash. Put it in front of buyers.</span></div>
+          <Link to="/live?sale=1" className="btn gold">Run a sale</Link>
+        </div>
+      )}
+      {(work.pick > 0 || work.ship > 0) && (
+        <div className="quick-grid">
+          {work.pick > 0 && <Link to="/orders" className="quick"><b className="gold">{work.pick} order{work.pick === 1 ? '' : 's'} to pick</b><span className="muted">Scan items into customer boxes</span></Link>}
+          {work.ship > 0 && <Link to="/shipping" className="quick"><b className="gold">{work.ship} box{work.ship === 1 ? '' : 'es'} to ship</b><span className="muted">Export to Pirate Ship</span></Link>}
+        </div>
+      )}
+
       <div className="home-grid">
         <div className="live-card">
           <span className="eyebrow light">Next live</span>
-          <span className="live-title">$2 Tuesday</span>
-          <span>{nextLive()}</span>
-          <Link to="/live" className="btn gold">Get ready for live</Link>
+          {next ? (
+            <>
+              <span className="live-title">{next.title}</span>
+              <span>{liveWhen(next)}</span>
+              <span className="small">{(next.items ?? []).reduce((a, i) => a + i.qty, 0)} items planned · {money(projected(next))} if everything sells</span>
+              <Link to={`/lives/${next.id}`} className="btn gold">Open this live</Link>
+            </>
+          ) : (
+            <>
+              <span className="live-title">$2 Tuesday</span>
+              <span>{nextLive()}</span>
+              <Link to="/calendar" className="btn gold">{next === null ? 'Schedule it on the calendar' : 'Get ready for live'}</Link>
+            </>
+          )}
         </div>
         <Link to="/scan" className="scan-hero">
           <svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M8 8v8M12 8v8M16 8v8" /></svg>

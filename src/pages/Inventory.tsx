@@ -39,7 +39,8 @@ export default function Inventory() {
         <div><span className="eyebrow">Stock</span><h1>Inventory</h1></div>
         <div className="row-gap">
           <Link to="/scan" className="btn outline-gold">Scan</Link>
-          <Link to="/intake" className="btn primary">+ Receive items</Link>
+          <Link to="/receive/bulk" className="btn outline-gold">Bulk upload CSV</Link>
+          <Link to="/intake" className="btn primary">+ Add item</Link>
         </div>
       </div>
       <input type="search" className="search" placeholder="Search name, brand or Live #" value={q} onChange={e => setQ(e.target.value)} />
@@ -47,7 +48,7 @@ export default function Inventory() {
       {loading ? <div className="skeleton-list"><div /><div /><div /></div> : rows.length === 0 ? (
         <div className="empty card"><b>{items.length ? 'Nothing matches that search' : 'No inventory yet'}</b>
           <span className="muted">{items.length ? 'Try a name or a 4-digit Live Number.' : 'Receive your first item to get Live Numbers and tags.'}</span>
-          {!items.length && <Link to="/intake" className="btn primary">Receive items</Link>}
+          {!items.length && <div className="row-gap"><Link to="/intake" className="btn primary">Add an item</Link><Link to="/receive/bulk" className="btn outline-gold">Bulk upload CSV</Link></div>}
         </div>
       ) : (
         <>
