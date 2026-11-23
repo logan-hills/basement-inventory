@@ -1,6 +1,5 @@
 import type { ReactElement } from 'react'
-/* Category tiles: jewel-toned boutique cards with hand-drawn gold line art.
-   Each category gets its own drawing and tone; unknown categories get a monogram crest. */
+/* Category art. `artFor` (gold line art) is used on sign-in; the rail below uses bright "pop" tiles. */
 
 type Art = { tone: string; draw: ReactElement }
 
@@ -32,33 +31,47 @@ export function artFor(cat: string, i = 0): Art {
 
 export type CatStat = { name: string; pieces: number; value?: number; photo?: string | null }
 
-const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX']
-const CROWN = <g {...S}><path d="M18 62 l10 -24 14 16 8 -28 8 28 14 -16 10 24 z" /><path d="M18 70 H82" /><circle cx="28" cy="36" r="2" /><circle cx="50" cy="24" r="2" /><circle cx="72" cy="36" r="2" /></g>
+/* ===== Bright "pop" tiles: candy gradients, chunky white icons, floating bubbles. ===== */
+const W = '#fff'
+const POP: Record<string, { tone: string; icon: ReactElement }> = {
+  all: { tone: 'sun', icon: <g><path d="M16 66 L22 32 L38 48 L50 22 L62 48 L78 32 L84 66 Z" fill={W} /><rect x="16" y="70" width="68" height="10" rx="5" fill={W} /><circle cx="22" cy="30" r="6" fill={W} /><circle cx="50" cy="19" r="7" fill={W} /><circle cx="78" cy="30" r="6" fill={W} /><circle cx="50" cy="56" r="6" fill="var(--ink)" /><circle cx="33" cy="60" r="4" fill="var(--ink)" opacity=".7" /><circle cx="67" cy="60" r="4" fill="var(--ink)" opacity=".7" /></g> },
+  jewelry: { tone: 'pink', icon: <g><circle cx="50" cy="62" r="24" fill="none" stroke={W} strokeWidth="9" /><path d="M36 30 L42 18 H58 L64 30 L50 46 Z" fill={W} /><path d="M36 30 H64 M44 18 L50 30 L56 18 M50 30 V46" stroke="var(--ink)" strokeWidth="2.5" strokeLinejoin="round" fill="none" opacity=".55" /><circle cx="76" cy="20" r="3" fill={W} /><circle cx="22" cy="40" r="2.5" fill={W} /></g> },
+  bags: { tone: 'coral', icon: <g><path d="M34 40 C34 18 66 18 66 40" fill="none" stroke={W} strokeWidth="7" strokeLinecap="round" /><path d="M18 40 H82 L86 80 Q86 88 78 88 H22 Q14 88 14 80 Z" fill={W} /><path d="M18 40 H82 L80 52 Q50 62 20 52 Z" fill="var(--ink)" opacity=".25" /><rect x="44" y="50" width="12" height="10" rx="3" fill="var(--ink)" /></g> },
+  apparel: { tone: 'violet', icon: <g><path d="M38 14 L50 22 L62 14 L66 34 L60 40 L80 86 H20 L40 40 L34 34 Z" fill={W} /><path d="M40 40 H60" stroke="var(--ink)" strokeWidth="5" strokeLinecap="round" /><path d="M28 70 Q50 78 72 70" stroke="var(--ink)" strokeWidth="3" fill="none" opacity=".5" /><circle cx="50" cy="54" r="3" fill="var(--ink)" opacity=".6" /></g> },
+  accessories: { tone: 'aqua', icon: <g><path d="M8 40 H92" stroke={W} strokeWidth="6" strokeLinecap="round" /><path d="M12 40 H44 V50 Q44 68 28 68 Q12 68 12 50 Z" fill={W} /><path d="M56 40 H88 V50 Q88 68 72 68 Q56 68 56 50 Z" fill={W} /><path d="M20 46 L30 44 M64 46 L74 44" stroke="var(--ink)" strokeWidth="4" strokeLinecap="round" opacity=".5" /><path d="M76 14 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill={W} /></g> },
+  shoes: { tone: 'lime', icon: <g><path d="M12 76 C30 74 42 62 52 46 C56 40 64 40 66 48 L70 62 C74 68 84 70 90 72 Q92 82 84 82 H20 Q12 82 12 76 Z" fill={W} /><path d="M66 48 L82 44 L84 82" stroke={W} strokeWidth="6" strokeLinejoin="round" fill="none" /><circle cx="58" cy="54" r="4" fill="var(--ink)" /><path d="M18 22 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill={W} /></g> },
+  home: { tone: 'sky', icon: <g><path d="M50 14 L88 44 H78 V84 H22 V44 H12 Z" fill={W} strokeLinejoin="round" /><path d="M42 84 V62 Q50 54 58 62 V84 Z" fill="var(--ink)" /><path d="M50 30 C46 34 47 40 50 42 C53 40 54 34 50 30 Z" fill="var(--ink)" opacity=".6" /></g> },
+  beauty: { tone: 'rose', icon: <g><rect x="36" y="50" width="28" height="38" rx="5" fill={W} /><path d="M40 50 V34 Q40 30 44 30 H56 Q60 30 60 34 V50" fill={W} opacity=".85" /><path d="M44 30 V18 L56 12 V30 Z" fill="var(--ink)" /><path d="M36 64 H64" stroke="var(--ink)" strokeWidth="3" opacity=".4" /></g> },
+}
+const POP_TONES = ['pink', 'aqua', 'coral', 'violet', 'lime', 'sky', 'sun', 'rose']
 
-/** Boutique placards: ivory card stock, a jewel-toned arch window (your newest product photo, or gold line art),
-    a Bodoni name and a gold double rule. */
-export default function CategoryRail({ cats, active, onPick, money, allLabel = 'The Collection' }: { cats: CatStat[]; active: string; onPick: (c: string) => void; money?: (n: number) => string; allLabel?: string }) {
+function popFor(cat: string, i: number) {
+  const key = ALIASES.find(([re]) => re.test(cat))?.[1]
+  if (key && POP[key]) return POP[key]
+  const letter = (cat.trim()[0] ?? '?').toUpperCase()
+  return { tone: POP_TONES[i % POP_TONES.length], icon: <g><circle cx="50" cy="50" r="34" fill={W} /><text x="50" y="62" textAnchor="middle" fontFamily="Inter, system-ui, sans-serif" fontWeight="900" fontSize="36" fill="var(--ink)">{letter}</text></g> }
+}
+
+/** Shop-by-category tiles: bright, bubbly and easy to tap. Tap again to go back to everything. */
+export default function CategoryRail({ cats, active, onPick, money, allLabel = 'Everything' }: { cats: CatStat[]; active: string; onPick: (c: string) => void; money?: (n: number) => string; allLabel?: string }) {
   const total = cats.reduce((s, c) => s + c.pieces, 0)
-  const tile = (key: string, name: string, no: string, tone: string, art: ReactElement, meta: string, on: boolean, empty: boolean, photo: string | null | undefined, pickValue: string) => (
-    <button key={key} className={`maison tone-${tone}${on ? ' on' : ''}${empty ? ' empty' : ''}`} onClick={() => onPick(pickValue)} aria-pressed={on}>
-      <span className="maison-arch" aria-hidden="true">
-        {photo ? <img src={photo} alt="" loading="lazy" /> : <svg viewBox="0 0 100 100">{art}</svg>}
-      </span>
-      <span className="maison-no">{no ? `N° ${no}` : 'Shop all'}</span>
-      <span className="maison-name">{name}</span>
-      <span className="maison-rule" aria-hidden="true" />
-      <span className="maison-meta">{meta}</span>
-      {on && <span className="maison-seal" aria-hidden="true"><svg viewBox="0 0 100 100">{CROWN}</svg></span>}
+  const tile = (key: string, name: string, tone: string, icon: ReactElement, meta: string, sub: string, on: boolean, empty: boolean, pickValue: string) => (
+    <button key={key} className={`pop-tile pop-${tone}${on ? ' on' : ''}${empty ? ' empty' : ''}`} onClick={() => onPick(pickValue)} aria-pressed={on}>
+      <span className="pop-bubbles" aria-hidden="true"><i /><i /><i /></span>
+      <span className="pop-icon" aria-hidden="true"><svg viewBox="0 0 100 100">{icon}</svg></span>
+      <span className="pop-name">{name}</span>
+      <span className="pop-meta">{meta}</span>
+      {sub && <span className="pop-sub">{sub}</span>}
+      {on && <span className="pop-check" aria-hidden="true">✓</span>}
     </button>
   )
   return (
-    <div className="maison-rail" role="group" aria-label="Shop by category">
-      {tile('__all', allLabel, '', 'all', CROWN, `${total.toLocaleString()} pieces`, active === '', false, null, '')}
+    <div className="pop-rail" role="group" aria-label="Shop by category">
+      {tile('__all', allLabel, POP.all.tone, POP.all.icon, `${total.toLocaleString()} pieces`, '', active === '', false, '')}
       {cats.map((c, i) => {
-        const a = artFor(c.name, i)
-        return tile(c.name, c.name, ROMAN[i] ?? String(i + 1), a.tone, a.draw,
-          c.pieces ? `${c.pieces.toLocaleString()} pieces${c.value != null && money ? ` · ${money(c.value)}` : ''}` : 'Coming soon',
-          active === c.name, !c.pieces, c.photo, active === c.name ? '' : c.name)
+        const a = popFor(c.name, i)
+        return tile(c.name, c.name, a.tone, a.icon, c.pieces ? `${c.pieces.toLocaleString()} pieces` : 'Coming soon',
+          c.pieces && c.value != null && money ? money(c.value) : '', active === c.name, !c.pieces, active === c.name ? '' : c.name)
       })}
     </div>
   )

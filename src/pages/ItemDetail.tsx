@@ -7,10 +7,11 @@ import { addUnits, money, photoUrls, restoreUnit, uploadPhotos } from '../lib/da
 import DamageSheet from '../components/DamageSheet'
 import SwipeRow from '../components/SwipeRow'
 import { CategorySelect, TagPicker } from '../components/Pickers'
+import { EXTRA_FIELDS, fieldError, type ItemExtra } from '../lib/itemFields'
 
 type UnitRow = { id: string; tag_code: string; status: string; removed_reason: string | null; location: { name: string } | null }
-type VariantRow = { id: string; label: string; live_number: string; price: number | null; cost: number | null; weight_lb: number | null; upc?: string | null; units: UnitRow[] }
-type ItemRow = { id: string; name: string; brand: string | null; category: string | null; description: string | null; tags?: string[]; created_at: string; variants: VariantRow[]; photos: { id: string; path: string; sort: number }[] }
+type VariantRow = { id: string; label: string; live_number: string; price: number | null; cost: number | null; weight_lb: number | null; upc?: string | null; sku?: string | null; sale_price?: number | null; units: UnitRow[] }
+type ItemRow = ItemExtra & { id: string; name: string; brand: string | null; category: string | null; description: string | null; tags?: string[]; created_at: string; variants: VariantRow[]; photos: { id: string; path: string; sort: number }[] }
 
 export default function ItemDetail() {
   const { id } = useParams()
@@ -28,7 +29,7 @@ export default function ItemDetail() {
   const load = useCallback(async () => {
     const { data, error } = await supabase
       .from('items')
-      .select('*, variants(id,label,live_number,price,cost,weight_lb,upc, units(id,tag_code,status,removed_reason, location:locations(name))), photos:item_photos(id,path,sort)')
+      .select('*, variants(*, units(id,tag_code,status,removed_reason, location:locations(name))), photos:item_photos(id,path,sort)')
       .eq('id', id!)
       .single()
     if (error) { toast(error.message, { kind: 'bad' }); return }
@@ -46,7 +47,7 @@ export default function ItemDetail() {
     if (!item) return
     setItem({ ...item, ...patch } as ItemRow)
     const { error } = await supabase.from('items').update(patch).eq('id', item.id)
-    if (error) { toast(error.message.includes('tags') ? 'Tags need a quick database update first.' : error.message, { kind: 'bad' }); load() }
+    if (error) { toast(error.message.includes('tags') ? 'Tags need a quick database update first.' : fieldError(error.message), { kind: 'bad' }); load() }
     else toast(msg, { kind: 'ok' })
   }
 
@@ -74,6 +75,23 @@ export default function ItemDetail() {
     const { error } = await supabase.from('variants').update({ upc: val }).eq('id', v.id)
     if (error) toast(error.message, { kind: 'bad' })
     else { toast(val ? `UPC saved: ${val}` : 'UPC cleared', { kind: 'ok' }); load() }
+  }
+
+  async function saveVariant(v: VariantRow, field: 'sku' | 'sale_price', raw: string) {
+    let val: string | number | null = raw.trim() === '' ? null : raw.trim()
+    if (field === 'sale_price' && val !== null) { val = Number(String(val).replace(/[$,]/g, '')); if (Number.isNaN(val)) return }
+    if (val === (v[field] ?? null)) return
+    const { error } = await supabase.from('variants').update({ [field]: val }).eq('id', v.id)
+    if (error) toast(fieldError(error.message), { kind: 'bad' })
+    else { toast(field === 'sku' ? (val ? `SKU saved: ${val}` : 'SKU cleared') : (val == null ? 'Sale price cleared' : `Sale price saved: ${money(val as number)}`), { kind: 'ok' }); load() }
+  }
+
+  function saveText(field: string, raw: string, label: string) {
+    if (!item) return
+    const val = raw.trim() || null
+    if (val === ((item as any)[field] ?? null)) return
+    if (field === 'name' && !val) return
+    saveItem({ [field]: val }, val ? `${label} saved` : `${label} cleared`)
   }
 
   async function addMore(v: VariantRow) {
@@ -124,9 +142,33 @@ export default function ItemDetail() {
         </div>
 
         <div className="card stack">
+          <div className="row2">
+            <label>Item name<input defaultValue={item.name} onBlur={e => saveText('name', e.target.value, 'Name')} /></label>
+            <label>Brand<input defaultValue={item.brand ?? ''} placeholder="Optional" onBlur={e => saveText('brand', e.target.value, 'Brand')} /></label>
+          </div>
           <label>Category<CategorySelect value={item.category ?? ''} onChange={v => saveItem({ category: v || null }, 'Category saved')} options={settings.categories} /></label>
           <div className="stack tight-gap"><span className="label-text">Tags</span><TagPicker value={item.tags ?? []} onChange={tags => saveItem({ tags }, 'Tags saved')} options={settings.itemTags} /></div>
         </div>
+
+        <details className="card more-details" open={EXTRA_FIELDS.some(f => item[f.key])}>
+          <summary><b>More details</b> <span className="muted small">Optional. Use them to sort, filter and find pieces faster.</span></summary>
+          <div className="row2">
+            {EXTRA_FIELDS.map(f => (
+              <label key={f.key}>{f.label}
+                {f.options ? (
+                  <select defaultValue={item[f.key] ?? ''} onChange={e => saveText(f.key, e.target.value, f.label)}>
+                    <option value="">Not set</option>
+                    {[...f.options, ...(item[f.key] && !f.options.includes(item[f.key]!) ? [item[f.key]!] : [])].map(o => <option key={o} value={o}>{o}</option>)}
+                  </select>
+                ) : (
+                  <input type={f.type} defaultValue={item[f.key] ?? ''} placeholder={f.placeholder ?? 'Optional'} list={f.suggest ? `sug-${f.key}` : undefined} onBlur={e => saveText(f.key, e.target.value, f.label)} />
+                )}
+                {f.suggest && <datalist id={`sug-${f.key}`}>{f.suggest.map(o => <option key={o} value={o} />)}</datalist>}
+              </label>
+            ))}
+            <label>Notes<textarea rows={2} defaultValue={item.description ?? ''} onBlur={e => saveText('description', e.target.value, 'Notes')} /></label>
+          </div>
+        </details>
 
         {item.variants.map(v => {
           const inStock = v.units.filter(u => u.status === 'in_stock')
@@ -136,7 +178,7 @@ export default function ItemDetail() {
               <div className="variant-head">
                 <span className="live-num">#{v.live_number}</span>
                 <div className="hit-text"><b>{v.label}</b><span className="muted">{money(v.price)} · {inStock.length} in stock</span></div>
-                <Link to={`/labels?variant=${v.id}`} className="btn ghost">Print tags</Link>
+                <div className="row-gap"><Link to={`/labels?variant=${v.id}`} className="btn ghost">Print tags</Link><Link to={`/labels?variant=${v.id}&style=sale`} className="btn ghost sale-link">Sale tags</Link></div>
               </div>
               <div className="row3">
                 <label>Price
@@ -156,6 +198,12 @@ export default function ItemDetail() {
                     <input inputMode="decimal" defaultValue={v.weight_lb ?? ''} placeholder="0.0" onBlur={e => saveWeight(v, e.target.value)} />
                     <span>lb</span>
                   </span>
+                </label>
+                <label>Sale price (yellow sale tag)
+                  <input inputMode="decimal" defaultValue={v.sale_price ?? ''} placeholder="Optional" onBlur={e => saveVariant(v, 'sale_price', e.target.value)} />
+                </label>
+                <label>Your SKU (optional)
+                  <input defaultValue={v.sku ?? ''} placeholder="Optional" onBlur={e => saveVariant(v, 'sku', e.target.value)} />
                 </label>
                 <label>UPC / barcode on the product (optional)
                   <input inputMode="numeric" defaultValue={v.upc ?? ''} placeholder="Scan or type it" onBlur={e => saveUpc(v, e.target.value)} onKeyDown={e => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur() }} />

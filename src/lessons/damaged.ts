@@ -5,13 +5,14 @@ const lesson: Lesson = {
   why: 'Taking broken pieces out of stock keeps you from selling something you can\'t ship.',
   outcomes: [
     'Damage out one piece, several, or a number in seconds',
+    'Damage out many items at once from Inventory, with a quantity for each',
     'Pick the right reason so your reports tell the truth',
     'Work out your shrink rate and know when it\'s too high',
     'Prevent the most common kinds of loss',
     'Decide what to do with damaged pieces: sell, fix, claim or donate',
   ],
   route: { to: '/damaged', label: 'Open Damaged' },
-  covers: ['src/pages/Damaged.tsx', 'src/components/DamageSheet.tsx', 'src/pages/ItemDetail.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/Damaged.tsx', 'src/components/DamageSheet.tsx', 'src/components/DamageQtySheet.tsx', 'src/pages/Inventory.tsx', 'src/pages/ItemDetail.tsx'], updated: '2026-11-23',
   slides: [
     { chapter: 'Why it matters', kind: 'learn', title: 'The piece you can\'t ship', nova: 'Nobody likes this part, but it saves you from a bad night.',
       text: 'If a broken piece stays "in stock," it shows up in Get ready for live, someone claims it, and you find out at the packing table. Now you\'re messaging a buyer to cancel, and she\'s disappointed. Damaging it out the moment you spot it prevents all of that.' },
@@ -19,6 +20,12 @@ const lesson: Lesson = {
 
     { chapter: 'Damage out', kind: 'learn', title: 'One, several, or a number', text: 'On an item page, swipe a tag left or tap Damage out. To do several at once, tick tags (or Select all) and Damage out, or say how many.',
       screen: { title: 'Gold hoop set', rows: ['☑ 4821-002', '☑ 4821-005'], buttons: ['Damage out 2'], highlight: 'Damage out 2' } },
+    { kind: 'learn', title: 'Many items at once, with a quantity each', text: 'After a leak or a bad shipment, you may have damage across lots of items. In Inventory, tick every row that has damage (or Select all), then tap Damage out. You\'ll see each item with a − and + so you can say exactly how many of each are damaged: 2 of the hoops, 1 of the sunglasses, 0 of the scarf. Pick one reason and an optional note for the batch.',
+      screen: { title: 'Damage out 3 items', rows: ['Gold hoop set #4810 · 2 on the shelf   [ − 2 + ]', 'Cat-eye sunglasses #4817 · 4 on the shelf   [ − 1 + ]', 'Silk scarf #4822 · 3 on the shelf   [ − 0 + ]'], buttons: ['1 of each', 'All of each', 'Remove 3 from stock'], highlight: 'Remove 3 from stock' },
+      tip: 'A row left at 0 is skipped. The app takes the lowest tag numbers first. To pick exact tags, open the item and tick them instead.' },
+    { kind: 'number', title: 'Count it up', q: 'A box got wet. In Damage out you set 3 for the scarves, 2 for the hoops, and 0 for the bangles. How many pieces come out of stock?', answer: 5, hint: 'Add up every row. Zero rows are skipped.', why: '3 + 2 + 0 = 5. The button says Remove 5 from stock so you can double-check before you tap.' },
+    { kind: 'tap', title: 'Practice', prompt: 'You ticked 4 items in Inventory that got crushed in a fall. Tap the button that lets you set how many of each…', screen: { title: 'Inventory · 4 selected', buttons: ['Print tags', 'Sale tags', 'Damage out', 'Edit'] }, answer: 'Damage out', hint: 'Damage out opens a list of your ticked items with a quantity for each.' },
+    { kind: 'learn', title: 'Put back several', text: 'On the Damaged page, tick the pieces that turned out fine (or the box at the top for all) and tap Put back. They go back in stock with their old tags.' },
     { kind: 'tap', title: 'Practice', prompt: 'You found two of the hoop sets tarnished. You ticked both tags. Tap…', screen: { title: 'Gold hoop set', rows: ['☑ 4821-002', '☑ 4821-005', '☐ 4821-006'], buttons: ['Reprint 2', 'Damage out 2', 'Print tags'] }, answer: 'Damage out 2', hint: 'Damage out takes the ticked tags out of stock with a reason.' },
     { kind: 'learn', title: 'Pick a reason', text: 'Choose a reason and add a note. The Damaged page lists every piece with its reason, and Reports shows Damage by reason, so you can spot what keeps going wrong.',
       table: { head: ['Reason', 'Use it when', 'Note example'], rows: [

@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import JsBarcode from 'jsbarcode'
 import { loadBins, type Bin } from '../lib/locations'
 import { useSession } from '../lib/session'
+import CrispBarcode from '../components/CrispBarcode'
 
 function LandscapeBin({ b, shop }: { b: Bin; shop: string }) {
   const parts: [string, string | number | null][] = [['Aisle', b.aisle], ['Section', b.section], ['Level', b.level], ['Bin', b.bin_no]]
@@ -21,6 +22,7 @@ function LandscapeBin({ b, shop }: { b: Bin; shop: string }) {
 
 const FORMATS = {
   landscape4x6: { name: '4×6 shipping label printer, landscape, 1 bin per label (recommended)', page: { w: 4, h: 6 }, cols: 1, rows: 1, label: { w: 4, h: 6 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 } },
+  roll2x1: { name: 'Thermal roll 2×1 in, one bin per label', page: { w: 2, h: 1 }, cols: 1, rows: 1, label: { w: 2, h: 1 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 } },
   sheet10: { name: 'Letter sheet, 10 per page (4×2 in, Avery 5163 size)', page: { w: 8.5, h: 11 }, cols: 2, rows: 5, label: { w: 4, h: 2 }, margin: { top: 0.5, left: 0.156 }, gap: { x: 0.188, y: 0 } },
   thermal4x6: { name: '4×6 shipping label printer, 1 bin per label', page: { w: 4, h: 6 }, cols: 1, rows: 1, label: { w: 4, h: 6 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 } },
   thermal4x6x3: { name: '4×6 shipping label printer, 3 bins per label (cut apart)', page: { w: 4, h: 6 }, cols: 1, rows: 3, label: { w: 4, h: 2 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 } },
@@ -40,7 +42,7 @@ export default function BinLabels() {
   const [bins, setBins] = useState<Bin[]>([])
   const [aisle, setAisle] = useState<string>('all')
   const [format, setFormat] = useState<FormatKey>(() => {
-    try { return (localStorage.getItem('binLabelFormat') as FormatKey) || 'landscape4x6' } catch { return 'landscape4x6' }
+    try { const f = localStorage.getItem('binLabelFormat') as FormatKey; return f && f in FORMATS ? f : 'landscape4x6' } catch { return 'landscape4x6' }
   })
   useEffect(() => { try { localStorage.setItem('binLabelFormat', format) } catch { /* ignore */ } }, [format])
   useEffect(() => { loadBins().then(setBins) }, [])
@@ -74,7 +76,7 @@ export default function BinLabels() {
               </select>
             </label>
           )}
-          <p className="muted small">{list.length} label{list.length === 1 ? '' : 's'} on {pages.length} page{pages.length === 1 ? '' : 's'}. Print at 100% / Actual size with margins set to None.{land ? ' Landscape labels are turned sideways for the printer automatically.' : ''}</p>
+          <p className="muted small">{list.length} label{list.length === 1 ? '' : 's'} on {pages.length} page{pages.length === 1 ? '' : 's'}. Print at 100% / Actual size with margins set to None.{land ? ' Landscape labels are turned sideways for the printer automatically.' : ''}{format === 'roll2x1' ? ' Use the same 2×1 roll as your item tags: set paper size to 2 x 1 in (50.8 x 25.4 mm) in the print window. Tip: a bigger bin label is easier to scan from a distance; the 4×6 options are still here when you want one.' : ''}</p>
           <button className="btn primary big" disabled={!list.length} onClick={() => window.print()}>Print</button>
         </div>
       </div>
@@ -85,7 +87,15 @@ export default function BinLabels() {
         {!land && pages.map((p, pi) => (
           <div key={pi} className="sheet" style={{ width: `${f.page.w}in`, height: `${f.page.h}in`, paddingTop: `${f.margin.top}in`, paddingLeft: `${f.margin.left}in` }}>
             <div className="sheet-grid" style={{ gridTemplateColumns: `repeat(${f.cols}, ${f.label.w}in)`, gridAutoRows: `${f.label.h}in`, columnGap: `${f.gap.x}in` }}>
-              {p.map(b => (
+              {p.map(b => format === 'roll2x1' ? (
+                <div key={b.id} className="slot">
+                  <div className="bin21">
+                    <div className="bin21-code">{b.code}</div>
+                    <CrispBarcode value={b.code} heightIn={0.42} maxWidthIn={1.8} />
+                    <div className="bin21-name">Aisle {b.aisle} · Sec {b.section} · Lvl {b.level} · Bin {b.bin_no}</div>
+                  </div>
+                </div>
+              ) : (
                 <div key={b.id} className="slot">
                   <div className={`bin-label ${tall ? 'tall' : ''}`}>
                     <div className="bin-label-code">{b.code}</div>

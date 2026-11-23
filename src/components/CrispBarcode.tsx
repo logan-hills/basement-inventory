@@ -1,0 +1,25 @@
+import { useLayoutEffect, useRef } from 'react'
+import JsBarcode from 'jsbarcode'
+
+/**
+ * A Code 128 barcode sized for thermal printers. Each bar is a whole number of printer dots
+ * (203 dots per inch on most shipping label printers), so bars print crisp and scan first time,
+ * instead of being stretched to fill the label.
+ */
+export default function CrispBarcode({ value, heightIn, maxWidthIn, dpi = 203, maxDots = 3 }: { value: string; heightIn: number; maxWidthIn: number; dpi?: number; maxDots?: number }) {
+  const ref = useRef<SVGSVGElement>(null)
+  useLayoutEffect(() => {
+    const svg = ref.current
+    if (!svg) return
+    JsBarcode(svg, value, { format: 'CODE128', displayValue: false, margin: 0, height: 100, width: 1 })
+    const modules = parseFloat(svg.getAttribute('width') || '0') || 1
+    const dots = Math.max(1, Math.min(maxDots, Math.floor((maxWidthIn * dpi) / modules)))
+    svg.setAttribute('viewBox', `0 0 ${modules} 100`)
+    svg.setAttribute('preserveAspectRatio', 'none')
+    svg.style.width = `${(modules * dots) / dpi}in`
+    svg.style.height = `${heightIn}in`
+    svg.removeAttribute('width')
+    svg.removeAttribute('height')
+  }, [value, heightIn, maxWidthIn, dpi, maxDots])
+  return <svg ref={ref} className="crisp-barcode" shapeRendering="crispEdges" />
+}

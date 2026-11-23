@@ -2,6 +2,7 @@ import type { Lesson } from './types'
 import tour from './tour'
 import settings from './settings'
 import receive from './receive'
+import inventory from './inventory'
 import bulk from './bulk'
 import labels from './labels'
 import warehouse from './warehouse'
@@ -27,7 +28,7 @@ import tiktok from './business/tiktok'
 import shipfast from './business/shipfast'
 import communication from './business/communication'
 
-export const LESSONS: Lesson[] = [tour, profile, settings, receive, bulk, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, bot, sale, upload, pick, shipping, customers, reports]
+export const LESSONS: Lesson[] = [tour, profile, settings, receive, inventory, bulk, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, bot, sale, upload, pick, shipping, customers, reports]
 export const COURSES: Lesson[] = [brand, marketing, social, creatorpay, tiktok, shipfast, communication]
 export const ALL_LESSONS: Lesson[] = [...LESSONS, ...COURSES]
 export const lessonById = (id?: string) => ALL_LESSONS.find(l => l.id === id)
