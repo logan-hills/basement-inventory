@@ -1,0 +1,47 @@
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import type { Session } from '@supabase/supabase-js'
+import { supabase } from './supabase'
+
+export type Shop = { id: string; name: string }
+
+type Ctx = {
+  session: Session | null
+  shop: Shop | null
+  loading: boolean
+  refreshShop: () => Promise<void>
+}
+
+const SessionContext = createContext<Ctx>({ session: null, shop: null, loading: true, refreshShop: async () => {} })
+
+export function SessionProvider({ children }: { children: ReactNode }) {
+  const [session, setSession] = useState<Session | null>(null)
+  const [shop, setShop] = useState<Shop | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  async function loadShop(s: Session | null) {
+    if (!s) { setShop(null); return }
+    const { data } = await supabase.from('shops').select('id,name').order('created_at').limit(1)
+    setShop(data?.[0] ?? null)
+  }
+
+  useEffect(() => {
+    supabase.auth.getSession().then(async ({ data }) => {
+      setSession(data.session)
+      await loadShop(data.session)
+      setLoading(false)
+    })
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
+      setSession(s)
+      loadShop(s)
+    })
+    return () => sub.subscription.unsubscribe()
+  }, [])
+
+  return (
+    <SessionContext.Provider value={{ session, shop, loading, refreshShop: () => loadShop(session) }}>
+      {children}
+    </SessionContext.Provider>
+  )
+}
+
+export const useSession = () => useContext(SessionContext)
