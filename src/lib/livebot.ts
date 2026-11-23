@@ -13,7 +13,7 @@ export type BotRules = {
 }
 
 export const DEFAULT_BOT_RULES: BotRules = {
-  claimWords: ['sold', 'mine', 'claim'],
+  claimWords: ['sold', 'mine', 'claim', 'wanted'],
   cancelWords: ['cancel', 'unsold', 'nevermind', 'never mind'],
   plainNumbers: true,
   prefixes: ['dd'],
@@ -40,7 +40,7 @@ export function parseComment(raw: string, rules: BotRules, known: Set<string>): 
 
   // Live #s, each with an optional quantity written like "x2", "2x", "qty 2" or "(2)".
   const items: { liveNumber: string; qty: number }[] = []
-  const re = /(\d{1,2})\s*x(?=[\s#]|\d{3}|$)|x\s*(\d{1,2})\b|\bqty\s*(\d{1,2})\b|\((\d{1,2})\)|(\$?)#?(\d+)/g
+  const re = /(\d{1,2})\s*x(?=[\s#]|\d{3}|$)|x\s*(\d{1,2})\b|(?<![a-z])q(?:ty)?\s*(\d{1,2})\b|\((\d{1,2})\)|(\$?)#?(\d+)/g
   let m: RegExpExecArray | null
   let pendingQty: number | null = null // "2x 4821": the quantity comes first
   let lastWasNumber = false
@@ -75,7 +75,7 @@ export function parseComment(raw: string, rules: BotRules, known: Set<string>): 
   if (rules.plainNumbers) {
     // Only numbers, #, x, commas, "and", "please" and emoji-ish leftovers: treat as a claim.
     const noPrefix = (rules.prefixes ?? []).reduce((t, p) => p.trim() ? t.replace(new RegExp(`(^|[^a-z])${esc(p.trim().toLowerCase())}(?=[\\s#:-]*\\d)`, 'g'), '$1') : t, text)
-    const leftover = noPrefix.replace(/#?\d+|\bx\b|\bqty\b|\band\b|\bplease\b|\bpls\b|\bplz\b|[\s,.&+!()x-]/g, '').replace(/[^a-z]/g, '')
+    const leftover = noPrefix.replace(/#?\d+|\bx\b|\bq(?:ty)?\d*\b|\band\b|\bplease\b|\bpls\b|\bplz\b|[\s,.&+!()x-]/g, '').replace(/[^a-z]/g, '')
     if (!leftover && real.length) return { kind: 'claim', items: real }
   }
   return { kind: 'none' }
