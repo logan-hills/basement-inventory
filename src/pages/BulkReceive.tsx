@@ -11,7 +11,7 @@ import { fieldError } from '../lib/itemFields'
 const COLUMNS = ['Item name', 'Variation', 'Quantity', 'Price', 'Cost', 'Brand', 'Category', 'Weight (lb)', 'Bin code', 'Notes', 'Tags', 'UPC', 'Sale price', 'SKU', 'Condition', 'Department', 'Color', 'Material', 'Season', 'Supplier'] as const
 type Key = 'name' | 'variation' | 'qty' | 'price' | 'cost' | 'brand' | 'category' | 'weight' | 'bin' | 'notes' | 'tags' | 'upc' | 'sale' | 'sku' | 'condition' | 'department' | 'color' | 'material' | 'season' | 'supplier'
 const KEYS: Key[] = ['name', 'variation', 'qty', 'price', 'cost', 'brand', 'category', 'weight', 'bin', 'notes', 'tags', 'upc', 'sale', 'sku', 'condition', 'department', 'color', 'material', 'season', 'supplier']
-/** Optional item details carried from the file (need supabase/013). */
+/** Optional item details carried from the file (need supabase/014). */
 const EXTRA_KEYS = ['condition', 'department', 'color', 'material', 'season', 'supplier'] as const
 
 type Row = Record<Key, string> & { line: number; errors: string[]; binId: string | null }

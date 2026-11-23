@@ -39,6 +39,6 @@ export function cleanExtra(x: ItemExtra): ItemExtra {
 /** Friendly message when the new columns haven't been added to the database yet. */
 export function fieldError(msg: string) {
   return /column|schema cache/i.test(msg) && /(condition|color|material|department|supplier|season|purchased_on|sku|sale_price)/.test(msg)
-    ? 'These details need a quick database update first (run supabase/013_inventory_fields.sql).'
+    ? 'These details need a quick database update first (run supabase/014_inventory_fields.sql).'
     : msg
 }
