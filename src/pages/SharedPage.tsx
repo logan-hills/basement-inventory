@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import Sheet from '../components/Sheet'
+import Avatar from '../components/Avatar'
+import { loadPublicProfiles, type PublicProfile } from '../lib/profile'
 import { supabase } from '../lib/supabase'
 import { useToast } from '../lib/toast'
 import { loadLives, type Live } from '../lib/lives'
@@ -14,8 +16,8 @@ const pad = (n: number) => String(n).padStart(2, '0')
 const dateStr = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
 const startOfDay = (d: Date) => { const x = new Date(d); x.setHours(0, 0, 0, 0); return x }
 const addDays = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n)
-const LENGTHS = [15, 30, 45, 60, 90, 120, 150, 180, 240]
-const lenText = (m: number) => m < 60 ? `${m} min` : `${Math.floor(m / 60)} hr${m % 60 ? ` ${m % 60} min` : ''}`
+const HOURS = Array.from({ length: 24 }, (_, h) => h)
+const hourText = (h: number) => new Date(2000, 0, 1, h).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })
 
 function Welcome({ onDone }: { onDone: () => void }) {
   const toast = useToast()
@@ -179,8 +181,8 @@ function HostPanel({ stage, members, onChange }: { stage: Stage; members: StageM
 function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolean; onClose: () => void; stage: Stage; day: Date | null; slots: Slot[]; onSaved: () => void }) {
   const toast = useToast()
   const [date, setDate] = useState('')
-  const [time, setTime] = useState('19:00')
-  const [len, setLen] = useState('60')
+  const [hour, setHour] = useState(19)
+  const [hours, setHours] = useState(1)
   const [title, setTitle] = useState('')
   const [liveId, setLiveId] = useState('')
   const [lives, setLives] = useState<Live[]>([])
@@ -188,13 +190,14 @@ function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolea
 
   useEffect(() => {
     if (!open) return
-    setDate(dateStr(day ?? new Date())); setTime('19:00'); setLen('60'); setTitle(''); setLiveId('')
+    setDate(dateStr(day ?? new Date())); setHour(19); setHours(1); setTitle(''); setLiveId('')
     loadLives(startOfDay(new Date())).then(l => setLives(l.filter(x => x.status === 'planned'))).catch(() => setLives([]))
   }, [open, day])
 
   const taken = useMemo(() => slots.filter(s => date && dateStr(new Date(s.starts_at)) === date), [slots, date])
-  const start = date ? new Date(`${date}T${time || '19:00'}`) : null
-  const end = start ? new Date(start.getTime() + parseInt(len, 10) * 60000) : null
+  const start = date ? new Date(`${date}T${pad(hour)}:00`) : null
+  const end = start ? new Date(start.getTime() + hours * 3600000) : null
+  const hourTaken = (h: number) => { const a = new Date(`${date}T${pad(h)}:00`).getTime(); return taken.some(s => Date.parse(s.starts_at) < a + 3600000 && Date.parse(s.ends_at) > a) || a < Date.now() }
   const clash = start && end ? taken.find(s => new Date(s.starts_at) < end && new Date(s.ends_at) > start) : undefined
 
   function pickLive(id: string) {
@@ -202,7 +205,7 @@ function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolea
     const l = lives.find(x => x.id === id)
     if (l) {
       const s = new Date(l.starts_at)
-      setDate(dateStr(s)); setTime(`${pad(s.getHours())}:${pad(s.getMinutes())}`); setLen(String(l.duration_min)); setTitle(l.title)
+      setDate(dateStr(s)); setHour(s.getHours()); setHours(Math.min(4, Math.max(1, Math.round(l.duration_min / 60)))); setTitle(l.title)
     }
   }
 
@@ -219,7 +222,7 @@ function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolea
   }
 
   return (
-    <Sheet open={open} onClose={onClose} title="Book a live slot">
+    <Sheet open={open} onClose={onClose} title="Book your live hour">
       <form className="stack" onSubmit={save}>
         {lives.length > 0 && (
           <label>Use one of my planned lives (optional)
@@ -232,8 +235,12 @@ function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolea
         <label>Title<input value={title} onChange={e => setTitle(e.target.value)} placeholder="$2 Tuesday" /></label>
         <div className="row3">
           <label>Date<input type="date" required value={date} onChange={e => setDate(e.target.value)} /></label>
-          <label>Start<input type="time" required value={time} onChange={e => setTime(e.target.value)} /></label>
-          <label>Length<select value={len} onChange={e => setLen(e.target.value)}>{LENGTHS.map(m => <option key={m} value={m}>{lenText(m)}</option>)}</select></label>
+          <label>Start
+            <select value={hour} onChange={e => setHour(parseInt(e.target.value, 10))}>
+              {HOURS.map(h => <option key={h} value={h} disabled={!!date && hourTaken(h)}>{hourText(h)}{date && hourTaken(h) ? ' (taken)' : ''}</option>)}
+            </select>
+          </label>
+          <label>Hours<select value={hours} onChange={e => setHours(parseInt(e.target.value, 10))}>{[1, 2, 3, 4].map(n => <option key={n} value={n}>{n} hour{n > 1 ? 's' : ''}</option>)}</select></label>
         </div>
         {taken.length > 0 && (
           <div className="stack tight-gap">
@@ -258,13 +265,15 @@ export default function SharedPage() {
   const [slots, setSlots] = useState<Slot[]>([])
   const [book, setBook] = useState<{ day: Date | null } | null>(null)
   const [err, setErr] = useState('')
+  const [people, setPeople] = useState<Record<string, PublicProfile>>({})
+  const [viewing, setViewing] = useState<PublicProfile | null>(null)
 
   const current = mine?.[pick] ?? null
   const stage = current?.stage ?? null
   const me = current?.me ?? null
 
   const loadStages = useCallback(async () => {
-    try { setErr(''); setMine(await loadMyStages()) } catch (e: any) { setErr(friendlySlotError(e.message)); setMine([]) }
+    try { setErr(''); await supabase.rpc('join_open_stages').then(() => null, () => null); setMine(await loadMyStages()) } catch (e: any) { setErr(friendlySlotError(e.message)); setMine([]) }
   }, [])
   useEffect(() => { loadStages() }, [loadStages])
 
@@ -273,6 +282,7 @@ export default function SharedPage() {
     try {
       const [m, s] = await Promise.all([loadMembers(stage.id), loadSlots(stage.id, weekStart, addDays(weekStart, 7))])
       setMembers(m); setSlots(s)
+      setPeople(await loadPublicProfiles(s.map(x => x.user_id)))
     } catch (e: any) { setErr(friendlySlotError(e.message)) }
   }, [stage, weekStart])
   useEffect(() => { refresh() }, [refresh])
@@ -306,11 +316,11 @@ export default function SharedPage() {
         <div>
           <span className="eyebrow">Sell · Shared Page</span>
           <h1>{stage.name}</h1>
-          <p className="muted small">{stage.fb_page_id ? <>Goes live on <b>{stage.fb_page_name}</b></> : <span className="danger-text">Facebook Page not connected yet</span>} · one seller at a time · hard start and stop</p>
+          <p className="muted small">{stage.fb_page_id ? <>Goes live on <b>{stage.fb_page_name}</b></> : <span className="danger-text">Facebook Page not connected yet</span>} · one seller per hour · hard start and stop</p>
         </div>
         <div className="row-gap">
           {mine.length > 1 && <select value={pick} onChange={e => setPick(parseInt(e.target.value, 10))}>{mine.map((m, i) => <option key={m.stage.id} value={i}>{m.stage.name}</option>)}</select>}
-          <button className="btn primary" onClick={() => setBook({ day: null })}>+ Book a slot</button>
+          <button className="btn primary" onClick={() => setBook({ day: null })}>+ Book your hour</button>
         </div>
       </div>
       {err && <p className="danger-text">{err}</p>}
@@ -353,10 +363,13 @@ export default function SharedPage() {
                   return (
                     <div key={s.id} className={`slot-row ${mineSlot ? 'mine' : ''} st-${s.status}`}>
                       <div className="slot-time">{fmtTime(s.starts_at)}<span>to {fmtTime(s.ends_at)}</span></div>
-                      <div className="slot-who">
-                        <b>{s.seller_name}</b>
-                        <span className="muted small">{s.title}</span>
-                      </div>
+                      <button type="button" className="slot-who-wrap plain" onClick={() => people[s.user_id] && setViewing(people[s.user_id])} aria-label={`About ${s.seller_name}`}>
+                        <Avatar name={s.seller_name} path={people[s.user_id]?.photo_path} size={30} />
+                        <span className="slot-who">
+                          <b>{s.seller_name}</b>
+                          <span className="muted small">{s.title}</span>
+                        </span>
+                      </button>
                       <span className={`pill st-${s.status}`}>{STATUS_LABEL[s.status] ?? s.status}</span>
                       {(mineSlot || me.role === 'host') && (
                         <div className="row-gap slot-actions">
@@ -372,6 +385,21 @@ export default function SharedPage() {
           })}
         </div>
       </div>
+
+      <Sheet open={!!viewing} onClose={() => setViewing(null)} title="Seller">
+        {viewing && (
+          <div className="seller-card">
+            <Avatar name={viewing.display_name} path={viewing.photo_path} size={72} />
+            <div className="stack tight-gap">
+              <h2>{viewing.display_name}</h2>
+              {viewing.bio && <p>{viewing.bio}</p>}
+              {viewing.email && <a href={`mailto:${viewing.email}`}>{viewing.email}</a>}
+              {viewing.phone && <a href={`tel:${viewing.phone}`}>{viewing.phone}</a>}
+              {!viewing.bio && !viewing.email && !viewing.phone && <p className="muted small">This seller keeps their details private.</p>}
+            </div>
+          </div>
+        )}
+      </Sheet>
 
       <BookSheet open={!!book} onClose={() => setBook(null)} stage={stage} day={book?.day ?? null} slots={slots} onSaved={refresh} />
     </div>

@@ -20,6 +20,12 @@ export default function Login() {
     else if (mode === 'up') setMsg('Check your email to confirm your account, then sign in.')
   }
 
+  async function apple() {
+    setMsg('')
+    const { error } = await supabase.auth.signInWithOAuth({ provider: 'apple', options: { redirectTo: window.location.origin + window.location.pathname } })
+    if (error) setMsg(error.message.includes('provider is not enabled') ? 'Sign in with Apple is not switched on yet. Use email for now.' : error.message)
+  }
+
   return (
     <div className="center-page">
       <form className="card auth" onSubmit={submit}>
@@ -27,6 +33,12 @@ export default function Login() {
         <label>Email<input type="email" required value={email} onChange={e => setEmail(e.target.value)} autoComplete="email" /></label>
         <label>Password<input type="password" required minLength={8} value={password} onChange={e => setPassword(e.target.value)} autoComplete={mode === 'in' ? 'current-password' : 'new-password'} /></label>
         <button className="btn primary big" disabled={busy}>{mode === 'in' ? 'Sign in' : 'Create account'}</button>
+        <div className="or-line"><span>or</span></div>
+        <button type="button" className="btn apple big" onClick={apple}>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.84.86-3.6 2.18-1.54 2.67-.39 6.62 1.1 8.79.73 1.06 1.6 2.25 2.73 2.2 1.1-.04 1.51-.7 2.84-.7 1.32 0 1.7.7 2.86.68 1.18-.02 1.93-1.07 2.65-2.14.84-1.23 1.18-2.42 1.2-2.48-.03-.01-2.3-.88-2.33-3.5zM14.2 6.13c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.64-1.05 1.67-.92 2.66.97.08 1.96-.49 2.56-1.21z" /></svg>
+          Sign in with Apple
+        </button>
+        <p className="muted small center-text">By continuing you agree to our <a href="#/terms">Terms of Use</a> and <a href="#/privacy">Privacy Policy</a>.</p>
         {msg && <p className="note">{msg}</p>}
         <button type="button" className="link-btn" onClick={() => { setMode(mode === 'in' ? 'up' : 'in'); setMsg('') }}>
           {mode === 'in' ? 'New here? Create an account' : 'Have an account? Sign in'}
