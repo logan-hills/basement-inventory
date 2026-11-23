@@ -48,7 +48,7 @@ const lesson: Lesson = {
         ['Order ID', 'One box for one buyer', 'DD-7K3P9Q'],
       ] } },
     { kind: 'quiz', q: 'Keisha types "sold 4821" in the comments. What is 4821?', options: ['A tag', 'A Live Number', 'A bin'], answer: 1, why: 'Live Numbers are for buyers. Tags (like 4821-003) and bins are for you and your helpers.' },
-    { chapter: 'Find your way', kind: 'learn', title: 'Your dock', text: 'On a laptop, the icons down the left side take you everywhere you go every day. On a phone they sit along the bottom. Everything else is under More (or Menu).',
+    { chapter: 'Find your way', kind: 'learn', title: 'Your dock', text: 'On a laptop, the icons down the left side take you everywhere you go every day. On a phone they sit along the bottom. Everything else is under More (or Menu), grouped into Stock, Sell and Manage. Fun extras live there too, like Giveaways under Sell for spinning a prize wheel on your live.',
       screen: { title: 'Dock', buttons: ['Home', 'Stock', 'Scan', 'Planner', 'Sell', 'Pack', 'Ship', 'Money', 'More'], highlight: 'More' } },
     { kind: 'tap', title: 'Practice: find your way', prompt: 'You want to plan this week\'s theme and poster. Which dock button?', screen: { title: 'Dock', buttons: ['Stock', 'Scan', 'Planner', 'Pack', 'Money'] }, answer: 'Planner', hint: 'Themes, posters and checklists all live in the Planner.' },
     { kind: 'learn', title: 'Home is your coach', text: 'Home counts down to your next live, shows your monthly goal, the profit sitting on your shelves, and the checklist for your next show. Tick steps right there. When stock gets old, Home tells you and offers Run a sale. Scroll down for theme ideas for your next live: this month\'s picks first, then tap a group or Show me more.',

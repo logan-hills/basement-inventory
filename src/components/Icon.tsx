@@ -26,6 +26,7 @@ const PATHS: Record<string, string> = {
   trend: 'M3 17l6-6 4 4 8-8M15 7h6v6',
   dollar: 'M12 3v18M16.5 7.5C16 6 14.3 5 12 5c-2.8 0-4.5 1.4-4.5 3.3 0 4.4 9 2.4 9 7 0 2-1.9 3.7-4.5 3.7-2.4 0-4.2-1.1-4.7-2.8',
   box: 'M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8',
+  gift: 'M3 9h18v4H3zM5 13v8h14v-8M12 9v12M12 9c-2-4-6-4-6-1.5S10 9 12 9zM12 9c2-4 6-4 6-1.5S14 9 12 9z',
 }
 
 export type IconName = keyof typeof PATHS

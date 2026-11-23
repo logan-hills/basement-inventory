@@ -40,6 +40,7 @@ import LiveBot from './pages/LiveBot'
 import SharedPage from './pages/SharedPage'
 import OnAir from './pages/OnAir'
 import Overlay from './pages/Overlay'
+import Giveaways from './pages/Giveaways'
 import OnAirBar from './components/OnAirBar'
 import Profile from './pages/Profile'
 import FinishSignup from './pages/FinishSignup'
@@ -66,6 +67,7 @@ const SELL = [
   { to: '/calendar', label: 'Live calendar', icon: 'calendar' },
   { to: '/shared-page', label: 'Shared Page lives', icon: 'clock' },
   { to: '/live', label: 'Get ready for live', icon: 'live' },
+  { to: '/giveaways', label: 'Giveaways', icon: 'gift' },
   { to: '/orders', label: 'Pick and pack', icon: 'pack' },
   { to: '/shipping', label: 'Shipping', icon: 'truck' },
   { to: '/customers', label: 'Customers', icon: 'users' },
@@ -97,6 +99,7 @@ function ScrollTop() {
 
 const STREAM_NAV = [
   { to: '/', label: 'Live calendar', end: true, icon: 'calendar' },
+  { to: '/giveaways', label: 'Giveaways', icon: 'gift' },
   { to: '/profile', label: 'My profile', icon: 'users' },
 ]
 
@@ -117,6 +120,7 @@ function StreamShell() {
         <OnAirBar />
         <Routes>
           <Route path="/on-air/:id" element={<OnAir />} />
+          <Route path="/giveaways" element={<Giveaways />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/terms" element={<Legal which="terms" />} />
           <Route path="/privacy" element={<Legal which="privacy" />} />
@@ -137,7 +141,7 @@ function Shell() {
   const recovering = useRecovering()
   useEffect(() => { setMenu(false) }, [pathname])
   // The on-stream product card for Prism / OBS: public, no sign-in, nothing else on the page.
-  if (pathname.startsWith('/overlay/')) return <Routes><Route path="/overlay/:token" element={<Overlay />} /></Routes>
+  if (pathname.startsWith('/overlay/')) return <Routes><Route path="/overlay/:token/:part?" element={<Overlay />} /></Routes>
   if (pathname === '/terms' || pathname === '/privacy') {
     if (!session || !shop) return <main className="content solo"><Legal which={pathname === '/terms' ? 'terms' : 'privacy'} /></main>
   }
@@ -192,6 +196,7 @@ function Shell() {
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/shared-page" element={<SharedPage />} />
           <Route path="/on-air/:id" element={<OnAir />} />
+          <Route path="/giveaways" element={<Giveaways />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/terms" element={<Legal which="terms" />} />
           <Route path="/privacy" element={<Legal which="privacy" />} />
