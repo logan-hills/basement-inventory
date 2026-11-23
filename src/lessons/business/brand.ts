@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'brand', kind: 'course', title: 'Build a brand they remember', track: 'Business', icon: 'sparkle', minutes: 20,
+  id: 'brand', kind: 'course', title: 'Build a brand they remember', track: 'Business', icon: 'sparkle',
   why: 'People forget a price. They remember how you made them feel. Your brand is that feeling, on purpose.',
   outcomes: ['Write your brand promise in one sentence', 'Pick a name, colors and a voice that fit you', 'Show up the same way everywhere, every live'],
   covers: [], updated: '2026-11-23',

@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'social', kind: 'course', title: 'Social media that sells', track: 'Business', icon: 'live', minutes: 25,
+  id: 'social', kind: 'course', title: 'Social media that sells', track: 'Business', icon: 'live',
   why: 'Social media is your storefront window. Done right, it fills your lives while you sleep.',
   outcomes: ['Pick the one or two platforms worth your time', 'Plan a week of posts in 20 minutes', 'Film Reels that sell with just a phone'],
   covers: [], updated: '2026-11-23',

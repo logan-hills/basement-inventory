@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'bot', title: 'Let the comment bot take the orders', track: 'Sell', icon: 'live', minutes: 4,
+  id: 'bot', title: 'Let the comment bot take the orders', track: 'Sell', icon: 'live',
   why: 'While you show the pieces, the bot writes down who claimed what, so nobody gets missed and nobody gets double sold.',
   route: { to: '/calendar', label: 'Open a live, then Comment bot' },
   covers: ['src/pages/LiveBot.tsx', 'src/lib/livebot.ts', 'src/lib/fbcomments.ts'], updated: '2026-11-23',

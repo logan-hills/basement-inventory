@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'scan', title: 'Scan to put away and look up', track: 'Stock', icon: 'scan', minutes: 3,
+  id: 'scan', title: 'Scan to put away and look up', track: 'Stock', icon: 'scan',
   why: 'Scanning records where every piece lives without typing a thing.',
   route: { to: '/scan', label: 'Open Scan' },
   covers: ['src/pages/Scan.tsx'], updated: '2026-11-23',

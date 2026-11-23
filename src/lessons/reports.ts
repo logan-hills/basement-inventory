@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'reports', title: 'Read your money', track: 'Grow', icon: 'reports', minutes: 3,
+  id: 'reports', title: 'Read your money', track: 'Grow', icon: 'reports',
   why: 'Knowing what sells and what sits helps you buy smarter and earn more.',
   route: { to: '/reports', label: 'Open Reports' },
   covers: ['src/pages/Reports.tsx', 'src/pages/Home.tsx'], updated: '2026-11-23',

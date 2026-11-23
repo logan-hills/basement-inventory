@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'upload', title: 'Bring in your live sales', track: 'Pack and ship', icon: 'upload', minutes: 4,
+  id: 'upload', title: 'Bring in your live sales', track: 'Pack and ship', icon: 'upload',
   why: 'Turning sales into orders is what starts picking, packing and shipping.',
   route: { to: '/orders/upload', label: 'Upload live sales' },
   covers: ['src/pages/OrdersUpload.tsx', 'src/pages/Orders.tsx'], updated: '2026-11-23',

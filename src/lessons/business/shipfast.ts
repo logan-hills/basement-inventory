@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'shipfast', kind: 'course', title: 'Ship fast, keep them coming back', track: 'Business', icon: 'truck', minutes: 15,
+  id: 'shipfast', kind: 'course', title: 'Ship fast, keep them coming back', track: 'Business', icon: 'truck',
   why: 'Fast shipping is the moment your buyer decides if she\'ll shop with you again.',
   outcomes: ['Set a ship-by promise you can keep', 'Run a weekly pack-and-ship routine', 'Make unboxing feel special on a budget'],
   route: { to: '/orders', label: 'Open Pick and pack' },

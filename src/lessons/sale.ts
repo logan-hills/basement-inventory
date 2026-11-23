@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'sale', title: 'Run a sale on old stock', track: 'Sell', icon: 'clock', minutes: 2,
+  id: 'sale', title: 'Run a sale on old stock', track: 'Sell', icon: 'clock',
   why: 'Old stock is cash stuck on a shelf. A sale turns it back into money.',
   route: { to: '/live', label: 'Get ready for live' },
   covers: ['src/pages/LivePrep.tsx', 'src/pages/Home.tsx'], updated: '2026-11-23',

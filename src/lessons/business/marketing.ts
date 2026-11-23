@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'marketing', kind: 'course', title: 'Market your brand without burning out', track: 'Business', icon: 'trend', minutes: 20,
+  id: 'marketing', kind: 'course', title: 'Market your brand without burning out', track: 'Business', icon: 'trend',
   why: 'Great pieces don\'t sell if nobody knows about the live. Marketing is simply inviting people, on repeat.',
   outcomes: ['Plan a simple weekly promo rhythm', 'Write posts that get people to show up', 'Turn buyers into your best marketers'],
   covers: [], updated: '2026-11-23',

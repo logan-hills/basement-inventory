@@ -1392,3 +1392,35 @@ input, select, textarea { min-height: 48px; font-size: 17px; }
 
 /* Sign-in: the gem orbit only shows where there's room beside the words */
 @media (max-width: 1400px) { .welcome-orbit { display: none; } }
+
+/* ===== ACADEMY: deeper lessons (tables, examples, scripts, scenarios, math, action plans, workbook) ===== */
+.lesson-table-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); }
+.lesson-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.lesson-table th { text-align: left; padding: 10px 14px; background: var(--raised); color: var(--gold); font-weight: 600; font-size: .9rem; letter-spacing: .3px; }
+.lesson-table td { padding: 10px 14px; border-top: 1px solid var(--border); vertical-align: top; line-height: 1.4; }
+.lesson-table tr:last-child td { font-weight: 600; }
+.lesson-example { padding: 14px 16px; border-radius: 14px; border-left: 4px solid var(--gold); background: rgba(255, 211, 110, .07); display: flex; flex-direction: column; gap: 4px; }
+.lesson-example p { font-size: 1.02rem !important; font-style: italic; }
+.script-card { position: relative; padding: 18px 20px 16px; border-radius: 6px 20px 6px 20px; background: #FBF3E4; color: #2A1A0C; display: flex; flex-direction: column; gap: 10px; box-shadow: inset 0 0 0 1px rgba(184, 134, 43, .45); }
+.script-card p { color: #2A1A0C; font-size: 1.08rem !important; line-height: 1.5; }
+.script-card .btn { align-self: flex-start; color: #6B4A12; border-color: #B8862B; }
+.small-btn { min-height: 40px; padding: 6px 14px; font-size: .92rem; }
+.scenario-box { padding: 16px 18px; border-radius: 16px; background: linear-gradient(160deg, rgba(142, 59, 184, .18), rgba(255, 122, 89, .1)); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; }
+.scenario-box p { font-size: 1.08rem !important; }
+.quiz-opt.shake { animation: shake .4s; }
+.number-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.number-affix { font-family: Fraunces, Georgia, serif; font-size: 1.6rem; color: var(--gold); }
+.number-input { width: 9rem; min-height: 56px; padding: 8px 14px; border-radius: 14px; border: 1px solid var(--border-strong); background: var(--raised); color: var(--text); font-size: 1.5rem; font-weight: 600; }
+.number-input.shake { border-color: var(--coral); animation: shake .4s; }
+.action-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.action-item { width: 100%; display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 10px 14px; border-radius: 14px; border: 1px solid var(--border-strong); background: var(--raised); color: var(--text); text-align: left; font-size: 1.02rem; cursor: pointer; }
+.action-item.on { border-color: var(--emerald-hi); background: rgba(14, 122, 71, .18); }
+.action-box { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--gold); color: #fff; font-weight: 700; }
+.action-item.on .action-box { background: var(--emerald-hi); border-color: var(--emerald-hi); }
+.workbook { padding: 24px; gap: 16px; }
+.workbook h2 { margin: 0; font-family: Fraunces, Georgia, serif; }
+.workbook-entry { display: flex; flex-direction: column; gap: 4px; padding-top: 12px; border-top: 1px solid var(--border); }
+.workbook-answer { margin: 4px 0 0; font-family: Caveat, cursive; font-size: 1.4rem; line-height: 1.3; white-space: pre-wrap; }
+.workbook-checks { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.workbook-checks li.on { color: var(--emerald-hi); }
+@media print { .workbook { background: #fff !important; color: #2A1A0C !important; } .workbook .muted, .workbook-checks li { color: #5A4A3A !important; } }

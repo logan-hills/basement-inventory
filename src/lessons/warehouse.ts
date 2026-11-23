@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'warehouse', title: 'Set up your shelves and bins', track: 'Stock', icon: 'warehouse', minutes: 3,
+  id: 'warehouse', title: 'Set up your shelves and bins', track: 'Stock', icon: 'warehouse',
   why: 'When every piece has a bin, anyone on your team can find it in seconds.',
   route: { to: '/locations', label: 'Open Warehouse' },
   covers: ['src/pages/Warehouse.tsx', 'src/pages/BinDetail.tsx', 'src/pages/BinLabels.tsx'], updated: '2026-11-23',

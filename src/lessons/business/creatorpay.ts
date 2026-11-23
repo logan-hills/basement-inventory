@@ -2,7 +2,7 @@ import type { Lesson } from '../types'
 import { PAY_TRENDS as T } from './trends'
 
 const lesson: Lesson = {
-  id: 'creatorpay', kind: 'course', title: 'Who pays creators right now', track: 'Business', icon: 'dollar', minutes: 12,
+  id: 'creatorpay', kind: 'course', title: 'Who pays creators right now', track: 'Business', icon: 'dollar',
   why: 'Your videos can sell your lives AND pay you for views. Put your energy where the money is.',
   outcomes: [`Know today's top pick (${T.topPick})`, 'Understand how each platform pays', 'Make every video do double duty'],
   covers: ['src/lessons/business/trends.ts'], updated: '2026-11-23',

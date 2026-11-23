@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'damaged', title: 'Damage out broken pieces', track: 'Stock', icon: 'damaged', minutes: 2,
+  id: 'damaged', title: 'Damage out broken pieces', track: 'Stock', icon: 'damaged',
   why: 'Taking broken pieces out of stock keeps you from selling something you can\'t ship.',
   route: { to: '/damaged', label: 'Open Damaged' },
   covers: ['src/pages/Damaged.tsx', 'src/components/DamageSheet.tsx', 'src/pages/ItemDetail.tsx'], updated: '2026-11-23',

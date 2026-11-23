@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'customers', title: 'Know your customers', track: 'Grow', icon: 'users', minutes: 2,
+  id: 'customers', title: 'Know your customers', track: 'Grow', icon: 'users',
   why: 'Your regulars are your business. Knowing them lets you thank them and sell to them better.',
   route: { to: '/customers', label: 'Open Customers' },
   covers: ['src/pages/Customers.tsx'], updated: '2026-11-23',

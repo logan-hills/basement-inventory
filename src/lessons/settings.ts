@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'settings', title: 'Make the app yours in Settings', track: 'Start here', icon: 'settings', minutes: 3,
+  id: 'settings', title: 'Make the app yours in Settings', track: 'Start here', icon: 'settings',
   why: 'Your categories, tags, themes and checklists show up in every dropdown, so setting them once saves typing forever.',
   route: { to: '/settings', label: 'Open Settings' },
   covers: ['src/pages/Settings.tsx', 'src/lib/settings.ts'], updated: '2026-11-23',

@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'planner', title: 'Plan a live that pops', track: 'Sell', icon: 'sparkle', minutes: 4,
+  id: 'planner', title: 'Plan a live that pops', track: 'Sell', icon: 'sparkle',
   why: 'A theme, a poster and a plan bring more people to your live, and more people means more sales.',
   route: { to: '/planner', label: 'Open the Live Planner' },
   covers: ['src/pages/Planner.tsx', 'src/pages/LivePlan.tsx', 'src/components/PosterMaker.tsx', 'src/lib/planner.ts'], updated: '2026-11-23',

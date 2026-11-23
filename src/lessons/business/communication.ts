@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'communication', kind: 'course', title: 'Communication is key', track: 'Business', icon: 'users', minutes: 15,
+  id: 'communication', kind: 'course', title: 'Communication is key', track: 'Business', icon: 'users',
   why: 'Delays happen. Silence is what loses customers. When you speak up early, most buyers stay loyal.',
   outcomes: ['Spot a delay before the buyer does', 'Send a clear, kind update in minutes', 'Turn a problem into a reason she trusts you more'],
   covers: [], updated: '2026-11-23',

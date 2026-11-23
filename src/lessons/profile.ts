@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'profile', title: 'Your seller profile and privacy', track: 'Start here', icon: 'users', minutes: 2,
+  id: 'profile', title: 'Your seller profile and privacy', track: 'Start here', icon: 'users',
   why: 'Let other sellers get to know you while you decide exactly what they can see.',
   route: { to: '/profile', label: 'Open my profile' },
   covers: ['src/pages/Profile.tsx', 'src/components/ProfileForm.tsx', 'src/pages/FinishSignup.tsx', 'src/pages/Login.tsx', 'src/lib/profile.ts', 'src/lib/legal.ts'],

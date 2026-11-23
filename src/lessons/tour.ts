@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'tour', title: 'Welcome: how your shop flows', track: 'Start here', icon: 'sparkle', minutes: 3,
+  id: 'tour', title: 'Welcome: how your shop flows', track: 'Start here', icon: 'sparkle',
   why: 'Knowing the path from box to buyer means you always know what to do next.',
   route: { to: '/', label: 'Go to Home' },
   covers: ['src/App.tsx', 'src/pages/Home.tsx'], updated: '2026-11-23',

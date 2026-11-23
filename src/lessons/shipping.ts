@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'shipping', title: 'Ship with Pirate Ship', track: 'Pack and ship', icon: 'truck', minutes: 2,
+  id: 'shipping', title: 'Ship with Pirate Ship', track: 'Pack and ship', icon: 'truck',
   why: 'Buying all your labels in one go saves hours and money.',
   route: { to: '/shipping', label: 'Open Shipping' },
   covers: ['src/pages/Shipping.tsx'], updated: '2026-11-23',

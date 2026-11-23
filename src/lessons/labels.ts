@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'labels', title: 'Print and reprint tags', track: 'Stock', icon: 'print', minutes: 3,
+  id: 'labels', title: 'Print and reprint tags', track: 'Stock', icon: 'print',
   why: 'A clean tag on every piece is what makes scanning, picking and counting fast.',
   route: { to: '/inventory', label: 'Open Stock' },
   covers: ['src/pages/Labels.tsx', 'src/pages/ItemDetail.tsx', 'src/pages/Inventory.tsx'], updated: '2026-11-23',

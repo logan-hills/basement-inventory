@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'bulk', title: 'Bulk upload a delivery', track: 'Stock', icon: 'upload', minutes: 3,
+  id: 'bulk', title: 'Bulk upload a delivery', track: 'Stock', icon: 'upload',
   why: 'A big haul goes in all at once from a spreadsheet instead of one item at a time.',
   route: { to: '/receive/bulk', label: 'Bulk upload' },
   covers: ['src/pages/BulkReceive.tsx'], updated: '2026-11-23',

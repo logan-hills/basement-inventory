@@ -32,3 +32,4 @@ export const COURSES: Lesson[] = [brand, marketing, social, creatorpay, tiktok, 
 export const ALL_LESSONS: Lesson[] = [...LESSONS, ...COURSES]
 export const lessonById = (id?: string) => ALL_LESSONS.find(l => l.id === id)
 export * from './types'
+export * from './time'

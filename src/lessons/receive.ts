@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'receive', title: 'Receive an item', track: 'Stock', icon: 'receive', minutes: 4,
+  id: 'receive', title: 'Receive an item', track: 'Stock', icon: 'receive',
   why: 'Every piece gets a tag, a photo and a price the moment it arrives, so nothing gets lost in a box.',
   route: { to: '/intake', label: 'Receive an item' },
   covers: ['src/pages/Intake.tsx', 'src/pages/ItemDetail.tsx', 'src/pages/Inventory.tsx'], updated: '2026-11-23',

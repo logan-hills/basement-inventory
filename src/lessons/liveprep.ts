@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'liveprep', title: 'Get ready for live', track: 'Sell', icon: 'live', minutes: 4,
+  id: 'liveprep', title: 'Get ready for live', track: 'Sell', icon: 'live',
   why: 'Choosing what to sell ahead of time means a smooth show and a bot that\'s ready to take claims.',
   route: { to: '/live', label: 'Get ready for live' },
   covers: ['src/pages/LivePrep.tsx', 'src/lib/cart.ts', 'src/pages/LiveDetail.tsx'], updated: '2026-11-23',

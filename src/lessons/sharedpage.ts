@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'sharedpage', title: 'Go live on the shared Page', track: 'Sell', icon: 'clock', minutes: 6,
+  id: 'sharedpage', title: 'Go live on the shared Page', track: 'Sell', icon: 'clock',
   why: 'Book your hour on the big shared Page, get your own stream key, and go live to thousands of followers without anyone sharing a password.',
   route: { to: '/shared-page', label: 'Open the live calendar' },
   covers: ['src/components/GuidelinesGate.tsx', 'src/lib/guidelines.ts', 'src/pages/SharedPage.tsx', 'src/pages/OnAir.tsx', 'src/components/StreamSetup.tsx', 'src/components/OnAirBar.tsx', 'src/lib/stage.ts', 'src/components/LiveControl.tsx', 'src/pages/Overlay.tsx'],

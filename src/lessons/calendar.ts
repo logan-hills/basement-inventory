@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'calendar', title: 'Schedule your lives', track: 'Sell', icon: 'calendar', minutes: 2,
+  id: 'calendar', title: 'Schedule your lives', track: 'Sell', icon: 'calendar',
   why: 'A steady schedule trains your buyers to show up.',
   route: { to: '/calendar', label: 'Open the calendar' },
   covers: ['src/pages/Calendar.tsx', 'src/components/LiveForm.tsx', 'src/pages/LiveDetail.tsx'], updated: '2026-11-23',

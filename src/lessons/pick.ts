@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'pick', title: 'Pick and pack, grocery style', track: 'Pack and ship', icon: 'pack', minutes: 4,
+  id: 'pick', title: 'Pick and pack, grocery style', track: 'Pack and ship', icon: 'pack',
   why: 'Scanning each piece into the right box means no wrong items and no angry buyers.',
   route: { to: '/orders', label: 'Open Pick and pack' },
   covers: ['src/pages/Pick.tsx', 'src/pages/Orders.tsx', 'src/pages/BoxLabels.tsx', 'src/pages/OrderDetail.tsx'], updated: '2026-11-23',
