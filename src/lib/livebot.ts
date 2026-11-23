@@ -10,6 +10,24 @@ export type BotRules = {
   plainNumbers: boolean
   /** Shop codes buyers put in front of the Live #, like "DD 4821" or "DD4821". A code + Live # always counts as a claim. */
   prefixes?: string[]
+  /** The thank-you message for each buyer. {name}, {first}, {items}, {count}, {total} and {live} are filled in. */
+  message?: string
+}
+
+export const DEFAULT_BUYER_MESSAGE = 'Hi {first}! 👑 Thank you for shopping {live} with us. You got:\n{items}\nTotal: {total}\nYour invoice is on the way. 💚'
+
+type MsgLine = { liveNumber: string; title: string; qty: number; price: number }
+
+/** Fills in a buyer's thank-you message. */
+export function buyerMessage(template: string, v: { name: string; live: string; lines: MsgLine[] }) {
+  const money = (n: number) => `$${n.toFixed(2)}`
+  const total = v.lines.reduce((s, l) => s + l.qty * l.price, 0)
+  const items = v.lines.map(l => `#${l.liveNumber} ${l.title}${l.qty > 1 ? ` x${l.qty}` : ''} ${money(l.qty * l.price)}`).join('\n')
+  const first = v.name.trim().split(/\s+/)[0] || v.name
+  return (template || DEFAULT_BUYER_MESSAGE)
+    .replaceAll('{name}', v.name).replaceAll('{first}', first)
+    .replaceAll('{items}', items).replaceAll('{count}', String(v.lines.reduce((s, l) => s + l.qty, 0)))
+    .replaceAll('{total}', money(total)).replaceAll('{live}', v.live)
 }
 
 export const DEFAULT_BOT_RULES: BotRules = {
