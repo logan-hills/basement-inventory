@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 /** The live-prep cart: variations picked for an upcoming live. Kept on this device until checkout. */
-export type CartLine = { variantId: string; qty: number; salePrice: number | null; name: string; label: string; live: string; price: number | null; cost: number | null }
+export type CartLine = { variantId: string; qty: number; salePrice: number | null; name: string; label: string; live: string; price: number | null; cost: number | null; inStock?: number }
 
 const KEY = 'liveCart'
 const EVT = 'livecart-change'

@@ -502,3 +502,5 @@ button { font: inherit; cursor: pointer; }
 .menu-link { padding: 12px; border-radius: 10px; border: 1px solid var(--border); color: var(--text); text-decoration: none; font-weight: 500; }
 .menu-link.active { border-color: var(--gold); color: var(--gold); }
 .link-text { color: var(--gold); }
+.variant-badge { align-self: flex-start; display: inline-block; padding: 2px 10px; border-radius: 8px; background: rgba(226, 190, 90, .16); border: 1px solid rgba(226, 190, 90, .5); color: var(--gold); font-weight: 700; font-size: .85rem; }
+.shelf-count { color: #6FD19B; font-weight: 700; }

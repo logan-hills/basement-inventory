@@ -127,8 +127,8 @@ export default function LiveDetail() {
             <div key={li.id} className="order-line">
               <span className="live-num small-live">#{li.variant.live_number}</span>
               <div className="hit-text grow">
-                <Link to={`/item/${li.variant.item.id}`}><b>{li.variant.item.name}{li.variant.label !== 'One size' ? ` · ${li.variant.label}` : ''}</b></Link>
-                <span className="muted small">{stock.length} in stock{bins.length ? ` · ${bins.join(', ')}` : ''} · regular {money(li.variant.price)}</span>
+                <Link to={`/item/${li.variant.item.id}`}><b>{li.variant.item.name}</b></Link>{li.variant.label !== 'One size' && <span className="variant-badge">{li.variant.label}</span>}
+                <span className="muted small"><b className="shelf-count">{stock.length} on shelf</b>{bins.length ? ` · ${bins.join(', ')}` : ''} · regular {money(li.variant.price)}</span>
               </div>
               <label className="mini-field">Qty<input inputMode="numeric" defaultValue={li.qty} onBlur={e => { const n = parseInt(e.target.value, 10); if (n > 0 && n !== li.qty) setItem(li, { qty: n }) }} /></label>
               <label className="mini-field">Live price<input inputMode="decimal" defaultValue={li.sale_price ?? ''} placeholder={li.variant.price != null ? Number(li.variant.price).toFixed(2) : ''} onBlur={e => { const v = e.target.value.trim(); const n = v === '' ? null : Number(v); if (n === null || !Number.isNaN(n)) setItem(li, { sale_price: n }) }} /></label>

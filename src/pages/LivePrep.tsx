@@ -56,7 +56,10 @@ export default function LivePrep() {
       price_lo: (a, b) => (a.price ?? 0) - (b.price ?? 0),
       stock: (a, b) => b.inStock - a.inStock,
     }
-    return list.sort(by[sort])
+    // Rank whole items by their best variation, then keep that item's variations together, side by side.
+    const rank = new Map<string, number>()
+    list.slice().sort(by[sort]).forEach((r, i) => { if (!rank.has(r.item.id)) rank.set(r.item.id, i) })
+    return list.sort((a, b) => (rank.get(a.item.id)! - rank.get(b.item.id)!) || a.label.localeCompare(b.label, undefined, { numeric: true }))
   }, [rows, q, cat, tag, sort, oldOnly, oldDays])
 
   const oldCount = (rows ?? []).filter(r => r.inStock > 0 && r.ageDays >= oldDays).length
@@ -69,10 +72,10 @@ export default function LivePrep() {
     tap()
   }
   function addAllShown() {
-    shown.forEach(r => { if (!inCart(r.id)) cart.add(cartLine(r), 1, r.inStock) })
-    toast(`Added ${shown.length} items to the cart`, { kind: 'ok' })
+    shown.forEach(r => { if (!inCart(r.id)) cart.add(cartLine(r), r.inStock, r.inStock) })
+    toast(`Added ${shown.length} variations, every piece on the shelf`, { kind: 'ok' })
   }
-  const cartLine = (r: StockRow) => ({ variantId: r.id, name: r.item.name, label: r.label, live: r.live_number, price: r.price, cost: r.cost })
+  const cartLine = (r: StockRow) => ({ variantId: r.id, name: r.item.name, label: r.label, live: r.live_number, price: r.price, cost: r.cost, inStock: r.inStock })
 
   async function checkout() {
     if (!shop || !target || !cart.lines.length) return
@@ -145,22 +148,23 @@ export default function LivePrep() {
                 </Link>
                 <div className="shop-body">
                   <b className="shop-name">{r.item.name}</b>
-                  <span className="muted small">{[r.label !== 'One size' ? r.label : '', r.item.brand, r.item.category].filter(Boolean).join(' · ')}</span>
+                  {r.label !== 'One size' && <span className="variant-badge">{r.label}</span>}
+                  <span className="muted small">{[r.item.brand, r.item.category].filter(Boolean).join(' · ')}</span>
                   <div className="shop-money">
                     <span className="gold shop-price">{money(r.price)}</span>
                     <span className="muted small">cost {r.cost != null ? money(r.cost) : '—'}</span>
                     {m != null && <span className={`margin-pill ${m >= 0.5 ? 'good' : m >= 0.25 ? 'ok' : 'low'}`}>{Math.round(m * 100)}%</span>}
                   </div>
-                  <span className="muted small">{r.inStock} in stock{r.bins.length ? ` · ${r.bins.slice(0, 2).join(', ')}${r.bins.length > 2 ? '…' : ''}` : ''}</span>
+                  <span className="small"><b className="shelf-count">{r.inStock} on shelf</b>{r.bins.length ? <span className="muted">{` · ${r.bins.slice(0, 2).join(', ')}${r.bins.length > 2 ? '…' : ''}`}</span> : null}</span>
                   {r.item.tags.length > 0 && <div className="chip-list">{r.item.tags.map(t => <span key={t} className="chip-mini">{t}</span>)}</div>}
                   {n ? (
                     <div className="stepper">
                       <button onClick={() => cart.set(r.id, { qty: n - 1 })} aria-label="One less">−</button>
-                      <b>{n} in cart</b>
+                      <b>{n} of {r.inStock} in cart</b>
                       <button onClick={() => cart.set(r.id, { qty: Math.min(r.inStock, n + 1) })} disabled={n >= r.inStock} aria-label="One more">+</button>
                     </div>
                   ) : (
-                    <button className="btn outline-gold" onClick={() => { cart.add(cartLine(r), 1, r.inStock); tap() }}>Add to cart</button>
+                    <button className="btn outline-gold" onClick={() => { cart.add(cartLine(r), r.inStock, r.inStock); tap() }}>Add all {r.inStock} to cart</button>
                   )}
                 </div>
               </div>
@@ -179,7 +183,7 @@ export default function LivePrep() {
           {cart.lines.map(l => (
             <div key={l.variantId} className="cart-line">
               <span className="live-num small-live">#{l.live}</span>
-              <div className="hit-text grow"><b>{l.name}</b><span className="muted small">{l.label !== 'One size' ? `${l.label} · ` : ''}regular {money(l.price)}</span></div>
+              <div className="hit-text grow"><b>{l.name}</b><span className="muted small">{l.label !== 'One size' ? `${l.label} · ` : ''}<b className="shelf-count">{l.inStock ?? '?'} on shelf</b> · regular {money(l.price)}</span></div>
               <label className="mini-field">Qty<input inputMode="numeric" value={l.qty} onChange={e => cart.set(l.variantId, { qty: parseInt(e.target.value.replace(/\D/g, '') || '0', 10) })} /></label>
               <label className="mini-field">Live price<input inputMode="decimal" defaultValue={l.salePrice ?? ''} placeholder={l.price != null ? Number(l.price).toFixed(2) : ''} onBlur={e => { const v = e.target.value.trim(); cart.set(l.variantId, { salePrice: v === '' || Number.isNaN(Number(v)) ? null : Number(v) }) }} /></label>
               <button className="icon-btn" aria-label="Remove" onClick={() => cart.remove(l.variantId)}>×</button>
