@@ -2,9 +2,10 @@
 // poked by the app at the exact start or stop second. Each run only does what the schedule says
 // is due, and every step "claims" the slot first, so running it twice at once is harmless.
 //
-//   booked    -> (prep window opens) create an unpublished Facebook live, store its stream key -> ready
-//   ready     -> (start time)         switch the live to LIVE_NOW                                   -> live
-//   ready     -> (start + late_cancel_min, never streamed) delete the live                   -> missed
+//   booked    -> (start time)          create the Facebook live, store its stream key               -> live
+//                (or prep_min early)   create a hidden preview instead                               -> ready -> live at start
+//   live      -> (video arrives)       record went_live_at
+//   any       -> (start + late_cancel_min, no video yet) delete the live                         -> missed
 //   ready/live-> (stop time)          end the live on Facebook                                      -> ended / missed
 //   cancelled -> clean up any unused Facebook live
 //
@@ -102,30 +103,9 @@ Deno.serve(async req => {
       continue
     }
 
-    if (s.status === 'booked' && start - (s.stage?.prep_min ?? 10) * 60000 <= now) {
-      if (!token || !s.stage?.fb_page_id) { await set(s.id, { last_error: 'The Facebook Page is not connected yet. A host needs to connect it.' }); continue }
-      if (!(await claim(s.id, 'booked', 'preparing'))) continue
-      try {
-        const live = await graph(`${s.stage.fb_page_id}/live_videos`, {
-          status: 'UNPUBLISHED',
-          title: `${s.title} with ${s.seller_name}`.slice(0, 250),
-          description: `${s.title} · ${s.seller_name} is live on ${s.stage.name}!`,
-          access_token: token,
-        })
-        let url: string = live.secure_stream_url || live.stream_url
-        if (!url) url = (await graph(`${live.id}?fields=secure_stream_url,stream_url&access_token=${encodeURIComponent(token)}`, {}, 'GET')).secure_stream_url
-        await db.from('live_slot_keys').upsert({ slot_id: s.id, stage_id: s.stage_id, user_id: s.user_id, stream_url: url })
-        await set(s.id, { status: 'ready', fb_live_video_id: live.id, last_error: null })
-        log.push(`ready ${s.id}`)
-      } catch (e) {
-        await set(s.id, { status: 'booked', last_error: `Could not make the stream key: ${(e as Error).message}` })
-      }
-      continue
-    }
-
-    // House rule: more than N minutes late (never started streaming) = live canceled.
+    // House rule: more than N minutes late (not streaming) = live canceled.
     const late = (s.stage?.late_cancel_min ?? 10) * 60000
-    if ((s.status === 'ready' || s.status === 'booked') && !s.went_live_at && now >= start + late && end > now) {
+    if (['booked', 'ready', 'live'].includes(s.status) && !s.went_live_at && now >= start + late && end > now) {
       if (!(await claim(s.id, s.status, 'missed'))) continue
       if (s.fb_live_video_id && token) await graph(`${s.fb_live_video_id}?access_token=${encodeURIComponent(token)}`, {}, 'DELETE').catch(() => null)
       await set(s.id, { ended_at: new Date().toISOString(), last_error: `Live canceled: not streaming ${s.stage?.late_cancel_min ?? 10} minutes after the start time.` })
@@ -134,15 +114,49 @@ Deno.serve(async req => {
       continue
     }
 
+    // Make the stream key. Default (prep_min 0): exactly at the start time, as a public live
+    // that shows as soon as the seller's video arrives. With prep_min > 0: a hidden preview first.
+    if (s.status === 'booked' && start - (s.stage?.prep_min ?? 0) * 60000 <= now) {
+      if (!token || !s.stage?.fb_page_id) { await set(s.id, { last_error: 'The Facebook Page is not connected yet. A host needs to connect it.' }); continue }
+      if (!(await claim(s.id, 'booked', 'preparing'))) continue
+      const atStart = now >= start
+      try {
+        const live = await graph(`${s.stage.fb_page_id}/live_videos`, {
+          status: atStart ? 'LIVE_NOW' : 'UNPUBLISHED',
+          title: `${s.title} with ${s.seller_name}`.slice(0, 250),
+          description: `${s.title} · ${s.seller_name} is live on ${s.stage.name}!`,
+          access_token: token,
+        })
+        let url: string = live.secure_stream_url || live.stream_url
+        if (!url) url = (await graph(`${live.id}?fields=secure_stream_url,stream_url&access_token=${encodeURIComponent(token)}`, {}, 'GET')).secure_stream_url
+        await db.from('live_slot_keys').upsert({ slot_id: s.id, stage_id: s.stage_id, user_id: s.user_id, stream_url: url })
+        await set(s.id, { status: atStart ? 'live' : 'ready', fb_live_video_id: live.id, last_error: null })
+        log.push(`${atStart ? 'live' : 'ready'} ${s.id}`)
+      } catch (e) {
+        await set(s.id, { status: 'booked', last_error: `Could not make the stream key: ${(e as Error).message}` })
+      }
+      continue
+    }
+
+    // Preview mode only: flip the hidden preview to public at the start time.
     if (s.status === 'ready' && start <= now && end > now && s.fb_live_video_id && token) {
       try {
         await graph(s.fb_live_video_id, { status: 'LIVE_NOW', access_token: token })
-        if (await claim(s.id, 'ready', 'live')) await set(s.id, { went_live_at: new Date().toISOString(), last_error: null })
+        await claim(s.id, 'ready', 'live')
         log.push(`live ${s.id}`)
       } catch (e) {
-        // Usually means Facebook isn't receiving video yet. Try again on the next run.
         await set(s.id, { last_error: `Not live yet: ${(e as Error).message}` })
       }
+      continue
+    }
+
+    // Watch for the seller's video actually arriving (this is what the late rule checks).
+    if (s.status === 'live' && !s.went_live_at && s.fb_live_video_id && token && end > now) {
+      try {
+        const v = await graph(`${s.fb_live_video_id}?fields=status,broadcast_start_time&access_token=${encodeURIComponent(token)}`, {}, 'GET')
+        if (v.broadcast_start_time || v.status === 'LIVE') { await set(s.id, { went_live_at: v.broadcast_start_time ?? new Date().toISOString(), last_error: null }); log.push(`streaming ${s.id}`) }
+        else await set(s.id, { last_error: 'Waiting for your video. Start streaming in your app.' })
+      } catch { /* try again next run */ }
     }
   }
 

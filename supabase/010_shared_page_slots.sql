@@ -80,7 +80,8 @@ create table if not exists public.stages (
   fb_page_id text,
   fb_page_name text,
   warn_min int not null default 5 check (warn_min between 1 and 30),
-  prep_min int not null default 10 check (prep_min between 2 and 180),
+  -- Minutes before the start that the seller gets the stream key. 0 = exactly at the start (default).
+  prep_min int not null default 0 check (prep_min between 0 and 30),
   open_to_all boolean not null default false,
   -- Seller rules shown (and agreed to) every time the calendar opens. Empty = the app's built-in rules.
   guidelines text,
@@ -305,7 +306,12 @@ drop policy if exists live_slots_insert on public.live_slots;
 create policy live_slots_insert on public.live_slots for insert with check (public.is_stage_member(stage_id));
 
 drop policy if exists live_slot_keys_select on public.live_slot_keys;
-create policy live_slot_keys_select on public.live_slot_keys for select using (user_id = auth.uid() or public.is_stage_host(stage_id));
+-- The seller sees their key only from their key time until their stop time. Hosts can always see keys.
+create policy live_slot_keys_select on public.live_slot_keys for select using (
+  public.is_stage_host(stage_id)
+  or (user_id = auth.uid() and exists (
+    select 1 from public.live_slots s join public.stages st on st.id = s.stage_id
+    where s.id = slot_id and now() >= s.starts_at - make_interval(mins => st.prep_min) and now() < s.ends_at)));
 
 -- stage_page_tokens: no policies on purpose.
 revoke all on public.stage_page_tokens from anon, authenticated;
@@ -315,7 +321,8 @@ grant select on public.stage_members, public.live_slot_keys to authenticated;
 grant select, insert on public.live_slots to authenticated;
 -- Hosts may change only these columns on a stage (not the Page id, which the connect step sets).
 revoke update on public.stages from authenticated;
-grant update (name, warn_min, prep_min, guidelines, late_cancel_min) on public.stages to authenticated;
+-- prep_min (early key) is not editable in the app: the owner wants keys at the exact start time.
+grant update (name, warn_min, guidelines, late_cancel_min) on public.stages to authenticated;
 grant execute on function public.join_open_stages(), public.join_stage(text), public.cancel_slot(uuid), public.set_stage_member(uuid, uuid, text, text, boolean) to authenticated;
 
 -- Live updates in the app when slots change.

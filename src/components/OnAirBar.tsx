@@ -34,10 +34,11 @@ export default function OnAirBar() {
 
   if (!slot || onPage || now >= end || now < start - 30 * 60000) return null
   const live = now >= start
+  const streaming = slot.status === 'live' && !!slot.went_live_at
   return (
     <Link to={`/on-air/${slot.id}`} className={`onair-bar no-print ${wrap ? 'wrap' : live ? 'live' : ''}`}>
       {live
-        ? <span><b>{wrap ? 'Wrap it up!' : '● On air'}</b> {fmtCountdown(end - now)} left · hard stop {fmtTime(end)}</span>
+        ? <span><b>{wrap ? 'Wrap it up!' : streaming ? '● On air' : 'It\'s your time! Get your Go Live key'}</b> {fmtCountdown(end - now)} left · hard stop {fmtTime(end)}</span>
         : <span><b>Your slot</b> starts in {fmtCountdown(start - now)} · {slot.title}</span>}
       <span className="onair-bar-go">Open On Air ›</span>
     </Link>

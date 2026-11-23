@@ -68,12 +68,11 @@ function HostPanel({ stage, members, onChange }: { stage: Stage; members: StageM
   const [userToken, setUserToken] = useState('')
   const [busy, setBusy] = useState(false)
   const [warn, setWarn] = useState(String(stage.warn_min))
-  const [prep, setPrep] = useState(String(stage.prep_min))
   const [late, setLate] = useState(String(stage.late_cancel_min ?? 10))
   const [rules, setRules] = useState(stage.guidelines ?? '')
 
   useEffect(() => { if (fbConfigured) loadFacebook().catch(() => null) }, [])
-  useEffect(() => { setWarn(String(stage.warn_min)); setPrep(String(stage.prep_min)); setLate(String(stage.late_cancel_min ?? 10)); setRules(stage.guidelines ?? '') }, [stage])
+  useEffect(() => { setWarn(String(stage.warn_min)); setLate(String(stage.late_cancel_min ?? 10)); setRules(stage.guidelines ?? '') }, [stage])
 
   async function call(body: Record<string, unknown>) {
     const { data, error } = await supabase.functions.invoke('fb-page-connect', { body: { stage_id: stage.id, ...body } })
@@ -109,7 +108,7 @@ function HostPanel({ stage, members, onChange }: { stage: Stage; members: StageM
     setBusy(false)
   }
   async function saveTimes() {
-    const { error } = await supabase.from('stages').update({ warn_min: parseInt(warn, 10), prep_min: parseInt(prep, 10), late_cancel_min: parseInt(late, 10), guidelines: rules.trim() || null }).eq('id', stage.id)
+    const { error } = await supabase.from('stages').update({ warn_min: parseInt(warn, 10), late_cancel_min: parseInt(late, 10), guidelines: rules.trim() || null }).eq('id', stage.id)
     if (error) toast(error.message, { kind: 'bad' }); else { toast('Saved', { kind: 'ok' }); onChange() }
   }
   async function member(m: StageMember, patch: { role?: string; remove?: boolean }) {
@@ -157,9 +156,7 @@ function HostPanel({ stage, members, onChange }: { stage: Stage; members: StageM
           <label>Wrap-up warning
             <select value={warn} onChange={e => setWarn(e.target.value)}>{[2, 3, 5, 10, 15].map(n => <option key={n} value={n}>{n} minutes before the end</option>)}</select>
           </label>
-          <label>Stream key appears
-            <select value={prep} onChange={e => setPrep(e.target.value)}>{[5, 10, 15, 20, 30, 60, 120].map(n => <option key={n} value={n}>{n < 60 ? `${n} minutes` : `${n / 60} hour${n > 60 ? 's' : ''}`} before the start</option>)}</select>
-          </label>
+          <div className="stack tight-gap"><span className="muted small">Go Live key</span><b>{stage.prep_min ? `${stage.prep_min} min before the start (hidden test)` : 'At the exact start time'}</b></div>
         </div>
         <label>Late rule
           <select value={late} onChange={e => setLate(e.target.value)}>{[5, 10, 15, 20, 30].map(n => <option key={n} value={n}>Cancel the live if not streaming {n} minutes after the start</option>)}</select>
@@ -167,7 +164,7 @@ function HostPanel({ stage, members, onChange }: { stage: Stage; members: StageM
         <label>Seller guidelines (shown every time the calendar opens)
           <textarea rows={4} value={rules} onChange={e => setRules(e.target.value)} placeholder="Leave empty to use the Dynamic Dazzle Bargain Basement Vendor Live Selling Guidelines" />
         </label>
-        {(warn !== String(stage.warn_min) || prep !== String(stage.prep_min) || late !== String(stage.late_cancel_min ?? 10) || rules !== (stage.guidelines ?? '')) && <button className="btn primary small" onClick={saveTimes}>Save settings</button>}
+        {(warn !== String(stage.warn_min) || late !== String(stage.late_cancel_min ?? 10) || rules !== (stage.guidelines ?? '')) && <button className="btn primary small" onClick={saveTimes}>Save settings</button>}
 
         <div className="stack tight-gap">
           <h3>Sellers ({members.length})</h3>

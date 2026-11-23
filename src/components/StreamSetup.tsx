@@ -51,7 +51,7 @@ export default function StreamSetup({ url }: { url: string | null }) {
           <p className="muted small">This key is only for your slot. It stops working when your slot ends, so nobody can reuse it.</p>
         </div>
       ) : (
-        <p className="muted">Your stream key will show up here a few minutes before your slot.</p>
+        <p className="muted">Your Go Live key shows up here at your start time.</p>
       )}
       <div className="stack tight-gap">
         <span className="eyebrow">How to go live with it</span>
@@ -59,7 +59,7 @@ export default function StreamSetup({ url }: { url: string | null }) {
           {APPS.map(x => <button key={x.id} type="button" className={`chip ${x.id === app ? 'on' : ''}`} onClick={() => setApp(x.id)}>{x.name} <span className="chip-sub">· {x.where}</span></button>)}
         </div>
         <ol className="steps">{a.steps.map(s => <li key={s}>{s}</li>)}</ol>
-        <p className="muted small">Start streaming any time after your key appears. You stay hidden in preview until your start time, then the app puts you live on the Page.</p>
+        <p className="muted small">Paste the key and start streaming right away. You go live on the Page as soon as your video arrives, and the app ends it at your stop time.</p>
       </div>
     </div>
   )
