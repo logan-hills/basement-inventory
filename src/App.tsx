@@ -33,6 +33,9 @@ import Reports from './pages/Reports'
 import Lessons from './pages/Lessons'
 import Planner from './pages/Planner'
 import LivePlan from './pages/LivePlan'
+import SharedPage from './pages/SharedPage'
+import OnAir from './pages/OnAir'
+import OnAirBar from './components/OnAirBar'
 
 export function Crown({ size = 28 }: { size?: number }) {
   return (
@@ -53,6 +56,7 @@ const STOCK = [
 const SELL = [
   { to: '/planner', label: 'Live Planner', icon: 'sparkle' },
   { to: '/calendar', label: 'Live calendar', icon: 'calendar' },
+  { to: '/shared-page', label: 'Shared Page lives', icon: 'clock' },
   { to: '/live', label: 'Get ready for live', icon: 'live' },
   { to: '/orders', label: 'Pick and pack', icon: 'pack' },
   { to: '/shipping', label: 'Shipping', icon: 'truck' },
@@ -117,6 +121,7 @@ function Shell() {
       </Sheet>
 
       <main className="content">
+        <OnAirBar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/intake" element={<Intake />} />
@@ -131,6 +136,8 @@ function Shell() {
           <Route path="/receive/bulk" element={<BulkReceive />} />
           <Route path="/live" element={<LivePrep />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/shared-page" element={<SharedPage />} />
+          <Route path="/on-air/:id" element={<OnAir />} />
           <Route path="/lives/:id" element={<LiveDetail />} />
           <Route path="/lives/:id/plan" element={<LivePlan />} />
           <Route path="/planner" element={<Planner />} />
