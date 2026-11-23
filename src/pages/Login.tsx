@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import { Crown } from '../App'
 import { artFor } from '../components/CategoryRail'
 import { Nova } from '../components/Nova'
+import novaLaverne from '../assets/nova-laverne.webp'
 
 const LINES = [
   'Where it goes down in the basement.',
@@ -50,9 +51,9 @@ export default function Login() {
           <p className="welcome-line" key={line}>{LINES[line]}</p>
         </div>
         <figure className="founder-note">
-          <span className="founder-mark"><Crown size={22} /></span>
+          <img className="founder-art" src={novaLaverne} alt="LaVerne with Nova the handbag" />
           <p>Every bargain party starts with her. This app was built around how LaVerne runs the basement, so every seller can run it like she does.</p>
-          <figcaption><b>LaVerne Quarles</b><span>Founder and host</span></figcaption>
+          <figcaption><b>LaVerne Quarles</b><span>Founder · Queen of $2 Tuesday</span></figcaption>
         </figure>
       </section>
 

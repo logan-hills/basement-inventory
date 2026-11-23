@@ -45,11 +45,11 @@ export default function LivePrep() {
 
   const oldDays = settings.oldStockDays
   const catStats = useMemo(() => {
-    const m = new Map<string, { pieces: number; value: number }>()
-    for (const c of settings.categories) m.set(c, { pieces: 0, value: 0 })
-    for (const r of rows ?? []) { if (r.inStock <= 0 || !r.item.category) continue; const x = m.get(r.item.category) ?? { pieces: 0, value: 0 }; x.pieces += r.inStock; x.value += r.inStock * (r.price ?? 0); m.set(r.item.category, x) }
+    const m = new Map<string, { pieces: number; value: number; photo: string | null }>()
+    for (const c of settings.categories) m.set(c, { pieces: 0, value: 0, photo: null })
+    for (const r of rows ?? []) { if (r.inStock <= 0 || !r.item.category) continue; const x = m.get(r.item.category) ?? { pieces: 0, value: 0, photo: null }; x.pieces += r.inStock; x.value += r.inStock * (r.price ?? 0); if (!x.photo && r.item.photo && urls[r.item.photo]) x.photo = urls[r.item.photo]; m.set(r.item.category, x) }
     return [...m].map(([name, v]) => ({ name, ...v }))
-  }, [rows, settings.categories])
+  }, [rows, settings.categories, urls])
   const shown = useMemo(() => {
     const s = q.trim().toLowerCase()
     const list = (rows ?? []).filter(r => r.inStock > 0 &&

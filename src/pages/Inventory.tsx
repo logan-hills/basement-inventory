@@ -35,11 +35,11 @@ export default function Inventory() {
       (it.category ?? '').toLowerCase().includes(s) || v.live_number.includes(s) || v.label.toLowerCase().includes(s))
   }, [items, q, cat])
   const catStats = useMemo(() => {
-    const m = new Map<string, { pieces: number; value: number }>()
-    for (const c of settings.categories) m.set(c, { pieces: 0, value: 0 })
-    for (const it of items) { if (!it.category) continue; const x = m.get(it.category) ?? { pieces: 0, value: 0 }; for (const v of it.variants) { x.pieces += v.in_stock ?? 0; x.value += (v.in_stock ?? 0) * (v.price ?? 0) } m.set(it.category, x) }
+    const m = new Map<string, { pieces: number; value: number; photo: string | null }>()
+    for (const c of settings.categories) m.set(c, { pieces: 0, value: 0, photo: null })
+    for (const it of items) { if (!it.category) continue; const x = m.get(it.category) ?? { pieces: 0, value: 0, photo: null }; for (const v of it.variants) { x.pieces += v.in_stock ?? 0; x.value += (v.in_stock ?? 0) * (v.price ?? 0) } const ph = it.photos[0]?.path; if (!x.photo && ph && urls[ph]) x.photo = urls[ph]; m.set(it.category, x) }
     return [...m].map(([name, v]) => ({ name, ...v }))
-  }, [items, settings.categories])
+  }, [items, settings.categories, urls])
 
   const units = rows.reduce((s, r) => s + (r.v.in_stock ?? 0), 0)
 

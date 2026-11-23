@@ -8,6 +8,8 @@ import { useSession } from '../lib/session'
 import { hasAcademy } from '../lib/plan'
 import { NovaSays, type NovaMood } from '../components/Nova'
 import AcademyLocked from '../components/AcademyLocked'
+import Tome from '../components/Tome'
+import novaLaverne from '../assets/nova-laverne.webp'
 
 const NOVA_TIPS: [NovaMood, string][] = [
   ['wink', 'Hey love, I\'m Nova, your Academy guide. Tap me any time for a tip.'],
@@ -47,7 +49,7 @@ export default function Lessons() {
       <div className="lesson-hero">
         <div className="stack tight-gap grow">
           <span className="script">Learn it once, run it like a boss</span>
-          <h1>Dazzle Academy</h1>
+          <h1 className="academy-title">Dazzle <em>Academy</em></h1>
           <p className="muted">Hands-on lessons for every part of the app, plus business courses to grow your brand. Practice as you go, earn certificates, and pick up right where you left off.</p>
           <div className="row-gap">
             {next
@@ -60,7 +62,11 @@ export default function Lessons() {
             <span><b>{coursesDone}</b>/{COURSES.length} courses</span>
           </div>
         </div>
-        <Ring value={(done + coursesDone) / (LESSONS.length + COURSES.length)} label="Academy progress"><small>complete</small></Ring>
+        <figure className="academy-portrait">
+          <img src={novaLaverne} alt="Nova the handbag with LaVerne, Queen of $2 Tuesday" />
+          <figcaption><b>Nova</b> &amp; <b>LaVerne</b><span>Bringing the Bargains to Life</span></figcaption>
+          <span className="portrait-ring"><Ring value={(done + coursesDone) / (LESSONS.length + COURSES.length)} label="Academy progress"><small>complete</small></Ring></span>
+        </figure>
       </div>
 
       <NovaSays mood={NOVA_TIPS[tip][0]} key={tip} onNovaClick={() => setTip(t => (t + 1) % NOVA_TIPS.length)}>{NOVA_TIPS[tip][1]}</NovaSays>
@@ -70,19 +76,11 @@ export default function Lessons() {
       {courseMatch.length > 0 && (
         <section className="stack" id="courses">
           <div className="row-between"><div><span className="eyebrow">Taught by Nova</span><h2 className="section-title">Business courses</h2></div><span className="muted small">Workbooks · certificates</span></div>
-          <div className="course-shelf">
+          <div className="tome-shelf">
             {courseMatch.map((l, n) => {
               const p = progress[l.id]
-              return (
-                <Link key={l.id} to={`/lessons/${l.id}`} className={`course-book tone-${['garnet', 'emerald', 'violet', 'cognac', 'onyx', 'champagne', 'garnet'][n % 7]}${p?.completed_at ? ' done' : ''}`}>
-                  <span className="book-spine" />
-                  <span className="cat-no">Course {String(n + 1).padStart(2, '0')}</span>
-                  <span className="book-ico"><Icon name={l.icon} size={26} /></span>
-                  <b className="book-title">{l.title}</b>
-                  <span className="book-why">{l.why}</span>
-                  <span className="book-meta">{l.minutes} min · {l.slides.filter(x => x.chapter).length} chapters{p?.completed_at ? ' · Certified' : p ? ' · In progress' : ''}</span>
-                </Link>
-              )
+              return <Tome key={l.id} to={`/lessons/${l.id}`} n={n} title={l.title} minutes={l.minutes} chapters={l.slides.filter(x => x.chapter).length} why={l.why}
+                tone={['garnet', 'emerald', 'onyx', 'violet', 'cognac', 'emerald', 'garnet'][n % 7]} status={p?.completed_at ? 'done' : p ? 'started' : undefined} />
             })}
           </div>
         </section>
