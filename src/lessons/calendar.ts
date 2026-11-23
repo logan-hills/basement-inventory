@@ -9,6 +9,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Put it on the calendar', text: 'Tap a day (or Schedule a live). Give it a title, theme, host, start time and length. Set it to repeat weekly for your regular show.' },
     { kind: 'learn', title: 'Projected total', text: 'Each live shows what it brings in if everything on its list sells, and the profit after cost.' },
     { kind: 'learn', title: 'Mark it done', text: 'After the show, open the live and tap Mark live as done. Your streak on Home grows with every live.' },
+    { kind: 'learn', title: 'Going live on the shared Page?', text: 'Your own calendar is for planning. To claim an hour on the shared Facebook Page, tap Shared Page slots at the top and book your hour there.' },
     { kind: 'quiz', q: 'You go live every Tuesday. Fastest way to add them all?', options: ['Set the live to repeat weekly', 'Add each one by hand'], answer: 0, why: 'Repeat weekly fills the calendar for you.' },
   ],
 }

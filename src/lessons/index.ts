@@ -16,7 +16,9 @@ import pick from './pick'
 import shipping from './shipping'
 import customers from './customers'
 import reports from './reports'
+import sharedpage from './sharedpage'
+import profile from './profile'
 
-export const LESSONS: Lesson[] = [tour, settings, receive, bulk, labels, warehouse, scan, damaged, planner, calendar, liveprep, sale, upload, pick, shipping, customers, reports]
+export const LESSONS: Lesson[] = [tour, profile, settings, receive, bulk, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, sale, upload, pick, shipping, customers, reports]
 export const lessonById = (id?: string) => LESSONS.find(l => l.id === id)
 export * from './types'
