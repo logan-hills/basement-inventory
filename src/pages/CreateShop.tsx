@@ -4,7 +4,7 @@ import { useSession } from '../lib/session'
 
 export default function CreateShop() {
   const { refreshShop } = useSession()
-  const [name, setName] = useState('The Basement')
+  const [name, setName] = useState('Dynamic Dazzle Bargain Basement')
   const [msg, setMsg] = useState('')
 
   async function submit(e: FormEvent) {
@@ -20,7 +20,7 @@ export default function CreateShop() {
         <h1>Name your shop</h1>
         <p className="muted">You can invite staff later.</p>
         <label>Shop name<input required value={name} onChange={e => setName(e.target.value)} /></label>
-        <button className="primary">Create shop</button>
+        <button className="btn primary big">Create shop</button>
         {msg && <p className="note">{msg}</p>}
       </form>
     </div>

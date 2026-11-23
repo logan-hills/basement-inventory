@@ -1,0 +1,131 @@
+import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
+import CameraScanner from '../components/CameraScanner'
+import DamageSheet from '../components/DamageSheet'
+import { findByLiveNumber, findUnit, money, type UnitInfo } from '../lib/data'
+import { feedbackBad, feedbackOk, setSound, soundEnabled } from '../lib/feedback'
+
+type Hit =
+  | { kind: 'unit'; code: string; unit: UnitInfo }
+  | { kind: 'variant'; code: string; v: any }
+  | { kind: 'miss'; code: string }
+
+export default function Scan() {
+  const [camera, setCamera] = useState(() => {
+    try { return localStorage.getItem('scanCamera') === 'on' } catch { return false }
+  })
+  const [manual, setManual] = useState('')
+  const [hits, setHits] = useState<Hit[]>([])
+  const [sound, setSoundState] = useState(soundEnabled())
+  const [damage, setDamage] = useState<UnitInfo | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => { try { localStorage.setItem('scanCamera', camera ? 'on' : 'off') } catch { /* ignore */ } }, [camera])
+
+  // USB and Bluetooth scanners type the code and press Enter, so keep the box focused.
+  useEffect(() => {
+    const refocus = () => { if (!document.querySelector('.sheet-panel')) inputRef.current?.focus() }
+    refocus()
+    const id = window.setInterval(() => { if (document.activeElement === document.body) refocus() }, 800)
+    return () => clearInterval(id)
+  }, [])
+
+  async function handle(raw: string) {
+    const code = raw.trim().toUpperCase()
+    if (!code) return
+    let hit: Hit
+    if (/^\d{4}$/.test(code)) {
+      const v = await findByLiveNumber(code)
+      hit = v ? { kind: 'variant', code, v } : { kind: 'miss', code }
+    } else {
+      const unit = await findUnit(code)
+      hit = unit ? { kind: 'unit', code, unit } : { kind: 'miss', code }
+    }
+    if (hit.kind === 'miss') feedbackBad()
+    else feedbackOk()
+    setHits(h => [hit, ...h].slice(0, 30))
+  }
+
+  function submit(e: FormEvent) {
+    e.preventDefault()
+    handle(manual)
+    setManual('')
+  }
+
+  const okCount = hits.filter(h => h.kind !== 'miss').length
+
+  async function refreshUnit(code: string) {
+    const unit = await findUnit(code)
+    if (unit) setHits(h => h.map(x => (x.kind === 'unit' && x.code === code ? { ...x, unit } : x)))
+  }
+
+  return (
+    <div className="stack">
+      <div className="page-head">
+        <div>
+          <span className="eyebrow">Stock</span>
+          <h1>Scan</h1>
+        </div>
+        <div className="row-gap">
+          <button className={`btn ${sound ? 'ghost' : 'ghost dim'}`} onClick={() => { setSound(!sound); setSoundState(!sound) }}>{sound ? 'Sound on' : 'Sound off'}</button>
+          <button className={`btn ${camera ? 'gold' : 'outline-gold'}`} onClick={() => setCamera(c => !c)}>{camera ? 'Stop camera' : 'Use camera'}</button>
+        </div>
+      </div>
+
+      {camera && <CameraScanner onCode={handle} />}
+
+      <form onSubmit={submit} className="scan-input">
+        <input ref={inputRef} value={manual} onChange={e => setManual(e.target.value)}
+          placeholder="Scan with a scanner, or type a tag or Live #" autoComplete="off" autoCapitalize="characters" enterKeyHint="go" aria-label="Scan or type a code" />
+        <button className="btn primary">Look up</button>
+      </form>
+
+      {hits.length > 0 && (
+        <div className="scan-counter"><span className="gold big-num">{okCount}</span> scanned this session{hits.length > okCount ? ` · ${hits.length - okCount} not found` : ''}
+          <button className="link-btn" onClick={() => setHits([])}>Clear</button>
+        </div>
+      )}
+
+      <div className="stack">
+        {hits.map((h, i) => (
+          <div key={i} className={`card scan-hit ${h.kind === 'miss' ? 'miss' : ''} ${i === 0 ? 'latest' : ''}`}>
+            {h.kind === 'miss' && <><b>{h.code}</b><span className="danger-text">Not found in your inventory</span></>}
+            {h.kind === 'variant' && (
+              <>
+                <div className="hit-main">
+                  <span className="live-num">#{h.v.live_number}</span>
+                  <div className="hit-text"><b>{h.v.item.name}</b><span className="muted">{h.v.label} · {money(h.v.price)}</span></div>
+                </div>
+                <Link className="btn ghost" to={`/item/${h.v.item.id}`}>Open</Link>
+              </>
+            )}
+            {h.kind === 'unit' && (
+              <>
+                <div className="hit-main">
+                  <span className="live-num">#{h.unit.variant.live_number}</span>
+                  <div className="hit-text">
+                    <b>{h.unit.variant.item.name}</b>
+                    <span className="muted">{h.unit.variant.label} · {money(h.unit.variant.price)} · tag {h.unit.tag_code}</span>
+                    <span className={h.unit.status === 'in_stock' ? 'muted' : 'danger-text'}>
+                      {h.unit.status === 'in_stock' ? (h.unit.location ? `In ${h.unit.location.name}` : 'In stock · no location yet') : `Removed · ${h.unit.removed_reason ?? h.unit.status}`}
+                    </span>
+                  </div>
+                </div>
+                <div className="row-gap">
+                  <Link className="btn ghost" to={`/item/${h.unit.variant.item.id}`}>Open</Link>
+                  {h.unit.status === 'in_stock' && <button className="btn ghost danger-text" onClick={() => setDamage(h.unit)}>Damage out</button>}
+                </div>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <DamageSheet
+        unit={damage ? { id: damage.id, tag_code: damage.tag_code, label: `${damage.variant.item.name} · ${damage.variant.label}` } : null}
+        onClose={() => setDamage(null)}
+        onChanged={() => damage && refreshUnit(damage.tag_code)}
+      />
+    </div>
+  )
+}

@@ -66,7 +66,7 @@ export default function Intake() {
 
   return (
     <form onSubmit={save} className="stack">
-      <h1>Add inventory</h1>
+      <div className="page-head"><div><span className="eyebrow">Stock</span><h1>Receive items</h1></div></div>
 
       <section className="card stack">
         <label>Item name<input required value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Nike Air Max 90" /></label>
@@ -104,14 +104,14 @@ export default function Intake() {
             <label>Variation<input value={r.label} onChange={e => update(r.key, { label: e.target.value })} placeholder="Large / Red" /></label>
             <label>Price<input inputMode="decimal" value={r.price} onChange={e => update(r.key, { price: e.target.value.replace(/[^0-9.]/g, '') })} placeholder="0.00" /></label>
             <label>Qty<input inputMode="numeric" value={r.qty} onChange={e => update(r.key, { qty: e.target.value.replace(/\D/g, '') })} /></label>
-            {rows.length > 1 && <button type="button" className="icon" onClick={() => setRows(rs => rs.filter(x => x.key !== r.key))} aria-label="Remove variation">×</button>}
+            {rows.length > 1 && <button type="button" className="icon-btn" onClick={() => setRows(rs => rs.filter(x => x.key !== r.key))} aria-label="Remove variation">×</button>}
           </div>
         ))}
-        <button type="button" className="secondary" onClick={() => setRows(rs => [...rs, newRow('', rs[rs.length - 1]?.price ?? '')])}>+ Add variation</button>
+        <button type="button" className="btn dashed" onClick={() => setRows(rs => [...rs, newRow('', rs[rs.length - 1]?.price ?? '')])}>+ Add variation</button>
       </section>
 
-      {msg && <p className="note error">{msg}</p>}
-      <button className="primary big" disabled={busy || !name.trim()}>
+      {msg && <p className="danger-text">{msg}</p>}
+      <button className="btn primary big" disabled={busy || !name.trim()}>
         {busy ? 'Saving…' : `Save and print ${totalTags} tag${totalTags === 1 ? '' : 's'}`}
       </button>
     </form>

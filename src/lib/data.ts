@@ -6,6 +6,7 @@ export type Variant = {
   label: string
   live_number: string
   price: number | null
+  weight_lb?: number | null
   in_stock?: number
 }
 
@@ -83,7 +84,7 @@ export async function addUnits(shopId: string, variant: { id: string; live_numbe
 export async function loadItems(): Promise<Item[]> {
   const { data, error } = await supabase
     .from('items')
-    .select('id,name,brand,category,description,created_at, variants(id,item_id,label,live_number,price, units(status)), photos:item_photos(id,path,sort)')
+    .select('id,name,brand,category,description,created_at, variants(id,item_id,label,live_number,price,weight_lb, units(status)), photos:item_photos(id,path,sort)')
     .order('created_at', { ascending: false })
   if (error) throw error
   return (data ?? []).map((it: any) => ({
@@ -98,4 +99,45 @@ export async function loadItems(): Promise<Item[]> {
 
 export function money(n: number | null | undefined) {
   return n == null ? '' : `$${Number(n).toFixed(2)}`
+}
+
+export const DAMAGE_REASONS = ['Damaged', 'Stained', 'Missing', 'Defective', 'Other'] as const
+
+export type UnitInfo = {
+  id: string
+  tag_code: string
+  status: string
+  removed_reason: string | null
+  variant: { id: string; label: string; live_number: string; price: number | null; item: { id: string; name: string } }
+  location: { code: string; name: string } | null
+}
+
+const UNIT_SELECT = 'id, tag_code, status, removed_reason, variant:variants!inner(id,label,live_number,price, item:items!inner(id,name)), location:locations(code,name)'
+
+/** Finds a tag by its barcode (e.g. 4821-001). */
+export async function findUnit(code: string): Promise<UnitInfo | null> {
+  const { data } = await supabase.from('units').select(UNIT_SELECT).eq('tag_code', code.trim().toUpperCase()).maybeSingle()
+  return (data as any) ?? null
+}
+
+/** Finds a variation by Live Number (e.g. 4821). */
+export async function findByLiveNumber(live: string) {
+  const { data } = await supabase.from('variants').select('id,label,live_number,price,item:items!inner(id,name)').eq('live_number', live).maybeSingle()
+  return (data as any) ?? null
+}
+
+export async function damageOut(shopId: string, unitId: string, reason: string, note: string) {
+  const { error } = await supabase.from('units').update({
+    status: 'removed', removed_reason: reason, removed_note: note || null, removed_at: new Date().toISOString(),
+  }).eq('id', unitId)
+  if (error) throw error
+  await supabase.from('movements').insert({ shop_id: shopId, unit_id: unitId, action: `damage_out:${reason}` })
+}
+
+export async function restoreUnit(shopId: string, unitId: string) {
+  const { error } = await supabase.from('units').update({
+    status: 'in_stock', removed_reason: null, removed_note: null, removed_at: null,
+  }).eq('id', unitId)
+  if (error) throw error
+  await supabase.from('movements').insert({ shop_id: shopId, unit_id: unitId, action: 'restore' })
 }

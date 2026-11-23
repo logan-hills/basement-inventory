@@ -111,7 +111,7 @@ export default function Labels() {
               </label>
             )}
             <p className="muted small">{tags.length} tag{tags.length === 1 ? '' : 's'} on {pages.length} page{pages.length === 1 ? '' : 's'}. In the print window, set scale to 100% (or "Actual size") and margins to None.</p>
-            <button className="primary big" onClick={() => window.print()}>Print</button>
+            <button className="btn primary big" onClick={() => window.print()}>Print</button>
           </div>
         )}
       </div>
