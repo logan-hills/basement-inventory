@@ -1,4 +1,9 @@
 // Scan feedback: a buzz (where the device allows it), a short tone and a screen flash.
+// In the iPhone app, buzzes use the phone's real haptic engine.
+import { Capacitor } from '@capacitor/core'
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics'
+
+const native = Capacitor.isNativePlatform()
 
 let ctx: AudioContext | null = null
 let soundOn = true
@@ -29,6 +34,14 @@ function tone(freq: number, ms: number, delay = 0) {
 }
 
 function vibrate(pattern: number | number[]) {
+  if (native) {
+    const ms = Array.isArray(pattern) ? 0 : pattern
+    const p = Array.isArray(pattern)
+      ? Haptics.notification({ type: NotificationType.Error })
+      : ms >= 30 ? Haptics.notification({ type: NotificationType.Success }) : Haptics.impact({ style: ImpactStyle.Light })
+    p.catch(() => { /* ignore */ })
+    return
+  }
   try { navigator.vibrate?.(pattern) } catch { /* not supported (iPhone browsers) */ }
 }
 

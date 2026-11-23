@@ -1,3 +1,4 @@
+import { Capacitor } from '@capacitor/core'
 import { useEffect, useState, type CSSProperties, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
 import { Crown } from '../App'
@@ -11,6 +12,11 @@ const LINES = [
   'Inventory, lives, picking and shipping in one place.',
   'Built for sellers who run it like a boss.',
 ]
+// In the iPhone app, email links must open the website (the app's own address only exists inside the app).
+// Sign in with Apple needs Apple's native sign-in there, so the app shows email sign-in only for now.
+const NATIVE = Capacitor.isNativePlatform()
+const SITE_URL = 'https://logan-hills.github.io/basement-inventory/'
+
 const SHOWCASE = ['Jewelry', 'Bags', 'Apparel', 'Shoes', 'Accessories', 'Home']
 
 export default function Login() {
@@ -28,7 +34,7 @@ export default function Login() {
     setBusy(true); setMsg('')
     const { error } = mode === 'in'
       ? await supabase.auth.signInWithPassword({ email, password })
-      : await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin + window.location.pathname } })
+      : await supabase.auth.signUp({ email, password, options: { emailRedirectTo: NATIVE ? SITE_URL : window.location.origin + window.location.pathname } })
     setBusy(false)
     if (error) setMsg(error.message)
     else if (mode === 'up') setMsg('Check your email to confirm your account, then sign in.')
@@ -73,11 +79,13 @@ export default function Login() {
           <label>Email<input type="email" required value={email} onChange={e => setEmail(e.target.value)} autoComplete="email" /></label>
           <label>Password<input type="password" required minLength={8} value={password} onChange={e => setPassword(e.target.value)} autoComplete={mode === 'in' ? 'current-password' : 'new-password'} /></label>
           <button className="btn gold big" disabled={busy}>{busy ? 'One moment…' : mode === 'in' ? 'Sign in' : 'Create account'}</button>
+          {!NATIVE && <>
           <div className="or-line"><span>or</span></div>
           <button type="button" className="btn apple big" onClick={apple}>
             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.84.86-3.6 2.18-1.54 2.67-.39 6.62 1.1 8.79.73 1.06 1.6 2.25 2.73 2.2 1.1-.04 1.51-.7 2.84-.7 1.32 0 1.7.7 2.86.68 1.18-.02 1.93-1.07 2.65-2.14.84-1.23 1.18-2.42 1.2-2.48-.03-.01-2.3-.88-2.33-3.5zM14.2 6.13c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.64-1.05 1.67-.92 2.66.97.08 1.96-.49 2.56-1.21z" /></svg>
             Sign in with Apple
           </button>
+          </>}
           <p className="muted small center-text">By continuing you agree to our <a href="#/terms">Terms of Use</a> and <a href="#/privacy">Privacy Policy</a>.</p>
           {msg && <p className="note">{msg}</p>}
           <button type="button" className="link-btn" onClick={() => { setMode(mode === 'in' ? 'up' : 'in'); setMsg('') }}>

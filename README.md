@@ -38,3 +38,12 @@ One-time setup:
 6. **App ID:** add `VITE_FB_APP_ID=<app id>` to `.env` (public by design, like the Supabase publishable key).
 7. **Sign in with Apple:** in Apple Developer create a Services ID and a Sign in with Apple key, then in Supabase → Authentication → Sign In / Providers → Apple paste the Services ID, Team ID, Key ID and key. Add the Supabase callback URL to the Services ID. (Apple's client secret expires every 6 months; Supabase reminds you.)
 8. A Page admin opens **Shared Page lives → Host tools → Connect Facebook Page** once, then shares the invite code with sellers.
+
+## iPhone app
+The iPhone app wraps the same web app with Capacitor (`capacitor.config.ts`, Xcode project in `ios/`). Bundle ID: `com.basementinventory.app`.
+
+To build on a Mac with Xcode:
+1. `npm install`, then `npm run ios` (builds the web app and copies it into `ios/`).
+2. Open `ios/App/App.xcodeproj` in Xcode.
+3. Signing & Capabilities: pick your Apple Developer team.
+4. Raise the Build number, then Product → Archive → Distribute App → App Store Connect (TestFlight).
