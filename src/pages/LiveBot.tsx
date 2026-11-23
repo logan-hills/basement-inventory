@@ -8,7 +8,7 @@ import { money } from '../lib/data'
 import { downloadFile, toCsv } from '../lib/csv'
 import { feedbackOk, tap } from '../lib/feedback'
 import { loadLive, liveWhen, type Live } from '../lib/lives'
-import { getPageToken, listenToComments, listenToSlot, parseVideoId, type StreamStatus } from '../lib/facebook'
+import { getPageToken, listenToComments, listenToSlot, parseVideoId, type StreamStatus } from '../lib/fbcomments'
 import {
   allocate, applyComment, buyerKey, DEFAULT_BOT_RULES, parseComment, practiceComments,
   type BotComment, type BotRules, type Claim, type Parsed,
