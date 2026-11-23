@@ -63,7 +63,7 @@ export async function photoUrls(paths: string[]): Promise<Record<string, string>
 }
 
 /** Creates `count` new tag rows for a variation, numbered after any existing tags (e.g. 4821-001). */
-export async function addUnits(shopId: string, variant: { id: string; live_number: string }, count: number) {
+export async function addUnits(shopId: string, variant: { id: string; live_number: string }, count: number, locationId: string | null = null) {
   if (count <= 0) return
   const { data: existing, error } = await supabase.from('units').select('tag_code').eq('variant_id', variant.id)
   if (error) throw error
@@ -76,6 +76,7 @@ export async function addUnits(shopId: string, variant: { id: string; live_numbe
     shop_id: shopId,
     variant_id: variant.id,
     tag_code: `${variant.live_number}-${String(max + i + 1).padStart(3, '0')}`,
+    location_id: locationId,
   }))
   const ins = await supabase.from('units').insert(rows)
   if (ins.error) throw ins.error

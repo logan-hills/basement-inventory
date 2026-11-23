@@ -52,6 +52,7 @@ export default function Labels() {
   const [params] = useSearchParams()
   const itemId = params.get('item')
   const variantId = params.get('variant')
+  const itemsParam = params.get('items')
   const [tags, setTags] = useState<Tag[]>([])
   const [title, setTitle] = useState('')
   const [loading, setLoading] = useState(true)
@@ -69,6 +70,7 @@ export default function Labels() {
         .order('tag_code')
       if (variantId) q = q.eq('variant_id', variantId)
       else if (itemId) q = q.eq('variant.item_id', itemId)
+      else if (itemsParam) q = q.in('variant.item_id', itemsParam.split(','))
       const { data } = await q
       const list: Tag[] = (data ?? []).map((u: any) => ({
         tag_code: u.tag_code,
@@ -78,10 +80,10 @@ export default function Labels() {
         price: u.variant.price,
       }))
       setTags(list)
-      setTitle(list[0]?.name ?? '')
+      setTitle(itemsParam ? `${new Set(list.map(t => t.name)).size} items` : (list[0]?.name ?? ''))
       setLoading(false)
     })()
-  }, [itemId, variantId])
+  }, [itemId, variantId, itemsParam])
 
   const f = FORMATS[format]
   const perPage = f.cols * f.rows

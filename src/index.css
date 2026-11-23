@@ -280,7 +280,7 @@ button { font: inherit; cursor: pointer; }
 .tag-top { display: flex; justify-content: space-between; align-items: baseline; line-height: 1; }
 .tag-live { font-size: 15pt; font-weight: 800; }
 .tag-price { font-size: 9pt; font-weight: 700; }
-.tag-name { font-size: 6.5pt; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tag-name { font-size: 7pt; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .barcode { width: 100%; height: .3in; display: block; }
 .tag-code { font-size: 6pt; text-align: center; line-height: 1; letter-spacing: .5px; }
 @media print {
@@ -293,3 +293,50 @@ button { font: inherit; cursor: pointer; }
   .sheet:last-child { break-after: auto; }
   .slot { outline: none; }
 }
+
+/* ---------- Bulk receive ---------- */
+.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.steps > li { display: flex; gap: 16px; align-items: flex-start; }
+.steps > li > .stack { flex: 1; min-width: 0; }
+.step-num { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--gold); color: var(--gold); font-family: Cinzel, Georgia, serif; font-weight: 700; }
+.drop { display: block; cursor: pointer; }
+.drop span { display: block; text-align: center; padding: 1.4rem; border: 1px dashed var(--gold); border-radius: 12px; color: var(--gold); font-weight: 600; transition: background .15s; }
+.drop:hover span { background: var(--raised); }
+.row-error td { background: rgba(240, 138, 126, .08); }
+.ok-text { color: #6FD19B; }
+.progress { height: 6px; border-radius: 3px; background: var(--raised); overflow: hidden; }
+.progress span { display: block; height: 100%; background: linear-gradient(90deg, var(--emerald), var(--gold)); transition: width .3s var(--ease); }
+.success-card { border-color: var(--emerald-hi); background: linear-gradient(135deg, #0E3B27, var(--surface)); animation: pop-in .3s var(--ease); }
+.big-text { font-size: 1.2rem; }
+
+/* ---------- Warehouse ---------- */
+.seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 10px; padding: 3px; gap: 3px; }
+.seg button { min-height: 36px; padding: 0 16px; border: 0; border-radius: 7px; background: none; color: var(--muted); font-weight: 600; }
+.seg button.on { background: var(--raised); color: var(--gold); }
+.wh-map { display: flex; flex-direction: column; gap: 18px; }
+.aisle { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.aisle h2 { font-family: Cinzel, Georgia, serif; color: var(--gold); }
+.aisle-row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 4px; }
+.section-col { display: flex; flex-direction: column; gap: 6px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); flex: none; }
+.level-row { display: flex; align-items: center; gap: 6px; }
+.level-tag { width: 18px; font-size: .75rem; color: var(--faint); font-weight: 700; text-align: center; }
+.section-tag { text-align: center; font-size: .75rem; color: var(--faint); font-weight: 700; letter-spacing: 1px; border-top: 1px solid var(--border); padding-top: 6px; }
+.bin-cell { position: relative; width: 46px; height: 40px; border-radius: 6px; border: 1px solid var(--border-strong); background: var(--raised); color: var(--muted); font-size: .72rem; font-weight: 600; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.1; transition: transform .12s var(--ease), border-color .15s; }
+.bin-cell:hover { border-color: var(--gold); transform: translateY(-1px); }
+.bin-cell.full { background: rgba(226, 190, 90, calc(var(--fill, .5) * .55)); border-color: var(--gold); color: var(--text); }
+.bin-cell small { font-size: .62rem; color: var(--gold-hi); }
+.stat-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.unit-row.wide { grid-template-columns: 70px 1fr auto; }
+.putaway-banner { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px; background: linear-gradient(135deg, #0E3B27, var(--emerald-deep)); border: 1px solid #1F5A3C; max-width: 560px; animation: pop-in .25s var(--ease); }
+.putaway-banner > div { display: flex; flex-direction: column; gap: 2px; color: #CFE9DA; font-size: .85rem; }
+.putaway-banner b { font-size: 1.3rem; color: var(--text); }
+
+/* ---------- Bin labels ---------- */
+.bin-label { height: 100%; padding: .15in .2in; display: flex; flex-direction: column; justify-content: center; gap: .08in; font-family: Arial, Helvetica, sans-serif; color: #000; text-align: center; }
+.bin-label-code { font-size: 28pt; font-weight: 800; letter-spacing: 1px; line-height: 1; }
+.bin-label .barcode { height: .55in; }
+.bin-label-name { font-size: 10pt; font-weight: 600; }
+.bin-label.tall { padding: .4in .3in; gap: .25in; }
+.bin-label.tall .bin-label-code { font-size: 44pt; }
+.bin-label.tall .barcode { height: 1.8in; }
+.bin-label.tall .bin-label-name { font-size: 14pt; }

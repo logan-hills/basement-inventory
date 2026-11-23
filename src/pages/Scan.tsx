@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import CameraScanner from '../components/CameraScanner'
 import DamageSheet from '../components/DamageSheet'
 import { findByLiveNumber, findUnit, money, type UnitInfo } from '../lib/data'
 import { feedbackBad, feedbackOk, setSound, soundEnabled } from '../lib/feedback'
+import { findBin, isBinCode, moveUnit, type Bin } from '../lib/locations'
+import { useSession } from '../lib/session'
+import { useToast } from '../lib/toast'
 
 type Hit =
   | { kind: 'unit'; code: string; unit: UnitInfo }
   | { kind: 'variant'; code: string; v: any }
   | { kind: 'miss'; code: string }
+  | { kind: 'bin'; code: string; bin: Bin }
 
 export default function Scan() {
   const [camera, setCamera] = useState(() => {
@@ -19,6 +23,17 @@ export default function Scan() {
   const [sound, setSoundState] = useState(soundEnabled())
   const [damage, setDamage] = useState<UnitInfo | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const { shop } = useSession()
+  const toast = useToast()
+  const [params] = useSearchParams()
+  const [activeBin, setActiveBin] = useState<Bin | null>(null)
+  const binRef = useRef<Bin | null>(null)
+  binRef.current = activeBin
+
+  useEffect(() => {
+    const b = params.get('bin')
+    if (b) findBin(b).then(found => { if (found) setActiveBin(found) })
+  }, [params])
 
   useEffect(() => { try { localStorage.setItem('scanCamera', camera ? 'on' : 'off') } catch { /* ignore */ } }, [camera])
 
@@ -34,11 +49,23 @@ export default function Scan() {
     const code = raw.trim().toUpperCase()
     if (!code) return
     let hit: Hit
-    if (/^\d{4}$/.test(code)) {
+    if (isBinCode(code)) {
+      const bin = await findBin(code)
+      if (bin) { setActiveBin(bin); hit = { kind: 'bin', code, bin } } else hit = { kind: 'miss', code }
+    } else if (/^\d{4}$/.test(code)) {
       const v = await findByLiveNumber(code)
       hit = v ? { kind: 'variant', code, v } : { kind: 'miss', code }
     } else {
-      const unit = await findUnit(code)
+      let unit = await findUnit(code)
+      const bin = binRef.current
+      if (unit && bin && shop && unit.status === 'in_stock') {
+        if (unit.location?.code !== bin.code) {
+          const from = await moveUnit(shop.id, unit.id, bin.id)
+          const u = unit
+          toast(`${u.tag_code} → ${bin.code}`, { undo: async () => { await moveUnit(shop.id, u.id, from) } })
+        }
+        unit = { ...unit, location: { code: bin.code, name: bin.name } }
+      }
       hit = unit ? { kind: 'unit', code, unit } : { kind: 'miss', code }
     }
     if (hit.kind === 'miss') feedbackBad()
@@ -72,6 +99,15 @@ export default function Scan() {
         </div>
       </div>
 
+      {activeBin ? (
+        <div className="putaway-banner">
+          <div><span className="eyebrow light">Putting away into</span><b className="mono">{activeBin.code}</b><span>{activeBin.name}</span></div>
+          <button className="btn gold" onClick={() => setActiveBin(null)}>Done</button>
+        </div>
+      ) : (
+        <p className="muted small">Scan a bin label first to put items away into it. Scan an item tag on its own to look it up.</p>
+      )}
+
       {camera && <CameraScanner onCode={handle} />}
 
       <form onSubmit={submit} className="scan-input">
@@ -90,6 +126,12 @@ export default function Scan() {
         {hits.map((h, i) => (
           <div key={i} className={`card scan-hit ${h.kind === 'miss' ? 'miss' : ''} ${i === 0 ? 'latest' : ''}`}>
             {h.kind === 'miss' && <><b>{h.code}</b><span className="danger-text">Not found in your inventory</span></>}
+            {h.kind === 'bin' && (
+              <>
+                <div className="hit-main"><span className="live-num">Bin</span><div className="hit-text"><b className="mono">{h.bin.code}</b><span className="muted">{h.bin.name} · now scan items to put them here</span></div></div>
+                <Link className="btn ghost" to={`/bin/${h.bin.id}`}>See contents</Link>
+              </>
+            )}
             {h.kind === 'variant' && (
               <>
                 <div className="hit-main">
@@ -107,7 +149,7 @@ export default function Scan() {
                     <b>{h.unit.variant.item.name}</b>
                     <span className="muted">{h.unit.variant.label} · {money(h.unit.variant.price)} · tag {h.unit.tag_code}</span>
                     <span className={h.unit.status === 'in_stock' ? 'muted' : 'danger-text'}>
-                      {h.unit.status === 'in_stock' ? (h.unit.location ? `In ${h.unit.location.name}` : 'In stock · no location yet') : `Removed · ${h.unit.removed_reason ?? h.unit.status}`}
+                      {h.unit.status === 'in_stock' ? (h.unit.location ? `In ${h.unit.location.code}` : 'In stock · no bin yet') : `Removed · ${h.unit.removed_reason ?? h.unit.status}`}
                     </span>
                   </div>
                 </div>

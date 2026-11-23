@@ -13,6 +13,10 @@ import Labels from './pages/Labels'
 import Scan from './pages/Scan'
 import ItemDetail from './pages/ItemDetail'
 import Damaged from './pages/Damaged'
+import BulkReceive from './pages/BulkReceive'
+import Warehouse from './pages/Warehouse'
+import BinDetail from './pages/BinDetail'
+import BinLabels from './pages/BinLabels'
 
 export function Crown({ size = 28 }: { size?: number }) {
   return (
@@ -27,7 +31,7 @@ const STOCK = [
   { to: '/inventory', label: 'Inventory' },
   { to: '/intake', label: 'Receive items' },
   { to: '/scan', label: 'Scan' },
-  { to: '/locations', label: 'Warehouse map' },
+  { to: '/locations', label: 'Warehouse' },
   { to: '/damaged', label: 'Damaged' },
 ]
 const SELL = [
@@ -81,7 +85,10 @@ function Shell() {
           <Route path="/labels" element={<Labels />} />
           <Route path="/scan" element={<Scan />} />
           <Route path="/damaged" element={<Damaged />} />
-          <Route path="/locations" element={<ComingSoon title="Warehouse map" />} />
+          <Route path="/locations" element={<Warehouse />} />
+          <Route path="/bin/:id" element={<BinDetail />} />
+          <Route path="/bin-labels" element={<BinLabels />} />
+          <Route path="/receive/bulk" element={<BulkReceive />} />
           <Route path="/live" element={<ComingSoon title="Get ready for live" />} />
           <Route path="/orders" element={<ComingSoon title="Pick and pack" />} />
           <Route path="/shipping" element={<ComingSoon title="Shipping" />} />

@@ -1,5 +1,6 @@
-import { useMemo, useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { loadBins, type Bin } from '../lib/locations'
 import { supabase } from '../lib/supabase'
 import { useSession } from '../lib/session'
 import { addUnits, uploadPhotos } from '../lib/data'
@@ -20,6 +21,9 @@ export default function Intake() {
   const [photos, setPhotos] = useState<File[]>([])
   const [busy, setBusy] = useState(false)
   const [msg, setMsg] = useState('')
+  const [bins, setBins] = useState<Bin[]>([])
+  const [binId, setBinId] = useState('')
+  useEffect(() => { loadBins().then(setBins).catch(() => {}) }, [])
 
   const previews = useMemo(() => photos.map(f => URL.createObjectURL(f)), [photos])
   const totalTags = rows.reduce((s, r) => s + (parseInt(r.qty, 10) || 0), 0)
@@ -53,7 +57,7 @@ export default function Intake() {
 
       for (const v of variants ?? []) {
         const row = rows[labels.indexOf(v.label)]
-        await addUnits(shop.id, v, parseInt(row?.qty ?? '0', 10) || 0)
+        await addUnits(shop.id, v, parseInt(row?.qty ?? '0', 10) || 0, binId || null)
       }
 
       if (photos.length) await uploadPhotos(shop.id, item.id, photos)
@@ -66,7 +70,7 @@ export default function Intake() {
 
   return (
     <form onSubmit={save} className="stack">
-      <div className="page-head"><div><span className="eyebrow">Stock</span><h1>Receive items</h1></div></div>
+      <div className="page-head"><div><span className="eyebrow">Stock</span><h1>Receive items</h1></div><Link to="/receive/bulk" className="btn outline-gold">Bulk receive from CSV</Link></div>
 
       <section className="card stack">
         <label>Item name<input required value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Nike Air Max 90" /></label>
@@ -74,6 +78,14 @@ export default function Intake() {
           <label>Brand<input value={brand} onChange={e => setBrand(e.target.value)} /></label>
           <label>Category<input value={category} onChange={e => setCategory(e.target.value)} placeholder="Shoes, tops, home…" /></label>
         </div>
+        {bins.length > 0 && (
+          <label>Put in bin (optional)
+            <select value={binId} onChange={e => setBinId(e.target.value)}>
+              <option value="">No bin yet</option>
+              {bins.map(b => <option key={b.id} value={b.id}>{b.code}</option>)}
+            </select>
+          </label>
+        )}
         <label>Notes<textarea rows={2} value={description} onChange={e => setDescription(e.target.value)} /></label>
       </section>
 
