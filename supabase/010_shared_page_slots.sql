@@ -315,7 +315,8 @@ create policy live_slot_keys_select on public.live_slot_keys for select using (
 
 -- stage_page_tokens: no policies on purpose.
 revoke all on public.stage_page_tokens from anon, authenticated;
-revoke all on public.live_slot_keys from anon;
+-- Supabase grants new tables to the signed-out role by default; none of this is for signed-out visitors.
+revoke all on public.live_slot_keys, public.stages, public.stage_members, public.live_slots, public.profiles, public.guideline_acceptances from anon;
 grant select, insert, update on public.stages to authenticated;
 grant select on public.stage_members, public.live_slot_keys to authenticated;
 grant select, insert on public.live_slots to authenticated;
