@@ -17,6 +17,8 @@ export default function Warehouse() {
   const [creating, setCreating] = useState(false)
   const [view, setView] = useState<'map' | 'list'>('map')
   const [q, setQ] = useState('')
+  const [sel, setSel] = useState<Set<string>>(new Set())
+  const toggle = (id: string) => setSel(s => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n })
 
   // generator form
   const [aisleFrom, setAisleFrom] = useState('1')
@@ -149,12 +151,22 @@ export default function Warehouse() {
           {view === 'list' && (
             <>
               <input type="search" className="search" placeholder="Search bin code, like A3-S2" value={q} onChange={e => setQ(e.target.value)} />
+              {sel.size > 0 && (
+                <div className="action-bar">
+                  <span><b className="gold">{sel.size}</b> bin{sel.size === 1 ? '' : 's'} selected</span>
+                  <div className="row-gap">
+                    <Link className="btn gold" to={`/bin-labels?ids=${[...sel].join(',')}`}>Reprint labels</Link>
+                    <button className="link-btn" onClick={() => setSel(new Set())}>Clear</button>
+                  </div>
+                </div>
+              )}
               <div className="table-box">
                 <table className="data-table clickable">
-                  <thead><tr><th>Code</th><th>Aisle</th><th>Section</th><th>Level</th><th>Bin</th><th>Units</th></tr></thead>
+                  <thead><tr><th><input type="checkbox" aria-label="Select all" checked={shown.length > 0 && shown.every(b => sel.has(b.id))} onChange={e => setSel(e.target.checked ? new Set(shown.map(b => b.id)) : new Set())} /></th><th>Code</th><th>Aisle</th><th>Section</th><th>Level</th><th>Bin</th><th>Units</th></tr></thead>
                   <tbody>
                     {shown.map(b => (
                       <tr key={b.id} onClick={() => navigate(`/bin/${b.id}`)} tabIndex={0} onKeyDown={e => { if (e.key === 'Enter') navigate(`/bin/${b.id}`) }}>
+                        <td onClick={e => e.stopPropagation()}><input type="checkbox" aria-label={`Select ${b.code}`} checked={sel.has(b.id)} onChange={() => toggle(b.id)} /></td>
                         <td className="mono gold">{b.code}</td><td>{b.aisle}</td><td>{b.section}</td><td>{b.level}</td><td>{b.bin_no}</td><td>{counts[b.id] ?? 0}</td>
                       </tr>
                     ))}

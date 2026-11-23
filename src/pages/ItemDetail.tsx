@@ -18,6 +18,8 @@ export default function ItemDetail() {
   const [item, setItem] = useState<ItemRow | null>(null)
   const [urls, setUrls] = useState<Record<string, string>>({})
   const [photo, setPhoto] = useState(0)
+  const [reprint, setReprint] = useState<Set<string>>(new Set())
+  const toggleReprint = (code: string) => setReprint(s => { const n = new Set(s); if (n.has(code)) n.delete(code); else n.add(code); return n })
   const [damage, setDamage] = useState<{ id: string; tag_code: string; label: string } | null>(null)
   const [addQty, setAddQty] = useState<Record<string, string>>({})
 
@@ -118,10 +120,11 @@ export default function ItemDetail() {
                 </label>
               </div>
               <div className="unit-list">
-                <span className="eyebrow">Tags · swipe left to damage out</span>
+                <span className="eyebrow">Tags · tick to reprint · swipe left to damage out</span>
                 {inStock.map(u => (
                   <SwipeRow key={u.id} leftLabel="Damage out" onSwipeLeft={() => setDamage({ id: u.id, tag_code: u.tag_code, label: `${item.name} · ${v.label}` })}>
                     <div className="unit-row">
+                      <input type="checkbox" aria-label={`Reprint ${u.tag_code}`} checked={reprint.has(u.tag_code)} onChange={() => toggleReprint(u.tag_code)} />
                       <span className="mono">{u.tag_code}</span>
                       <span className="muted">{u.location?.name ?? 'No location'}</span>
                       <button className="link-btn danger-text" onClick={() => setDamage({ id: u.id, tag_code: u.tag_code, label: `${item.name} · ${v.label}` })}>Damage out</button>
@@ -140,6 +143,16 @@ export default function ItemDetail() {
           )
         })}
       </section>
+
+      {reprint.size > 0 && (
+        <div className="action-bar floating">
+          <span><b className="gold">{reprint.size}</b> tag{reprint.size === 1 ? '' : 's'} picked</span>
+          <div className="row-gap">
+            <Link className="btn gold" to={`/labels?tags=${[...reprint].join(',')}`}>Reprint {reprint.size === 1 ? 'this tag' : 'these tags'}</Link>
+            <button className="link-btn" onClick={() => setReprint(new Set())}>Clear</button>
+          </div>
+        </div>
+      )}
 
       <DamageSheet unit={damage} onClose={() => setDamage(null)} onChanged={load} />
     </div>

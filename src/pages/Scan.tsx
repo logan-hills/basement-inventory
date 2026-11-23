@@ -7,12 +7,14 @@ import { feedbackBad, feedbackOk, setSound, soundEnabled } from '../lib/feedback
 import { findBin, isBinCode, moveUnit, type Bin } from '../lib/locations'
 import { useSession } from '../lib/session'
 import { useToast } from '../lib/toast'
+import { isOrderCode, loadOrderByCode, orderUnits, STATUS_LABEL, type Order } from '../lib/orders'
 
 type Hit =
   | { kind: 'unit'; code: string; unit: UnitInfo }
   | { kind: 'variant'; code: string; v: any }
   | { kind: 'miss'; code: string }
   | { kind: 'bin'; code: string; bin: Bin }
+  | { kind: 'order'; code: string; order: Order }
 
 export default function Scan() {
   const [camera, setCamera] = useState(() => {
@@ -49,7 +51,10 @@ export default function Scan() {
     const code = raw.trim().toUpperCase()
     if (!code) return
     let hit: Hit
-    if (isBinCode(code)) {
+    if (isOrderCode(code)) {
+      const order = await loadOrderByCode(code)
+      hit = order ? { kind: 'order', code, order } : { kind: 'miss', code }
+    } else if (isBinCode(code)) {
       const bin = await findBin(code)
       if (bin) { setActiveBin(bin); hit = { kind: 'bin', code, bin } } else hit = { kind: 'miss', code }
     } else if (/^\d{4}$/.test(code)) {
@@ -126,6 +131,12 @@ export default function Scan() {
         {hits.map((h, i) => (
           <div key={i} className={`card scan-hit ${h.kind === 'miss' ? 'miss' : ''} ${i === 0 ? 'latest' : ''}`}>
             {h.kind === 'miss' && <><b>{h.code}</b><span className="danger-text">Not found in your inventory</span></>}
+            {h.kind === 'order' && (
+              <>
+                <div className="hit-main"><span className="live-num">Box</span><div className="hit-text"><b className="mono">{h.order.code}</b><span className="muted">{h.order.customer?.name ?? 'Customer'} · {orderUnits(h.order)} items · {STATUS_LABEL[h.order.status] ?? h.order.status}</span></div></div>
+                <Link className="btn ghost" to={`/order/${h.order.code}`}>Open order</Link>
+              </>
+            )}
             {h.kind === 'bin' && (
               <>
                 <div className="hit-main"><span className="live-num">Bin</span><div className="hit-text"><b className="mono">{h.bin.code}</b><span className="muted">{h.bin.name} · now scan items to put them here</span></div></div>

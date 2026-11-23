@@ -17,6 +17,11 @@ import BulkReceive from './pages/BulkReceive'
 import Warehouse from './pages/Warehouse'
 import BinDetail from './pages/BinDetail'
 import BinLabels from './pages/BinLabels'
+import Orders from './pages/Orders'
+import OrdersUpload from './pages/OrdersUpload'
+import OrderDetail from './pages/OrderDetail'
+import Pick from './pages/Pick'
+import BoxLabels from './pages/BoxLabels'
 
 export function Crown({ size = 28 }: { size?: number }) {
   return (
@@ -90,7 +95,11 @@ function Shell() {
           <Route path="/bin-labels" element={<BinLabels />} />
           <Route path="/receive/bulk" element={<BulkReceive />} />
           <Route path="/live" element={<ComingSoon title="Get ready for live" />} />
-          <Route path="/orders" element={<ComingSoon title="Pick and pack" />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/upload" element={<OrdersUpload />} />
+          <Route path="/order/:code" element={<OrderDetail />} />
+          <Route path="/pick" element={<Pick />} />
+          <Route path="/box-labels" element={<BoxLabels />} />
           <Route path="/shipping" element={<ComingSoon title="Shipping" />} />
           <Route path="/customers" element={<ComingSoon title="Customers" />} />
         </Routes>

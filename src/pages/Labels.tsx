@@ -53,6 +53,8 @@ export default function Labels() {
   const itemId = params.get('item')
   const variantId = params.get('variant')
   const itemsParam = params.get('items')
+  const tagsParam = params.get('tags')
+  const variantsParam = params.get('variants')
   const [tags, setTags] = useState<Tag[]>([])
   const [title, setTitle] = useState('')
   const [loading, setLoading] = useState(true)
@@ -66,9 +68,13 @@ export default function Labels() {
       let q = supabase
         .from('units')
         .select('tag_code, status, variant:variants!inner(id,label,live_number,price,item_id, item:items!inner(name))')
-        .eq('status', 'in_stock')
         .order('tag_code')
-      if (variantId) q = q.eq('variant_id', variantId)
+      // Reprinting specific tags works for any status; everything else prints in-stock tags only.
+      if (tagsParam) q = q.in('tag_code', tagsParam.split(','))
+      else q = q.eq('status', 'in_stock')
+      if (tagsParam) { /* already filtered */ }
+      else if (variantsParam) q = q.in('variant_id', variantsParam.split(','))
+      else if (variantId) q = q.eq('variant_id', variantId)
       else if (itemId) q = q.eq('variant.item_id', itemId)
       else if (itemsParam) q = q.in('variant.item_id', itemsParam.split(','))
       const { data } = await q
@@ -80,10 +86,10 @@ export default function Labels() {
         price: u.variant.price,
       }))
       setTags(list)
-      setTitle(itemsParam ? `${new Set(list.map(t => t.name)).size} items` : (list[0]?.name ?? ''))
+      setTitle(itemsParam || variantsParam || (list.length && new Set(list.map(t => t.name)).size > 1) ? `${new Set(list.map(t => t.name)).size} items` : (list[0]?.name ?? ''))
       setLoading(false)
     })()
-  }, [itemId, variantId, itemsParam])
+  }, [itemId, variantId, itemsParam, tagsParam, variantsParam])
 
   const f = FORMATS[format]
   const perPage = f.cols * f.rows
@@ -97,7 +103,7 @@ export default function Labels() {
     <div className="labels-page">
       <style>{pageCss}</style>
       <div className="no-print stack">
-        <h1>Print tags{title ? `: ${title}` : ''}</h1>
+        <h1>{tagsParam ? 'Reprint tags' : 'Print tags'}{title ? `: ${title}` : ''}</h1>
         {loading ? <p className="muted">Loading…</p> : tags.length === 0 ? (
           <p className="muted">No tags to print. <Link to="/inventory" className="link-text">Back to inventory</Link></p>
         ) : (

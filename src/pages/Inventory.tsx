@@ -9,6 +9,8 @@ export default function Inventory() {
   const [q, setQ] = useState('')
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState('')
+  const [sel, setSel] = useState<Set<string>>(new Set())
+  const toggle = (id: string) => setSel(s => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n })
 
   useEffect(() => {
     loadItems()
@@ -49,13 +51,23 @@ export default function Inventory() {
         </div>
       ) : (
         <>
+          {sel.size > 0 && (
+            <div className="action-bar">
+              <span><b className="gold">{sel.size}</b> selected</span>
+              <div className="row-gap">
+                <Link className="btn gold" to={`/labels?variants=${[...sel].join(',')}`}>Print tags for selected</Link>
+                <button className="link-btn" onClick={() => setSel(new Set())}>Clear</button>
+              </div>
+            </div>
+          )}
           <span className="muted small">{rows.length} variation{rows.length === 1 ? '' : 's'} · {units} units in stock</span>
           <div className="table-box">
             <table className="data-table clickable">
-              <thead><tr><th>Item</th><th>Live #</th><th>Variation</th><th>Price</th><th>Stock</th><th className="hide-sm">Weight</th></tr></thead>
+              <thead><tr><th><input type="checkbox" aria-label="Select all" checked={rows.length > 0 && rows.every(r => sel.has(r.v.id))} onChange={e => setSel(e.target.checked ? new Set(rows.map(r => r.v.id)) : new Set())} /></th><th>Item</th><th>Live #</th><th>Variation</th><th>Price</th><th>Stock</th><th className="hide-sm">Weight</th></tr></thead>
               <tbody>
                 {rows.map(({ it, v }) => (
                   <tr key={v.id} onClick={() => navigate(`/item/${it.id}`)} tabIndex={0} onKeyDown={e => { if (e.key === 'Enter') navigate(`/item/${it.id}`) }}>
+                    <td onClick={e => e.stopPropagation()}><input type="checkbox" aria-label={`Select #${v.live_number}`} checked={sel.has(v.id)} onChange={() => toggle(v.id)} /></td>
                     <td>
                       <div className="cell-item">
                         <span className="mini-photo">{it.photos[0] && urls[it.photos[0].path] ? <img src={urls[it.photos[0].path]} alt="" /> : null}</span>
