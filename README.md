@@ -22,6 +22,8 @@ npm run dev
 The Supabase URL and publishable key in `.env` are public by design. Never commit the database password or the `service_role`/secret key.
 
 ## Shared Page lives (one Facebook Page, many sellers)
+Every account joins one community live calendar (the first shared Page created) and books whole-hour blocks. Accounts are either free **Just stream** (calendar, On Air, profile) or the **full seller app**. Each person has a profile (name always shown on the calendar; photo, bio, email, phone each Shown/Hidden) and agrees to the Terms of Use and Privacy Policy (`src/lib/legal.ts`, DRAFT, needs a lawyer's review) at sign-up.
+
 Sellers book slots on a shared Page calendar (no overlaps allowed), get a private stream key for just their slot, and the server starts and ends the Facebook live at the hard start and hard stop. Nobody needs the Page password.
 
 One-time setup:
@@ -32,4 +34,5 @@ One-time setup:
    `live-slots-tick` (turn **Verify JWT off**), `fb-page-connect`, `facebook-page-token`, `facebook-live-comments`.
 5. **Timer:** run `supabase/011_slot_timer.sql` (runs the slot timer every 15 seconds).
 6. **App ID:** add `VITE_FB_APP_ID=<app id>` to `.env` (public by design, like the Supabase publishable key).
-7. A Page admin opens **Shared Page lives → Host tools → Connect Facebook Page** once, then shares the invite code with sellers.
+7. **Sign in with Apple:** in Apple Developer create a Services ID and a Sign in with Apple key, then in Supabase → Authentication → Sign In / Providers → Apple paste the Services ID, Team ID, Key ID and key. Add the Supabase callback URL to the Services ID. (Apple's client secret expires every 6 months; Supabase reminds you.)
+8. A Page admin opens **Shared Page lives → Host tools → Connect Facebook Page** once, then shares the invite code with sellers.
