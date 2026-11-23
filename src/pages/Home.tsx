@@ -6,6 +6,8 @@ import { money } from '../lib/data'
 import { loadLives, liveWhen, projected, type Live } from '../lib/lives'
 import Icon from '../components/Icon'
 import { BarList, ColumnChart, CountUp, Ring, SegmentBar, type Point } from '../components/Charts'
+import { IDEA_BANK, PALETTES, inspirationOfTheDay, progress, savePlan, stepKey, steps, type Plan } from '../lib/planner'
+import { tap } from '../lib/feedback'
 
 /** Next Tuesday 7 PM Eastern, the shop's regular "$2 Tuesday" live. */
 function nextTuesday() {
@@ -26,16 +28,44 @@ function greeting() {
 }
 
 const whole = (n: number) => money(n).replace(/\.\d\d$/, '')
+const isToday = (iso: string) => new Date(iso).toDateString() === new Date().toDateString()
+
+/** The first few unchecked "before" steps for the next live, tickable right here. */
+function MiniChecklist({ live, onChange }: { live: Live & { plan?: Plan }; onChange: (p: Plan) => void }) {
+  const { settings } = useSession()
+  const plan = live.plan ?? {}
+  const all = steps(settings.checklist, plan).filter(x => x.phase === 'before')
+  const pr = progress(settings.checklist, plan)
+  const show = [...all.filter(x => plan.checked?.[stepKey(x.phase, x.text)]).slice(-2), ...all.filter(x => !plan.checked?.[stepKey(x.phase, x.text)]).slice(0, 4)]
+  function toggle(text: string) {
+    const k = stepKey('before', text)
+    const next = { ...plan, checked: { ...(plan.checked ?? {}), [k]: !plan.checked?.[k] } }
+    onChange(next); tap()
+    savePlan(live.id, next).catch(() => {})
+  }
+  return (
+    <div className="stack tight-gap">
+      <div className="plan-progress"><span style={{ width: `${Math.round(pr.pct * 100)}%` }} /></div>
+      <span className="muted small">{pr.done} of {pr.total} steps done{pr.done === pr.total && pr.total ? ". You're ready, Queen! 👑" : ''}</span>
+      <div className="mini-check">
+        {show.map(x => {
+          const on = !!plan.checked?.[stepKey('before', x.text)]
+          return <button key={x.text} className={on ? 'on' : ''} onClick={() => toggle(x.text)}><span className="check-box">{on ? '✓' : ''}</span><span className={on ? 'muted' : ''}>{x.text}</span></button>
+        })}
+      </div>
+    </div>
+  )
+}
 
 type Stats = {
   units: number; retail: number; cost: number; noBin: number; damaged: number; old: number
-  cats: Point[]; age: Point[]; sales30: number; salesByLive: Point[]
+  cats: Point[]; age: Point[]; sales30: number; salesByLive: Point[]; month: number; lastMonth: number; livesRecent: number
 }
 
 export default function Home() {
-  const { shop, settings } = useSession()
+  const { settings } = useSession()
   const [s, setS] = useState<Stats | null>(null)
-  const [next, setNext] = useState<Live | null | undefined>(undefined)
+  const [next, setNext] = useState<(Live & { plan?: Plan }) | null | undefined>(undefined)
   const [work, setWork] = useState<{ pick: number; ship: number }>({ pick: 0, ship: 0 })
 
   useEffect(() => {
@@ -64,28 +94,74 @@ export default function Home() {
         cats: [...cats.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6).map(([label, value]) => ({ label, value })),
         age: buckets.map(([label, a, b]) => ({ label, value: inStock.filter(r => ageOf(r) >= a && ageOf(r) < b).length })),
         sales30: orders.filter(o => Date.parse(o.live_date ? o.live_date + 'T12:00' : o.created_at) > now - 30 * day).reduce((a, o) => a + Number(o.total ?? 0), 0),
+        month: orders.filter(o => { const d = new Date(o.live_date ? o.live_date + 'T12:00' : o.created_at); const n = new Date(); return d.getMonth() === n.getMonth() && d.getFullYear() === n.getFullYear() }).reduce((a, o) => a + Number(o.total ?? 0), 0),
+        lastMonth: orders.filter(o => { const d = new Date(o.live_date ? o.live_date + 'T12:00' : o.created_at); const n = new Date(); const lm = new Date(n.getFullYear(), n.getMonth() - 1, 1); return d.getMonth() === lm.getMonth() && d.getFullYear() === lm.getFullYear() }).reduce((a, o) => a + Number(o.total ?? 0), 0),
+        livesRecent: new Set(orders.filter(o => o.live_date && Date.parse(o.live_date) > now - 28 * day).map(o => o.live_date)).size,
         salesByLive: [...byLive.entries()].sort((a, b) => a[0].localeCompare(b[0])).slice(-10)
           .map(([d, v]) => ({ label: new Date(d + 'T12:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' }), value: v })),
       })
       setWork({ pick: orders.filter(o => o.status === 'open' || o.status === 'picking').length, ship: orders.filter(o => o.status === 'packed').length })
     })()
-    loadLives(new Date(Date.now() - 4 * 3600e3)).then(l => setNext(l.find(x => x.status === 'planned') ?? null)).catch(() => setNext(null))
+    loadLives(new Date(Date.now() - 4 * 3600e3)).then(async l => {
+      const n = l.find(x => x.status === 'planned')
+      if (!n) { setNext(null); return }
+      const { data } = await supabase.from('lives').select('plan').eq('id', n.id).maybeSingle()
+      setNext({ ...n, plan: ((data as any)?.plan ?? {}) as Plan })
+    }).catch(() => setNext(null))
   }, [settings.oldStockDays])
 
   const shelved = s && s.units ? (s.units - s.noBin) / s.units : 0
+  function headline() {
+    if (next && isToday(next.starts_at)) return <>Let's make <em>tonight</em> count.</>
+    if (next) {
+      const days = Math.ceil((new Date(next.starts_at).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / 864e5)
+      return days === 1 ? <>You go live <em>tomorrow</em>.</> : <><em>{days} days</em> to your next live.</>
+    }
+    return <>Let's get you <em>live</em> this week.</>
+  }
 
   return (
     <div className="stack wide-gap">
       <div className="page-head">
         <div>
-          <span className="eyebrow">{new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}</span>
-          <h1 className="shine">{greeting()}</h1>
-          <span className="muted">{shop?.name}</span>
+          <span className="script">{greeting()}, Queen ✨</span>
+          <h1>{headline()}</h1>
         </div>
         <div className="row-gap">
-          <Link to="/scan" className="btn outline-gold"><Icon name="scan" size={18} />Scan</Link>
-          <Link to="/intake" className="btn primary"><Icon name="plus" size={18} />Receive items</Link>
+          {s && s.livesRecent > 0 && <span className="streak">🔥 {s.livesRecent} live{s.livesRecent === 1 ? '' : 's'} in the last 4 weeks</span>}
+          <Link to="/scan" className="btn ghost"><Icon name="scan" size={18} />Scan</Link>
+          <Link to="/intake" className="btn gold"><Icon name="plus" size={18} />Add stock</Link>
         </div>
+      </div>
+
+      <div className="top-grid">
+        {next ? (
+          <div className="gh-hero">
+            <span className="eyebrow"><span className="live-dot" />{isToday(next.starts_at) ? 'Tonight' : 'Next live'} · {new Date(next.starts_at).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}</span>
+            <span className="gh-hero-title">{next.title}</span>
+            <span>{liveWhen(next)}</span>
+            <span><b>{(next.items ?? []).reduce((a, i) => a + i.qty, 0)} items</b> ready · <b>{money(projected(next))}</b> if it all sells</span>
+            <div className="row-gap" style={{ marginTop: 8 }}>
+              <Link to={`/lives/${next.id}/plan`} className="btn gold"><Icon name="sparkle" size={18} />Open the plan</Link>
+              <Link to={`/live?for=${next.id}`} className="btn glass">Pick items</Link>
+              <Link to={`/lives/${next.id}`} className="btn glass">Bot sheet</Link>
+            </div>
+          </div>
+        ) : (
+          <div className="gh-hero">
+            <span className="eyebrow"><span className="live-dot" />Your next live</span>
+            <span className="gh-hero-title">{next === null ? "Let's get one on the calendar" : '$2 Tuesday'}</span>
+            <span>{next === null ? 'Pick a theme from the idea bank and the planner does the rest.' : nextTuesday()}</span>
+            <div className="row-gap" style={{ marginTop: 8 }}>
+              <Link to="/planner" className="btn gold"><Icon name="sparkle" size={18} />Plan a live</Link>
+              <Link to="/calendar" className="btn glass">Calendar</Link>
+            </div>
+          </div>
+        )}
+        <section className="card stack">
+          <div className="row-between"><h2>Live checklist</h2>{next && <Link to={`/lives/${next.id}/plan#tab=check`} className="link-btn">See all</Link>}</div>
+          {next ? <MiniChecklist live={next} onChange={plan => setNext({ ...next, plan })} /> : <p className="muted small">Plan a live to get your before, during and after checklist.</p>}
+        </section>
       </div>
 
       {s && s.old > 0 && (
@@ -97,10 +173,12 @@ export default function Home() {
       )}
 
       <div className="kpi-grid">
-        <div className="kpi"><span className="kpi-ico"><Icon name="inventory" /></span><span>Items in stock</span><b>{s ? <CountUp value={s.units} /> : '—'}</b></div>
-        <div className="kpi"><span className="kpi-ico"><Icon name="tag" /></span><span>Retail value</span><b className="gold">{s ? <CountUp value={s.retail} format={whole} /> : '—'}</b></div>
-        <div className="kpi"><span className="kpi-ico green"><Icon name="trend" /></span><span>Profit waiting</span><b className="ok-text">{s ? <CountUp value={s.retail - s.cost} format={whole} /> : '—'}</b></div>
-        <div className="kpi"><span className="kpi-ico"><Icon name="dollar" /></span><span>Sales, last 30 days</span><b>{s ? <CountUp value={s.sales30} format={whole} /> : '—'}</b></div>
+        <div className="kpi gold-tile"><span className="kpi-ico"><Icon name="dollar" /></span><span>Sold this month</span><b>{s ? <CountUp value={s.month} format={whole} /> : '—'}</b>
+          <div className="goal-bar"><span style={{ width: `${s ? Math.min(100, (s.month / Math.max(1, settings.monthlyGoal)) * 100) : 0}%` }} /></div>
+          <small>{s ? (s.month >= settings.monthlyGoal ? `Goal smashed! 🎉 ${whole(settings.monthlyGoal)} goal` : `${whole(settings.monthlyGoal - s.month)} to your ${whole(settings.monthlyGoal)} goal`) : ''}</small></div>
+        <div className="kpi green-tile"><span className="kpi-ico"><Icon name="trend" /></span><span>Profit sitting on the shelf</span><b>{s ? <CountUp value={s.retail - s.cost} format={whole} /> : '—'}</b><small>{s ? `${s.units} pieces ready to sell` : ''}</small></div>
+        <div className="kpi rose-tile"><span className="kpi-ico"><Icon name="tag" /></span><span>Retail value in stock</span><b>{s ? <CountUp value={s.retail} format={whole} /> : '—'}</b><small>{s && s.lastMonth > 0 ? `Last month you sold ${whole(s.lastMonth)}` : 'Every piece is a sale waiting'}</small></div>
+        <div className="kpi"><span className="kpi-ico"><Icon name="reports" /></span><span>Sales, last 30 days</span><b>{s ? <CountUp value={s.sales30} format={whole} /> : '—'}</b><small className="muted">{s && s.month > s.lastMonth && s.lastMonth > 0 ? `↑ ${Math.round((s.month / s.lastMonth - 1) * 100)}% vs last month` : 'Keep going live, it adds up'}</small></div>
       </div>
 
       {(work.pick > 0 || work.ship > 0) && (
@@ -111,23 +189,9 @@ export default function Home() {
       )}
 
       <div className="home-grid">
-        <div className="live-card">
-          <div className="live-glow" aria-hidden="true" />
-          <span className="eyebrow light"><span className="live-dot" />Next live</span>
-          {next ? (
-            <>
-              <span className="live-title">{next.title}</span>
-              <span>{liveWhen(next)}</span>
-              <span className="small">{(next.items ?? []).reduce((a, i) => a + i.qty, 0)} items planned · <b>{money(projected(next))}</b> if everything sells</span>
-              <Link to={`/lives/${next.id}`} className="btn gold">Open this live</Link>
-            </>
-          ) : (
-            <>
-              <span className="live-title">$2 Tuesday</span>
-              <span>{nextTuesday()}</span>
-              <Link to="/calendar" className="btn gold">{next === null ? 'Schedule it on the calendar' : 'Get ready for live'}</Link>
-            </>
-          )}
+        <div className="quote-card">
+          <Icon name="sparkle" size={22} />
+          <p>“{inspirationOfTheDay()}”</p>
         </div>
         <div className="card ring-card">
           <Ring value={shelved} label="Items with a bin"><small>shelved</small></Ring>
@@ -154,6 +218,21 @@ export default function Home() {
       <section className="card stack">
         <div className="row-between"><div><h2>How old is your stock?</h2><span className="muted small">Items in stock, by days since they arrived</span></div>{s && s.old > 0 && <Link to="/live?sale=1" className="link-btn">Run a sale</Link>}</div>
         {s ? <SegmentBar data={s.age} /> : <div className="skeleton-list"><div /></div>}
+      </section>
+
+      <section className="stack">
+        <div className="row-between"><h2 className="section-title">Theme ideas for your next live</h2><Link to="/planner" className="link-btn">Idea bank →</Link></div>
+        <div className="idea-grid">
+          {IDEA_BANK.slice(Math.floor(Date.now() / 864e5) % 13, Math.floor(Date.now() / 864e5) % 13 + 3).map(i => {
+            const pal = PALETTES[i.palette].c
+            return (
+              <Link key={i.title} to="/planner" className="idea-card">
+                <div className="idea-top" style={{ background: `linear-gradient(135deg, ${pal[0]}, ${pal[1]} 70%, ${pal[2]})`, color: pal[3] }}><b>{i.title}</b></div>
+                <div className="idea-body"><span className="small">{i.vibe}</span><span className="idea-cta">Plan it →</span></div>
+              </Link>
+            )
+          })}
+        </div>
       </section>
 
       <div className="quick-grid">

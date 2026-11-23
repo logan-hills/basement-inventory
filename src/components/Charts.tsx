@@ -77,7 +77,7 @@ export function ColumnChart({ data, format = (n: number) => n.toLocaleString(), 
               <rect x={padL + band * i} y={padT} width={band} height={ih} fill="transparent" />
               {path && <path d={path} className={`chart-bar ${hover === i ? 'on' : hover != null ? 'dim' : ''}`} style={{ animationDelay: `${i * 40}ms` }} />}
               {i === peak && d.value > 0 && hover == null && <text x={x + bw / 2} y={top - 7} textAnchor="middle" className="chart-value">{format(d.value)}</text>}
-              {(i % every === 0 || i === data.length - 1) && <text x={x + bw / 2} y={height - 8} textAnchor="middle" className="chart-axis">{d.label}</text>}
+              {((i % every === 0 && data.length - 1 - i >= every) || i === data.length - 1) && <text x={x + bw / 2} y={height - 8} textAnchor="middle" className="chart-axis">{d.label}</text>}
             </g>
           )
         })}

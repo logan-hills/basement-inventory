@@ -58,14 +58,31 @@ export default function Settings() {
         </section>
 
         <section className="card stack">
+          <h2>Live checklist: before</h2>
+          <p className="muted small">The steps every live starts with. Each live in the Planner gets its own copy to tick off.</p>
+          <ListEditor items={settings.checklist.before} onChange={before => save({ checklist: { ...settings.checklist, before } })} placeholder="Add a step" />
+        </section>
+        <section className="card stack">
+          <h2>Live checklist: during</h2>
+          <ListEditor items={settings.checklist.during} onChange={during => save({ checklist: { ...settings.checklist, during } })} placeholder="Add a step" />
+        </section>
+        <section className="card stack">
+          <h2>Live checklist: after</h2>
+          <ListEditor items={settings.checklist.after} onChange={after => save({ checklist: { ...settings.checklist, after } })} placeholder="Add a step" />
+        </section>
+
+        <section className="card stack">
           <h2>Hosts</h2>
           <ListEditor items={settings.hosts} onChange={hosts => save({ hosts })} placeholder="Add a host name" />
         </section>
 
         <section className="card stack">
-          <h2>Alerts and defaults</h2>
+          <h2>Goals, alerts and defaults</h2>
           <label>Call stock "old" after this many days
             <span className="input-suffix"><input inputMode="numeric" defaultValue={settings.oldStockDays} onBlur={e => { const n = parseInt(e.target.value, 10); if (n > 0 && n !== settings.oldStockDays) save({ oldStockDays: n }) }} /><span>days</span></span>
+          </label>
+          <label>Monthly sales goal
+            <span className="input-suffix"><span>$</span><input inputMode="numeric" defaultValue={settings.monthlyGoal} onBlur={e => { const n = parseInt(e.target.value.replace(/\D/g, ''), 10); if (n > 0 && n !== settings.monthlyGoal) save({ monthlyGoal: n }) }} /></span>
           </label>
           <label>Default live length
             <span className="input-suffix"><input inputMode="numeric" defaultValue={settings.liveDurationMin} onBlur={e => { const n = parseInt(e.target.value, 10); if (n > 0 && n !== settings.liveDurationMin) save({ liveDurationMin: n }) }} /><span>minutes</span></span>

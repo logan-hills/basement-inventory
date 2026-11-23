@@ -99,7 +99,7 @@ export async function loadItems(): Promise<Item[]> {
 }
 
 export function money(n: number | null | undefined) {
-  return n == null ? '' : `$${Number(n).toFixed(2)}`
+  return n == null ? '' : `$${Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 }
 
 export const DAMAGE_REASONS = ['Damaged', 'Stained', 'Missing', 'Defective', 'Other'] as const

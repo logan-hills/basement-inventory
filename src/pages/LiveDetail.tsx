@@ -101,6 +101,7 @@ export default function LiveDetail() {
         </div>
         <div className="row-gap">
           <button className="btn ghost" onClick={() => setEditing(true)}>Edit</button>
+          <Link className="btn ghost" to={`/lives/${live.id}/plan`}>Planner & poster</Link>
           <Link className="btn outline-gold" to={`/live?for=${live.id}`}>+ Add items</Link>
           <button className="btn primary" disabled={!items.length} onClick={exportCsv}>Download bot CSV</button>
         </div>
