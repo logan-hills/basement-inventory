@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
 import CrispBarcode from '../components/CrispBarcode'
 import SaveForPrinterApp from '../components/SaveForPrinterApp'
+import PrintNudge from '../components/PrintNudge'
 import { GEAR, GEAR_GROUPS, TEST_SIZES, amazonLink, type TestSize } from '../lib/gear'
 import { SCANNER_SPEED_MS } from '../lib/scanner'
 import { feedbackOk } from '../lib/feedback'
@@ -107,6 +108,7 @@ function TestPrint() {
       <style>{`@page { size: ${s.w}in ${h}in; margin: 0; }`}</style>
       <button className="btn primary big" onClick={() => window.print()}>Print test {receipt ? 'receipt' : 'label'}</button>
       <SaveForPrinterApp name={`test-${size}`} />
+      <PrintNudge w={s.w} h={receipt ? 0 : s.h} label={receipt ? (size === 'r58' ? '58 mm receipts' : '80 mm receipts') : undefined} open />
     </div>
     <div className="print-area">
       <div className="sheet" ref={ref} style={{ width: `${s.w}in`, height: receipt ? 'auto' : `${s.h}in` }}><TestLabel size={size} /></div>
@@ -143,7 +145,8 @@ export default function Gear() {
                   <ol>{x.setup.map((s, i) => <li key={i}>{s}</li>)}</ol>
                   <p className="small" style={{ marginTop: 8 }}>Used in: {x.useIn.map((u, i) => <span key={u.to}>{i ? ', ' : ''}<Link to={u.to}>{u.label}</Link></span>)}</p>
                 </details>
-                <a className="btn ghost big" href={amazonLink(x.asin)} target="_blank" rel="noopener noreferrer">View on Amazon</a>
+                {x.asin ? <a className="btn ghost big" href={amazonLink(x.asin)} target="_blank" rel="noopener noreferrer">View on Amazon</a>
+                  : <span className="btn ghost big" aria-disabled="true">Sold at {x.store}</span>}
               </article>
             ))}
           </div>

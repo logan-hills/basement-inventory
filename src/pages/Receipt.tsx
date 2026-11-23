@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import CrispBarcode from '../components/CrispBarcode'
 import SaveForPrinterApp from '../components/SaveForPrinterApp'
+import PrintNudge from '../components/PrintNudge'
 import { loadOrderByCode, type Order } from '../lib/orders'
 import { money } from '../lib/data'
 import { useSession } from '../lib/session'
@@ -51,6 +52,7 @@ export default function Receipt() {
           <p className="muted small">From a computer: pick your receipt printer, paper size {width === 'r58' ? '58 mm' : '80 mm'} roll, scale 100%, margins None. From a phone: tap Save for printer app and open the picture in your printer's app.</p>
           <button className="btn primary big" onClick={() => window.print()}>Print</button>
           <SaveForPrinterApp name={`receipt-${order.code}`} />
+          <PrintNudge w={f.w} h={0} label={width === 'r58' ? '58 mm receipts' : '80 mm receipts'} />
         </div>
       </div>
       <div className="print-area">

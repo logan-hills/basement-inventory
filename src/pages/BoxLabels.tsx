@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import SaveForPrinterApp from '../components/SaveForPrinterApp'
+import PrintNudge from '../components/PrintNudge'
 import JsBarcode from 'jsbarcode'
 import { addressLines, loadOrders, orderUnits, type Order } from '../lib/orders'
 import { useSession } from '../lib/session'
@@ -48,6 +49,7 @@ export default function BoxLabels() {
           <p className="muted small">{orders === null ? 'Loading…' : `${list.length} label${list.length === 1 ? '' : 's'}.`} Stick one on each customer's box before you pick. Scanning it tells the app which box an item went into. Print at 100% / Actual size with margins set to None.</p>
           <button className="btn primary big" disabled={!list.length} onClick={() => window.print()}>Print</button>
           <SaveForPrinterApp name="box-labels" disabled={!list.length} />
+          <PrintNudge w={f.page.w} h={f.page.h} />
           <p className="muted small">Need a printer or labels? See <Link to="/gear">Recommended gear</Link>.</p>
         </div>
       </div>

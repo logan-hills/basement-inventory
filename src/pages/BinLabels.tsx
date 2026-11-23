@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import SaveForPrinterApp from '../components/SaveForPrinterApp'
+import PrintNudge from '../components/PrintNudge'
 import JsBarcode from 'jsbarcode'
 import { loadBins, type Bin } from '../lib/locations'
 import { useSession } from '../lib/session'
@@ -97,6 +98,7 @@ export default function BinLabels() {
           <p className="muted small">{list.length} label{list.length === 1 ? '' : 's'} on {pages.length} page{pages.length === 1 ? '' : 's'}. Print at 100% / Actual size with margins set to None.{land ? ' Landscape labels are turned sideways for the printer automatically.' : ''}{format === 'roll4x4' ? ' Load the 4×4 roll and set paper size to 4 x 4 in (101.6 x 101.6 mm) in the print window.' : ''}{format === 'roll2x1' ? ' Use the same 2×1 roll as your item tags: set paper size to 2 x 1 in (50.8 x 25.4 mm) in the print window. Tip: a bigger bin label is easier to scan from a distance; the 4×4 roll is our recommended bin size.' : ''}</p>
           <button className="btn primary big" disabled={!list.length} onClick={() => window.print()}>Print</button>
           <SaveForPrinterApp name="bin-labels" disabled={!list.length} />
+          <PrintNudge w={f.page.w} h={f.page.h} />
           <p className="muted small">Need a printer or labels? See <Link to="/gear">Recommended gear</Link>.</p>
         </div>
       </div>
