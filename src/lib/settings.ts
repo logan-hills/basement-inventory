@@ -35,6 +35,7 @@ export const BOT_FIELDS: { key: string; label: string; sample: string }[] = [
   { key: 'bins', label: 'Bin location', sample: 'A1-S2-B-03' },
   { key: 'description', label: 'Description', sample: 'Gold chain strap' },
   { key: 'sku', label: 'SKU (Live # + variation)', sample: '4821-BLACK' },
+  { key: 'upc', label: 'UPC / barcode', sample: '012345678905' },
 ]
 
 export const DEFAULT_CHECKLIST: Settings['checklist'] = {

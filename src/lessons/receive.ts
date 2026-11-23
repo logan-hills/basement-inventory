@@ -11,6 +11,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Add it', text: 'Stock → Add item. Name it, pick a category and tags, snap photos, then add each variation with its price, what you paid, and how many.',
       screen: { title: 'Receive items', rows: ['Name', 'Category', 'Photos', 'Variations'], buttons: ['Save and print tags'], highlight: 'Save and print tags' } },
     { kind: 'learn', title: 'Why "what you paid" matters', text: 'Your cost turns sales into profit. Reports, Home and Get ready for live all use it to show your real money.', tip: 'Guess if you have to. A close number beats no number.' },
+    { kind: 'learn', title: 'Got a UPC? Add it', text: 'If the product has its own barcode (a UPC), scan or type it on the item page. Pickers can then scan the product\'s barcode instead of the tag, and it shows on the picking screen.' },
     { kind: 'learn', title: 'Photos help your whole team', text: 'Anyone who scans or looks up a piece sees its photo, so helpers grab the right one fast.' },
     { kind: 'order', title: 'Practice', prompt: 'Put the steps in order.', steps: ['Tap Add item', 'Name it and pick a category', 'Snap photos', 'Add variations with price, cost and count', 'Save and print tags'] },
     { kind: 'quiz', q: 'You have the same top in Small, Medium and Large. How many variations?', options: ['1', '3', 'One per piece'], answer: 1, why: 'Each size is a variation with its own Live Number. Each piece still gets its own tag.' },

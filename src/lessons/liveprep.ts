@@ -10,8 +10,10 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Add to cart takes it all', text: 'Add to cart adds the whole quantity on your shelf, so you can say "I have 6 of these" on live. Sizes and colors sit side by side as their own cards.',
       screen: { title: 'Gold hoop set · Small', rows: ['6 on shelf', '$12'], buttons: ['Add to cart'], highlight: 'Add to cart' } },
     { kind: 'learn', title: 'Check out to a live', text: 'Open the cart, set any special live prices, choose the live, and check out. The items are now on that live\'s list.' },
-    { kind: 'learn', title: 'Send the list to your bot', text: 'Open the live and tap Download bot CSV, then upload it to your bot. Change the columns in Settings → Bot CSV columns if your bot needs different names.' },
-    { kind: 'order', title: 'Practice', prompt: 'Put the steps in order.', steps: ['Tap a category and pick items', 'Add to cart', 'Pick the live and check out', 'Download bot CSV'] },
+    { kind: 'learn', title: 'Send the list to your bot', text: 'Open the live from the Calendar and pick your bot.',
+      points: ['Loyal Shops: tap Download for Loyal Shops, then upload it in Loyal Shops\' Upload Inventory List box before the live', 'Another bot: tap Download my bot CSV (change its columns in Settings → Bot CSV columns)'],
+      screen: { title: '$2 Tuesday', buttons: ['Download for Loyal Shops', 'Download my bot CSV'], highlight: 'Download for Loyal Shops' } },
+    { kind: 'order', title: 'Practice', prompt: 'Put the steps in order.', steps: ['Tap a category and pick items', 'Add to cart', 'Pick the live and check out', 'Download the file for your bot'] },
     { kind: 'quiz', q: 'You have 4 Small and 2 Medium. You tap Add to cart on Small. How many go in?', options: ['4', '1', '6'], answer: 0, why: 'It adds everything on your shelf for that one variation.' },
   ],
 }

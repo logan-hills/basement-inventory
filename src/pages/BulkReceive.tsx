@@ -7,12 +7,12 @@ import { downloadFile, parseCsv, toCsv } from '../lib/csv'
 import { loadBins } from '../lib/locations'
 import { feedbackOk } from '../lib/feedback'
 
-const COLUMNS = ['Item name', 'Variation', 'Quantity', 'Price', 'Cost', 'Brand', 'Category', 'Weight (lb)', 'Bin code', 'Notes', 'Tags'] as const
-type Key = 'name' | 'variation' | 'qty' | 'price' | 'cost' | 'brand' | 'category' | 'weight' | 'bin' | 'notes' | 'tags'
-const KEYS: Key[] = ['name', 'variation', 'qty', 'price', 'cost', 'brand', 'category', 'weight', 'bin', 'notes', 'tags']
+const COLUMNS = ['Item name', 'Variation', 'Quantity', 'Price', 'Cost', 'Brand', 'Category', 'Weight (lb)', 'Bin code', 'Notes', 'Tags', 'UPC'] as const
+type Key = 'name' | 'variation' | 'qty' | 'price' | 'cost' | 'brand' | 'category' | 'weight' | 'bin' | 'notes' | 'tags' | 'upc'
+const KEYS: Key[] = ['name', 'variation', 'qty', 'price', 'cost', 'brand', 'category', 'weight', 'bin', 'notes', 'tags', 'upc']
 
 type Row = Record<Key, string> & { line: number; errors: string[]; binId: string | null }
-type Group = { key: string; name: string; brand: string; category: string; notes: string; tags: string[]; variants: { label: string; qty: number; price: number | null; cost: number | null; weight: number | null; binId: string | null; bin: string }[] }
+type Group = { key: string; name: string; brand: string; category: string; notes: string; tags: string[]; variants: { label: string; qty: number; price: number | null; cost: number | null; weight: number | null; binId: string | null; bin: string; upc: string }[] }
 
 function headerKey(h: string): Key | null {
   const t = h.toLowerCase().replace(/[^a-z]/g, '')
@@ -25,6 +25,7 @@ function headerKey(h: string): Key | null {
   if (t.startsWith('category')) return 'category'
   if (t.startsWith('weight')) return 'weight'
   if (t.startsWith('bin') || t.startsWith('location')) return 'bin'
+  if (t === 'upc' || t.startsWith('barcode') || t === 'ean' || t === 'gtin') return 'upc'
   if (t.startsWith('tag')) return 'tags'
   if (t.startsWith('note') || t.startsWith('description')) return 'notes'
   return null
@@ -84,7 +85,7 @@ export default function BulkReceive() {
       const label = r.variation || 'One size'
       const existing = g.variants.find(v => v.label.toLowerCase() === label.toLowerCase() && v.binId === r.binId)
       if (existing) existing.qty += Number(r.qty)
-      else g.variants.push({ label, qty: Number(r.qty), price: num(r.price), cost: num(r.cost), weight: num(r.weight), binId: r.binId, bin: r.bin })
+      else g.variants.push({ label, qty: Number(r.qty), price: num(r.price), cost: num(r.cost), weight: num(r.weight), binId: r.binId, bin: r.bin, upc: (r as any).upc ?? '' })
     }
     return [...out.values()]
   }, [rows])
@@ -108,7 +109,7 @@ export default function BulkReceive() {
         itemIds.push(item.id)
         const labels = [...new Map(g.variants.map(v => [v.label.toLowerCase(), v])).values()]
         const { data: vs, error: vErr } = await supabase.from('variants')
-          .insert(labels.map(v => ({ shop_id: shop.id, item_id: item.id, label: v.label, price: v.price, cost: v.cost, weight_lb: v.weight })))
+          .insert(labels.map(v => ({ shop_id: shop.id, item_id: item.id, label: v.label, price: v.price, cost: v.cost, weight_lb: v.weight, ...(v.upc ? { upc: v.upc.trim() } : {}) })))
           .select('id,label,live_number')
         if (vErr) throw vErr
         for (const v of g.variants) {

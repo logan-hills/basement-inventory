@@ -31,7 +31,7 @@ export async function loadLive(id: string) {
   if (error) throw error
   if (!data) return null
   const { data: items } = await supabase.from('live_items')
-    .select('id,live_id,variant_id,qty,sale_price,sort, variant:variants(id,label,live_number,price,cost,weight_lb, item:items(*), units(status, location:locations(code)))')
+    .select('id,live_id,variant_id,qty,sale_price,sort, variant:variants(id,label,live_number,price,cost,weight_lb,upc, item:items(*), units(status, location:locations(code)))')
     .eq('live_id', id).order('sort').order('created_at')
   return { live: data as Live, items: (items ?? []) as any as LiveItem[] }
 }
