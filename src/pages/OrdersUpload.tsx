@@ -219,7 +219,7 @@ export default function OrdersUpload() {
         <div className="stack tight-gap">
           <button className="btn gold" onClick={() => template(false)}>Download the sales template</button>
           <button className="link-btn" onClick={() => template(true)}>See a filled-in example</button>
-          <Link className="link-btn" to="/lessons/upload">Show me how (Academy lesson)</Link>
+          <Link className="link-btn" to="/lessons/upload">Show me how (University lesson)</Link>
         </div>
       </div>
 

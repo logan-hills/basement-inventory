@@ -185,7 +185,7 @@ export default function Home() {
         <NovaSays mood={HOME_TIPS[tip][0]} key={tip} onNovaClick={() => setTip(t => (t + 1) % HOME_TIPS.length)}>
           {HOME_TIPS[tip][1]}
         </NovaSays>
-        {hasAcademy(shop?.plan) && <Link to="/lessons" className="btn ghost small nova-strip-link"><Icon name="lessons" size={16} />Dazzle Academy</Link>}
+        {hasAcademy(shop?.plan) && <Link to="/lessons" className="btn ghost small nova-strip-link"><Icon name="lessons" size={16} />Dazzle University</Link>}
       </div>
 
       <div className="top-grid">

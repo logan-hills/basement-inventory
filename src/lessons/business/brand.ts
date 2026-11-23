@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'brand', kind: 'course', title: 'Build a brand they remember', track: 'Business', icon: 'sparkle',
+  id: 'brand', kind: 'course', school: 'Brand and marketing', title: 'Build a brand they remember', track: 'Business', icon: 'sparkle',
   why: "People forget a price. They remember how you made them feel. Your brand is that feeling, on purpose.",
   outcomes: [
     'Describe your dream buyer so clearly you could pick her out of a crowd',
@@ -9,6 +9,10 @@ const lesson: Lesson = {
     'Choose colors, fonts and three voice words, and use them everywhere',
     'Build signature moments into every live that buyers look forward to',
     'Audit your Page, posters, boxes and messages so they all tell the same story',
+  ],
+  sources: [
+    { org: 'U.S. Small Business Administration', title: 'Marketing and sales', url: 'https://www.sba.gov/business-guide/manage-your-business/marketing-sales' },
+    { org: 'U.S. Small Business Administration', title: 'Marketing plan example', url: 'https://www.sba.gov/document/support-marketing-plan-example' },
   ],
   covers: [], updated: '2026-11-23',
   slides: [

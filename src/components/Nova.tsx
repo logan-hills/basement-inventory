@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react'
 
 import novaAvatar from '../assets/nova-avatar.webp'
 
-/* Nova: the Dazzle Academy teaching assistant, from the official Dynamic Dazzle art
+/* Nova: the Dazzle University teaching assistant, from the official Dynamic Dazzle art
    (green bag, gold bow and crown, cat-eye shades, DD crest). Moods change how she moves
    and what sparkles around her. */
 export type NovaMood = 'happy' | 'cheer' | 'think' | 'oops' | 'wow' | 'wink'

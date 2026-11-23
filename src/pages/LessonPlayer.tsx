@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Icon from '../components/Icon'
 import { Nova, NovaSays, burst, pick, NOVA_CHEERS, NOVA_OOPS, type NovaMood } from '../components/Nova'
-import { LESSONS, COURSES, GRADED, INTERACTIVE, lessonById, lessonMinutes, type Screen, type Slide } from '../lessons'
+import { LESSONS, COURSES, GRADED, INTERACTIVE, lessonById, lessonMinutes, lessonTone, type Lesson, type Screen, type Slide } from '../lessons'
 import { useLessonProgress } from '../lib/lessonProgress'
 import { useSession } from '../lib/session'
 import { hasAcademy } from '../lib/plan'
@@ -253,6 +253,17 @@ export default function LessonPlayer() {
   return <Player key={id} id={id} />
 }
 
+/** The reputable sources a lesson is built on, as links that open in a new tab. */
+function Sources({ lesson, title }: { lesson: Lesson; title: string }) {
+  if (!lesson.sources?.length) return null
+  return (
+    <div className="lesson-sources no-print">
+      <span className="eyebrow">{title}</span>
+      <ul>{lesson.sources.map(s => <li key={s.url}><a href={s.url} target="_blank" rel="noreferrer">{s.title}</a><small>{s.org}</small></li>)}</ul>
+    </div>
+  )
+}
+
 function Player({ id }: { id?: string }) {
   const nav = useNavigate()
   const { shop } = useSession()
@@ -305,12 +316,12 @@ function Player({ id }: { id?: string }) {
         <div className={`lesson-finish card${isCourse ? ' certificate' : ''}`}>
           {isCourse ? (
             <>
-              <span className="cert-kicker">Dazzle Academy · Certificate of completion</span>
+              <span className="cert-kicker">Dazzle University · Certificate of completion</span>
               <Nova mood="cheer" size={120} />
               <h1>{lesson.title}</h1>
               <p className="muted">Awarded to <b className="gold">{shop?.name ?? 'you'}</b> on {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
               {lesson.outcomes && <ul className="cert-outcomes">{lesson.outcomes.map(o => <li key={o}>{o}</li>)}</ul>}
-              <span className="cert-sign">Nova <small>Head of Dazzle Academy</small></span>
+              <span className="cert-sign">Nova <small>Head of Dazzle University</small></span>
             </>
           ) : (
             <>
@@ -330,6 +341,7 @@ function Player({ id }: { id?: string }) {
             <button className="link-btn" onClick={() => { setI(0); setResults({}); setFinished(false) }}>Retake</button>
             <Link className="link-btn" to="/lessons">All lessons</Link>
           </div>
+          <Sources lesson={lesson} title="Go deeper: the sources behind this lesson" />
         </div>
         <Workbook lessonId={lesson.id} slides={lesson.slides} />
       </div>
@@ -339,15 +351,16 @@ function Player({ id }: { id?: string }) {
   return (
     <div className={`lesson-player stack wide-gap${isCourse ? ' is-course' : ''}`}>
       <div className="row-between">
-        <button className="link-btn" onClick={() => nav('/lessons')}>← Dazzle Academy</button>
+        <button className="link-btn" onClick={() => nav('/lessons')}>← Dazzle University</button>
         <span className="muted small">{isCourse ? 'Business course' : lesson.track} · about {minutes} min · step {i + 1} of {lesson.slides.length}</span>
       </div>
       {i === 0 && (
-        <div className="course-cover">
+        <div className={`uni-cover tone-${lessonTone(lesson)}`}>
           <span className="cert-kicker">{isCourse ? 'A course by Nova' : 'A lesson by Nova'} · about {minutes} minutes</span>
           <h1>{lesson.title}</h1>
           {lesson.outcomes && <div className="stack tight-gap"><span className="eyebrow">By the end you'll be able to</span><ul className="lesson-points">{lesson.outcomes.map(o => <li key={o}>{o}</li>)}</ul></div>}
           {chapters.length > 0 && <div className="chapter-list">{chapters.map((c, n) => <span key={c}><b>{String(n + 1).padStart(2, '0')}</b>{c}</span>)}</div>}
+          <Sources lesson={lesson} title="Built on trusted sources" />
         </div>
       )}
       <div className="lesson-steps" aria-label={`Step ${i + 1} of ${lesson.slides.length}`}>
