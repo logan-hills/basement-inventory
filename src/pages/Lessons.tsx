@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
 import { Ring } from '../components/Charts'
-import { LESSONS, COURSES, TRACKS } from '../lessons'
+import { LESSONS, COURSES, TRACKS, INTERACTIVE, lessonMinutes } from '../lessons'
 import { useLessonProgress } from '../lib/lessonProgress'
 import { useSession } from '../lib/session'
 import { hasAcademy } from '../lib/plan'
@@ -79,7 +79,7 @@ export default function Lessons() {
           <div className="tome-shelf">
             {courseMatch.map((l, n) => {
               const p = progress[l.id]
-              return <Tome key={l.id} to={`/lessons/${l.id}`} n={n} title={l.title} minutes={l.minutes} chapters={l.slides.filter(x => x.chapter).length} why={l.why}
+              return <Tome key={l.id} to={`/lessons/${l.id}`} n={n} title={l.title} minutes={lessonMinutes(l)} chapters={l.slides.filter(x => x.chapter).length} why={l.why}
                 tone={['garnet', 'emerald', 'onyx', 'violet', 'cognac', 'emerald', 'garnet'][n % 7]} status={p?.completed_at ? 'done' : p ? 'started' : undefined} />
             })}
           </div>
@@ -103,7 +103,7 @@ export default function Lessons() {
                     <b>{l.title}</b>
                     <span className="muted small">{l.why}</span>
                     <div className="lesson-meta">
-                      <span className="small muted">{l.minutes} min · {l.slides.filter(x => x.kind !== 'learn').length} practice</span>
+                      <span className="small muted">{lessonMinutes(l)} min · {l.slides.filter(x => INTERACTIVE.includes(x.kind)).length} activities</span>
                       {p?.completed_at ? <span className="chip-mini vip">✓ {p.score ?? 100}%</span> : p ? <span className="chip-mini">In progress</span> : null}
                     </div>
                     <span className="lesson-bar"><i style={{ width: `${pct * 100}%` }} /></span>
