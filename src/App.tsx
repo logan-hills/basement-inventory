@@ -34,6 +34,7 @@ import Lessons from './pages/Lessons'
 import LessonPlayer from './pages/LessonPlayer'
 import Planner from './pages/Planner'
 import LivePlan from './pages/LivePlan'
+import LiveBot from './pages/LiveBot'
 import SharedPage from './pages/SharedPage'
 import OnAir from './pages/OnAir'
 import OnAirBar from './components/OnAirBar'
@@ -189,6 +190,7 @@ function Shell() {
           <Route path="/privacy" element={<Legal which="privacy" />} />
           <Route path="/lives/:id" element={<LiveDetail />} />
           <Route path="/lives/:id/plan" element={<LivePlan />} />
+          <Route path="/lives/:id/bot" element={<LiveBot />} />
           <Route path="/planner" element={<Planner />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/reports" element={<Reports />} />
