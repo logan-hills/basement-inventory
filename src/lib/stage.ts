@@ -3,6 +3,7 @@ import { supabase } from './supabase'
 export type Stage = {
   id: string; name: string; fb_page_id: string | null; fb_page_name: string | null
   warn_min: number; prep_min: number; invite_code: string; created_by: string
+  open_to_all?: boolean; guidelines?: string | null; late_cancel_min?: number
 }
 export type StageMember = { stage_id: string; user_id: string; display_name: string; role: 'host' | 'seller'; shop_id: string | null }
 export type Slot = {

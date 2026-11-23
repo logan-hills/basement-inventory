@@ -80,8 +80,12 @@ create table if not exists public.stages (
   fb_page_id text,
   fb_page_name text,
   warn_min int not null default 5 check (warn_min between 1 and 30),
-  prep_min int not null default 10 check (prep_min between 2 and 60),
+  prep_min int not null default 10 check (prep_min between 2 and 180),
   open_to_all boolean not null default false,
+  -- Seller rules shown (and agreed to) every time the calendar opens. Empty = the app's built-in rules.
+  guidelines text,
+  -- Not streaming this many minutes after the start time = live canceled.
+  late_cancel_min int not null default 10 check (late_cancel_min between 1 and 60),
   invite_code text not null unique default upper(substr(replace(gen_random_uuid()::text, '-', ''), 1, 6)),
   created_by uuid not null default auth.uid() references auth.users(id),
   created_at timestamptz not null default now()
@@ -254,6 +258,30 @@ end $$;
 drop trigger if exists profiles_sync on public.profiles;
 create trigger profiles_sync before insert or update on public.profiles for each row execute function public.sync_profile_name();
 
+-- ---------- Guideline agreements ----------
+-- One row every time a seller taps "I agree" on the calendar's rules pop-up.
+create table if not exists public.guideline_acceptances (
+  id uuid primary key default gen_random_uuid(),
+  stage_id uuid not null references public.stages(id) on delete cascade,
+  user_id uuid not null default auth.uid() references auth.users(id) on delete cascade,
+  version text not null,
+  accepted_at timestamptz not null default now()
+);
+create index if not exists guideline_acceptances_user_idx on public.guideline_acceptances(stage_id, user_id, accepted_at desc);
+alter table public.guideline_acceptances enable row level security;
+drop policy if exists guideline_acceptances_insert on public.guideline_acceptances;
+create policy guideline_acceptances_insert on public.guideline_acceptances for insert
+  with check (user_id = auth.uid() and public.is_stage_member(stage_id));
+drop policy if exists guideline_acceptances_select on public.guideline_acceptances;
+create policy guideline_acceptances_select on public.guideline_acceptances for select
+  using (user_id = auth.uid() or public.is_stage_host(stage_id));
+grant select, insert on public.guideline_acceptances to authenticated;
+-- The server sets the time; nobody can backdate an agreement.
+create or replace function public.stamp_acceptance() returns trigger language plpgsql as $$
+begin new.accepted_at := now(); new.user_id := auth.uid(); return new; end $$;
+drop trigger if exists guideline_acceptances_stamp on public.guideline_acceptances;
+create trigger guideline_acceptances_stamp before insert on public.guideline_acceptances for each row execute function public.stamp_acceptance();
+
 -- ---------- Row-level security ----------
 alter table public.stages enable row level security;
 alter table public.stage_members enable row level security;
@@ -287,7 +315,7 @@ grant select on public.stage_members, public.live_slot_keys to authenticated;
 grant select, insert on public.live_slots to authenticated;
 -- Hosts may change only these columns on a stage (not the Page id, which the connect step sets).
 revoke update on public.stages from authenticated;
-grant update (name, warn_min, prep_min) on public.stages to authenticated;
+grant update (name, warn_min, prep_min, guidelines, late_cancel_min) on public.stages to authenticated;
 grant execute on function public.join_open_stages(), public.join_stage(text), public.cancel_slot(uuid), public.set_stage_member(uuid, uuid, text, text, boolean) to authenticated;
 
 -- Live updates in the app when slots change.

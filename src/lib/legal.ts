@@ -30,6 +30,8 @@ export const TERMS: LegalDoc = {
       p: [
         'Live time on the shared Facebook Page is booked in whole-hour blocks. Only one seller can hold a time. Booking is first come, first served unless a host sets other rules.',
         'Start and stop times are hard. Your live is started at your start time and ended automatically at your stop time, even mid-sentence. You get a wrap-up warning before the end. Please finish on time out of respect for the next seller.',
+        'Each shared Page has seller guidelines (for the Dynamic Dazzle Bargain Basement Page, the "Vendor Live Selling Guidelines"). They are shown every time you open the live calendar, and you must agree to them before booking. We save the date and time of each agreement. The guidelines are part of these Terms. Booking live time is free.',
+        'If you are more than the allowed number of minutes late (10 minutes on the Dynamic Dazzle Page), your live is canceled automatically and the hour is lost.',
         'The Page owner and hosts may cancel or move bookings, remove sellers from the calendar, and end a live early to protect the Page, its followers or other sellers. If you cannot make your time, cancel it in the App so someone else can use it.',
       ],
     },
@@ -73,7 +75,8 @@ export const TERMS: LegalDoc = {
     {
       h: '9. Ending your account',
       p: [
-        'You can stop using the App and ask us to delete your account at any time. We may suspend or close accounts that break these Terms or put the shared Page at risk.',
+        'You can stop using the App and ask us to delete your account at any time.',
+        'If you break these Terms or the seller guidelines you agreed to, we may suspend or revoke your account. If your account is revoked for a violation, you will not get a refund for the month or year you have already paid for, unless the law requires one. We may also remove you from the shared live calendar.',
       ],
     },
     {

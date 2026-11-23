@@ -4,6 +4,7 @@
 //
 //   booked    -> (prep window opens) create an unpublished Facebook live, store its stream key -> ready
 //   ready     -> (start time)         switch the live to LIVE_NOW                                   -> live
+//   ready     -> (start + late_cancel_min, never streamed) delete the live                   -> missed
 //   ready/live-> (stop time)          end the live on Facebook                                      -> ended / missed
 //   cancelled -> clean up any unused Facebook live
 //
@@ -17,7 +18,7 @@ const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers
 type Slot = {
   id: string; stage_id: string; user_id: string; title: string; seller_name: string
   starts_at: string; ends_at: string; status: string; fb_live_video_id: string | null; went_live_at: string | null
-  stage: { name: string; fb_page_id: string | null; prep_min: number } | null
+  stage: { name: string; fb_page_id: string | null; prep_min: number; late_cancel_min: number } | null
 }
 
 async function graph(path: string, params: Record<string, string>, method = 'POST') {
@@ -50,7 +51,7 @@ Deno.serve(async req => {
   }
 
   const { data, error } = await db.from('live_slots')
-    .select('id,stage_id,user_id,title,seller_name,starts_at,ends_at,status,fb_live_video_id,went_live_at, stage:stages(name,fb_page_id,prep_min)')
+    .select('id,stage_id,user_id,title,seller_name,starts_at,ends_at,status,fb_live_video_id,went_live_at, stage:stages(name,fb_page_id,prep_min,late_cancel_min)')
     .in('status', ['booked', 'preparing', 'ready', 'live', 'ending', 'cancelled'])
     .lte('starts_at', new Date(now + 61 * 60000).toISOString())
     .gte('ends_at', new Date(now - 24 * 3600000).toISOString())
@@ -119,6 +120,17 @@ Deno.serve(async req => {
       } catch (e) {
         await set(s.id, { status: 'booked', last_error: `Could not make the stream key: ${(e as Error).message}` })
       }
+      continue
+    }
+
+    // House rule: more than N minutes late (never started streaming) = live canceled.
+    const late = (s.stage?.late_cancel_min ?? 10) * 60000
+    if ((s.status === 'ready' || s.status === 'booked') && !s.went_live_at && now >= start + late && end > now) {
+      if (!(await claim(s.id, s.status, 'missed'))) continue
+      if (s.fb_live_video_id && token) await graph(`${s.fb_live_video_id}?access_token=${encodeURIComponent(token)}`, {}, 'DELETE').catch(() => null)
+      await set(s.id, { ended_at: new Date().toISOString(), last_error: `Live canceled: not streaming ${s.stage?.late_cancel_min ?? 10} minutes after the start time.` })
+      await db.from('live_slot_keys').delete().eq('slot_id', s.id)
+      log.push(`late ${s.id}`)
       continue
     }
 

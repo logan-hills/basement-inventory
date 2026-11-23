@@ -78,7 +78,7 @@ export default function OnAir() {
 
   let phase: string, big: string, sub: string
   if (slot.status === 'cancelled') { phase = 'off'; big = 'Cancelled'; sub = 'This slot was cancelled.' }
-  else if (after) { phase = 'off'; big = 'Time is up'; sub = slot.went_live_at ? `Your live ended at ${fmtTime(slot.ends_at)}. Great show!` : 'This slot is over.' }
+  else if (after) { phase = 'off'; big = 'Time is up'; sub = slot.went_live_at ? `Your live ended at ${fmtTime(slot.ends_at)}. Great show!` : slot.status === 'missed' && slot.last_error ? slot.last_error : 'This slot is over.' }
   else if (before) { phase = keyOpen ? 'ready' : 'wait'; big = fmtCountdown(start - now); sub = keyOpen ? `Start streaming now. Viewers see you at ${fmtTime(start)}.` : `until your slot. Your stream key appears at ${fmtTime(start - prepMs)}.` }
   else if (slot.status === 'live') { phase = wrap ? 'wrap' : 'live'; big = fmtCountdown(left); sub = wrap ? 'Wrap it up! Last call, thank your buyers, and say goodbye.' : `left. Hard stop at ${fmtTime(end)}.` }
   else { phase = 'waiting'; big = fmtCountdown(left); sub = 'Your time has started. Start streaming in your app and you will go live within seconds.' }

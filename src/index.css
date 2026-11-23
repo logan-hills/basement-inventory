@@ -1024,3 +1024,20 @@ button.mock-btn:hover { border-color: var(--gold); }
 .template-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; border-color: rgba(255, 211, 110, .45); background: linear-gradient(135deg, rgba(255, 211, 110, .1), var(--surface)); }
 @media (max-width: 640px) { .template-card { grid-template-columns: minmax(0, 1fr); } }
 .template-cols { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* Seller guidelines pop-up (every visit to the live calendar) */
+.gate-backdrop { position: fixed; inset: 0; z-index: 80; background: rgba(10, 6, 4, .78); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 16px; }
+.gate-panel { width: 100%; max-width: 560px; max-height: calc(100dvh - 32px); display: flex; flex-direction: column; border-radius: 24px; border: 1px solid var(--gold); background: linear-gradient(180deg, rgba(255, 211, 110, .10), transparent 30%), var(--surface); box-shadow: 0 20px 60px rgba(0, 0, 0, .5); overflow: hidden; }
+.gate-scroll { overflow-y: auto; padding: 24px 22px 8px; display: flex; flex-direction: column; gap: 12px; }
+.gate-crown { font-size: 2rem; text-align: center; }
+.gate-scroll .eyebrow { text-align: center; color: var(--gold); }
+.gate-scroll h2 { text-align: center; margin: 0; font-size: 1.4rem; }
+.gate-intro { text-align: center; display: flex; flex-direction: column; gap: 4px; }
+.gate-intro p, .gate-closing p { margin: 0; color: var(--text-2); }
+.gate-sec { padding: 12px 14px; border-radius: 16px; background: var(--raised); }
+.gate-sec h3 { margin: 0 0 6px; font-size: 1rem; color: var(--gold); }
+.gate-sec ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.gate-sec ul.gate-sub { list-style: disc; padding-left: 40px; margin: 4px 0 6px; color: var(--text-2); }
+.gate-closing { text-align: center; font-weight: 600; display: flex; flex-direction: column; gap: 6px; }
+.gate-custom { white-space: pre-wrap; line-height: 1.6; }
+.gate-actions { padding: 14px 22px 18px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; align-items: center; }

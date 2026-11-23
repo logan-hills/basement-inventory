@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Sheet from '../components/Sheet'
 import Avatar from '../components/Avatar'
+import GuidelinesGate from '../components/GuidelinesGate'
+import { useSession } from '../lib/session'
 import { loadPublicProfiles, type PublicProfile } from '../lib/profile'
 import { supabase } from '../lib/supabase'
 import { useToast } from '../lib/toast'
@@ -67,9 +69,11 @@ function HostPanel({ stage, members, onChange }: { stage: Stage; members: StageM
   const [busy, setBusy] = useState(false)
   const [warn, setWarn] = useState(String(stage.warn_min))
   const [prep, setPrep] = useState(String(stage.prep_min))
+  const [late, setLate] = useState(String(stage.late_cancel_min ?? 10))
+  const [rules, setRules] = useState(stage.guidelines ?? '')
 
   useEffect(() => { if (fbConfigured) loadFacebook().catch(() => null) }, [])
-  useEffect(() => { setWarn(String(stage.warn_min)); setPrep(String(stage.prep_min)) }, [stage])
+  useEffect(() => { setWarn(String(stage.warn_min)); setPrep(String(stage.prep_min)); setLate(String(stage.late_cancel_min ?? 10)); setRules(stage.guidelines ?? '') }, [stage])
 
   async function call(body: Record<string, unknown>) {
     const { data, error } = await supabase.functions.invoke('fb-page-connect', { body: { stage_id: stage.id, ...body } })
@@ -105,7 +109,7 @@ function HostPanel({ stage, members, onChange }: { stage: Stage; members: StageM
     setBusy(false)
   }
   async function saveTimes() {
-    const { error } = await supabase.from('stages').update({ warn_min: parseInt(warn, 10), prep_min: parseInt(prep, 10) }).eq('id', stage.id)
+    const { error } = await supabase.from('stages').update({ warn_min: parseInt(warn, 10), prep_min: parseInt(prep, 10), late_cancel_min: parseInt(late, 10), guidelines: rules.trim() || null }).eq('id', stage.id)
     if (error) toast(error.message, { kind: 'bad' }); else { toast('Saved', { kind: 'ok' }); onChange() }
   }
   async function member(m: StageMember, patch: { role?: string; remove?: boolean }) {
@@ -154,10 +158,16 @@ function HostPanel({ stage, members, onChange }: { stage: Stage; members: StageM
             <select value={warn} onChange={e => setWarn(e.target.value)}>{[2, 3, 5, 10, 15].map(n => <option key={n} value={n}>{n} minutes before the end</option>)}</select>
           </label>
           <label>Stream key appears
-            <select value={prep} onChange={e => setPrep(e.target.value)}>{[5, 10, 15, 20, 30].map(n => <option key={n} value={n}>{n} minutes before the start</option>)}</select>
+            <select value={prep} onChange={e => setPrep(e.target.value)}>{[5, 10, 15, 20, 30, 60, 120].map(n => <option key={n} value={n}>{n < 60 ? `${n} minutes` : `${n / 60} hour${n > 60 ? 's' : ''}`} before the start</option>)}</select>
           </label>
         </div>
-        {(warn !== String(stage.warn_min) || prep !== String(stage.prep_min)) && <button className="btn primary small" onClick={saveTimes}>Save times</button>}
+        <label>Late rule
+          <select value={late} onChange={e => setLate(e.target.value)}>{[5, 10, 15, 20, 30].map(n => <option key={n} value={n}>Cancel the live if not streaming {n} minutes after the start</option>)}</select>
+        </label>
+        <label>Seller guidelines (shown every time the calendar opens)
+          <textarea rows={4} value={rules} onChange={e => setRules(e.target.value)} placeholder="Leave empty to use the Dynamic Dazzle Bargain Basement Vendor Live Selling Guidelines" />
+        </label>
+        {(warn !== String(stage.warn_min) || prep !== String(stage.prep_min) || late !== String(stage.late_cancel_min ?? 10) || rules !== (stage.guidelines ?? '')) && <button className="btn primary small" onClick={saveTimes}>Save settings</button>}
 
         <div className="stack tight-gap">
           <h3>Sellers ({members.length})</h3>
@@ -258,6 +268,9 @@ function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolea
 
 export default function SharedPage() {
   const toast = useToast()
+  const navigate = useNavigate()
+  const { shop } = useSession()
+  const [agreed, setAgreed] = useState(false)
   const [mine, setMine] = useState<{ stage: Stage; me: StageMember }[] | null>(null)
   const [pick, setPick] = useState(0)
   const [members, setMembers] = useState<StageMember[]>([])
@@ -305,6 +318,7 @@ export default function SharedPage() {
   if (mine === null) return <div className="center-page"><p className="muted">Loading…</p></div>
   if (err && !stage) return <div className="stack"><h1>Shared Page lives</h1><p className="danger-text">{err}</p></div>
   if (!stage || !me) return <Welcome onDone={loadStages} />
+  if (!agreed) return <GuidelinesGate stageId={stage.id} custom={stage.guidelines ?? null} onAgree={() => setAgreed(true)} onDecline={() => navigate(shop ? '/' : '/profile')} />
 
   const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i))
   const now = Date.now()
@@ -316,7 +330,7 @@ export default function SharedPage() {
         <div>
           <span className="eyebrow">Sell · Shared Page</span>
           <h1>{stage.name}</h1>
-          <p className="muted small">{stage.fb_page_id ? <>Goes live on <b>{stage.fb_page_name}</b></> : <span className="danger-text">Facebook Page not connected yet</span>} · one seller per hour · hard start and stop</p>
+          <p className="muted small">{stage.fb_page_id ? <>Goes live on <b>{stage.fb_page_name}</b></> : <span className="danger-text">Facebook Page not connected yet</span>} · one seller per hour · hard start and stop · times in your time zone</p>
         </div>
         <div className="row-gap">
           {mine.length > 1 && <select value={pick} onChange={e => setPick(parseInt(e.target.value, 10))}>{mine.map((m, i) => <option key={m.stage.id} value={i}>{m.stage.name}</option>)}</select>}
