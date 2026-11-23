@@ -114,9 +114,10 @@ Deno.serve(async req => {
       continue
     }
 
-    // Make the stream key. Default (prep_min 0): exactly at the start time, as a public live
-    // that shows as soon as the seller's video arrives. With prep_min > 0: a hidden preview first.
-    if (s.status === 'booked' && start - (s.stage?.prep_min ?? 0) * 60000 <= now) {
+    // Make the stream key. Default prep_min 5: a hidden test preview 5 minutes early, public at start.
+    // With prep_min 0: exactly at the start time, as a public live
+    // that shows as soon as the seller's video arrives.
+    if (s.status === 'booked' && start - (s.stage?.prep_min ?? 5) * 60000 <= now) {
       if (!token || !s.stage?.fb_page_id) { await set(s.id, { last_error: 'The Facebook Page is not connected yet. A host needs to connect it.' }); continue }
       if (!(await claim(s.id, 'booked', 'preparing'))) continue
       const atStart = now >= start

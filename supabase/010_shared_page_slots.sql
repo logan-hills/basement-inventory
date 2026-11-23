@@ -80,8 +80,8 @@ create table if not exists public.stages (
   fb_page_id text,
   fb_page_name text,
   warn_min int not null default 5 check (warn_min between 1 and 30),
-  -- Minutes before the start that the seller gets the stream key. 0 = exactly at the start (default).
-  prep_min int not null default 0 check (prep_min between 0 and 30),
+  -- Minutes before the start that the seller gets the stream key for a HIDDEN test (default 5; 0 = exactly at the start).
+  prep_min int not null default 5 check (prep_min between 0 and 30),
   open_to_all boolean not null default false,
   -- Seller rules shown (and agreed to) every time the calendar opens. Empty = the app's built-in rules.
   guidelines text,
@@ -321,7 +321,7 @@ grant select on public.stage_members, public.live_slot_keys to authenticated;
 grant select, insert on public.live_slots to authenticated;
 -- Hosts may change only these columns on a stage (not the Page id, which the connect step sets).
 revoke update on public.stages from authenticated;
--- prep_min (early key) is not editable in the app: the owner wants keys at the exact start time.
+-- prep_min is not editable in the app: owner chose a 5-minute hidden test, public exactly at start.
 grant update (name, warn_min, guidelines, late_cancel_min) on public.stages to authenticated;
 grant execute on function public.join_open_stages(), public.join_stage(text), public.cancel_slot(uuid), public.set_stage_member(uuid, uuid, text, text, boolean) to authenticated;
 

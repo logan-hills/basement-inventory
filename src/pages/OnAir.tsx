@@ -48,7 +48,7 @@ export default function OnAir() {
   const start = slot ? Date.parse(slot.starts_at) : 0
   const end = slot ? Date.parse(slot.ends_at) : 0
   const warnMs = (stage?.warn_min ?? 5) * 60000
-  const prepMs = (stage?.prep_min ?? 0) * 60000
+  const prepMs = (stage?.prep_min ?? 5) * 60000
 
   // Nudge the server timer at the exact moments that matter, so start and stop land on the second.
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function OnAir() {
   let phase: string, big: string, sub: string
   if (slot.status === 'cancelled') { phase = 'off'; big = 'Cancelled'; sub = 'This slot was cancelled.' }
   else if (after) { phase = 'off'; big = 'Time is up'; sub = slot.went_live_at ? `Your live ended at ${fmtTime(slot.ends_at)}. Great show!` : slot.status === 'missed' && slot.last_error ? slot.last_error : 'This slot is over.' }
-  else if (before) { phase = keyOpen ? 'ready' : 'wait'; big = fmtCountdown(start - now); sub = keyOpen ? `Test your stream now. Viewers see you at ${fmtTime(start)}.` : `until your live. Your Go Live key unlocks at exactly ${fmtTime(start - prepMs)}.` }
+  else if (before) { phase = keyOpen ? 'ready' : 'wait'; big = fmtCountdown(start - now); sub = keyOpen ? `Your Go Live key is ready. Start streaming now for a private test. Nobody sees you until ${fmtTime(start)} exactly.` : `until your live. Your Go Live key unlocks at exactly ${fmtTime(start - prepMs)}.` }
   else if (slot.status === 'live' && slot.went_live_at) { phase = wrap ? 'wrap' : 'live'; big = fmtCountdown(left); sub = wrap ? 'Wrap it up! Last call, thank your buyers, and say goodbye.' : `left. Hard stop at ${fmtTime(end)}.` }
   else { phase = 'waiting'; big = fmtCountdown(left); sub = `It's your time! Paste your key into your streaming app and start. You go live the moment your video arrives. Not streaming by ${fmtTime(start + (stage?.late_cancel_min ?? 10) * 60000)} = live canceled.` }
 
@@ -112,7 +112,7 @@ export default function OnAir() {
       {!after && slot.status !== 'cancelled' && !keyOpen && (
         <div className="card stack">
           <h2>Get your streaming app ready</h2>
-          <p className="muted">Your Go Live key unlocks only at your start time, only on the night you booked. Set up your app now so you just paste and go.</p>
+          <p className="muted">Your Go Live key unlocks 5 minutes before your start time, only on the night you booked, for a private test. You go public at your exact start time. Set up your app now so you just paste and go.</p>
           <StreamSetup url={null} />
         </div>
       )}
