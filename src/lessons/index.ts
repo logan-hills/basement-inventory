@@ -16,7 +16,16 @@ import pick from './pick'
 import shipping from './shipping'
 import customers from './customers'
 import reports from './reports'
+import brand from './business/brand'
+import marketing from './business/marketing'
+import social from './business/social'
+import creatorpay from './business/creatorpay'
+import tiktok from './business/tiktok'
+import shipfast from './business/shipfast'
+import communication from './business/communication'
 
 export const LESSONS: Lesson[] = [tour, settings, receive, bulk, labels, warehouse, scan, damaged, planner, calendar, liveprep, sale, upload, pick, shipping, customers, reports]
-export const lessonById = (id?: string) => LESSONS.find(l => l.id === id)
+export const COURSES: Lesson[] = [brand, marketing, social, creatorpay, tiktok, shipfast, communication]
+export const ALL_LESSONS: Lesson[] = [...LESSONS, ...COURSES]
+export const lessonById = (id?: string) => ALL_LESSONS.find(l => l.id === id)
 export * from './types'

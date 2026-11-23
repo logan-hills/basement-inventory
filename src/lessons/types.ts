@@ -6,7 +6,10 @@
 /** A simple pretend screen used in lessons: a title, some rows, and buttons. */
 export type Screen = { title: string; rows?: string[]; buttons: string[]; highlight?: string }
 
-export type Slide =
+/** Fields any slide can carry: a chapter heading (courses) and Nova's own line for this slide. */
+type Common = { chapter?: string; nova?: string }
+
+export type Slide = Common & (
   | { kind: 'learn'; title: string; text: string; points?: string[]; screen?: Screen; tip?: string }
   /** Practice: tap the right button on a pretend screen. */
   | { kind: 'tap'; title: string; prompt: string; screen: Screen; answer: string; hint: string }
@@ -14,8 +17,11 @@ export type Slide =
   | { kind: 'order'; title: string; prompt: string; steps: string[] }
   /** Quick check: one multiple-choice question. */
   | { kind: 'quiz'; q: string; options: string[]; answer: number; why: string }
+  /** Workbook: the seller writes their own answer (saved on this device). Any honest answer counts. */
+  | { kind: 'reflect'; title: string; prompt: string; placeholder?: string; example?: string }
+)
 
-export type Track = 'Start here' | 'Stock' | 'Sell' | 'Pack and ship' | 'Grow'
+export type Track = 'Start here' | 'Stock' | 'Sell' | 'Pack and ship' | 'Grow' | 'Business'
 
 export type Lesson = {
   id: string
@@ -25,6 +31,10 @@ export type Lesson = {
   minutes: number
   /** One sentence on why this feature matters to the seller. */
   why: string
+  /** 'course' = an in-depth business course; default is an app how-to lesson. */
+  kind?: 'app' | 'course'
+  /** What the seller can do after a course. */
+  outcomes?: string[]
   /** Where to try it for real. */
   route?: { to: string; label: string }
   /** Source files this lesson teaches. Used by lessons:check. */
@@ -35,3 +45,4 @@ export type Lesson = {
 }
 
 export const TRACKS: Track[] = ['Start here', 'Stock', 'Sell', 'Pack and ship', 'Grow']
+export const COURSE_TRACK: Track = 'Business'

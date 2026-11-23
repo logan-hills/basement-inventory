@@ -1,12 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { loadItems, money, photoUrls, type Item } from '../lib/data'
+import { useSession } from '../lib/session'
+import CategoryRail from '../components/CategoryRail'
 
 export default function Inventory() {
   const navigate = useNavigate()
   const [items, setItems] = useState<Item[]>([])
   const [urls, setUrls] = useState<Record<string, string>>({})
   const [q, setQ] = useState('')
+  const [cat, setCat] = useState('')
+  const { settings } = useSession()
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState('')
   const [sel, setSel] = useState<Set<string>>(new Set())
@@ -24,12 +28,18 @@ export default function Inventory() {
 
   const rows = useMemo(() => {
     const s = q.trim().toLowerCase()
-    const all = items.flatMap(it => it.variants.map(v => ({ it, v })))
+    const all = items.flatMap(it => it.variants.map(v => ({ it, v }))).filter(({ it }) => !cat || it.category === cat)
     if (!s) return all
     return all.filter(({ it, v }) =>
       it.name.toLowerCase().includes(s) || (it.brand ?? '').toLowerCase().includes(s) ||
       (it.category ?? '').toLowerCase().includes(s) || v.live_number.includes(s) || v.label.toLowerCase().includes(s))
-  }, [items, q])
+  }, [items, q, cat])
+  const catStats = useMemo(() => {
+    const m = new Map<string, { pieces: number; value: number }>()
+    for (const c of settings.categories) m.set(c, { pieces: 0, value: 0 })
+    for (const it of items) { if (!it.category) continue; const x = m.get(it.category) ?? { pieces: 0, value: 0 }; for (const v of it.variants) { x.pieces += v.in_stock ?? 0; x.value += (v.in_stock ?? 0) * (v.price ?? 0) } m.set(it.category, x) }
+    return [...m].map(([name, v]) => ({ name, ...v }))
+  }, [items, settings.categories])
 
   const units = rows.reduce((s, r) => s + (r.v.in_stock ?? 0), 0)
 
@@ -43,6 +53,7 @@ export default function Inventory() {
           <Link to="/intake" className="btn primary">+ Add item</Link>
         </div>
       </div>
+      {items.length > 0 && <CategoryRail cats={catStats} active={cat} onPick={setCat} money={money} />}
       <input type="search" className="search" placeholder="Search name, brand or Live #" value={q} onChange={e => setQ(e.target.value)} />
       {err && <p className="danger-text">{err}</p>}
       {loading ? <div className="skeleton-list"><div /><div /><div /></div> : rows.length === 0 ? (
