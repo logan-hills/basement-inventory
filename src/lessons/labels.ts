@@ -45,7 +45,7 @@ const lesson: Lesson = {
       points: ['Each item\'s own sale price: set it on the item page, or for many at once with Edit in Inventory', 'Percent off the regular price: type 30 for 30% off', 'One price for all: perfect for a $5 rack or $2 Tuesday'],
       screen: { title: 'Print tags', rows: ['Tag style: Regular (white roll) | Sale (yellow roll)', 'Sale price: Percent off the regular price · 30% off'], buttons: ['Print'], highlight: 'Print' } },
     { kind: 'number', title: 'Work out the tag', q: 'A bag is $40. You print sale tags at 25% off. What price prints big on the yellow tag?', answer: 30, prefix: '$', hint: '25% of $40 is $10.', why: '$40 − $10 = $30. The tag shows $30 with $40 crossed out.' },
-    { kind: 'tap', title: 'Practice', prompt: 'You ticked 12 old pieces in Inventory for a clearance live. Tap the button for yellow tags…', screen: { title: 'Inventory · 12 selected', buttons: ['Print tags', 'Sale tags', 'Damage out', 'Edit'] }, answer: 'Sale tags', hint: 'Sale tags opens printing with the Sale style already on.' },
+    { kind: 'tap', title: 'Practice', prompt: 'You ticked 12 old pieces in Inventory for a clearance live. Tap the button for yellow tags…', screen: { title: 'Inventory · 12 selected', buttons: ['Print tags', 'Edit', 'More: Print yellow sale tags'] }, answer: 'More: Print yellow sale tags', hint: 'Tap More, then Print yellow sale tags. It opens printing with the Sale style already on.' },
 
     { kind: 'learn', title: 'Paying for labels', text: 'Labels are a real cost of doing business, so it helps to know what each tag costs you. Rough numbers below, prices vary by store and pack size.',
       table: { head: ['Label type', 'Rough cost per tag', 'Hidden cost'], rows: [

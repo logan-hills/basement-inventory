@@ -1,7 +1,7 @@
 import { useEffect, type ReactNode } from 'react'
 
 /** Slides up from the bottom on phones, appears as a centered panel on laptops. */
-export default function Sheet({ open, onClose, title, children }: { open: boolean; onClose: () => void; title: string; children: ReactNode }) {
+export default function Sheet({ open, onClose, title, children, wide }: { open: boolean; onClose: () => void; title: string; children: ReactNode; wide?: boolean }) {
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
@@ -12,7 +12,7 @@ export default function Sheet({ open, onClose, title, children }: { open: boolea
   if (!open) return null
   return (
     <div className="sheet-backdrop" onClick={onClose}>
-      <div className="sheet-panel" role="dialog" aria-modal="true" aria-label={title} onClick={e => e.stopPropagation()}>
+      <div className={`sheet-panel${wide ? ' wide' : ''}`} role="dialog" aria-modal="true" aria-label={title} onClick={e => e.stopPropagation()}>
         <div className="sheet-grip" aria-hidden="true" />
         <div className="sheet-head">
           <h2>{title}</h2>

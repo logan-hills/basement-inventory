@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useSession } from '../lib/session'
 import { money } from '../lib/data'
@@ -12,16 +13,16 @@ type Removed = { removed_reason: string | null; removed_at: string | null; varia
 
 /** Every report a seller can print, in page order. */
 const REPORTS = [
-  { k: 'summary', label: 'Big numbers', hint: 'Sales and inventory totals' },
-  { k: 'categories', label: 'Top categories', hint: 'What sold in each category, in percents' },
-  { k: 'lives', label: 'Sales by live', hint: 'Each live night\'s totals' },
-  { k: 'best', label: 'Best sellers', hint: 'Your top pieces' },
-  { k: 'customers', label: 'Top customers', hint: 'Your biggest buyers' },
-  { k: 'stockAge', label: 'Stock age', hint: 'How long pieces have sat' },
-  { k: 'stockCat', label: 'Stock by category', hint: 'What\'s on the shelf, by category' },
-  { k: 'oldest', label: 'Oldest stock', hint: 'Pieces to put on sale' },
-  { k: 'lowMargin', label: 'Low margin items', hint: 'Pieces making you the least' },
-  { k: 'damage', label: 'Damage by reason', hint: 'What went wrong most' },
+  { k: 'summary', label: 'Big numbers', hint: 'Sales and inventory totals', icon: 'dollar' },
+  { k: 'categories', icon: 'tag', label: 'Top categories', hint: 'What sold in each category, in percents' },
+  { k: 'lives', icon: 'reports', label: 'Sales by live', hint: 'Each live night\'s totals' },
+  { k: 'best', icon: 'sparkle', label: 'Best sellers', hint: 'Your top pieces' },
+  { k: 'customers', icon: 'users', label: 'Top customers', hint: 'Your biggest buyers' },
+  { k: 'stockAge', icon: 'clock', label: 'Stock age', hint: 'How long pieces have sat' },
+  { k: 'stockCat', icon: 'inventory', label: 'Stock by category', hint: 'What\'s on the shelf, by category' },
+  { k: 'oldest', icon: 'clock', label: 'Oldest stock', hint: 'Pieces to put on sale' },
+  { k: 'lowMargin', icon: 'trend', label: 'Low margin items', hint: 'Pieces making you the least' },
+  { k: 'damage', icon: 'damaged', label: 'Damage by reason', hint: 'What went wrong most' },
 ] as const
 type ReportKey = typeof REPORTS[number]['k']
 
@@ -40,9 +41,9 @@ function ReportHead({ title, sub, onPrint, csv }: { title: string; sub?: string;
   )
 }
 
-function Table({ title, head, rows, file, cls, onPrint }: { title: string; head: string[]; rows: (string | number)[][]; file: string; cls: string; onPrint: () => void }) {
+function Table({ title, head, rows, file, cls, onPrint }: { title: string; head: string[]; rows: (string | number)[][]; file: string; cls?: string; onPrint: () => void }) {
   return (
-    <section className={`card stack report-block ${cls}`}>
+    <section className={`card stack report-block ${cls ?? ''}`}>
       <ReportHead title={title} onPrint={onPrint} csv={{ file, rows: [head, ...rows] }} />
       {rows.length === 0 ? <p className="muted small">No data yet.</p> : (
         <div className="table-box"><table className="data-table">
@@ -55,6 +56,8 @@ function Table({ title, head, rows, file, cls, onPrint }: { title: string; head:
 }
 
 export default function Reports() {
+  const { view } = useParams<{ view?: string }>()
+  const current = REPORTS.find(r => r.k === view && r.k !== 'summary')
   const { settings, shop } = useSession()
   const [range, setRange] = useState('90')
   const [picker, setPicker] = useState(false)
@@ -76,7 +79,8 @@ export default function Reports() {
     return () => { window.clearTimeout(t); window.removeEventListener('afterprint', done) }
   }, [printing])
   const printOnly = (keys: ReportKey[]) => { setPicker(false); setPrinting(new Set(keys)) }
-  const cls = (k: ReportKey) => (printing && !printing.has(k) ? 'print-skip' : '')
+  /** On screen: Big numbers on the main page, one report per sub-page. When printing: just the ones picked. */
+  const on = (k: ReportKey) => (printing ? printing.has(k) : current ? current.k === k : k === 'summary')
   const togglePick = (k: ReportKey) => setPicked(p => { const n = new Set(p); if (n.has(k)) n.delete(k); else n.add(k); return n })
 
   useEffect(() => {
@@ -150,13 +154,21 @@ export default function Reports() {
   const dmg = new Map<string, number>()
   for (const r of removed) dmg.set(r.removed_reason ?? 'Other', (dmg.get(r.removed_reason ?? 'Other') ?? 0) + 1)
 
+  const salesChart = byLive.size ? <ColumnChart label="Sales by live" format={n => money(n).replace(/\.\d\d$/, '')}
+    data={[...byLive.entries()].sort((a, b) => a[0].localeCompare(b[0])).slice(-16).map(([d, v]) => ({ label: new Date(d + 'T12:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' }), value: v.revenue, detail: `${v.orders} orders` }))} />
+    : <div className="chart-empty"><Icon name="reports" size={28} /><span className="muted small">No sales in this range yet.</span></div>
+  const ageBar = <SegmentBar data={[[0, 30, 'Under 30 days'], [31, 60, '31–60'], [61, 90, '61–90'], [91, 180, '91–180'], [181, 1e9, '181+']].map(([a, b, l]) => ({ label: l as string, value: live.filter(r => r.ageDays >= (a as number) && r.ageDays <= (b as number)).reduce((x, r) => x + r.inStock, 0) }))} />
+
   return (
     <div className={`stack wide-gap report-page${printing ? ' printing' : ''}`}>
+      {current && <Link to="/reports" className="back-link no-print">‹ Reports</Link>}
       <div className="page-head no-print">
-        <div><span className="eyebrow">Insights</span><h1>Reports</h1></div>
+        <div><h1>{current ? current.label : 'Reports'}</h1>{current && <span className="muted">{current.hint}</span>}</div>
         <div className="report-top-actions">
           <select value={range} onChange={e => setRange(e.target.value)} aria-label="Date range">{RANGES.map(r => <option key={r.k} value={r.k}>{r.label}</option>)}</select>
-          <button className="btn gold" onClick={() => setPicker(p => !p)} aria-expanded={picker}><Icon name="print" size={18} /> Print reports</button>
+          {current
+            ? <button className="btn gold" onClick={() => printOnly([current.k])}><Icon name="print" size={18} /> Print</button>
+            : <button className="btn gold" onClick={() => setPicker(p => !p)} aria-expanded={picker}><Icon name="print" size={18} /> Print reports</button>}
         </div>
       </div>
 
@@ -192,7 +204,7 @@ export default function Reports() {
         </section>
       )}
 
-      <section className={`stack report-block report-plain ${cls('summary')}`}>
+      {on('summary') && <section className={`stack report-block report-plain`}>
         <ReportHead title="Big numbers" onPrint={() => printOnly(['summary'])} />
         <span className="eyebrow">Sales · {rangeLabel.toLowerCase()}</span>
         <div className="stat-row">
@@ -213,9 +225,34 @@ export default function Reports() {
           <div className="stat"><span>Old stock</span><b className={old.length ? 'danger-text' : ''}>{old.length}</b><small className="muted">{settings.oldStockDays}+ days</small></div>
           <div className="stat"><span>Damaged out</span><b>{removed.length}</b><small className="muted">{money(damagedValue)} lost</small></div>
         </div>
-      </section>
+      </section>}
 
-      <section className={`card stack report-block ${cls('categories')}`}>
+      {!current && !printing && <>
+        <div className="chart-grid no-print">
+          <section className="card stack">
+            <div className="row-between"><div><h2>Sales by live</h2><span className="muted small">Hover a bar for the exact total</span></div><Link to="/reports/lives" className="link-btn">Details</Link></div>
+            {salesChart}
+          </section>
+          <section className="card stack">
+            <div className="row-between"><div><h2>Stock age</h2><span className="muted small">Items in stock by days since they arrived</span></div><Link to="/reports/stockAge" className="link-btn">Details</Link></div>
+            {ageBar}
+          </section>
+        </div>
+        <section className="stack no-print">
+          <h2 className="section-title">More reports</h2>
+          <div className="hub-list">
+            {REPORTS.filter(r => r.k !== 'summary').map(r => (
+              <Link key={r.k} to={`/reports/${r.k}`} className="hub-row">
+                <span className="action-ico"><Icon name={r.icon} size={22} /></span>
+                <span className="action-text"><b>{r.label}</b><small>{r.hint}</small></span>
+                <Icon name="chevron" size={20} className="action-chev" />
+              </Link>
+            ))}
+          </div>
+        </section>
+      </>}
+
+      {on('categories') && <section className={`card stack report-block`}>
         <ReportHead title="Top categories" sub="What your buyers pick most, and what sold inside each category" onPrint={() => printOnly(['categories'])} csv={{ file: 'top-categories.csv', rows: catCsv }} />
         {cats.length === 0 ? <div className="chart-empty"><Icon name="tag" size={28} /><span className="muted small">Nothing sold in this range yet. Once orders come in, your top categories show up here.</span></div> : <>
           {leader && <p className="cat-insight"><Icon name="sparkle" size={18} /> <span><b>{leader.name}</b> is your buyers' favorite: <b>{pct(catSort === 'units' ? leader.unitShare : leader.revShare)}</b> of {catSort === 'units' ? 'everything sold' : 'your sales'}.{leader.items[0] && <> Inside it, <b>{leader.items[0].name}</b> leads with {pct(leader.units ? leader.items[0].units / leader.units : 0)} of the pieces sold.</>}</span></p>}
@@ -259,41 +296,28 @@ export default function Reports() {
           </ol>
           <p className="muted small no-print">Tap a category to see what sold inside it. Pieces with no category show as "No category"; add one on the item page.</p>
         </>}
-      </section>
+      </section>}
 
-      <div className="chart-grid no-print">
-        <section className="card stack">
-          <div><h2>Sales by live</h2><span className="muted small">Hover a bar for the exact total</span></div>
-          {byLive.size ? <ColumnChart label="Sales by live" format={n => money(n).replace(/\.\d\d$/, '')}
-            data={[...byLive.entries()].sort((a, b) => a[0].localeCompare(b[0])).slice(-16).map(([d, v]) => ({ label: new Date(d + 'T12:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' }), value: v.revenue, detail: `${v.orders} orders` }))} />
-            : <div className="chart-empty"><Icon name="reports" size={28} /><span className="muted small">No sales in this range yet.</span></div>}
-        </section>
-        <section className="card stack">
-          <div><h2>Best sellers</h2><span className="muted small">Items sold</span></div>
-          {top.size ? <BarList data={[...top.values()].sort((a, b) => b.units - a.units).slice(0, 6).map(v => ({ label: v.name, value: v.units }))} />
-            : <div className="chart-empty"><Icon name="tag" size={28} /><span className="muted small">Nothing sold in this range yet.</span></div>}
-        </section>
-      </div>
-      <section className="card stack no-print">
-        <div><h2>Stock age</h2><span className="muted small">Items in stock by days since they arrived</span></div>
-        <SegmentBar data={[[0, 30, 'Under 30 days'], [31, 60, '31–60'], [61, 90, '61–90'], [91, 180, '91–180'], [181, 1e9, '181+']].map(([a, b, l]) => ({ label: l as string, value: live.filter(r => r.ageDays >= (a as number) && r.ageDays <= (b as number)).reduce((x, r) => x + r.inStock, 0) }))} />
-      </section>
+      {current && !printing && current.k === 'lives' && <section className="card stack no-print">{salesChart}</section>}
+      {current && !printing && current.k === 'best' && <section className="card stack no-print">{top.size ? <BarList data={[...top.values()].sort((a, b) => b.units - a.units).slice(0, 6).map(v => ({ label: v.name, value: v.units }))} /> : <div className="chart-empty"><Icon name="tag" size={28} /><span className="muted small">Nothing sold in this range yet.</span></div>}</section>}
+      {current && !printing && current.k === 'stockAge' && <section className="card stack no-print">{ageBar}</section>}
+      {current && !printing && current.k === 'stockCat' && <section className="card stack no-print"><div><h2>Retail value on the shelf</h2></div>{byCat.size ? <BarList data={[...byCat.entries()].sort((a, b) => b[1].retail - a[1].retail).slice(0, 8).map(([label, v]) => ({ label, value: v.retail }))} format={n => money(n).replace(/\.\d\d$/, '')} /> : <div className="chart-empty"><Icon name="inventory" size={28} /><span className="muted small">Receive items to see your mix.</span></div>}</section>}
 
-      <div className="settings-grid report-tables">
-        <Table title="Sales by live" head={['Live date', 'Orders', 'Items', 'Buyers', 'Sales']} file="sales-by-live.csv" cls={cls('lives')} onPrint={() => printOnly(['lives'])}
-          rows={[...byLive.entries()].sort((a, b) => b[0].localeCompare(a[0])).map(([d, v]) => [new Date(d + 'T12:00').toLocaleDateString(), v.orders, v.units, v.customers.size, money(v.revenue)])} />
-        <Table title="Best sellers" head={['Item', 'Sold', 'Sales']} file="best-sellers.csv" cls={cls('best')} onPrint={() => printOnly(['best'])}
-          rows={[...top.values()].sort((a, b) => b.units - a.units).slice(0, 15).map(v => [v.name, v.units, money(v.revenue)])} />
-        <Table title="Top customers" head={['Customer', 'Orders', 'Spent']} file="top-customers.csv" cls={cls('customers')} onPrint={() => printOnly(['customers'])}
-          rows={[...topCust.values()].sort((a, b) => b.spent - a.spent).slice(0, 15).map(v => [v.name, v.orders, money(v.spent)])} />
-        <Table title="Stock age" head={['Age', 'Items', 'Retail', 'Cost']} file="stock-age.csv" rows={buckets} cls={cls('stockAge')} onPrint={() => printOnly(['stockAge'])} />
-        <Table title="Stock by category" head={['Category', 'Items', 'Retail', 'Cost', 'Margin']} file="stock-by-category.csv" cls={cls('stockCat')} onPrint={() => printOnly(['stockCat'])}
-          rows={[...byCat.entries()].sort((a, b) => b[1].retail - a[1].retail).map(([k, v]) => [k, v.units, money(v.retail), money(v.cost), v.retail ? pct((v.retail - v.cost) / v.retail) : '—'])} />
-        <Table title="Oldest stock" head={['Live #', 'Item', 'Days', 'In stock', 'Price']} file="oldest-stock.csv" cls={cls('oldest')} onPrint={() => printOnly(['oldest'])}
-          rows={[...old].sort((a, b) => b.ageDays - a.ageDays).slice(0, 20).map(r => [r.live_number, `${r.item.name}${r.label !== 'One size' ? ` · ${r.label}` : ''}`, r.ageDays, r.inStock, money(r.price)])} />
-        <Table title="Low margin items" head={['Live #', 'Item', 'Price', 'Cost', 'Margin']} file="low-margin.csv" cls={cls('lowMargin')} onPrint={() => printOnly(['lowMargin'])}
-          rows={live.filter(r => margin(r) != null).sort((a, b) => margin(a)! - margin(b)!).slice(0, 15).map(r => [r.live_number, r.item.name, money(r.price), money(r.cost), pct(margin(r))])} />
-        <Table title="Damage by reason" head={['Reason', 'Items']} file="damage.csv" rows={[...dmg.entries()].sort((a, b) => b[1] - a[1])} cls={cls('damage')} onPrint={() => printOnly(['damage'])} />
+      <div className="stack report-tables">
+        {on('lives') && <Table title="Sales by live" head={['Live date', 'Orders', 'Items', 'Buyers', 'Sales']} file="sales-by-live.csv" onPrint={() => printOnly(['lives'])}
+          rows={[...byLive.entries()].sort((a, b) => b[0].localeCompare(a[0])).map(([d, v]) => [new Date(d + 'T12:00').toLocaleDateString(), v.orders, v.units, v.customers.size, money(v.revenue)])} />}
+        {on('best') && <Table title="Best sellers" head={['Item', 'Sold', 'Sales']} file="best-sellers.csv" onPrint={() => printOnly(['best'])}
+          rows={[...top.values()].sort((a, b) => b.units - a.units).slice(0, 15).map(v => [v.name, v.units, money(v.revenue)])} />}
+        {on('customers') && <Table title="Top customers" head={['Customer', 'Orders', 'Spent']} file="top-customers.csv" onPrint={() => printOnly(['customers'])}
+          rows={[...topCust.values()].sort((a, b) => b.spent - a.spent).slice(0, 15).map(v => [v.name, v.orders, money(v.spent)])} />}
+        {on('stockAge') && <Table title="Stock age" head={['Age', 'Items', 'Retail', 'Cost']} file="stock-age.csv" rows={buckets} onPrint={() => printOnly(['stockAge'])} />}
+        {on('stockCat') && <Table title="Stock by category" head={['Category', 'Items', 'Retail', 'Cost', 'Margin']} file="stock-by-category.csv" onPrint={() => printOnly(['stockCat'])}
+          rows={[...byCat.entries()].sort((a, b) => b[1].retail - a[1].retail).map(([k, v]) => [k, v.units, money(v.retail), money(v.cost), v.retail ? pct((v.retail - v.cost) / v.retail) : '—'])} />}
+        {on('oldest') && <Table title="Oldest stock" head={['Live #', 'Item', 'Days', 'In stock', 'Price']} file="oldest-stock.csv" onPrint={() => printOnly(['oldest'])}
+          rows={[...old].sort((a, b) => b.ageDays - a.ageDays).slice(0, 20).map(r => [r.live_number, `${r.item.name}${r.label !== 'One size' ? ` · ${r.label}` : ''}`, r.ageDays, r.inStock, money(r.price)])} />}
+        {on('lowMargin') && <Table title="Low margin items" head={['Live #', 'Item', 'Price', 'Cost', 'Margin']} file="low-margin.csv" onPrint={() => printOnly(['lowMargin'])}
+          rows={live.filter(r => margin(r) != null).sort((a, b) => margin(a)! - margin(b)!).slice(0, 15).map(r => [r.live_number, r.item.name, money(r.price), money(r.cost), pct(margin(r))])} />}
+        {on('damage') && <Table title="Damage by reason" head={['Reason', 'Items']} file="damage.csv" rows={[...dmg.entries()].sort((a, b) => b[1] - a[1])} onPrint={() => printOnly(['damage'])} />}
       </div>
     </div>
   )

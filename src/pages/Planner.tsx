@@ -12,7 +12,8 @@ import { ENGAGEMENT_IDEAS, IDEA_BANK, PALETTES, THEME_CATS, findIdea, ideaPreset
 
 type LiveWithPlan = Live & { plan: Plan }
 
-export default function Planner() {
+/** The Live Planner. `ideas` is its sub-page with the whole idea bank, so the main page stays short. */
+export default function Planner({ view = 'main' }: { view?: 'main' | 'ideas' }) {
   const navigate = useNavigate()
   const { settings } = useSession()
   const [lives, setLives] = useState<LiveWithPlan[] | null>(null)
@@ -62,6 +63,49 @@ export default function Planner() {
     if (i) { planIdea(i); setParams({}, { replace: true }) }
   }, [params]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const ideaBank = (
+    <>
+      <div className="theme-filter">
+        <div className="chips">
+          {['All', ...(thisMonth.length ? ['This month'] : []), ...THEME_CATS].map(c => <button key={c} className={`chip ${cat === c ? 'on' : ''}`} onClick={() => { setCat(c); setSpin(null) }}>{c}</button>)}
+        </div>
+        <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search themes: bags, church, gold…" aria-label="Search themes" />
+      </div>
+      {shown.length === 0 && <div className="empty card"><b>No themes match "{q}"</b><span className="muted">Try another word, or start from scratch with Plan a new live.</span></div>}
+      <div className="idea-grid">
+        {shown.map(i => (
+          <button key={i.title} className="idea-card" onClick={() => planIdea(i)}>
+            <div className="idea-top" style={swatch(i.palette)}>
+              <span className="idea-cat">{i.cat}</span>
+              <b>{i.title}</b>
+            </div>
+            <div className="idea-body">
+              <span className="small">{i.vibe}</span>
+              <ul>{i.hooks.slice(0, 2).map(h => <li key={h}>{h}</li>)}</ul>
+              <span className="idea-cta">Plan this live →</span>
+            </div>
+          </button>
+        ))}
+      </div>
+      <section className="card stack">
+        <h2>Ways to get the comments flowing</h2>
+        <div className="chip-list">{ENGAGEMENT_IDEAS.map(e => <span key={e} className="idea-chip">{e}</span>)}</div>
+      </section>
+    </>
+  )
+  const form_ = <LiveForm open={form} preset={preset} onClose={() => setForm(false)} onSaved={id => navigate(`/lives/${id}/plan`)} />
+
+  if (view === 'ideas') return (
+    <div className="stack wide-gap">
+      <Link to="/planner" className="back-link">‹ Live Planner</Link>
+      <div className="page-head">
+        <div><h1>Theme ideas</h1><p className="lede">{IDEA_BANK.length} themes to build a show around. Tap one to plan a live with its vibe, poster look and comment hooks ready to go.</p></div>
+      </div>
+      {ideaBank}
+      {form_}
+    </div>
+  )
+
   return (
     <div className="stack wide-gap">
       <div className="page-head">
@@ -77,7 +121,7 @@ export default function Planner() {
       <section className="stack">
         <h2 className="section-title">Your upcoming lives</h2>
         {lives === null ? <div className="skeleton-list"><div /><div /></div> : lives.length === 0 ? (
-          <div className="empty card"><b>No lives on the calendar yet</b><span className="muted">Pick a theme from the idea bank below, or start from scratch.</span></div>
+          <div className="empty card"><b>No lives on the calendar yet</b><span className="muted">Spin for a theme below, browse the theme ideas, or start from scratch.</span></div>
         ) : (
           <div className="plan-grid">
             {lives.map(l => {
@@ -105,7 +149,7 @@ export default function Planner() {
 
       <section className="roulette">
         <NovaSays mood={spin?.spinning ? 'wow' : spin ? 'cheer' : 'wink'} key={spin?.spinning ? 'spin' : spin ? `done${spin.i}` : 'idle'}>
-          {spin?.spinning ? 'Ooh, where is it gonna land…' : spin ? `${wheel[spin.i % wheel.length].title}! I can already see the poster.` : `Can't pick a theme? Let me spin one for you${cat === 'All' ? '' : ` from ${cat}`}.`}
+          {spin?.spinning ? 'Ooh, where is it gonna land…' : spin ? `${wheel[spin.i % wheel.length].title}! I can already see the poster.` : "Can't pick a theme? Let me spin one for you."}
         </NovaSays>
         <div className="roulette-stage">
           {(() => {
@@ -125,39 +169,13 @@ export default function Planner() {
         </div>
       </section>
 
-      <section className="stack">
-        <div className="row-between"><h2 className="section-title">Idea bank</h2><span className="muted small">{IDEA_BANK.length} themes</span></div>
-        <p className="muted">Tap a theme to plan a live around it. It comes with a vibe, a poster look and hooks to get the comments going.</p>
-        <div className="theme-filter">
-          <div className="chips">
-            {['All', ...(thisMonth.length ? ['This month'] : []), ...THEME_CATS].map(c => <button key={c} className={`chip ${cat === c ? 'on' : ''}`} onClick={() => { setCat(c); setSpin(null) }}>{c}</button>)}
-          </div>
-          <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search themes: bags, church, gold…" aria-label="Search themes" />
-        </div>
-        {shown.length === 0 && <div className="empty card"><b>No themes match "{q}"</b><span className="muted">Try another word, or start from scratch with Plan a new live.</span></div>}
-        <div className="idea-grid">
-          {shown.map(i => (
-            <button key={i.title} className="idea-card" onClick={() => planIdea(i)}>
-              <div className="idea-top" style={swatch(i.palette)}>
-                <span className="idea-cat">{i.cat}</span>
-                <b>{i.title}</b>
-              </div>
-              <div className="idea-body">
-                <span className="small">{i.vibe}</span>
-                <ul>{i.hooks.slice(0, 2).map(h => <li key={h}>{h}</li>)}</ul>
-                <span className="idea-cta">Plan this live →</span>
-              </div>
-            </button>
-          ))}
-        </div>
-      </section>
+      <Link to="/planner/ideas" className="hub-row">
+        <span className="action-ico"><Icon name="sparkle" size={22} /></span>
+        <span className="action-text"><b>Browse all {IDEA_BANK.length} theme ideas</b><small>{thisMonth.length ? `${thisMonth.length} picked for this month, plus holidays, deals, style and community nights. Each comes with hooks to get the comments going.` : 'Holidays, deals, style and community nights. Each comes with hooks to get the comments going.'}</small></span>
+        <Icon name="chevron" size={20} className="action-chev" />
+      </Link>
 
-      <section className="card stack">
-        <h2>Ways to get the comments flowing</h2>
-        <div className="chip-list">{ENGAGEMENT_IDEAS.map(e => <span key={e} className="idea-chip">{e}</span>)}</div>
-      </section>
-
-      <LiveForm open={form} preset={preset} onClose={() => setForm(false)} onSaved={id => navigate(`/lives/${id}/plan`)} />
+      {form_}
     </div>
   )
 }

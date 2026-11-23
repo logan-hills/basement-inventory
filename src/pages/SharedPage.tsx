@@ -42,7 +42,7 @@ function Welcome({ onDone }: { onDone: () => void }) {
   }
   return (
     <div className="stack wide-gap">
-      <div className="page-head"><div><span className="eyebrow">Sell</span><h1>Shared Page lives</h1></div></div>
+      <div className="page-head"><div><h1>Shared Page lives</h1></div></div>
       <p className="muted lead">Take turns going live on one Facebook Page. Book your time, get your own private stream key, and the app starts and ends your live right on time. Nobody ever needs the Page password.</p>
       <div className="stage-welcome">
         <form className="card stack" onSubmit={join}>

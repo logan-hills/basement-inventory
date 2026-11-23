@@ -36,7 +36,7 @@ export default function Orders() {
   return (
     <div className="stack wide-gap">
       <div className="page-head">
-        <div><span className="eyebrow">Sell</span><h1>Orders</h1></div>
+        <div><h1>Pick and pack</h1></div>
         <div className="row-gap">
           <Link to="/orders/upload" className="btn primary">Upload live sales</Link>
         </div>

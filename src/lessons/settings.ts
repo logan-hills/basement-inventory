@@ -14,9 +14,9 @@ const lesson: Lesson = {
   covers: ['src/pages/Settings.tsx', 'src/lib/settings.ts'], updated: '2026-11-23',
   slides: [
     { chapter: 'Your lists', kind: 'learn', title: 'Your lists, your words', nova: 'Ten minutes here saves you hours later. Promise.',
-      text: 'Settings holds the lists the whole app uses. Add, rename or remove anything.',
+      text: 'Settings holds the lists the whole app uses. It opens as a short list; tap a row to open just that page, and ‹ Settings brings you back. Add, rename or remove anything.',
       points: ['Categories (Jewelry, Bags, Apparel…)', 'Item tags (Holiday, Plus size, New arrival…)', 'Live themes and hosts', 'Bot CSV columns'],
-      screen: { title: 'Customize your shop', rows: ['Categories', 'Item tags', 'Live themes', 'Hosts'], buttons: ['Add'], highlight: 'Add' } },
+      screen: { title: 'Settings', rows: ['Your shop', 'Categories and tags', 'Live themes and hosts', 'Live checklists', 'Goals, alerts and defaults', 'Bot CSV columns'], buttons: ['Categories and tags'], highlight: 'Categories and tags' } },
     { kind: 'learn', title: 'Categories vs tags', text: 'Every piece gets ONE category: what kind of thing it is. It can have MANY tags: extra labels that help you find and plan. Mixing them up is the most common setup mistake.',
       table: { head: ['', 'Category', 'Tags'], rows: [
         ['Question it answers', 'What is it?', 'What else is true about it?'],
@@ -27,7 +27,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'A system that stays tidy', text: 'Keep categories to about 6 to 10. Too many and nobody can pick the right one. Then use tags for everything else.',
       example: 'Categories: Jewelry, Bags, Tops, Dresses, Scarves & Accessories, Shoes, Home. Tags: color (Gold, Silver, Emerald), season (Holiday, Spring), size (Plus size), occasion (Church, Date night), status (New arrival, Bundle).',
       tip: 'Decide on your spelling once ("Plus size", not "plus-size" and "Plus Size" too). One spelling means filters always work.' },
-    { kind: 'tap', title: 'Practice', prompt: 'You started selling shoes. Where do you add "Shoes" so it shows in the dropdown when receiving items?', screen: { title: 'Customize your shop', buttons: ['Categories', 'Item tags', 'Live themes', 'Bot CSV columns'] }, answer: 'Categories', hint: 'The kind of product is a category. Tags are extra labels like "Holiday".' },
+    { kind: 'tap', title: 'Practice', prompt: 'You started selling shoes. Where do you add "Shoes" so it shows in the dropdown when receiving items?', screen: { title: 'Settings', buttons: ['Categories and tags', 'Live themes and hosts', 'Live checklists', 'Bot CSV columns'] }, answer: 'Categories and tags', hint: 'The kind of product is a category. Open Categories and tags and add it under Categories.' },
     { kind: 'quiz', q: 'A gold necklace that\'s perfect for Christmas. How do you set it up?', options: ['Category: Holiday', 'Category: Jewelry. Tags: Gold, Holiday', 'Category: Gold Christmas Jewelry'], answer: 1, why: 'What it is goes in the category. Everything else goes in tags, so it shows up for Jewelry AND for your Holiday live.' },
     { kind: 'reflect', title: 'Your categories and tags', prompt: 'List the 6 to 10 categories you\'ll use, and at least 6 tags.', placeholder: 'Categories: … Tags: …', example: 'Categories: Jewelry, Bags, Tops, Dresses, Scarves, Shoes. Tags: Gold, Silver, Holiday, Church, Plus size, New arrival, Bundle.' },
 
@@ -52,7 +52,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'quiz', q: 'Stock starts showing in Run a sale when…', options: ['It passes your old-stock days in Settings', 'It has no photo', 'It is in the cart'], answer: 0, why: 'You choose the number of days in Settings → Goals, alerts and defaults.' },
 
-    { chapter: 'Checklists', kind: 'learn', title: 'Your live checklists', text: 'Write the steps you do before, during and after every live. Each new live starts with this checklist in its Planner, and Home shows the next few steps.', tip: 'Add the things you tend to forget, like "charge the ring light".' },
+    { chapter: 'Checklists', kind: 'learn', title: 'Your live checklists', text: 'Open Settings → Live checklists and write the steps you do before, during and after every live. Each new live starts with this checklist in its Planner, and Home shows the next few steps.', tip: 'Add the things you tend to forget, like "charge the ring light".' },
     { kind: 'learn', title: 'A starter checklist', text: 'Here\'s a tried-and-true set to start from. Change it to fit you.',
       table: { head: ['Before', 'During', 'After'], rows: [
         ['Post the poster 2 days ahead', 'Read the shop rules at the start', 'Make orders'],

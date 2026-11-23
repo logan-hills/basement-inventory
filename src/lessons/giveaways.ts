@@ -65,7 +65,7 @@ const lesson: Lesson = {
       tip: 'Only opened boxes go to your stream. What\'s inside the rest stays on your device, so nobody can peek.',
       example: 'Prizes: Free bag, Free shipping, $10 off, Mystery jewelry, Try again. With 9 boxes, the extra boxes get your last line, so end with "Try again" or a small treat.' },
     { kind: 'quiz', q: 'You want to give away a scarf to anyone watching, with no slots. Which game fits best?', options: ['Spin the wheel', 'Lucky number', 'Mystery boxes'], answer: 1, why: 'Lucky number needs no list. Everyone comments a number, you draw, closest wins.' },
-    { kind: 'learn', title: 'Announce any winner', text: 'For a lucky number, a box prize or "first to comment", type the winner\'s name in Announce a winner and tap Show the winner. The banner and confetti show for 30 seconds, and the name is saved in Today\'s winners.' },
+    { kind: 'learn', title: 'Announce any winner', text: 'For a lucky number, a box prize or "first to comment", tap Announce a winner under the stage, type the winner\'s name and tap Show the winner. The banner and confetti show for 30 seconds, and the name is saved in Today\'s winners (the button next to it) so you can copy the list later.' },
 
     { chapter: 'On your live', kind: 'learn', title: 'Two ways to show it', text: 'Your viewers need to see the wheel, not just hear about it. Pick the way that matches how you stream.',
       table: { head: ['How you stream', 'What to do'], rows: [
@@ -74,8 +74,8 @@ const lesson: Lesson = {
         ['OBS or Streamlabs on a computer', 'Add your overlay link as a Browser source at 1280 × 720.'],
         ['Prism on your phone', 'Add the Giveaway only link as a Web widget and stretch it over the whole screen.'],
       ] } },
-    { kind: 'learn', title: 'The overlay link', text: 'In the On your live box, copy your overlay link and add it to your streaming app one time. It\'s the same link as your product card, so if it\'s already there, you\'re done. When "Showing on stream" is on, the giveaway pops up on your video. Pick Middle or Top corner. Spinning, drawing or opening a box turns it on for you.',
-      screen: { title: 'On your live', rows: ['Showing on stream', 'Pop up in the: Middle · Top corner'], buttons: ['Copy'], highlight: 'Copy' },
+    { kind: 'learn', title: 'The overlay link', text: 'Tap Stream setup under the stage, copy your overlay link and add it to your streaming app one time. It\'s the same link as your product card, so if it\'s already there, you\'re done. When the switch under the stage says "Showing on stream", the giveaway pops up on your video. Pick Middle or Top corner. Spinning, drawing or opening a box turns it on for you.',
+      screen: { title: 'Stream setup', rows: ['Showing on stream', 'Pop up in the: Middle · Top corner'], buttons: ['Copy'], highlight: 'Copy' },
       tip: 'Keep your overlay links private. If one gets shared by mistake, make a new one from the On Air screen.' },
     { kind: 'tap', title: 'Practice', prompt: 'Your live is on a tablet propped next to your phone. You want the wheel big enough for viewers to read. Tap…', screen: { title: 'Giveaways', buttons: ['Sound on', 'Full screen', 'Clear the winner'] }, answer: 'Full screen', hint: 'Full screen fills the whole screen with the giveaway and keeps the spin button at the bottom.' },
     { kind: 'script', title: 'Say it on the live', lines: [

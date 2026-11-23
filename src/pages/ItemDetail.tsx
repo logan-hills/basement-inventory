@@ -193,6 +193,16 @@ export default function ItemDetail() {
                 </div>
               </div>
               <div className="row2">
+                <label>Add more tags
+                  <span className="input-suffix">
+                    <input inputMode="numeric" value={addQty[v.id] ?? ''} onChange={e => setAddQty(q => ({ ...q, [v.id]: e.target.value.replace(/\D/g, '') }))} placeholder="Qty" />
+                    <button className="btn ghost small" onClick={() => addMore(v)}>Add</button>
+                  </span>
+                </label>
+              </div>
+              <details className="variant-more" open={v.sale_price != null || !!v.sku || !!v.upc}>
+                <summary>More details <span className="muted small">weight, sale price, SKU, UPC</span></summary>
+              <div className="row2">
                 <label>Weight per item (optional)
                   <span className="input-suffix">
                     <input inputMode="decimal" defaultValue={v.weight_lb ?? ''} placeholder="0.0" onBlur={e => saveWeight(v, e.target.value)} />
@@ -208,13 +218,8 @@ export default function ItemDetail() {
                 <label>UPC / barcode on the product (optional)
                   <input inputMode="numeric" defaultValue={v.upc ?? ''} placeholder="Scan or type it" onBlur={e => saveUpc(v, e.target.value)} onKeyDown={e => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur() }} />
                 </label>
-                <label>Add more tags
-                  <span className="input-suffix">
-                    <input inputMode="numeric" value={addQty[v.id] ?? ''} onChange={e => setAddQty(q => ({ ...q, [v.id]: e.target.value.replace(/\D/g, '') }))} placeholder="Qty" />
-                    <button className="btn ghost small" onClick={() => addMore(v)}>Add</button>
-                  </span>
-                </label>
               </div>
+              </details>
               <div className="unit-list">
                 <div className="row-between">
                   <span className="eyebrow">Tags · tick to reprint or damage out</span>

@@ -43,6 +43,7 @@ import OnAir from './pages/OnAir'
 import Overlay from './pages/Overlay'
 import Giveaways from './pages/Giveaways'
 import OnAirBar from './components/OnAirBar'
+import SubNav, { sectionOf } from './components/SubNav'
 import Profile from './pages/Profile'
 import FinishSignup from './pages/FinishSignup'
 import Legal from './pages/Legal'
@@ -57,43 +58,43 @@ export function Crown({ size = 28 }: { size?: number }) {
   )
 }
 
+/** The full menu (opened from More / Menu), grouped by the same areas as the dock. */
 const STOCK = [
-  { to: '/', label: 'Dashboard', end: true, icon: 'dashboard' },
   { to: '/inventory', label: 'Inventory', icon: 'inventory' },
   { to: '/intake', label: 'Receive items', icon: 'receive' },
   { to: '/scan', label: 'Scan', icon: 'scan' },
   { to: '/locations', label: 'Warehouse', icon: 'warehouse' },
   { to: '/damaged', label: 'Damaged', icon: 'damaged' },
 ]
-const SELL = [
+const LIVES = [
   { to: '/planner', label: 'Live Planner', icon: 'sparkle' },
   { to: '/calendar', label: 'Live calendar', icon: 'calendar' },
-  { to: '/shared-page', label: 'Shared Page lives', icon: 'clock' },
   { to: '/live', label: 'Get ready for live', icon: 'live' },
   { to: '/giveaways', label: 'Giveaways', icon: 'gift' },
+  { to: '/shared-page', label: 'Shared Page lives', icon: 'clock' },
+]
+const ORDERS = [
   { to: '/orders', label: 'Pick and pack', icon: 'pack' },
   { to: '/shipping', label: 'Shipping', icon: 'truck' },
   { to: '/customers', label: 'Customers', icon: 'users' },
 ]
 const MORE = [
-  { to: '/profile', label: 'My profile', icon: 'users' },
   { to: '/reports', label: 'Reports', icon: 'reports' },
+  { to: '/profile', label: 'My profile', icon: 'users' },
   { to: '/lessons', label: 'Dazzle University', icon: 'lessons' },
   { to: '/gear', label: 'Recommended gear', icon: 'scan' },
   { to: '/consult', label: 'Time with the Queen', icon: 'sparkle' },
   { to: '/settings', label: 'Settings', icon: 'settings' },
 ]
 
-/** The always-visible dock: the places used every day. Everything else is one tap away in More. */
-const DOCK = [
-  { to: '/', label: 'Home', end: true, icon: 'dashboard' },
-  { to: '/inventory', label: 'Stock', icon: 'inventory' },
-  { to: '/scan', label: 'Scan', icon: 'scan' },
-  { to: '/planner', label: 'Planner', icon: 'sparkle' },
-  { to: '/live', label: 'Sell', icon: 'live' },
-  { to: '/orders', label: 'Pack', icon: 'pack' },
-  { to: '/shipping', label: 'Ship', icon: 'truck' },
-  { to: '/reports', label: 'Money', icon: 'reports' },
+/** The always-visible dock: one button per area. Each area's pages sit in a small row at the top of the page. */
+const DOCK: { to: string; label: string; icon: string; area: ReturnType<typeof sectionOf> }[] = [
+  { to: '/', label: 'Home', icon: 'dashboard', area: 'home' },
+  { to: '/inventory', label: 'Stock', icon: 'inventory', area: 'stock' },
+  { to: '/scan', label: 'Scan', icon: 'scan', area: 'scan' },
+  { to: '/planner', label: 'Lives', icon: 'sparkle', area: 'lives' },
+  { to: '/orders', label: 'Orders', icon: 'pack', area: 'orders' },
+  { to: '/reports', label: 'Money', icon: 'reports', area: 'money' },
 ]
 
 function ScrollTop() {
@@ -145,6 +146,7 @@ function Shell() {
   const { pathname } = useLocation()
   const recovering = useRecovering()
   useEffect(() => { setMenu(false) }, [pathname])
+  const area = sectionOf(pathname)
   // The on-stream product card for Prism / OBS: public, no sign-in, nothing else on the page.
   if (pathname.startsWith('/overlay/')) return <Routes><Route path="/overlay/:token/:part?" element={<Overlay />} /></Routes>
   if (pathname === '/terms' || pathname === '/privacy') {
@@ -163,8 +165,8 @@ function Shell() {
       <ScrollTop />
       <aside className="dock no-print" aria-label="Main menu">
         <NavLink to="/" className="dock-logo" aria-label="Home"><Crown size={26} /></NavLink>
-        {DOCK.map(n => <NavLink key={n.to} to={n.to} end={n.end} className="dock-link"><Icon name={n.icon} size={22} /><span>{n.label}</span></NavLink>)}
-        <button className="dock-link" onClick={() => setMenu(true)}><Icon name="menu" size={22} /><span>More</span></button>
+        {DOCK.map(n => <NavLink key={n.to} to={n.to} className={() => `dock-link${area === n.area ? ' active' : ''}`}><Icon name={n.icon} size={22} /><span>{n.label}</span></NavLink>)}
+        <button className={`dock-link${area === 'more' ? ' active' : ''}`} onClick={() => setMenu(true)}><Icon name="menu" size={22} /><span>More</span></button>
       </aside>
 
       <header className="mobile-top no-print">
@@ -173,10 +175,10 @@ function Shell() {
       </header>
       <Sheet open={menu} onClose={() => setMenu(false)} title="Everything">
         <div className="menu-sheet">
-          {[['Stock', STOCK], ['Sell', SELL], ['Manage', MORE]].map(([name, list]) => (
+          {[['Stock', STOCK], ['Lives', LIVES], ['Orders', ORDERS], ['You and your shop', MORE]].map(([name, list]) => (
             <div key={name as string} className="stack tight-gap">
               <span className="nav-group">{name as string}</span>
-              <div className="menu-links">{(list as typeof STOCK).map(n => <NavLink key={n.to} to={n.to} end={n.end} className="menu-link"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}</div>
+              <div className="menu-links">{(list as typeof STOCK).map(n => <NavLink key={n.to} to={n.to} className="menu-link"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}</div>
             </div>
           ))}
           <div className="row-between"><span className="muted small">{session.user.email}</span><button className="link-btn" onClick={() => supabase.auth.signOut()}>Sign out</button></div>
@@ -185,6 +187,7 @@ function Shell() {
 
       <main className="content">
         <OnAirBar />
+        <SubNav path={pathname} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/intake" element={<Intake />} />
@@ -209,8 +212,11 @@ function Shell() {
           <Route path="/lives/:id/plan" element={<LivePlan />} />
           <Route path="/lives/:id/bot" element={<LiveBot />} />
           <Route path="/planner" element={<Planner />} />
+          <Route path="/planner/ideas" element={<Planner view="ideas" />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/settings/:section" element={<Settings />} />
           <Route path="/reports" element={<Reports />} />
+          <Route path="/reports/:view" element={<Reports />} />
           <Route path="/lessons" element={<Lessons />} />
           <Route path="/consult" element={<Consult />} />
           <Route path="/lessons/:id" element={<LessonPlayer />} />
@@ -228,12 +234,12 @@ function Shell() {
 
       <nav className="tabbar no-print">
         <NavLink to="/" end><Icon name="dashboard" size={22} /><span>Home</span></NavLink>
-        <NavLink to="/inventory"><Icon name="inventory" size={22} /><span>Stock</span></NavLink>
+        <NavLink to="/inventory" className={() => area === 'stock' ? 'active' : ''}><Icon name="inventory" size={22} /><span>Stock</span></NavLink>
         <NavLink to="/scan" className="tab-scan" aria-label="Scan">
           <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M8 8v8M12 8v8M16 8v8" /></svg>
         </NavLink>
-        <NavLink to="/planner"><Icon name="sparkle" size={22} /><span>Planner</span></NavLink>
-        <NavLink to="/orders"><Icon name="pack" size={22} /><span>Pack</span></NavLink>
+        <NavLink to="/planner" className={() => area === 'lives' ? 'active' : ''}><Icon name="sparkle" size={22} /><span>Lives</span></NavLink>
+        <NavLink to="/orders" className={() => area === 'orders' ? 'active' : ''}><Icon name="pack" size={22} /><span>Orders</span></NavLink>
       </nav>
     </div>
   )

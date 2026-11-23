@@ -120,7 +120,7 @@ export default function Warehouse() {
   return (
     <div className="stack wide-gap">
       <div className="page-head">
-        <div><span className="eyebrow">Stock</span><h1>Warehouse</h1></div>
+        <div><h1>Warehouse</h1></div>
         <div className="row-gap">
           {bins && bins.length > 0 && <Link className="btn ghost" to="/bin-labels">Print bin labels</Link>}
           <button className="btn primary" onClick={openLayout}>{bins && bins.length ? 'Edit layout' : '+ Add bins'}</button>
