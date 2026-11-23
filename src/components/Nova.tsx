@@ -16,7 +16,7 @@ const load3d = () => (loading ??= import('./nova3d').then(m => (nova3d = m)).cat
    Moods change her face, how she moves and what sparkles around her. */
 export type NovaMood = 'happy' | 'cheer' | 'think' | 'oops' | 'wow' | 'wink'
 
-export function Nova({ mood = 'happy', size = 96, className = '' }: { mood?: NovaMood; size?: number; className?: string }) {
+export function Nova({ mood = 'happy', size = 96, className = '', talking = false }: { mood?: NovaMood; size?: number; className?: string; talking?: boolean }) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const handle = useRef<NovaHandle | null>(null)
   const [live, setLive] = useState(() => !!nova3d?.supported())
@@ -29,12 +29,20 @@ export function Nova({ mood = 'happy', size = 96, className = '' }: { mood?: Nov
       handle.current = m.attach(canvas.current, moodRef.current, () => setLive(false))
       setLive(!!handle.current)
     })
-    return () => { gone = true; handle.current?.detach(); handle.current = null }
+    // Confetti when she shows off her bow or dances.
+    const el = canvas.current
+    const onPoke = (e: Event) => {
+      const { part, x, y } = (e as CustomEvent<{ part: string; x: number; y: number }>).detail
+      if (part === 'bow' || part === 'shoes') burst(x, y)
+    }
+    el?.addEventListener('novapoke', onPoke)
+    return () => { gone = true; el?.removeEventListener('novapoke', onPoke); handle.current?.detach(); handle.current = null }
   }, [])
+  useEffect(() => { handle.current?.setTalking(talking) }, [talking, live])
   useEffect(() => { moodRef.current = mood; handle.current?.setMood(mood) }, [mood])
 
   return (
-    <span className={`nova nova-${mood} ${live ? 'nova-live' : ''} ${className}`} style={{ width: size, height: size }} role="img" aria-label={`Nova, ${mood}${live ? '. Drag to spin her, tap for a twirl.' : ''}`}>
+    <span className={`nova nova-${mood} ${live ? 'nova-live' : ''} ${className}`} style={{ width: size, height: size }} role="img" aria-label={`Nova, ${mood}${live ? '. Drag to spin her. Tap her shades, bow, hand, bag or sneakers.' : ''}`}>
       <span className="nova-ring">
         <img src={novaAvatar} alt="" width={size} height={size} draggable={false} />
       </span>
@@ -64,11 +72,12 @@ export function NovaSays({ mood = 'happy', children, size = 84, side = 'left', t
     const t = setInterval(() => setN(x => { if (x >= text.length) { clearInterval(t); return x } return x + 2 }), 16)
     return () => clearInterval(t)
   }, [text, typing])
+  const talkingNow = !!text && n < text.length
   return (
     <div className={`nova-says ${side}`}>
       {onNovaClick
-        ? <button className="nova-btn" onClick={onNovaClick} aria-label="Ask Nova for another tip"><Nova mood={mood} size={size} /></button>
-        : <Nova mood={mood} size={size} />}
+        ? <button className="nova-btn" onClick={onNovaClick} aria-label="Ask Nova for another tip"><Nova mood={mood} size={size} talking={talkingNow} /></button>
+        : <Nova mood={mood} size={size} talking={talkingNow} />}
       <div className="nova-bubble" aria-live="polite">
         <span className="nova-name">Nova</span>
         {text ? <span>{text.slice(0, n)}<span className="nova-ghost">{text.slice(n)}</span></span> : children}
