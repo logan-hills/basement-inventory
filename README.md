@@ -26,7 +26,7 @@ Sellers book slots on a shared Page calendar (no overlaps allowed), get a privat
 
 One-time setup:
 1. **Database:** run `supabase/007_shared_page_slots.sql` in the SQL Editor.
-2. **Meta app** (shared with the Live comment bot): at developers.facebook.com create a Business app, add Facebook Login for Business, add `logan-hills.github.io` to App Domains and the app URL as a valid OAuth redirect. The person connecting the Page must have a role on the Meta app while it is in Development mode, and a role on the Page.
+2. **Meta app** (shared with the Live comment bot): at developers.facebook.com create a Business app, add Facebook Login for Business, add `logan-hills.github.io` to App Domains and the app URL as a valid OAuth redirect. The person connecting the Page must have a role on the Meta app while it is in Development mode, and a role on the Page. The app asks for: pages_show_list, pages_manage_posts, pages_read_engagement, pages_read_user_content (all four are needed; the last one gives the comment bot buyer names).
 3. **Supabase secrets** (Edge Functions → Secrets): `FB_APP_ID`, `FB_APP_SECRET`.
 4. **Edge Functions** (Edge Functions → Deploy new function → paste each file from `supabase/functions/`):
    `live-slots-tick` (turn **Verify JWT off**), `fb-page-connect`, `facebook-page-token`, `facebook-live-comments`.
