@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Icon from '../components/Icon'
-import PosterMaker from '../components/PosterMaker'
+import PosterStudio from '../components/PosterMaker'
 import { Ring } from '../components/Charts'
 import { supabase } from '../lib/supabase'
 import { useSession } from '../lib/session'
 import { useToast } from '../lib/toast'
 import { compressImage, money, photoUrls } from '../lib/data'
 import { liveWhen, projected, type Live } from '../lib/lives'
-import { ENGAGEMENT_IDEAS, PALETTES, POSTER_SIZES, progress, savePlan, stepKey, steps, uid, type Phase, type Plan, type Poster } from '../lib/planner'
+import { ENGAGEMENT_IDEAS, PALETTES, POSTER_STYLES, posterPhotos, progress, savePlan, stepKey, steps, uid, type Phase, type Plan, type Poster } from '../lib/planner'
 import { feedbackOk, tap } from '../lib/feedback'
 
 const TABS = [['plan', 'Plan', 'sparkle'], ['inspo', 'Inspiration', 'lessons'], ['poster', 'Poster', 'print'], ['check', 'Checklist', 'pack']] as const
@@ -30,7 +30,21 @@ export default function LivePlan() {
       .then(({ data }) => { setLive((data as any) ?? null); setPlan(((data as any)?.plan ?? {}) as Plan) })
   }, [id])
 
-  const imagePaths = useMemo(() => (plan.inspiration ?? []).filter(i => i.kind === 'image' && i.path).map(i => i.path!), [plan.inspiration])
+  // Photos of the pieces picked for this live, so they can go on the poster.
+  const [products, setProducts] = useState<{ path: string; label: string }[]>([])
+  useEffect(() => {
+    supabase.from('live_items').select('sort, variant:variants(label, item:items(name, photos:item_photos(path,sort)))').eq('live_id', id!).order('sort')
+      .then(({ data }) => {
+        const seen = new Set<string>(); const out: { path: string; label: string }[] = []
+        for (const r of (data ?? []) as any[]) {
+          const it = r.variant?.item; const ph = [...(it?.photos ?? [])].sort((a: any, b: any) => a.sort - b.sort)[0]
+          if (ph && !seen.has(ph.path)) { seen.add(ph.path); out.push({ path: ph.path, label: it.name }) }
+        }
+        setProducts(out.slice(0, 18))
+      }, () => null)
+  }, [id])
+
+  const imagePaths = useMemo(() => [...(plan.inspiration ?? []).filter(i => i.kind === 'image' && i.path).map(i => i.path!), ...products.map(p => p.path)], [plan.inspiration, products])
   useEffect(() => { if (imagePaths.some(p => !urls[p])) photoUrls(imagePaths).then(u => setUrls(x => ({ ...x, ...u }))) }, [imagePaths]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const update = useCallback((patch: Partial<Plan>) => {
@@ -50,8 +64,9 @@ export default function LivePlan() {
 
   const pr = progress(settings.checklist, plan)
   const start = new Date(live.starts_at)
+  const look = POSTER_STYLES.find(x => x.id === plan.poster?.template)
   const poster: Poster = {
-    template: 'glow', palette: 0, size: 'portrait',
+    template: 'noir', palette: 6, size: 'portrait', font: 'auto', foil: look ? !!look.luxe : true, perks: [], badge: '', handle: '',
     kicker: start.toDateString() === new Date().toDateString() ? 'LIVE TONIGHT' : 'GOING LIVE',
     headline: live.title,
     when: `${start.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })} · ${start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}`,
@@ -62,7 +77,7 @@ export default function LivePlan() {
   const setPoster = (patch: Partial<Poster>) => update({ poster: { ...(plan.poster ?? {}), ...patch } })
 
   async function addImages(files: FileList | null) {
-    if (!files || !shop) return
+    if (!files || !shop) return []
     const added = []
     for (const f of Array.from(files)) {
       const blob = await compressImage(f, 1400)
@@ -72,6 +87,7 @@ export default function LivePlan() {
       added.push({ id: uid(), kind: 'image' as const, path })
     }
     update({ inspiration: [...(plan.inspiration ?? []), ...added] })
+    return added.map(a => a.path)
   }
 
   function toggle(phase: Phase, text: string) {
@@ -113,7 +129,7 @@ export default function LivePlan() {
             <span className="label-text">Color story</span>
             <div className="palette-row">
               {PALETTES.map((p, i) => (
-                <button key={p.name} className={`palette ${(plan.poster?.palette ?? 0) === i ? 'on' : ''}`} onClick={() => setPoster({ palette: i })} title={p.name}>
+                <button key={p.name} className={`palette ${poster.palette === i ? 'on' : ''}`} onClick={() => setPoster({ palette: i })} title={p.name}>
                   <span style={{ background: `linear-gradient(135deg, ${p.c[0]}, ${p.c[1]} 70%, ${p.c[2]})` }} /><small>{p.name}</small>
                 </button>
               ))}
@@ -161,7 +177,7 @@ export default function LivePlan() {
                 {i.kind === 'link' && <a href={i.url} target="_blank" rel="noreferrer"><Icon name="arrow" size={16} />{i.url!.replace(/^https?:\/\/(www\.)?/, '').slice(0, 60)}</a>}
                 {i.kind === 'note' && <textarea rows={4} value={i.text ?? ''} placeholder="Write an idea…" onChange={e => update({ inspiration: plan.inspiration!.map(x => x.id === i.id ? { ...x, text: e.target.value } : x) })} />}
                 <div className="mood-actions">
-                  {i.kind === 'image' && <button className="link-btn" onClick={() => { setPoster({ photo: i.path }); setTab('poster') }}>Use on poster</button>}
+                  {i.kind === 'image' && <button className="link-btn" onClick={() => { setPoster({ photos: [...posterPhotos(poster).filter(x => x !== i.path), i.path!].slice(-3), photo: null }); setTab('poster') }}>Use on poster</button>}
                   <button className="link-btn danger-text" onClick={() => update({ inspiration: plan.inspiration!.filter(x => x.id !== i.id) })}>Remove</button>
                 </div>
               </div>
@@ -171,29 +187,12 @@ export default function LivePlan() {
       )}
 
       {tab === 'poster' && (
-        <div className="poster-layout">
-          <section className="card stack">
-            <h2>Design</h2>
-            <span className="label-text">Style</span>
-            <div className="seg">
-              {(['glow', 'block', 'regal'] as const).map(t => <button key={t} className={poster.template === t ? 'on' : ''} onClick={() => setPoster({ template: t })}>{t === 'glow' ? 'Glow' : t === 'block' ? 'Bold' : 'Regal'}</button>)}
-            </div>
-            <span className="label-text">Colors</span>
-            <div className="palette-row">
-              {PALETTES.map((p, i) => <button key={p.name} className={`palette ${poster.palette === i ? 'on' : ''}`} onClick={() => setPoster({ palette: i })} title={p.name}><span style={{ background: `linear-gradient(135deg, ${p.c[0]}, ${p.c[1]} 70%, ${p.c[2]})` }} /><small>{p.name}</small></button>)}
-            </div>
-            <label>Size<select value={poster.size} onChange={e => setPoster({ size: e.target.value as Poster['size'] })}>{Object.entries(POSTER_SIZES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}</select></label>
-            <label>Top line<input value={poster.kicker} onChange={e => setPoster({ kicker: e.target.value })} /></label>
-            <label>Headline<input value={poster.headline} onChange={e => setPoster({ headline: e.target.value })} /></label>
-            <label>Date and time<input value={poster.when} onChange={e => setPoster({ when: e.target.value })} /></label>
-            <label>Tagline<input value={poster.tagline} onChange={e => setPoster({ tagline: e.target.value })} placeholder="Everything $2 to $15" /></label>
-            <label>Bottom line<input value={poster.footer} onChange={e => setPoster({ footer: e.target.value })} /></label>
-            {poster.photo ? <button className="link-btn self-start danger-text" onClick={() => setPoster({ photo: null })}>Remove photo</button> : <button className="link-btn self-start" onClick={() => setTab('inspo')}>Add a photo from your mood board</button>}
-          </section>
-          <section className="card stack">
-            <PosterMaker p={poster} photoUrl={poster.photo ? urls[poster.photo] : null} shop={shop?.name ?? ''} fileName={`${live.title.replace(/[^\w$ -]+/g, '').trim().replace(/\s+/g, '-')}-poster.png`} />
-          </section>
-        </div>
+        <PosterStudio poster={poster} setPoster={setPoster} shop={shop?.name ?? ''} onOpenInspo={() => setTab('inspo')} onUpload={addImages}
+          photoChoices={[
+            ...(plan.inspiration ?? []).filter(i => i.kind === 'image' && i.path && urls[i.path]).map(i => ({ path: i.path!, url: urls[i.path!], label: 'Mood board' })),
+            ...products.filter(p => urls[p.path]).map(p => ({ path: p.path, url: urls[p.path], label: p.label })),
+          ]}
+          fileName={`${live.title.replace(/[^\w$ -]+/g, '').trim().replace(/\s+/g, '-')}-poster.png`} />
       )}
 
       {tab === 'check' && (
