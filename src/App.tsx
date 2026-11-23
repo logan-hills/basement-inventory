@@ -1,6 +1,7 @@
 import { HashRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Sheet from './components/Sheet'
+import Icon from './components/Icon'
 import { SessionProvider, useSession } from './lib/session'
 import { ToastProvider } from './lib/toast'
 import { supabase } from './lib/supabase'
@@ -40,24 +41,24 @@ export function Crown({ size = 28 }: { size?: number }) {
 }
 
 const STOCK = [
-  { to: '/', label: 'Dashboard', end: true },
-  { to: '/inventory', label: 'Inventory' },
-  { to: '/intake', label: 'Receive items' },
-  { to: '/scan', label: 'Scan' },
-  { to: '/locations', label: 'Warehouse' },
-  { to: '/damaged', label: 'Damaged' },
+  { to: '/', label: 'Dashboard', end: true, icon: 'dashboard' },
+  { to: '/inventory', label: 'Inventory', icon: 'inventory' },
+  { to: '/intake', label: 'Receive items', icon: 'receive' },
+  { to: '/scan', label: 'Scan', icon: 'scan' },
+  { to: '/locations', label: 'Warehouse', icon: 'warehouse' },
+  { to: '/damaged', label: 'Damaged', icon: 'damaged' },
 ]
 const SELL = [
-  { to: '/calendar', label: 'Live calendar' },
-  { to: '/live', label: 'Get ready for live' },
-  { to: '/orders', label: 'Pick and pack' },
-  { to: '/shipping', label: 'Shipping' },
-  { to: '/customers', label: 'Customers' },
+  { to: '/calendar', label: 'Live calendar', icon: 'calendar' },
+  { to: '/live', label: 'Get ready for live', icon: 'live' },
+  { to: '/orders', label: 'Pick and pack', icon: 'pack' },
+  { to: '/shipping', label: 'Shipping', icon: 'truck' },
+  { to: '/customers', label: 'Customers', icon: 'users' },
 ]
 const MORE = [
-  { to: '/reports', label: 'Reports' },
-  { to: '/lessons', label: 'Lessons' },
-  { to: '/settings', label: 'Settings' },
+  { to: '/reports', label: 'Reports', icon: 'reports' },
+  { to: '/lessons', label: 'Lessons', icon: 'lessons' },
+  { to: '/settings', label: 'Settings', icon: 'settings' },
 ]
 
 function ScrollTop() {
@@ -84,11 +85,11 @@ function Shell() {
           <span className="brand-text"><b>Dynamic Dazzle</b><small>Basement Warehouse</small></span>
         </NavLink>
         <span className="nav-group">Stock</span>
-        {STOCK.map(n => <NavLink key={n.to} to={n.to} end={n.end} className="nav-link">{n.label}</NavLink>)}
+        {STOCK.map(n => <NavLink key={n.to} to={n.to} end={n.end} className="nav-link"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}
         <span className="nav-group">Sell</span>
-        {SELL.map(n => <NavLink key={n.to} to={n.to} className="nav-link">{n.label}</NavLink>)}
+        {SELL.map(n => <NavLink key={n.to} to={n.to} className="nav-link"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}
         <span className="nav-group">Manage</span>
-        {MORE.map(n => <NavLink key={n.to} to={n.to} className="nav-link">{n.label}</NavLink>)}
+        {MORE.map(n => <NavLink key={n.to} to={n.to} className="nav-link"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}
         <div className="sidebar-foot">
           <span className="muted small">{session.user.email}</span>
           <button className="link-btn" onClick={() => supabase.auth.signOut()}>Sign out</button>
@@ -97,14 +98,14 @@ function Shell() {
 
       <header className="mobile-top no-print">
         <NavLink to="/" className="brand"><span className="gold"><Crown size={24} /></span><span className="brand-text"><b>Dynamic Dazzle</b></span></NavLink>
-        <button className="btn ghost small" onClick={() => setMenu(true)} aria-label="Open menu">☰ Menu</button>
+        <button className="btn ghost small" onClick={() => setMenu(true)} aria-label="Open menu"><Icon name="menu" size={18} /> Menu</button>
       </header>
       <Sheet open={menu} onClose={() => setMenu(false)} title="Menu">
         <div className="menu-sheet">
           {[['Stock', STOCK], ['Sell', SELL], ['Manage', MORE]].map(([name, list]) => (
             <div key={name as string} className="stack tight-gap">
               <span className="nav-group">{name as string}</span>
-              <div className="menu-links">{(list as typeof STOCK).map(n => <NavLink key={n.to} to={n.to} end={n.end} className="menu-link">{n.label}</NavLink>)}</div>
+              <div className="menu-links">{(list as typeof STOCK).map(n => <NavLink key={n.to} to={n.to} end={n.end} className="menu-link"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}</div>
             </div>
           ))}
           <div className="row-between"><span className="muted small">{session.user.email}</span><button className="link-btn" onClick={() => supabase.auth.signOut()}>Sign out</button></div>
@@ -141,13 +142,13 @@ function Shell() {
       </main>
 
       <nav className="tabbar no-print">
-        <NavLink to="/" end>Home</NavLink>
-        <NavLink to="/inventory">Inventory</NavLink>
+        <NavLink to="/" end><Icon name="dashboard" size={22} /><span>Home</span></NavLink>
+        <NavLink to="/inventory"><Icon name="inventory" size={22} /><span>Stock</span></NavLink>
         <NavLink to="/scan" className="tab-scan" aria-label="Scan">
           <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3M8 8v8M12 8v8M16 8v8" /></svg>
         </NavLink>
-        <NavLink to="/intake">Receive</NavLink>
-        <NavLink to="/live">Live</NavLink>
+        <NavLink to="/orders"><Icon name="pack" size={22} /><span>Pick</span></NavLink>
+        <NavLink to="/live"><Icon name="live" size={22} /><span>Live</span></NavLink>
       </nav>
     </div>
   )

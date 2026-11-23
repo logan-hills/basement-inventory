@@ -4,6 +4,8 @@ import { useSession } from '../lib/session'
 import { money } from '../lib/data'
 import { downloadFile, toCsv } from '../lib/csv'
 import { loadStock, margin, type StockRow } from '../lib/stock'
+import { BarList, ColumnChart, SegmentBar } from '../components/Charts'
+import Icon from '../components/Icon'
 
 type OrderRow = { id: string; status: string; total: number | null; live_date: string | null; created_at: string; customer_id: string | null; customer: { name: string } | null; lines: { qty: number; price: number | null; picked: number; short: number; variant_id: string | null; live_number: string | null; description: string | null; variant: { cost: number | null; label: string; item: { name: string; category: string | null } } | null }[] }
 type Removed = { removed_reason: string | null; removed_at: string | null; variant: { price: number | null; cost: number | null } | null }
@@ -107,6 +109,24 @@ export default function Reports() {
         <div className="stat"><span>Old stock</span><b className={old.length ? 'danger-text' : ''}>{old.length}</b><small className="muted">{settings.oldStockDays}+ days</small></div>
         <div className="stat"><span>Damaged out</span><b>{removed.length}</b><small className="muted">{money(damagedValue)} lost</small></div>
       </div>
+
+      <div className="chart-grid">
+        <section className="card stack">
+          <div><h2>Sales by live</h2><span className="muted small">Hover a bar for the exact total</span></div>
+          {byLive.size ? <ColumnChart label="Sales by live" format={n => money(n).replace(/\.\d\d$/, '')}
+            data={[...byLive.entries()].sort((a, b) => a[0].localeCompare(b[0])).slice(-16).map(([d, v]) => ({ label: new Date(d + 'T12:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' }), value: v.revenue, detail: `${v.orders} orders` }))} />
+            : <div className="chart-empty"><Icon name="reports" size={28} /><span className="muted small">No sales in this range yet.</span></div>}
+        </section>
+        <section className="card stack">
+          <div><h2>Best sellers</h2><span className="muted small">Items sold</span></div>
+          {top.size ? <BarList data={[...top.values()].sort((a, b) => b.units - a.units).slice(0, 6).map(v => ({ label: v.name, value: v.units }))} />
+            : <div className="chart-empty"><Icon name="tag" size={28} /><span className="muted small">Nothing sold in this range yet.</span></div>}
+        </section>
+      </div>
+      <section className="card stack">
+        <div><h2>Stock age</h2><span className="muted small">Items in stock by days since they arrived</span></div>
+        <SegmentBar data={[[0, 30, 'Under 30 days'], [31, 60, '31–60'], [61, 90, '61–90'], [91, 180, '91–180'], [181, 1e9, '181+']].map(([a, b, l]) => ({ label: l as string, value: live.filter(r => r.ageDays >= (a as number) && r.ageDays <= (b as number)).reduce((x, r) => x + r.inStock, 0) }))} />
+      </section>
 
       <div className="settings-grid">
         <Table title="Sales by live" head={['Live date', 'Orders', 'Items', 'Buyers', 'Sales']} file="sales-by-live.csv"
