@@ -72,7 +72,7 @@ const lesson: Lesson = {
       points: ['Say regulars\' names and remember what they love', 'Send a thank-you after a first order', 'Keep a VIP list in Customers and give them early looks', 'Fix problems fast and warmly (see Customer care courses)'] },
     { kind: 'learn', title: 'Use the comment bot to catch every sale', text: 'In a fast live, missed claims are lost sales and upset buyers. The comment bot reads claims like "SOLD 4821" as they come in, so you can keep selling instead of scrolling.',
       points: ['Open your live, tap Comment bot, and connect before you go live', 'Say the claim format often so the bot (and buyers) get it right', 'Glance at the bot\'s list between pieces to confirm sold-outs', 'After the live, turn the claims into orders in one step'],
-      tip: 'The "Let the comment bot take the orders" lesson in Onboarding walks through every button.' },
+      tip: 'The "Let the comment bot take the orders" lesson in Orientation walks through every button.' },
     { kind: 'scenario', title: 'Big night, missed claims', situation: 'Your best live ever: 220 viewers. Afterward, 9 buyers message that their claims were missed while you were reading comments by hand.',
       options: [
         { text: 'Apologize and hope it doesn\'t happen again', feedback: 'It will happen again, and on your best nights. Growth needs a system.' },

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
 import { Ring } from '../components/Charts'
-import { LESSONS, COURSES, TRACKS, SCHOOLS, TRACK_TONE, INTERACTIVE, lessonMinutes, type Track, type Lesson } from '../lessons'
+import { LESSONS, COURSES, lessonById, TRACKS, SCHOOLS, TRACK_TONE, INTERACTIVE, lessonMinutes, type Track, type Lesson } from '../lessons'
 import { ASOF, STATE_SALES_TAX, OTHER_STATES, OFFICIAL_LINKS, TAX_DATES, IRS_NUMBERS, NOT_ADVICE } from '../lessons/resources'
 import { useLessonProgress } from '../lib/lessonProgress'
 import { useSession } from '../lib/session'
@@ -10,12 +10,15 @@ import { hasAcademy } from '../lib/plan'
 import { NovaSays, type NovaMood } from '../components/Nova'
 import AcademyLocked from '../components/AcademyLocked'
 import CourseBag from '../components/CourseBag'
+import LessonTag from '../components/LessonTag'
+import { CLASS_TZ, LIVE_CLASSES, ONE_ON_ONE, QUEEN_SESSION } from '../lessons/classes'
+import { CONTACT } from '../lib/legal'
 import novaLaverne from '../assets/nova-laverne.webp'
 
 const NOVA_TIPS: [NovaMood, string][] = [
   ['wink', 'Hey love, I\'m Nova, Head of Dazzle University. Tap me any time for a tip.'],
   ['happy', 'Fifteen minutes a day in here beats one long cram session. Little and often!'],
-  ['wow', 'New here? Start with Onboarding, Module 1. It sets up everything else.'],
+  ['wow', 'New here? Start with Orientation, Module 1, and join a live class on Monday or Wednesday.'],
   ['think', 'Need your state\'s sales tax ID or the tax due dates? The Resource desk has them.'],
   ['cheer', 'Every business course ends with a certificate. Print it and hang it up, boss.'],
   ['happy', 'Train your helpers here too. Each person\'s progress saves on their own sign-in.'],
@@ -44,7 +47,7 @@ const MODULE_BLURB: Record<Track, string> = {
 }
 
 const SECTIONS = [
-  { id: 'u-onboarding', label: 'Onboarding', icon: 'sparkle' },
+  { id: 'u-onboarding', label: 'Orientation', icon: 'sparkle' },
   { id: 'u-business', label: 'Business center', icon: 'trend' },
   { id: 'u-resources', label: 'Resource desk', icon: 'lessons' },
   { id: 'u-help', label: 'Help desk', icon: 'settings' },
@@ -76,15 +79,15 @@ export default function Lessons() {
         <div className="uni-hero-copy">
           <span className="uni-kicker">Est. by Dynamic Dazzle · Taught by Nova</span>
           <h1 className="uni-title">Dazzle <em>University</em></h1>
-          <p className="uni-lead">Your business resource center. Start with onboarding to learn the app, then grow in the Business center with in-depth courses built on research from Wharton, Harvard, MIT, McKinsey, the SBA and the IRS.</p>
+          <p className="uni-lead">Your business resource center. Start with Orientation to learn the app, in lessons and live classes, then grow in the Business center with in-depth courses built on research from Wharton, Harvard, MIT, McKinsey, the SBA and the IRS.</p>
           <div className="row-gap">
             {next
-              ? <Link className="btn uni-cta" to={`/lessons/${next.id}`}><Icon name="sparkle" size={18} /> {done ? 'Keep going' : 'Start onboarding'}: {next.title}</Link>
-              : <span className="uni-chip">Onboarding complete. You're certified!</span>}
+              ? <Link className="btn uni-cta" to={`/lessons/${next.id}`}><Icon name="sparkle" size={18} /> {done ? 'Keep going' : 'Start orientation'}: {next.title}</Link>
+              : <span className="uni-chip">Orientation complete. You're certified!</span>}
             <button type="button" className="btn uni-ghost" onClick={() => go('u-business')}>Business center</button>
           </div>
           <div className="uni-stats">
-            <span><b>{done}</b> of {LESSONS.length}<small>onboarding lessons</small></span>
+            <span><b>{done}</b> of {LESSONS.length}<small>orientation lessons</small></span>
             <span><b>{coursesDone}</b> of {COURSES.length}<small>courses</small></span>
             <span><b>{Math.round([...LESSONS, ...COURSES].reduce((a, l) => a + lessonMinutes(l), 0) / 60)}</b><small>hours of training</small></span>
           </div>
@@ -110,10 +113,10 @@ export default function Lessons() {
       {match.length > 0 && (
         <section className="stack wide-gap uni-part" id="u-onboarding">
           <div className="uni-section-head">
-            <span className="uni-eyebrow">Part one · Onboarding</span>
+            <span className="uni-eyebrow">Part one · Orientation</span>
             <h2 className="uni-h2">Learn the app, module by module</h2>
-            <p className="uni-sub">Five modules take you from your first sign-in to your first shipped order. Each lesson is hands-on, with practice taps on the real screens.</p>
-            <span className="uni-bar big" aria-label={`${done} of ${LESSONS.length} onboarding lessons done`}><i style={{ width: `${(done / LESSONS.length) * 100}%` }} /></span>
+            <p className="uni-sub">Five modules take you from your first sign-in to your first shipped order. Each lesson is hands-on, with practice taps on the real screens. Then join us live: daytime and evening classes every week, and 1:1 coaching when you want it.</p>
+            <span className="uni-bar big" aria-label={`${done} of ${LESSONS.length} orientation lessons done`}><i style={{ width: `${(done / LESSONS.length) * 100}%` }} /></span>
           </div>
           <div className="uni-modules">
             {TRACKS.map((t, mi) => {
@@ -132,24 +135,66 @@ export default function Lessons() {
                     </div>
                   </header>
                   <span className="uni-bar"><i style={{ width: `${(mDone / list.length) * 100}%` }} /></span>
-                  <ol className="uni-syllabus">
+                  <div className="htag-row">
                     {list.map((l, i) => {
                       const p = progress[l.id]
-                      return (
-                        <li key={l.id}>
-                          <Link to={`/lessons/${l.id}`} className={`uni-lesson${p?.completed_at ? ' done' : ''}`}>
-                            <span className="uni-lesson-no">{mi + 1}.{i + 1}</span>
-                            <span className="uni-lesson-ico"><Icon name={l.icon} size={20} /></span>
-                            <span className="uni-lesson-text"><b>{l.title}</b><small>{lessonMinutes(l)} min · {l.slides.filter(x => INTERACTIVE.includes(x.kind)).length} activities</small></span>
-                            {p?.completed_at ? <span className="uni-pill done">✓ {p.score ?? 100}%</span> : p ? <span className="uni-pill">In progress</span> : <span className="uni-lesson-go" aria-hidden="true">›</span>}
-                          </Link>
-                        </li>
-                      )
+                      return <LessonTag key={l.id} to={`/lessons/${l.id}`} no={`${mi + 1}.${i + 1}`} title={l.title} minutes={lessonMinutes(l)} icon={l.icon}
+                        activities={l.slides.filter(x => INTERACTIVE.includes(x.kind)).length} tone={TRACK_TONE[t]} status={p?.completed_at ? 'done' : p ? 'started' : undefined} score={p?.score} />
                     })}
-                  </ol>
+                  </div>
                 </article>
               )
             })}
+          </div>
+          <div className="uni-classes" id="u-classes">
+            <div className="uni-classes-head">
+              <h3>Live orientation classes</h3>
+              <p>Learn it with us, on camera, with time for your questions. Pick daytime or evening. All times are {CLASS_TZ}.</p>
+            </div>
+            <div className="uni-class-grid">
+              {LIVE_CLASSES.map(c => (
+                <article key={c.id} className={`uni-class tone-${c.tone}`}>
+                  <span className="uni-class-day">{c.day}</span>
+                  <h4>{c.title}</h4>
+                  <p>{c.what}</p>
+                  <ul className="uni-class-covers">{c.covers.map(x => <li key={x}>{x}</li>)}</ul>
+                  <div className="uni-class-times">
+                    {c.sessions.map(s => (
+                      <a key={s.label} className="uni-class-time" href={`mailto:${CONTACT}?subject=${encodeURIComponent(`Save my seat: ${c.title}, ${c.day} ${s.label.toLowerCase()} (${s.time})`)}`}>
+                        <small>{s.label}</small><b>{s.time}</b><span>Save my seat ›</span>
+                      </a>
+                    ))}
+                  </div>
+                  <div className="uni-class-prep">
+                    <small>Take these first</small>
+                    {c.prep.map(id => lessonById(id)).filter(Boolean).map(l => <Link key={l!.id} to={`/lessons/${l!.id}`}>{l!.title}{isDone(l!) ? ' ✓' : ''}</Link>)}
+                  </div>
+                </article>
+              ))}
+              <article className="uni-class tone-gold">
+                <span className="uni-class-day">By appointment</span>
+                <h4>{ONE_ON_ONE.title}</h4>
+                <p>{ONE_ON_ONE.what}</p>
+                <div className="uni-class-times">
+                  <a className="uni-class-time" href={`mailto:${CONTACT}?subject=${encodeURIComponent('Book a 1:1 coaching session (daytime)')}`}><small>Daytime</small><b>1:1</b><span>Book it ›</span></a>
+                  <a className="uni-class-time" href={`mailto:${CONTACT}?subject=${encodeURIComponent('Book a 1:1 coaching session (evening)')}`}><small>Evening</small><b>1:1</b><span>Book it ›</span></a>
+                </div>
+              </article>
+            </div>
+            <article className="uni-queen">
+              <div className="uni-queen-copy">
+                <span className="uni-class-day">{QUEEN_SESSION.tagline}</span>
+                <h4>{QUEEN_SESSION.title}</h4>
+                <p>{QUEEN_SESSION.what}</p>
+                <span className="uni-queen-cred">♛ {QUEEN_SESSION.credential}</span>
+                <Link className="uni-queen-prep" to="/lessons/consult">Prep with the "Get the most from time with the Queen" lesson ›</Link>
+              </div>
+              <div className="uni-queen-price">
+                <span className="uni-queen-first"><small>Your first full hour</small><b>${QUEEN_SESSION.rate * (1 - QUEEN_SESSION.firstHourOff)}</b><em>{Math.round(QUEEN_SESSION.firstHourOff * 100)}% off</em></span>
+                <span className="uni-queen-then">Then ${QUEEN_SESSION.rate} an hour, prorated. Use the full hour, it's worth it!</span>
+                <Link className="btn uni-cta" to="/consult">♛ Schedule time with the Queen</Link>
+              </div>
+            </article>
           </div>
         </section>
       )}

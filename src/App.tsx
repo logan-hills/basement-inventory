@@ -33,6 +33,7 @@ import Customers from './pages/Customers'
 import Shipping from './pages/Shipping'
 import Reports from './pages/Reports'
 import Lessons from './pages/Lessons'
+import Consult from './pages/Consult'
 import LessonPlayer from './pages/LessonPlayer'
 import Planner from './pages/Planner'
 import LivePlan from './pages/LivePlan'
@@ -76,6 +77,7 @@ const MORE = [
   { to: '/profile', label: 'My profile', icon: 'users' },
   { to: '/reports', label: 'Reports', icon: 'reports' },
   { to: '/lessons', label: 'Dazzle University', icon: 'lessons' },
+  { to: '/consult', label: 'Time with the Queen', icon: 'sparkle' },
   { to: '/settings', label: 'Settings', icon: 'settings' },
 ]
 
@@ -207,6 +209,7 @@ function Shell() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/lessons" element={<Lessons />} />
+          <Route path="/consult" element={<Consult />} />
           <Route path="/lessons/:id" element={<LessonPlayer />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/upload" element={<OrdersUpload />} />
