@@ -149,7 +149,7 @@ export default function Login() {
         <form className="auth-card" onSubmit={checkCode} key="code">
           <div className="auth-head">
             <h2>Check your {via === 'email' ? 'email' : 'texts'}</h2>
-            <p className="muted">If <b>{sentTo}</b> has an account, a code is on its way. It can take a minute{via === 'email' ? ', so peek in spam too' : ''}.</p>
+            <p className="muted">If <b>{sentTo}</b> has an account, a code is on its way. It can take a minute{via === 'email' ? ', so peek in spam too. You can type the code, or just tap the reset link in the email' : ''}.</p>
           </div>
           <label>Your code
             <input className="auth-code" required value={code} onChange={e => setCode(e.target.value.replace(/[^\d ]/g, ''))}
