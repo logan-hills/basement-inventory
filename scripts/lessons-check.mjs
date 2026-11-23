@@ -9,7 +9,7 @@ const dir = 'src/lessons'
 const last = f => { try { return execSync(`git log -1 --format=%cs -- "${f}"`).toString().trim() } catch { return '' } }
 const files = d => readdirSync(d).flatMap(f => statSync(`${d}/${f}`).isDirectory() ? files(`${d}/${f}`) : [`${d}/${f}`])
 let stale = 0
-for (const f of files(dir).filter(f => f.endsWith('.ts') && !/\/(types|index|time|trends|resources)\.ts$/.test(f))) {
+for (const f of files(dir).filter(f => f.endsWith('.ts') && !/\/(types|index|time|trends|resources|classes)\.ts$/.test(f))) {
   const src = readFileSync(f, 'utf8')
   const updated = (src.match(/updated: '([\d-]+)'/) || [])[1] || ''
   const covers = [...(src.match(/covers: \[([^\]]*)\]/)?.[1] ?? '').matchAll(/'([^']+)'/g)].map(m => m[1])

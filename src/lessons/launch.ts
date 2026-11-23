@@ -1,7 +1,7 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'launch', title: 'Onboarding: launch your shop in 30 days', track: 'Start here', icon: 'sparkle',
+  id: 'launch', title: 'Orientation: launch your shop in 30 days', track: 'Start here', icon: 'sparkle',
   why: 'A calm, planned launch beats a frantic one. Get the gear, the space and the habits right once, and every live after is easier.',
   outcomes: [
     'Buy the right starter gear without overspending',
@@ -19,8 +19,16 @@ const lesson: Lesson = {
   covers: [], updated: '2026-11-23',
   slides: [
     { chapter: 'Welcome to Dazzle', kind: 'learn', title: 'You\'re building a real business', nova: 'Welcome to the family, boss! I\'m Nova, and I\'ll walk with you every step of the way.',
-      text: 'Dazzle Warehouse runs the whole trip for every piece you sell: receive it, tag it, shelve it, plan it, sell it live, pick it, pack it, ship it, and see the money. This onboarding gets your gear, your space and your first month set up so the app has something solid to run on.',
+      text: 'Dazzle Warehouse runs the whole trip for every piece you sell: receive it, tag it, shelve it, plan it, sell it live, pick it, pack it, ship it, and see the money. This orientation gets your gear, your space and your first month set up so the app has something solid to run on.',
       points: ['Week 1: gear and space', 'Week 2: settings, shelves and your best sellers', 'Week 3: your first planned live', 'Week 4: review the numbers and tune up'] },
+    { kind: 'learn', title: 'Learn it live with us', text: 'Orientation is more than these lessons. Every week the Dynamic Dazzle team teaches live classes, with a daytime and an evening time so you can come around work and family. Find the times and save your seat on the University page, under Orientation.',
+      table: { head: ['When', 'Class', 'What you\'ll leave with'], rows: [
+        ['Mondays', 'Implementation meeting', 'Settings done, tags printing, shelves labeled'],
+        ['Wednesdays', 'How to go Live', 'A planned live, a calendar slot and the comment bot connected'],
+        ['Any day', '1:1 coaching', 'Help with your own stock and your own questions'],
+        ['Any day', 'Schedule time with the Queen', 'A 1:1 strategic planning session for your shop'],
+      ] },
+      tip: 'Take the matching lessons before each class. You\'ll spend class time on your questions instead of the basics.' },
     { kind: 'reflect', title: 'Why you\'re here', prompt: 'In one or two sentences: what do you want your shop to look like 6 months from now?', placeholder: 'In 6 months my shop…', example: 'Two lives a week, 50 orders each, packed in under 2 hours, and $2,000 profit a month so I can cut back my second job.' },
 
     { chapter: 'Your starter kit', kind: 'learn', title: 'The gear you actually need', text: 'You don\'t need fancy equipment to start. Here\'s a starter kit most sellers can put together for a few hundred dollars. Prices are rough and change often, so shop around.',
