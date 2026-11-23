@@ -1,4 +1,5 @@
 import { HashRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import AskNova from './components/AskNova'
 import { useEffect, useState } from 'react'
 import Sheet from './components/Sheet'
 import Icon from './components/Icon'
@@ -231,6 +232,8 @@ function Shell() {
           <Route path="/customers" element={<Customers />} />
         </Routes>
       </main>
+
+      <AskNova />
 
       <nav className="tabbar no-print">
         <NavLink to="/" end><Icon name="dashboard" size={22} /><span>Home</span></NavLink>

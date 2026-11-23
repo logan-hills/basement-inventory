@@ -1445,6 +1445,12 @@ button.mock-btn:hover { border-color: var(--gold); }
 .nova-live .nova-ring img { opacity: 0; }
 .nova-live .nova-ring::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: radial-gradient(circle at 50% 38%, #FFE7B0 0%, #F2B25C 30%, #B8572E 62%, #4A1C16 100%); }
 .nova-fx, .nova-dots, .nova-badge { z-index: 2; }
+/* Her catchphrase pops out when she lands her signature move. */
+.nova-kaching { position: absolute; left: 50%; top: -34%; z-index: 3; transform: translate(-50%, 0) rotate(-8deg); padding: 3px 10px; border-radius: 999px; white-space: nowrap; pointer-events: none;
+  font-family: Caveat, cursive; font-weight: 700; font-size: clamp(.95rem, 1.2vw + .6rem, 1.6rem); color: #2A1A0C; background: linear-gradient(135deg, #FFF1C1, #F2C14E 55%, #D69A2B); box-shadow: 0 6px 18px rgba(0, 0, 0, .35), 0 0 0 2px rgba(255, 255, 255, .5) inset;
+  animation: nova-kaching 1.6s var(--ease) forwards; }
+@keyframes nova-kaching { 0% { opacity: 0; transform: translate(-50%, 10px) rotate(-8deg) scale(.4); } 18% { opacity: 1; transform: translate(-50%, -6px) rotate(-8deg) scale(1.12); } 30% { transform: translate(-50%, 0) rotate(-8deg) scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -18px) rotate(-8deg) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .nova-kaching { animation-duration: .01s; } }
 
 /* ===== FOIL ===== */
 .foil { background: linear-gradient(100deg, #9C7A33 0%, #F5D58A 22%, #B8862B 40%, #FFF1C1 52%, #C9993C 66%, #F5D58A 82%, #8A6A2A 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -2602,3 +2608,24 @@ button.uni-step:hover, button.uni-step:focus-visible { transform: translateY(-2p
 .uni-live-time span { font-size: .82rem; font-weight: 700; white-space: nowrap; }
 .uni-live-more { align-self: flex-start; margin-top: 8px; padding: 6px 0; border: 0; background: none; font: inherit; font-size: 1rem; font-weight: 700; color: #A3005A; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 640px) { .uni-live-wrap { padding-left: 0; } .uni-live { padding: 12px; } .uni-live-times { width: 100%; } .uni-live-time { flex: 1; min-width: 0; padding: 8px 6px; } }
+
+/* Ask Nova: she floats in the corner of every screen. */
+.ask-nova-fab { position: fixed; right: 22px; bottom: 22px; z-index: 40; display: flex; align-items: center; gap: 10px; flex-direction: row-reverse; padding: 0; border: 0; background: none; cursor: pointer; }
+.ask-nova-fab:focus-visible { outline: 2px solid var(--gold); outline-offset: 6px; border-radius: 999px; }
+.ask-nova-pill { padding: 7px 13px; border-radius: 999px; background: linear-gradient(135deg, #FFF1C1, #F2C14E 60%, #D69A2B); color: #2A1A0C; font-weight: 700; font-size: .9rem; box-shadow: 0 8px 22px rgba(0, 0, 0, .35); white-space: nowrap; }
+.ask-nova-fab:not(.fresh) .ask-nova-pill { opacity: 0; transform: translateX(8px); transition: opacity .2s, transform .2s; pointer-events: none; }
+.ask-nova-fab:not(.fresh):hover .ask-nova-pill, .ask-nova-fab:not(.fresh):focus-visible .ask-nova-pill { opacity: 1; transform: none; }
+.ask-nova-fab.fresh .ask-nova-pill { animation: nova-hop .8s var(--ease) 3; }
+@media (max-width: 899px) { .ask-nova-fab { right: 14px; bottom: calc(96px + var(--safe-b)); } }
+.ask-nova-form { display: flex; gap: 8px; }
+.ask-nova-form .input { flex: 1; min-width: 0; font-size: 1.05rem; }
+.ask-nova-answers { display: grid; gap: 12px; }
+.ask-nova-answer { padding: 14px 16px; border-radius: 14px; background: var(--surface-2, rgba(255, 255, 255, .04)); border: 1px solid var(--border); }
+.ask-nova-answer h3 { margin: 2px 0 6px; font-size: 1.05rem; }
+.ask-nova-answer p { margin: 0; line-height: 1.5; }
+.ask-nova-answer ul { margin: 8px 0 0; padding-left: 20px; line-height: 1.45; }
+.ask-nova-from { font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; color: var(--gold); }
+.ask-nova-go { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.ask-nova-starters { display: grid; gap: 8px; }
+.ask-nova-tip { margin: 0; text-align: center; }
+.ask-nova .nova-says { margin-top: 18px; }

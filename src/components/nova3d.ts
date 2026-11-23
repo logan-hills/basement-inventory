@@ -14,9 +14,9 @@
    sneakers, or her body for a twirl). Her mouth moves while her words type. If the device
    can't keep up, or has no WebGL, every Nova quietly goes back to her picture. */
 import {
-  BoxGeometry, CanvasTexture, CapsuleGeometry, CatmullRomCurve3, Color, ConeGeometry, CylinderGeometry,
+  AdditiveBlending, BoxGeometry, CanvasTexture, CapsuleGeometry, CatmullRomCurve3, Color, ConeGeometry, CylinderGeometry,
   DirectionalLight, DoubleSide, ExtrudeGeometry, Group, InstancedMesh, Mesh, MeshPhysicalMaterial,
-  MeshStandardMaterial, NeutralToneMapping, Object3D, PerspectiveCamera, PlaneGeometry, PMREMGenerator,
+  MeshBasicMaterial, MeshStandardMaterial, NeutralToneMapping, Object3D, PerspectiveCamera, PlaneGeometry, PMREMGenerator,
   Raycaster, Scene, Shape, SphereGeometry, SRGBColorSpace, TorusGeometry, TubeGeometry, Vector2, Vector3,
   WebGLRenderer, type Texture,
 } from 'three'
@@ -25,7 +25,9 @@ import { tap as buzz } from '../lib/feedback'
 
 export type Mood = 'happy' | 'cheer' | 'think' | 'oops' | 'wow' | 'wink'
 export type Part = 'body' | 'glasses' | 'bow' | 'hand' | 'minibag' | 'shoes'
-export type NovaHandle = { setMood: (m: Mood) => void; setTalking: (on: boolean) => void; detach: () => void }
+/** Her big moves. 'kaching' is her signature: a fast spin, a pose and a glint off her shades. */
+export type Move = 'jump' | 'spin' | 'curtsy' | 'kaching'
+export type NovaHandle = { setMood: (m: Mood) => void; setTalking: (on: boolean) => void; play: (m: Move) => void; detach: () => void }
 
 const R = 512 // shared render target size (px); each Nova uses a corner of it
 const reduced = () => !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
@@ -222,6 +224,18 @@ function paintCamo(): Texture {
   return tex(c)
 }
 
+/** A four-point star with a soft glow. */
+function paintGlint(): Texture {
+  const { c, g } = canvas(128, 128)
+  const r = g.createRadialGradient(64, 64, 0, 64, 64, 40)
+  r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(0.25, 'rgba(255,240,200,.7)'); r.addColorStop(1, 'rgba(255,220,150,0)')
+  g.fillStyle = r; g.fillRect(0, 0, 128, 128)
+  g.fillStyle = '#fff'; g.beginPath()
+  g.moveTo(64, 0); g.quadraticCurveTo(68, 60, 128, 64); g.quadraticCurveTo(68, 68, 64, 128); g.quadraticCurveTo(60, 68, 0, 64); g.quadraticCurveTo(60, 60, 64, 0)
+  g.fill()
+  return tex(c)
+}
+
 /* ---------- building her ---------- */
 
 function bagShape(wb: number, wt: number, h: number, r: number) {
@@ -250,7 +264,7 @@ function lensShape(k = 1) {
 }
 
 type Model = {
-  root: Group; body: Group; glasses: Group; bow: Group; crown: Group
+  root: Group; body: Group; glasses: Group; glint: Mesh; bow: Group; crown: Group
   armL: Group; armR: Group; peace: Group; mini: Group; legL: Group; legR: Group
   eyes: MeshStandardMaterial; mouth: MeshStandardMaterial
   pickables: Object3D[]
@@ -284,17 +298,32 @@ function buildNova(): Model {
 
   // The bag: tall, flared, glossy. Top at y=0.82, front face at z=front.
   const W = 1.22, H = 1.64
-  const geo = new ExtrudeGeometry(bagShape(W + 0.1, W - 0.06, H, 0.16), { depth: 0.5, bevelEnabled: true, bevelThickness: 0.08, bevelSize: 0.06, bevelSegments: 5, curveSegments: 12 })
-  geo.translate(0, 0, -0.25)
+  // Crisp, defined edges like a real paper-and-patent shopping bag.
+  const geo = new ExtrudeGeometry(bagShape(W + 0.12, W - 0.04, H, 0.035), { depth: 0.54, bevelEnabled: true, bevelThickness: 0.025, bevelSize: 0.018, bevelSegments: 2, curveSegments: 6 })
+  geo.translate(0, 0, -0.27)
   const bag = tag(new Mesh(geo, green), 'body')
   body.add(bag)
   pickables.push(bag)
-  const front = 0.25 + 0.08, top = H / 2
+  const front = 0.27 + 0.025, top = H / 2
   // The opening at the top
   const mouthTop = new Mesh(new PlaneGeometry(W - 0.12, 0.5), inside)
   mouthTop.rotation.x = -Math.PI / 2
-  mouthTop.position.set(0, top + 0.061, 0)
+  mouthTop.position.set(0, top + 0.019, 0)
   body.add(mouthTop)
+  // A folded hem around the top, with sharp corners.
+  const hemGreen = new MeshPhysicalMaterial({ color: new Color('#0A7A2E'), roughness: 0.25, clearcoat: 1, clearcoatRoughness: 0.05 })
+  for (const z of [front + 0.004, -front - 0.004]) {
+    const hem = new Mesh(new BoxGeometry(W - 0.02, 0.1, 0.012), hemGreen)
+    hem.position.set(0, top - 0.05, z)
+    body.add(hem)
+  }
+  // Side gusset folds: a crisp crease down each side.
+  for (const sx of [-1, 1]) {
+    const crease = new Mesh(new BoxGeometry(0.012, H * 0.9, 0.012), new MeshStandardMaterial({ color: new Color('#055A20'), roughness: 0.4 }))
+    crease.position.set(sx * (W / 2 + 0.04), -0.02, 0)
+    crease.rotation.z = sx * -0.05
+    body.add(crease)
+  }
 
   // Face decals: eyes, mouth (with blush), and the gold DD crest.
   const decal = (w: number, h: number, y: number, mat: MeshStandardMaterial) => {
@@ -304,10 +333,10 @@ function buildNova(): Model {
     return mat
   }
   const decalMat = () => new MeshStandardMaterial({ transparent: true, roughness: 0.3, metalness: 0, polygonOffset: true, polygonOffsetFactor: -2 })
-  const eyes = decal(1.08, 0.54, 0.42, decalMat())
-  const mouth = decal(1.2, 0.45, -0.17, decalMat())
+  const eyes = decal(1.08, 0.54, 0.47, decalMat())
+  const mouth = decal(1.2, 0.45, -0.25, decalMat())
   const crestMat = new MeshStandardMaterial({ map: paintCrest(), transparent: true, roughness: 0.25, metalness: 0.5, polygonOffset: true, polygonOffsetFactor: -2 })
-  decal(0.7, 0.525, -0.54, crestMat)
+  decal(0.56, 0.42, -0.62, crestMat)
 
   // Gold rhinestone cat-eye shades, worn low and tilted, so her open eye peeks over.
   const glasses = tag(new Group(), 'glasses') as Group
@@ -341,10 +370,16 @@ function buildNova(): Model {
   const bridge = new Mesh(new TorusGeometry(0.075, 0.017, 8, 16, Math.PI), gold)
   bridge.position.set(0, 0.05, 0.02)
   glasses.add(bridge)
+  // A star glint on her shades for the signature move.
+  const glint = new Mesh(new PlaneGeometry(0.5, 0.5), new MeshBasicMaterial({ map: paintGlint(), transparent: true, blending: AdditiveBlending, depthWrite: false }))
+  glint.position.set(0.5, 0.17, 0.08)
+  glint.scale.setScalar(0.001)
+  glasses.add(glint)
   hitBox(glasses, 1.15, 0.38, 0.08, 0, 0.03, 0.02)
-  glasses.scale.setScalar(1.12)
-  glasses.position.set(0.02, 0.12, front + 0.06)
-  glasses.rotation.z = -0.1
+  glasses.scale.setScalar(1.04)
+  // Perched on the edge of her nose, tipped forward and tilted, in style.
+  glasses.position.set(0.03, 0.0, front + 0.08)
+  glasses.rotation.set(0.28, 0, -0.14)
   body.add(glasses)
   pickables.push(glasses)
 
@@ -352,7 +387,7 @@ function buildNova(): Model {
   for (const z of [front - 0.03, -front + 0.03]) {
     const pts = [[-0.3, top - 0.1], [-0.33, top + 0.2], [-0.2, top + 0.44], [0, top + 0.5], [0.2, top + 0.44], [0.33, top + 0.2], [0.3, top - 0.1]]
       .map(([x, y]) => new Vector3(x, y, z * 1.02))
-    const h = new Mesh(new TubeGeometry(new CatmullRomCurve3(pts), 40, 0.042, 10), gold)
+    const h = new Mesh(new TubeGeometry(new CatmullRomCurve3(pts), 48, 0.034, 10), gold)
     body.add(h)
     for (const x of [-0.3, 0.3]) {
       const ring = new Mesh(new TorusGeometry(0.06, 0.022, 8, 20), gold)
@@ -509,7 +544,7 @@ function buildNova(): Model {
   }
 
   root.position.y = 0.05
-  return { root, body, glasses, bow, crown, armL, armR, peace, mini, legL: legs[0], legR: legs[1], eyes, mouth, pickables }
+  return { root, body, glasses, glint, bow, crown, armL, armR, peace, mini, legL: legs[0], legR: legs[1], eyes, mouth, pickables }
 }
 
 /* ---------- one shared stage ---------- */
@@ -520,6 +555,7 @@ type Inst = {
   downX: number; downY: number; lastX: number; lastT: number; moved: boolean
   lookX: number; lookY: number; tLookX: number; tLookY: number
   moodAt: number; react: Part | null; reactAt: number; blinkAt: number; tapFootAt: number; seed: number
+  move: Move | null; moveAt: number; nextIdleMove: number; lastTap: number; holdTimer: number
   off: () => void
 }
 
@@ -533,6 +569,7 @@ let px = -1, py = -1
 // 'off' always shows her picture; 'always' skips the speed check (for testing).
 const pref = (() => { try { return localStorage.getItem('nova3d') } catch { return null } })()
 const REACT_MS: Record<Part, number> = { body: 1100, glasses: 1500, bow: 1200, hand: 1400, minibag: 1300, shoes: 1400 }
+const MOVE_MS: Record<Move, number> = { jump: 1000, spin: 1000, curtsy: 1500, kaching: 1900 }
 
 function fail() {
   if (failed) return
@@ -609,7 +646,7 @@ function pose(i: Inst, now: number) {
   }
 
   let y = 0, roll = 0, spin = 0, sx = 1, sy = 1
-  let glassesY = 0.12, glassesTilt = -0.1, bowWiggle = 0, crownHop = 0
+  let glassesY = 0.0, glassesTilt = -0.14, bowWiggle = 0, crownHop = 0
   let armLz = Math.sin(ph * 2.2) * 0.05, armRz = 0, peaceZ = 0.18, miniSwing = Math.sin(ph * 1.7) * 0.06
   let footL = 0, footR = 0, hopL = 0, hopR = 0
   if (!still) {
@@ -624,18 +661,55 @@ function pose(i: Inst, now: number) {
 
   const mt = (now - i.moodAt) / 1000
   if (!still) {
-    if (i.mood === 'cheer' && mt < 1.4) {
-      const k = mt / 1.4
-      y += Math.abs(Math.sin(k * Math.PI * 3)) * 0.18 * (1 - k * 0.3)
-      sy = 1 + Math.sin(k * Math.PI * 6) * 0.04; sx = 2 - sy
-      hopL = Math.max(0, Math.sin(k * Math.PI * 6)) * 0.1; hopR = Math.max(0, -Math.sin(k * Math.PI * 6)) * 0.1
-      armLz += Math.sin(k * Math.PI * 6) * 0.3
-    }
-    if (i.mood === 'wow' && mt < 1) spin += ease(mt) * TAU
     if (i.mood === 'oops' && mt < 0.8) roll += Math.sin(mt * Math.PI * 7) * 0.14 * (1 - mt / 0.8)
   }
   if (i.mood === 'think') { roll -= 0.08; peaceZ = 0.6 }
   if (i.mood === 'wink') roll += 0.05
+
+  // Big moves.
+  let pitch = 0, legRz = 0, legBend = 0, armLx = 0, glint = 0, moveEyes: Eyes | null = null
+  const mv = i.move ? (now - i.moveAt) / MOVE_MS[i.move] : 2
+  if (mv < 1 && !still) {
+    switch (i.move) {
+      case 'jump': {
+        // Crouch, spring up high with knees tucked, land with a squash.
+        const crouch = bump(mv / 0.2) * (mv < 0.2 ? 1 : 0), air = mv > 0.18 && mv < 0.78 ? bump((mv - 0.18) / 0.6) : 0, land = mv > 0.76 ? bump((mv - 0.76) / 0.24) : 0
+        y += air * 0.75 - crouch * 0.08 - land * 0.06
+        sy = 1 - crouch * 0.1 - land * 0.1 + air * 0.05; sx = 2 - sy
+        hopL = hopR = air * 0.14
+        armLz += air * 0.5; armRz = -air * 0.4
+        moveEyes = 'cheer'
+        break
+      }
+      case 'spin':
+        spin += ease(mv) * TAU; y += bump(mv) * 0.12; roll += Math.sin(mv * Math.PI) * 0.06
+        moveEyes = 'cheer'
+        break
+      case 'curtsy': {
+        // Step one foot back, dip, bow forward, arms out like holding a skirt.
+        const d = bump(mv)
+        y -= d * 0.16; pitch = d * 0.22; roll -= d * 0.06
+        legRz = -d * 0.22; legBend = d * 0.25
+        armLz += d * 0.6; armRz = -d * 0.5
+        moveEyes = mv > 0.25 && mv < 0.85 ? 'blink' : 'wink'
+        break
+      }
+      case 'kaching': {
+        // Ka-ching! Wind up, whip around twice, snap to a pose, glint.
+        const wind = mv < 0.15 ? bump(mv / 0.3) : 0
+        const turn = mv >= 0.1 && mv < 0.55 ? ease((mv - 0.1) / 0.45) : mv >= 0.55 ? 1 : 0
+        spin += -wind * 0.4 + turn * TAU * 2
+        y += bump((mv - 0.1) / 0.45) * 0.2
+        const pose = mv >= 0.55 ? bump((mv - 0.55) / 0.45) : 0
+        roll -= pose * 0.16; armLz += pose * 0.35; armLx = -pose * 0.6; peaceZ += pose * 0.25
+        glassesY -= pose * 0.05; glassesTilt -= pose * 0.08
+        glint = mv > 0.58 && mv < 0.95 ? bump((mv - 0.58) / 0.37) : 0
+        sy = 1 + pose * 0.03; sx = 2 - sy
+        moveEyes = mv < 0.55 ? 'cheer' : 'wink'
+        break
+      }
+    }
+  }
 
   // Reactions to a tap on part of her.
   const k = i.react ? (now - i.reactAt) / REACT_MS[i.react] : 2
@@ -659,19 +733,23 @@ function pose(i: Inst, now: number) {
   }
 
   m.body.position.y = y
-  m.body.rotation.set(i.pitch + i.lookY * 0.2, i.yaw + spin + i.lookX * 0.5, roll)
+  m.body.rotation.set(i.pitch + pitch + i.lookY * 0.2, i.yaw + spin + i.lookX * 0.5, roll)
   m.body.scale.set(sx, sy, 1)
   m.glasses.position.y = glassesY
   m.glasses.rotation.z = glassesTilt
   m.bow.rotation.z = 0.35 + bowWiggle
   m.crown.position.y = 0.13 + crownHop
   m.crown.rotation.y = crownHop * 12
-  m.armL.rotation.z = armLz
+  m.armL.rotation.set(armLx, 0, armLz)
   m.peace.rotation.z = peaceZ
   m.armR.rotation.z = armRz
   m.mini.rotation.z = miniSwing
   m.legL.position.y = -0.8 + hopL
-  m.legR.position.y = -0.8 + hopR
+  m.legR.position.y = -0.8 + hopR + legBend * 0.2
+  m.legR.position.z = legRz
+  m.legR.rotation.x = legBend
+  m.glint.scale.setScalar(Math.max(0.001, glint))
+  m.glint.rotation.z = glint * 1.5
   m.legL.children[1].rotation.x = -footL
   m.legR.children[1].rotation.x = -footR
 
@@ -680,6 +758,7 @@ function pose(i: Inst, now: number) {
   const blinking = now > i.blinkAt && now < i.blinkAt + 140
   let eyes: Eyes = i.mood
   if (k < 1) eyes = i.react === 'glasses' ? 'peek' : i.react === 'minibag' || i.react === 'hand' ? 'wink' : 'cheer'
+  else if (moveEyes) eyes = moveEyes
   else if (blinking && i.mood !== 'cheer') eyes = 'blink'
   const oShape = i.mood === 'oops' || i.mood === 'wow' || (k < 1 && i.react === 'glasses')
   const kind = oShape ? 'o' : i.mood === 'think' && k >= 1 ? 'smirk' : 'smile'
@@ -700,7 +779,7 @@ function frame(now: number) {
   if (!stage || document.hidden) return
   const active = [...insts].filter(i => i.visible)
   if (!active.length) return
-  const busy = active.some(i => i.dragging || i.talking || Math.abs(i.vyaw) > 0 || (i.react && now - i.reactAt < REACT_MS[i.react]) || now - i.moodAt < 1400)
+  const busy = active.some(i => i.dragging || i.talking || Math.abs(i.vyaw) > 0 || (i.react && now - i.reactAt < REACT_MS[i.react]) || (i.move && now - i.moveAt < MOVE_MS[i.move]) || now - i.moodAt < 1400)
   const gap = now - lastFrame
   if (gap < (busy ? 0 : 31)) return // 30 fps when she's just idling, to save battery
   // If this device can't keep up, go back to pictures.
@@ -718,6 +797,11 @@ function frame(now: number) {
       i.tLookX = Math.max(-1, Math.min(1, (px - cx) / (window.innerWidth * 0.5)))
       i.tLookY = Math.max(-1, Math.min(1, (py - cy) / (window.innerHeight * 0.5)))
     }
+    if (now > i.nextIdleMove && !i.dragging && !reduced()) {
+      const busyNow = (i.react && now - i.reactAt < 3000) || (i.move && now - i.moveAt < 3000)
+      if (!busyNow) play(i, (['jump', 'spin', 'curtsy', 'kaching', 'jump', 'curtsy'] as Move[])[Math.floor(Math.random() * 6)], false)
+      i.nextIdleMove = now + 14000 + Math.random() * 12000
+    }
     pose(i, now)
     const s = Math.min(R, i.canvas.width)
     renderer.setViewport(0, 0, s, s)
@@ -725,6 +809,17 @@ function frame(now: number) {
     renderer.render(scene, camera)
     i.ctx.clearRect(0, 0, i.canvas.width, i.canvas.height)
     i.ctx.drawImage(renderer.domElement, 0, R - s, s, s, 0, 0, i.canvas.width, i.canvas.height)
+  }
+}
+
+/** Start one of her big moves on instance `i`. */
+function play(i: Inst, mv: Move, fromUser = true) {
+  i.move = mv; i.moveAt = performance.now()
+  if (fromUser) i.nextIdleMove = i.moveAt + 15000 + Math.random() * 10000
+  if (mv === 'kaching') {
+    const r = i.canvas.getBoundingClientRect()
+    // Let <Nova> pop her catchphrase and confetti once she lands the pose.
+    setTimeout(() => i.canvas.dispatchEvent(new CustomEvent('novamove', { detail: { move: mv, x: r.left + r.width / 2, y: r.top + r.height * 0.35 }, bubbles: true })), MOVE_MS.kaching * 0.55)
   }
 }
 
@@ -760,6 +855,7 @@ export function attach(canvas: HTMLCanvasElement, mood: Mood, onFail: () => void
     lookX: 0, lookY: 0, tLookX: 0, tLookY: 0, moodAt: now, react: null, reactAt: 0,
     blinkAt: now + 1500 + Math.random() * 2000, tapFootAt: now + 2500 + Math.random() * 3000,
     seed: Math.random() * 10, off: () => {},
+    move: null, moveAt: 0, nextIdleMove: now + 6000 + Math.random() * 8000, lastTap: 0, holdTimer: 0,
   }
 
   const poke = (part: Part, x: number, y: number) => {
@@ -767,8 +863,12 @@ export function attach(canvas: HTMLCanvasElement, mood: Mood, onFail: () => void
     buzz()
     canvas.dispatchEvent(new CustomEvent('novapoke', { detail: { part, x, y }, bubbles: true }))
   }
+  let held = false
   const down = (e: PointerEvent) => {
-    i.dragging = true; i.moved = false; i.vyaw = 0
+    i.dragging = true; i.moved = false; i.vyaw = 0; held = false
+    // Press and hold for a curtsy.
+    clearTimeout(i.holdTimer)
+    i.holdTimer = window.setTimeout(() => { if (i.dragging && !i.moved) { held = true; play(i, 'curtsy'); buzz() } }, 550)
     i.downX = i.lastX = e.clientX; i.downY = e.clientY; i.lastT = e.timeStamp
     canvas.setPointerCapture?.(e.pointerId)
   }
@@ -785,13 +885,17 @@ export function attach(canvas: HTMLCanvasElement, mood: Mood, onFail: () => void
     if (!i.dragging) return
     i.dragging = false
     i.pitch = 0
-    if (i.moved) {
+    clearTimeout(i.holdTimer)
+    if (i.moved || held) {
       // A drag shouldn't also count as a tap on whatever button she's sitting in.
       const eat = (ev: MouseEvent) => { ev.stopPropagation(); ev.preventDefault() }
       window.addEventListener('click', eat, { capture: true, once: true })
       setTimeout(() => window.removeEventListener('click', eat, { capture: true }), 0)
     } else if (e.type === 'pointerup') {
-      poke(pick(i, e.clientX, e.clientY) ?? 'body', e.clientX, e.clientY)
+      const t = performance.now()
+      // Double tap: her signature Ka-ching!
+      if (t - i.lastTap < 380) { i.react = null; play(i, 'kaching'); buzz(); i.lastTap = 0 }
+      else { poke(pick(i, e.clientX, e.clientY) ?? 'body', e.clientX, e.clientY); i.lastTap = t }
     }
   }
   const key = (e: KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') poke('body', 0, 0) }
@@ -809,9 +913,12 @@ export function attach(canvas: HTMLCanvasElement, mood: Mood, onFail: () => void
   io.observe(canvas)
   insts.add(i)
   failListeners.add(onFail)
+  if (mood === 'cheer') play(i, 'jump', false)
+  if (mood === 'wow') play(i, 'spin', false)
   if (!raf) raf = requestAnimationFrame(frame)
 
   i.off = () => {
+    clearTimeout(i.holdTimer)
     canvas.removeEventListener('pointerdown', down)
     canvas.removeEventListener('pointermove', move)
     canvas.removeEventListener('pointerup', up)
@@ -824,7 +931,13 @@ export function attach(canvas: HTMLCanvasElement, mood: Mood, onFail: () => void
   }
 
   return {
-    setMood: m => { if (m !== i.mood) { i.mood = m; i.moodAt = performance.now() } },
+    setMood: m => {
+      if (m === i.mood) return
+      i.mood = m; i.moodAt = performance.now()
+      if (m === 'cheer') play(i, 'jump', false)
+      if (m === 'wow') play(i, 'spin', false)
+    },
+    play: mv => play(i, mv),
     setTalking: on => { i.talking = on },
     detach: () => i.off(),
   }

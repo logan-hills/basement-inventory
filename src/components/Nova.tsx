@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 import novaAvatar from '../assets/nova-avatar.webp'
-import type { NovaHandle } from './nova3d'
+import type { Move, NovaHandle } from './nova3d'
+export type { Move as NovaMove }
 
 /* 3D Nova is loaded on first use and shared by every Nova on screen. Until it's ready, or on a
    device that can't run it (no WebGL, very old or slow), she shows as her picture. */
@@ -12,15 +13,18 @@ const load3d = () => (loading ??= import('./nova3d').then(m => (nova3d = m)).cat
 
 /* Nova: the Dazzle University teaching assistant, from the official Dynamic Dazzle art
    (green bag, gold bow and crown, cat-eye shades, DD crest). She's a real 3D handbag:
-   drag to spin her, tap for a twirl, and she turns to follow your finger or mouse.
-   Moods change her face, how she moves and what sparkles around her. */
+   drag to spin her, tap her for reactions, double tap for her signature Ka-ching!, press and
+   hold for a curtsy. She turns to follow your finger or mouse and does little moves on her own.
+   Moods change her face, how she moves and what sparkles around her. Pass `act` to make her do a
+   move from code, e.g. act={['kaching', n]} (bump n to play it again). */
 export type NovaMood = 'happy' | 'cheer' | 'think' | 'oops' | 'wow' | 'wink'
 
-export function Nova({ mood = 'happy', size = 96, className = '', talking = false }: { mood?: NovaMood; size?: number; className?: string; talking?: boolean }) {
+export function Nova({ mood = 'happy', size = 96, className = '', talking = false, act }: { mood?: NovaMood; size?: number; className?: string; talking?: boolean; act?: [Move, number] }) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const handle = useRef<NovaHandle | null>(null)
   const [live, setLive] = useState(() => !!nova3d?.supported())
   const moodRef = useRef(mood)
+  const [kaching, setKaching] = useState(0)
 
   useEffect(() => {
     let gone = false
@@ -35,18 +39,26 @@ export function Nova({ mood = 'happy', size = 96, className = '', talking = fals
       const { part, x, y } = (e as CustomEvent<{ part: string; x: number; y: number }>).detail
       if (part === 'bow' || part === 'shoes') burst(x, y)
     }
+    // Her signature move: a Ka-ching! pop and confetti as she lands the pose.
+    const onMove = (e: Event) => {
+      const { move, x, y } = (e as CustomEvent<{ move: Move; x: number; y: number }>).detail
+      if (move === 'kaching') { setKaching(k => k + 1); burst(x, y) }
+    }
     el?.addEventListener('novapoke', onPoke)
-    return () => { gone = true; el?.removeEventListener('novapoke', onPoke); handle.current?.detach(); handle.current = null }
+    el?.addEventListener('novamove', onMove)
+    return () => { gone = true; el?.removeEventListener('novapoke', onPoke); el?.removeEventListener('novamove', onMove); handle.current?.detach(); handle.current = null }
   }, [])
   useEffect(() => { handle.current?.setTalking(talking) }, [talking, live])
   useEffect(() => { moodRef.current = mood; handle.current?.setMood(mood) }, [mood])
+  useEffect(() => { if (act) handle.current?.play(act[0]) }, [act?.[0], act?.[1], live]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <span className={`nova nova-${mood} ${live ? 'nova-live' : ''} ${className}`} style={{ width: size, height: size }} role="img" aria-label={`Nova, ${mood}${live ? '. Drag to spin her. Tap her shades, bow, hand, bag or sneakers.' : ''}`}>
+    <span className={`nova nova-${mood} ${live ? 'nova-live' : ''} ${className}`} style={{ width: size, height: size }} role="img" aria-label={`Nova, ${mood}${live ? '. Drag to spin her. Tap her shades, bow, hand, bag or sneakers. Double tap for Ka-ching!' : ''}`}>
       <span className="nova-ring">
         <img src={novaAvatar} alt="" width={size} height={size} draggable={false} />
       </span>
       <canvas ref={canvas} className="nova-3d" aria-hidden="true" />
+      {kaching > 0 && <span key={kaching} className="nova-kaching" aria-hidden="true">Ka-ching!</span>}
       {(mood === 'cheer' || mood === 'wow') && (
         <svg className="nova-fx" viewBox="0 0 100 100" aria-hidden="true">
           <g fill="#FFD36E">
