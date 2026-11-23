@@ -2602,3 +2602,10 @@ button.uni-step:hover, button.uni-step:focus-visible { transform: translateY(-2p
 .uni-live-time span { font-size: .82rem; font-weight: 700; white-space: nowrap; }
 .uni-live-more { align-self: flex-start; margin-top: 8px; padding: 6px 0; border: 0; background: none; font: inherit; font-size: 1rem; font-weight: 700; color: #A3005A; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 640px) { .uni-live-wrap { padding-left: 0; } .uni-live { padding: 12px; } .uni-live-times { width: 100%; } .uni-live-time { flex: 1; min-width: 0; padding: 8px 6px; } }
+
+/* ---------- Print nudge ---------- */
+.nudge { border: 1px solid var(--border-strong); border-radius: 14px; padding: 4px 14px; }
+.nudge summary { cursor: pointer; font-weight: 700; color: var(--gold); min-height: 48px; display: flex; align-items: center; }
+.nudge-body { display: flex; flex-direction: column; gap: 10px; padding-bottom: 12px; }
+.nudge-pad { display: grid; grid-template-columns: repeat(3, minmax(0, 120px)); gap: 8px; }
+.nudge-pad .btn { min-height: 52px; font-size: 1rem; padding: 0 8px; }

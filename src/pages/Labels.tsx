@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase'
 import { money } from '../lib/data'
 import CrispBarcode from '../components/CrispBarcode'
 import SaveForPrinterApp from '../components/SaveForPrinterApp'
+import PrintNudge from '../components/PrintNudge'
 
 type Tag = { tag_code: string; live_number: string; name: string; variant: string; price: number | null; sale: number | null }
 type Style = 'regular' | 'sale'
@@ -201,6 +202,7 @@ export default function Labels() {
                   <li>Load the 2×1 roll, then hold the printer's feed button until it feeds a label or two, so it learns the gap.</li>
                   <li>In the print window, choose your thermal printer and set paper size to <b>2 x 1 in</b> (50.8 x 25.4 mm). If it isn't listed, add it under the printer's Preferences or Paper size.</li>
                   <li>Scale <b>100%</b> (or Actual size), margins <b>None</b>, headers and footers off.</li>
+                  <li>Print lands a little to one side? Open <b>Nudge it</b> below and line it up once. The app remembers it.</li>
                 </ol>
                 <span className="muted">Each tag prints on its own label. White roll for regular tags, yellow roll for sale tags.</span>
               </div>
@@ -213,6 +215,7 @@ export default function Labels() {
             <p className="muted small">{tags.length} tag{tags.length === 1 ? '' : 's'} on {pages.length} page{pages.length === 1 ? '' : 's'}. In the print window, set scale to 100% (or "Actual size") and margins to None.</p>
             <button className={`btn big ${style === 'sale' ? 'sale-btn' : 'primary'}`} onClick={() => window.print()}>Print</button>
             <SaveForPrinterApp name={style === 'sale' ? 'sale-tags' : 'tags'} />
+            <PrintNudge w={f.page.w} h={f.page.h} />
             <p className="muted small">Need a printer or labels? See <Link to="/gear">Recommended gear</Link>.</p>
           </div>
         )}
