@@ -1,15 +1,88 @@
 import type { Lesson } from './types'
 
 const lesson: Lesson = {
-  id: 'reports', title: 'Read your money', track: 'Grow', icon: 'reports', minutes: 3,
+  id: 'reports', title: 'Read your money', track: 'Grow', icon: 'reports',
   why: 'Knowing what sells and what sits helps you buy smarter and earn more.',
+  outcomes: [
+    'Know what every number on Reports means, in plain words',
+    'Work out margin, average order and sell-through yourself',
+    'Spot your best nights, best pieces and weak spots',
+    'Turn the numbers into three decisions a month',
+    'Run a 30-minute monthly money meeting with yourself',
+  ],
   route: { to: '/reports', label: 'Open Reports' },
   covers: ['src/pages/Reports.tsx', 'src/pages/Home.tsx'], updated: '2026-11-23',
   slides: [
-    { kind: 'learn', title: 'The big numbers', text: 'Reports (Money in the dock) shows sales, profit, what\'s sitting on your shelves, and your monthly goal.' },
-    { kind: 'learn', title: 'Sales by live', text: 'Each bar is one live. Hover or tap a bar for the total. Look for which themes and nights bring in the most.' },
-    { kind: 'learn', title: 'Best sellers and stock age', text: 'Best sellers tells you what to buy more of. Stock age shows how much has been sitting, with the oldest in the darkest gold.' },
+    { chapter: 'The big numbers', kind: 'learn', title: 'Why numbers, honestly', nova: 'Don\'t worry, no accounting degree needed. Just a few numbers that tell you the truth.',
+      text: 'A live can feel amazing and still lose money. Another can feel slow and be your most profitable night. Reports (Money in the dock) tells you which is which, so you decide with facts instead of feelings.' },
+    { kind: 'learn', title: 'Sales numbers', text: 'Pick a date range at the top (Last 30 days, Last 90 days, Last 12 months, All time). The top row shows how that time went.',
+      table: { head: ['Number', 'Plain words'], rows: [
+        ['Sales', 'All the money buyers paid for pieces'],
+        ['Gross profit', 'Sales minus what you paid for those pieces'],
+        ['Orders', 'How many boxes'],
+        ['Avg order', 'Sales ÷ orders: what a typical box is worth'],
+        ['Items sold', 'How many pieces went out'],
+        ['Buyers', 'How many different people bought'],
+      ] } },
+    { kind: 'learn', title: 'Inventory numbers', text: 'The second row shows what\'s on your shelves right now.',
+      table: { head: ['Number', 'Plain words'], rows: [
+        ['Items in stock', 'Pieces on the shelf'],
+        ['Retail value', 'What they\'d bring in at full price'],
+        ['Cost value', 'What you paid for them: your cash on the shelf'],
+        ['Profit waiting', 'Retail value minus cost value'],
+        ['Avg margin', 'How much of each sale dollar is profit, on average'],
+        ['Old stock', 'Pieces past your old-stock days'],
+        ['Damaged out', 'Pieces you took out of stock as damaged or lost'],
+      ] } },
+    { kind: 'quiz', q: 'Sales were $2,000 and Gross profit was $1,200. What did the pieces cost you?', options: ['$800', '$1,200', '$3,200'], answer: 0, why: 'Gross profit is sales minus cost, so cost was $2,000 − $1,200 = $800.' },
+
+    { kind: 'quiz', q: 'Retail value is $6,000 and Cost value is $2,200. What does that $2,200 tell you?', options: ['Your profit so far', 'The cash you have tied up on your shelves right now', 'This month\'s sales'], answer: 1, why: 'Cost value is what you paid for everything still on the shelf. Moving old stock turns it back into cash for fresh pieces.' },
+    { chapter: 'Do the math', kind: 'learn', title: 'Margin, in plain words', text: 'Margin is the share of the price that\'s profit. A $20 bag you paid $8 for has a $12 profit, and $12 ÷ $20 = 60% margin. Higher margin means more of every dollar stays with you.',
+      table: { head: ['Piece', 'Price', 'Cost', 'Profit', 'Margin'], rows: [
+        ['Emerald bag', '$20', '$8', '$12', '60%'],
+        ['Gold hoops', '$12', '$3', '$9', '75%'],
+        ['Oversized sunglasses', '$10', '$7', '$3', '30%'],
+      ] },
+      tip: 'Low margin items lists the pieces making you the least. Raise the price, bundle them, or stop buying them.' },
+    { kind: 'number', title: 'Find the margin', q: 'A top sells for $16 and cost you $4. What\'s the margin?', answer: 75, tolerance: 0.5, suffix: '%', hint: 'Profit ÷ price × 100. Profit is $16 − $4.', why: '$12 ÷ $16 = 0.75, so 75%. Three out of every four dollars stay with you.' },
+    { kind: 'number', title: 'Average order', q: 'Last month: $3,120 in sales from 130 orders. What\'s your average order?', prefix: '$', answer: 24, hint: 'Sales ÷ orders.', why: '$3,120 ÷ 130 = $24. Bundles, "add a $3 scarf" offers and combined shipping are the easiest ways to raise it.' },
+    { kind: 'scenario', title: 'The live that felt amazing', situation: 'Friday\'s live was electric: 90 viewers, nonstop comments, $900 in sales. But Gross profit for the night was only $180, because you ran everything at deep live prices.',
+      options: [
+        { text: 'Do it exactly the same every week, the energy was incredible', feedback: 'The energy was great, but 20% of sales as profit means you worked a whole night for very little.' },
+        { text: 'Keep the energy and the theme, but price most pieces at a healthy margin and save the deep deals for a few door-openers and the Steal of the Night', best: true, feedback: 'The crowd came for the fun and the deals. You can keep both and still get paid.' },
+        { text: 'Raise every price way up next week', feedback: 'Big jumps scare off the crowd you just built. Adjust the mix instead.' },
+      ] },
+    { kind: 'learn', title: 'Sell-through', text: 'Sell-through is how much of what you planned actually sold. If a live had 50 pieces and 30 sold, sell-through was 60%. Track it live to live: high sell-through means you picked well. Low means the lineup, prices or promotion missed.' },
+
+    { chapter: 'Find the story', kind: 'learn', title: 'Sales by live', text: 'Each bar is one live. Hover or tap a bar for the exact total, and the table below lists orders, items, buyers and sales for each. Look for patterns: which nights, themes and promos bring in the most?',
+      example: 'One seller noticed her Thursday lives beat Tuesdays every week, by about 40%. She moved her best new pieces to Thursday and added a payday theme on the first Thursday. Her month grew without adding a single extra live.' },
     { kind: 'quiz', q: 'Which live night earned the most? Where do you look?', options: ['Sales by live', 'Stock age', 'Settings'], answer: 0, why: 'Sales by live shows each show\'s total.' },
+    { kind: 'learn', title: 'Best sellers, oldest stock, stock age', text: 'Best sellers tells you what to buy more of. Oldest stock lists pieces sitting the longest, with how many days. Stock age groups everything by how long it\'s been on the shelf, with the oldest in the darkest gold.' },
+    { kind: 'learn', title: 'Categories, customers and damage', text: 'Stock by category shows how much is tied up in each category, and the margin there. Top customers lists your biggest buyers. Damage by reason shows what\'s going wrong most. Every table has Download CSV if you want it in a spreadsheet.' },
+    { kind: 'scenario', title: 'Read the signs', situation: 'In the last 90 days: Bags have a 62% margin and sell fast. Sunglasses have a 28% margin and Oldest stock is full of them. Your next supplier order is $400.',
+      options: [
+        { text: 'Split it evenly across everything you sell', feedback: 'That buys more of what\'s already sitting. The numbers are pointing somewhere.' },
+        { text: 'Put most of it into bags, skip sunglasses, and run a sale on the sunglasses you have', best: true, feedback: 'Buy more of what sells at a good margin, stop buying what sits, and turn the old stock back into cash.' },
+        { text: 'Buy lots more sunglasses so the price per pair goes down', feedback: 'Cheaper sunglasses that still sit on the shelf are still cash stuck on a shelf.' },
+      ] },
+
+    { chapter: 'Your monthly money meeting', kind: 'learn', title: '30 minutes, once a month', text: 'Put it on your calendar like a live: the first Saturday morning, with coffee. Set the range to Last 30 days and walk through this.',
+      table: { head: ['Minutes', 'Look at', 'Ask yourself'], rows: [
+        ['5', 'Sales, Gross profit, Avg order', 'Did I hit my goal? Up or down from last month?'],
+        ['5', 'Sales by live', 'Which nights and themes won? Do more of those.'],
+        ['5', 'Best sellers, Low margin items', 'What do I buy more of? What do I stop buying?'],
+        ['5', 'Old stock, Oldest stock', 'What goes in this month\'s sale?'],
+        ['5', 'Top customers, Damage by reason', 'Who do I thank? What do I fix?'],
+        ['5', 'Write it down', 'My three decisions for this month'],
+      ] } },
+    { kind: 'reflect', title: 'Your first money meeting', prompt: 'Open Reports for the last 30 days. Write your sales, gross profit and average order, then your three decisions for this month.', placeholder: 'Sales: … Profit: … Avg order: … My 3 decisions: …', example: 'Sales $2,840, profit $1,610, avg order $22. 1) More gold hoops, Thursday is my big night. 2) Stop buying sunglasses. 3) Clearance live for everything 60+ days.' },
+    { kind: 'checklist', title: 'Make it a habit', prompt: 'Tick each one.', items: [
+      'Put a monthly money meeting on my calendar',
+      'Make sure every item has a cost, so profit is real',
+      'Write down three decisions each month',
+      'Check Low margin items before my next supplier order',
+      'Compare this month to last month, not to other sellers',
+    ] },
   ],
 }
 export default lesson
