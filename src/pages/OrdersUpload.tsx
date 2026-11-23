@@ -8,20 +8,20 @@ import { feedbackOk } from '../lib/feedback'
 
 const FIELDS = [
   { key: 'order', label: 'Order / invoice #', hints: ['orderid', 'ordernumber', 'order', 'invoice', 'invoicenumber', 'orderno'] },
-  { key: 'name', label: 'Customer name', hints: ['customername', 'name', 'buyer', 'buyername', 'fullname', 'customer'] },
-  { key: 'handle', label: 'Facebook name / username', hints: ['username', 'handle', 'facebook', 'fbname', 'facebookname', 'profile', 'user'] },
+  { key: 'name', label: 'Customer name', hints: ['customername', 'name', 'buyer', 'buyername', 'fullname', 'customer', 'customerfullname', 'shopper'] },
+  { key: 'handle', label: 'Facebook name / username', hints: ['username', 'handle', 'facebook', 'fbname', 'facebookname', 'profile', 'user', 'facebookuser', 'commenter', 'commentername'] },
   { key: 'email', label: 'Email', hints: ['email', 'emailaddress', 'buyeremail'] },
   { key: 'phone', label: 'Phone', hints: ['phone', 'phonenumber', 'mobile', 'cell'] },
   { key: 'address1', label: 'Address line 1', hints: ['address', 'address1', 'addressline1', 'street', 'shippingaddress', 'streetaddress'] },
   { key: 'address2', label: 'Address line 2', hints: ['address2', 'addressline2', 'apt', 'suite', 'unit'] },
   { key: 'city', label: 'City', hints: ['city', 'town'] },
   { key: 'state', label: 'State', hints: ['state', 'province', 'region'] },
-  { key: 'zip', label: 'ZIP', hints: ['zip', 'zipcode', 'postal', 'postalcode', 'postcode'] },
+  { key: 'zip', label: 'ZIP', hints: ['zip', 'zipcode', 'postal', 'postalcode', 'postcode', 'ziparea'] },
   { key: 'country', label: 'Country', hints: ['country'] },
-  { key: 'live', label: 'Live #', hints: ['livenumber', 'live', 'liveno', 'itemnumber', 'item', 'number', 'code', 'sku', 'claim', 'claimnumber'] },
-  { key: 'desc', label: 'Item description', hints: ['description', 'itemname', 'product', 'productname', 'title', 'itemdescription'] },
-  { key: 'qty', label: 'Quantity', hints: ['qty', 'quantity', 'count'] },
-  { key: 'price', label: 'Price', hints: ['price', 'amount', 'saleprice', 'itemprice', 'total'] },
+  { key: 'live', label: 'Live #', hints: ['claimnumber', 'livenumber', 'live', 'liveno', 'itemnumber', 'claim', 'claimno', 'item', 'number', 'code', 'sku', 'barcode', 'upc'] },
+  { key: 'desc', label: 'Item description', hints: ['producttitle', 'description', 'itemname', 'product', 'productname', 'title', 'itemdescription'] },
+  { key: 'qty', label: 'Quantity', hints: ['qty', 'quantity', 'count', 'quantitysold', 'qtysold'] },
+  { key: 'price', label: 'Price', hints: ['price', 'saleprice', 'itemprice', 'amount', 'soldprice', 'total'] },
 ] as const
 type FieldKey = typeof FIELDS[number]['key']
 
@@ -64,8 +64,17 @@ export default function OrdersUpload() {
     const grid = parseCsv(await f.text())
     if (grid.length < 2) { setErr('That file has no sale rows under the header.'); return }
     setHeaders(grid[0]); setData(grid.slice(1)); setMap(guessMap(grid[0]))
-    const { data: vs } = await supabase.from('variants').select('id,live_number, item:items(name)')
-    setVariants(new Map((vs ?? []).map((v: any) => [v.live_number, { id: v.id, name: v.item?.name ?? '' }])))
+    let { data: vs, error: vErr } = await supabase.from('variants').select('id,live_number,label,upc, item:items(name)')
+    if (vErr) ({ data: vs } = await supabase.from('variants').select('id,live_number,label, item:items(name)') as any)
+    const m = new Map<string, { id: string; name: string }>()
+    for (const v of (vs ?? []) as any[]) {
+      const name = v.item?.name ?? ''
+      const rec = { id: v.id, name: v.label && v.label !== 'One size' ? `${name} - ${v.label}` : name }
+      m.set(v.live_number, rec); m.set(String(Number(v.live_number)), rec)
+      if (v.upc) m.set(`upc:${v.upc}`, rec)
+      m.set(`title:${rec.name.toLowerCase()}`, rec)
+    }
+    setVariants(m)
   }
 
   const drafts = useMemo<Draft[]>(() => {
@@ -90,7 +99,7 @@ export default function OrdersUpload() {
       const live = /^\d{1,4}$/.test(liveRaw) ? liveRaw.padStart(4, '0') : liveRaw
       const qty = parseInt(get(row, 'qty') || '1', 10) || 1
       const priceRaw = get(row, 'price').replace(/[$,\s]/g, '')
-      const v = variants.get(live)
+      const v = variants.get(live) ?? variants.get(String(Number(liveRaw))) ?? variants.get(`upc:${liveRaw}`) ?? variants.get(`title:${get(row, 'desc').toLowerCase()}`)
       if (live || get(row, 'desc')) d.lines.push({ live, desc: get(row, 'desc'), qty, price: priceRaw ? Number(priceRaw) : null, variantId: v?.id ?? null, itemName: v?.name ?? null })
     }
     return [...out.values()].filter(d => d.lines.length)
@@ -181,6 +190,16 @@ export default function OrdersUpload() {
             <span>{fileName ? `Choose a different file (${fileName})` : 'Choose the sales CSV'}</span>
           </label>
         </div>
+      </div>
+
+      <div className="card stack loyal-card">
+        <b>Using Loyal Shops?</b>
+        <ol className="big-steps">
+          <li>In Loyal Shops, open <b>Sales History</b> for the live.</li>
+          <li>Tap <b>Export Sales</b>. A file downloads.</li>
+          <li>Come back here and tap <b>Choose the sales CSV</b> above.</li>
+        </ol>
+        <span className="muted small">Items are matched by claim number (your Live #), UPC, or product title.</span>
       </div>
 
       <div className="card template-card">

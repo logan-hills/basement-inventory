@@ -6,7 +6,10 @@ const lesson: Lesson = {
   route: { to: '/orders/upload', label: 'Upload live sales' },
   covers: ['src/pages/OrdersUpload.tsx', 'src/pages/Orders.tsx'], updated: '2026-11-23',
   slides: [
-    { kind: 'learn', title: 'Two ways in', text: 'If you use the Dynamic Dazzle comment bot, sales flow straight into Pick and pack. Using another bot, or writing sales down? Upload a CSV file.' },
+    { kind: 'learn', title: 'Three ways in', text: 'Pick the one that matches how you sell.',
+      points: ['Dynamic Dazzle comment bot: sales flow straight into Pick and pack', 'Loyal Shops: export your sales and upload the file here', 'Any other bot, or sales written down: fill in our sales template'] },
+    { kind: 'learn', title: 'From Loyal Shops', text: 'In Loyal Shops, open Sales History for the live and tap Export Sales. Then come to Upload live sales and choose that file. Items match by claim number (your Live #), UPC, or product title.',
+      screen: { title: 'Upload live sales', rows: ['Using Loyal Shops?'], buttons: ['Choose the sales CSV'], highlight: 'Choose the sales CSV' } },
     { kind: 'learn', title: 'The sales template', text: 'On Upload live sales, tap Download the sales template. Fill in one row per piece sold: who bought it, their address, the Live #, quantity and price. Save as CSV and upload.',
       screen: { title: 'Upload live sales', buttons: ['Choose the sales CSV', 'Download the sales template'], highlight: 'Download the sales template' },
       tip: 'Your bot\'s own export works too. The app matches the columns for you.' },
