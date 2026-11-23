@@ -2,7 +2,7 @@ import type { Lesson } from '../types'
 import { PAY_TRENDS as T } from './trends'
 
 const lesson: Lesson = {
-  id: 'creatorpay', kind: 'course', title: 'Who pays creators right now', track: 'Business', icon: 'dollar',
+  id: 'creatorpay', kind: 'course', school: 'Platforms and pay', title: 'Who pays creators right now', track: 'Business', icon: 'dollar',
   why: 'Your videos can sell your lives AND pay you for views. Put your energy where the money is.',
   outcomes: [
     `Know today's top pick (${T.topPick}) and why`,
@@ -10,6 +10,11 @@ const lesson: Lesson = {
     'Make every video do three jobs at once',
     'Turn one live into a week of videos',
     'Keep creator money in its place: a bonus, tracked for taxes',
+  ],
+  sources: [
+    { org: 'Meta', title: 'Monetize more content with Facebook\'s streamlined program', url: 'https://about.fb.com/news/2024/10/monetize-content-facebook/' },
+    { org: 'Meta for Creators', title: 'Facebook Content Monetization', url: 'https://creators.facebook.com/tools/facebook-content-monetization' },
+    { org: 'Meta', title: 'Creator Fast Track', url: 'https://about.fb.com/news/2026/03/creator-fast-track-grow-your-audience-earn-money-on-facebook/' },
   ],
   covers: ['src/lessons/business/trends.ts'], updated: '2026-11-23',
   slides: [

@@ -27,9 +27,14 @@ import creatorpay from './business/creatorpay'
 import tiktok from './business/tiktok'
 import shipfast from './business/shipfast'
 import communication from './business/communication'
+import storage from './business/storage'
+import picking from './business/picking'
+import lean from './business/lean'
+import launch from './launch'
+import printer from './printer'
 
-export const LESSONS: Lesson[] = [tour, profile, settings, receive, inventory, bulk, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, bot, sale, upload, pick, shipping, customers, reports]
-export const COURSES: Lesson[] = [brand, marketing, social, creatorpay, tiktok, shipfast, communication]
+export const LESSONS: Lesson[] = [launch, tour, profile, settings, receive, inventory, bulk, printer, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, bot, sale, upload, pick, shipping, customers, reports]
+export const COURSES: Lesson[] = [brand, marketing, social, creatorpay, tiktok, storage, picking, lean, shipfast, communication]
 export const ALL_LESSONS: Lesson[] = [...LESSONS, ...COURSES]
 export const lessonById = (id?: string) => ALL_LESSONS.find(l => l.id === id)
 export * from './types'

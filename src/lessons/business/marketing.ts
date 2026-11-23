@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'marketing', kind: 'course', title: 'Market your brand without burning out', track: 'Business', icon: 'trend',
+  id: 'marketing', kind: 'course', school: 'Brand and marketing', title: 'Market your brand without burning out', track: 'Business', icon: 'trend',
   why: "Great pieces don't sell if nobody knows about the live. Marketing is simply inviting people, on repeat.",
   outcomes: [
     'Write posts that answer What, When and Why every time',
@@ -9,6 +9,11 @@ const lesson: Lesson = {
     'Write hooks that stop the scroll',
     'Run giveaways and referral nights that follow Facebook\'s rules',
     'Track one simple scorecard so you know what actually works',
+  ],
+  sources: [
+    { org: 'U.S. Small Business Administration', title: 'Marketing and sales', url: 'https://www.sba.gov/business-guide/manage-your-business/marketing-sales' },
+    { org: 'U.S. Small Business Administration', title: 'Marketing plan example', url: 'https://www.sba.gov/document/support-marketing-plan-example' },
+    { org: 'HubSpot Academy', title: 'Facebook marketing training (free)', url: 'https://academy.hubspot.com/courses/facebook-marketing-training' },
   ],
   covers: [], updated: '2026-11-23',
   slides: [

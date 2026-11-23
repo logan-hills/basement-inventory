@@ -54,7 +54,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Home is your coach', text: 'Home counts down to your next live, shows your monthly goal, the profit sitting on your shelves, and the checklist for your next show. Tick steps right there. When stock gets old, Home tells you and offers Run a sale.',
       tip: 'Your monthly goal lives in Settings. Set one that stretches you a little.' },
     { kind: 'quiz', q: 'Where do you see how much profit is sitting on your shelves right now?', options: ['Home', 'Scan', 'Shipping'], answer: 0, why: 'Home shows profit sitting on the shelf, plus your goal and next live.' },
-    { kind: 'learn', title: 'Meet Nova', text: 'Nova the handbag is your guide. She shares a tip on Home every day (tap her for another one) and teaches every lesson and course in Dazzle Academy. Stuck on a screen? Search the Academy for it.' },
+    { kind: 'learn', title: 'Meet Nova', text: 'Nova the handbag is your guide. She shares a tip on Home every day (tap her for another one) and teaches every lesson and course in Dazzle University. Stuck on a screen? Search the University for it.' },
 
     { chapter: 'Your first week', kind: 'learn', title: 'Set up in five short sessions', text: "Don't try to do it all in one day. One session a day, about an hour each, and by Friday your shop runs on the system.",
       table: { head: ['Day', 'Do this', 'Lesson'], rows: [
@@ -82,7 +82,7 @@ const lesson: Lesson = {
         ['Sat', 'Check Reports, run a sale on old stock, rest'],
       ] } },
     { kind: 'learn', title: 'If you have helpers', text: 'The app is built so a helper can jump in without you standing over them. Each person signs in as themselves, and the tags, bins and pick screens tell them exactly what to do.',
-      points: ['Receiving helper: adds items and prints tags', 'Put-away helper: scans bins and tags', 'Packing helper: picks and scans into boxes', 'Everyone: takes the Academy lessons for their part'] },
+      points: ['Receiving helper: adds items and prints tags', 'Put-away helper: scans bins and tags', 'Packing helper: picks and scans into boxes', 'Everyone: takes the University lessons for their part'] },
     { kind: 'quiz', q: 'Your niece is helping pack on Wednesday. What does she need from you?', options: ['Your password', 'Her own sign-in and the Pick and pack lesson', 'A printed list of every order'], answer: 1, why: 'Each person has their own sign-in, and the pick screen shows her where everything is and which box it goes in.' },
     { kind: 'reflect', title: 'Your rhythm', prompt: 'Which days will you go live, and which days will you receive, pack and ship?', placeholder: 'I go live on…', example: 'I go live Tuesday 7 PM. I receive on Monday, pack and ship Wednesday, and check Reports on Saturday morning.' },
     { kind: 'checklist', title: 'Your first-week plan', prompt: 'Tick each day as you finish it.', items: [
