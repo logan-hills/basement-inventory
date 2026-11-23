@@ -1,7 +1,7 @@
 import type { Lesson } from '../types'
 
 const lesson: Lesson = {
-  id: 'tiktok', kind: 'course', school: 'Platforms and pay', title: 'Selling on TikTok Shop', track: 'Business', icon: 'cart',
+  id: 'tiktok', kind: 'course', school: 'Platforms and trends', title: 'Selling on TikTok Shop', track: 'Business', icon: 'cart',
   why: "TikTok Shop puts your pieces in front of buyers who've never heard of you, and lets them check out without leaving the app.",
   outcomes: [
     'Know what it takes to open a shop, and what to have ready',

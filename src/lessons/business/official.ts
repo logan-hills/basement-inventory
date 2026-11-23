@@ -1,0 +1,93 @@
+import type { Lesson } from '../types'
+import { NOT_ADVICE } from '../resources'
+
+const lesson: Lesson = {
+  id: 'official', kind: 'course', school: 'Make it official', title: 'Make your business official', track: 'Business', icon: 'reports',
+  why: 'Being official protects you, opens doors to wholesale vendors and banks, and makes tax time calm instead of scary.',
+  outcomes: [
+    'Choose between a sole proprietorship and an LLC, and know what each means',
+    'Register a business name (a "DBA") when you need one',
+    'Get a free EIN from the IRS, and know when you need it',
+    'Know what a business license is, and what Pennsylvania does and doesn\'t require',
+    'Get a free D-U-N-S Number and know what it\'s for',
+    'Set up a business bank account and keep money separate',
+  ],
+  route: { to: '/lessons', label: 'Open the Resource desk' },
+  sources: [
+    { org: 'IRS', title: 'Get an Employer Identification Number', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/get-an-employer-identification-number' },
+    { org: 'Dun & Bradstreet', title: 'Get a D-U-N-S Number', url: 'https://www.dnb.com/en-us/smb/duns/get-a-duns.html' },
+    { org: 'Pennsylvania Department of State', title: 'Business fees and payments', url: 'https://www.pa.gov/agencies/dos/programs/business/fees-and-payments.html' },
+    { org: 'Pennsylvania Business One-Stop Shop', title: 'Register your business', url: 'https://business.pa.gov/register/special-registrations/' },
+    { org: 'U.S. Small Business Administration', title: 'Manage your finances', url: 'https://www.sba.gov/business-guide/manage-your-business/manage-your-finances' },
+  ],
+  covers: ['src/lessons/resources.ts'], updated: '2026-11-23',
+  slides: [
+    { chapter: 'Why go official', kind: 'learn', title: 'From side hustle to business', nova: 'Quick note, love: I\'m a handbag, not a lawyer. This is education to get you started. Check the official sites or a pro before you file.',
+      text: 'Lots of live sellers start informally. That\'s normal. But once you\'re selling every week, going official protects you and opens doors.',
+      points: ['Wholesale vendors and liquidators often ask for a sales tax license or resale certificate', 'Banks want a business account for business money', 'Payment apps and platforms ask for tax info', 'Apple, Google and some programs ask for a D-U-N-S Number', 'Clean records make taxes faster and cheaper'],
+      tip: NOT_ADVICE },
+    { kind: 'learn', title: 'The order to do it in', text: 'Most sellers go official in this order. Each step uses the one before it.',
+      table: { head: ['Step', 'What', 'Cost'], rows: [
+        ['1', 'Pick your structure (sole proprietor or LLC)', 'Free for sole proprietor; state fee for an LLC'],
+        ['2', 'Register your business name if needed (DBA or LLC name)', 'State filing fee'],
+        ['3', 'Get an EIN from the IRS', 'Free'],
+        ['4', 'Register for sales tax with your state', 'Usually free'],
+        ['5', 'Check local licenses (city, township, county)', 'Varies'],
+        ['6', 'Open a business bank account', 'Often free'],
+        ['7', 'Get a D-U-N-S Number (optional, useful)', 'Free'],
+      ] } },
+    { kind: 'order', title: 'Practice: the order', prompt: 'Put these steps in the usual order.', steps: ['Pick a structure', 'Register the business name', 'Get an EIN', 'Register for sales tax', 'Open a business bank account'] },
+
+    { chapter: 'Your structure', kind: 'learn', title: 'Sole proprietor or LLC?', text: 'If you sell on your own and haven\'t filed anything, you\'re already a sole proprietor. An LLC (limited liability company) is a separate legal business you create by filing with your state.',
+      table: { head: ['', 'Sole proprietor', 'Single-member LLC'], rows: [
+        ['How to start', 'Just start selling', 'File a Certificate of Organization with your state'],
+        ['Cost', 'Free', 'A state filing fee, plus a small yearly report in many states'],
+        ['Personal protection', 'None: business debts and lawsuits can reach your personal stuff', 'Generally keeps business debts separate, if you keep money separate'],
+        ['Taxes', 'Profit goes on your personal return (Schedule C)', 'By default, taxed the same way as a sole proprietor'],
+        ['Looks to vendors', 'Fine', 'More established'],
+      ] },
+      tip: 'An LLC isn\'t magic. Mixing personal and business money can weaken its protection. Ask a lawyer or SCORE mentor if you\'re unsure which fits.' },
+    { kind: 'scenario', title: 'Which one?', situation: 'Tasha sells about $1,500 a month on two lives a week from her basement. She\'s growing, wants to buy from a wholesale vendor, and worries about a customer ever suing over a product.',
+      options: [
+        { text: 'Stay informal, it\'s too early', feedback: 'At $1,500 a month and growing, she\'s past "too early." Vendors will ask for paperwork soon.' },
+        { text: 'Consider forming an LLC, then get an EIN, a sales tax license and a business bank account', best: true, feedback: 'The LLC addresses her liability worry, and the rest gets her ready for wholesale buying. A quick talk with a pro confirms it fits.' },
+        { text: 'Form a corporation with a board of directors', feedback: 'Far more structure and paperwork than a small live shop needs right now.' },
+      ] },
+
+    { chapter: 'Names and numbers', kind: 'learn', title: 'Your business name (DBA)', text: 'If you sell under a name that isn\'t your own legal name (like "Dazzle Finds" instead of "Tasha Brown"), many states require you to register that name. In Pennsylvania it\'s called a fictitious name registration, filed with the Department of State. An LLC registers its name when it forms.',
+      tip: 'Search your state\'s business name database first so you don\'t pick a name someone already has.' },
+    { kind: 'learn', title: 'The EIN', text: 'An EIN (Employer Identification Number) is like a Social Security number for your business. The IRS gives it out free, online, in one sitting. You need one if you have employees or an LLC with certain setups, and many sellers get one anyway so they can give vendors and platforms an EIN instead of their Social Security number.',
+      points: ['Apply at IRS.gov. It\'s free; the IRS warns never to pay a website for an EIN.', 'Finish in one session; it times out after 15 minutes of no activity', 'You get your number right away when you finish online', 'Limit: one EIN per responsible person per day', 'Save the confirmation letter (CP 575) somewhere safe'] },
+    { kind: 'quiz', q: 'A website offers to get your EIN for $79. What should you do?', options: ['Pay it, it\'s faster', 'Apply free on IRS.gov yourself', 'Use your Social Security number forever instead'], answer: 1, why: 'The IRS says you never have to pay a fee for an EIN. Apply directly on IRS.gov; it takes about 15 minutes.' },
+    { kind: 'learn', title: 'The D-U-N-S Number', text: 'A D-U-N-S Number is a 9-digit business ID from Dun & Bradstreet. It\'s free and not required, but it helps establish business credit and is asked for by some programs, large companies and government agencies. For example, Apple asks organizations for one to publish apps.',
+      points: ['Request it free at dnb.com', 'Standard processing can take up to 30 business days', 'They\'ll offer paid add-ons; you don\'t need them to get the number'] },
+
+    { chapter: 'Licenses', kind: 'learn', title: 'What is a "business license"?', text: 'A business license is permission from a government to operate. There isn\'t one national license. It depends on your state, county and city.',
+      table: { head: ['Level', 'What it might be', 'Pennsylvania example'], rows: [
+        ['State', 'A general license, or licenses for certain trades', 'PA has no general statewide business license for retail'],
+        ['State tax', 'Sales tax registration', 'PA sales tax license through myPATH'],
+        ['Local', 'City or township business license or tax', 'Philadelphia requires a Commercial Activity License; some townships have business privilege taxes'],
+      ] },
+      tip: 'Call or check your city or township\'s website and ask: "Do I need a license to sell online from home?" Ask about home business (zoning) rules too.' },
+    { kind: 'learn', title: 'Separate your money', text: 'The SBA\'s first money advice for small businesses is to keep business and personal finances separate. Open a business checking account with your EIN or LLC paperwork.',
+      points: ['All sales payouts go into it', 'All stock, supplies and shipping come out of it', 'Pay yourself by transferring to personal, on a schedule', 'It makes taxes, loans and LLC protection much stronger'] },
+    { kind: 'reflect', title: 'Your status today', prompt: 'Which of these do you already have: structure chosen, business name registered, EIN, sales tax license, local license checked, business bank account, D-U-N-S? Which is next?', placeholder: 'I have… Next I\'ll…', example: 'I have an EIN and a business account. Next: sales tax license on myPATH, then call my township about local licenses.' },
+    { kind: 'learn', title: 'Case study: getting official in Pennsylvania', text: 'Here\'s how one Pennsylvania seller did it in two weeks.',
+      table: { head: ['Day', 'What she did'], rows: [
+        ['Monday', 'Decided on a sole proprietorship for now; searched the state name database'],
+        ['Tuesday', 'Filed a fictitious name registration for "Gold Hour Finds" with the PA Department of State'],
+        ['Wednesday', 'Got her free EIN on IRS.gov in 15 minutes'],
+        ['Thursday', 'Registered for a sales tax license on myPATH'],
+        ['Next week', 'Called her township about local licenses; opened a business checking account; requested a D-U-N-S Number'],
+      ] } },
+    { kind: 'number', title: 'One quiet cost', q: 'A filing service charges $79 for an EIN, $99 for a sales tax registration and $49 for a D-U-N-S request. If you do all three yourself on the official sites (all free), how much do you save?', prefix: '$', answer: 227, hint: 'Add them up.', why: '$79 + $99 + $49 = $227. The official sites are free. Pay for help only if you truly want it.' },
+    { kind: 'scenario', title: 'The scary letter', situation: "Six months after registering, you get a letter that you missed a sales tax return. You had no sales that month, so you skipped it.",
+      options: [
+        { text: "Ignore it, you didn't owe anything", feedback: "Many states, including Pennsylvania, want a return filed even when sales are zero. Ignoring letters makes penalties grow." },
+        { text: "File the missing return (showing $0), pay any small penalty, and set a calendar reminder for every due date", best: true, feedback: "Right. A $0 return still counts. Reminders make sure it never happens again." },
+        { text: "Close the license so the letters stop", feedback: "Then you can't legally collect sales tax for your next live. Fix the filing instead." },
+      ] },
+    { kind: 'checklist', title: 'Go official', prompt: 'Tick each step as you finish it.', items: ['Decide sole proprietor or LLC (talk to a pro if unsure)', 'Register my business name or LLC with the state', 'Get my free EIN on IRS.gov', 'Register for sales tax (see the Sales tax course)', 'Check city, township and county licenses', 'Open a business bank account', 'Request a free D-U-N-S Number'] },
+  ],
+}
+export default lesson
