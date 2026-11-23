@@ -22,6 +22,7 @@ const FIELDS = [
   { key: 'desc', label: 'Item description', hints: ['producttitle', 'description', 'itemname', 'product', 'productname', 'title', 'itemdescription'] },
   { key: 'qty', label: 'Quantity', hints: ['qty', 'quantity', 'count', 'quantitysold', 'qtysold'] },
   { key: 'price', label: 'Price', hints: ['price', 'saleprice', 'itemprice', 'amount', 'soldprice', 'total'] },
+  { key: 'status', label: 'Claim status (waitlist rows are skipped)', hints: ['status', 'claimstatus', 'winner', 'waitlist', 'waitlisted', 'claimtype'] },
 ] as const
 type FieldKey = typeof FIELDS[number]['key']
 
@@ -95,10 +96,17 @@ export default function OrdersUpload() {
       for (const f of ['name', 'handle', 'email', 'phone', 'address1', 'address2', 'city', 'state', 'zip', 'country'] as FieldKey[]) {
         const v = get(row, f); if (v && !d.customer[f]) d.customer[f] = v
       }
-      const liveRaw = get(row, 'live').replace(/^#/, '')
+      // Loyal Shops keeps waitlisted / runner-up / passed claims in some exports. Only winners get packed.
+      if (/wait|runner|pass|cancel|delet|remov|declin|lost/i.test(get(row, 'status'))) continue
+      // Claims can arrive as "123", "#123", "Sold 123 Blue M" or "Claim 88 Q2".
+      let liveRaw = get(row, 'live').replace(/^#/, '')
+      const claim = !/^\d+$/.test(liveRaw) && liveRaw.match(/^(?:sold|wanted|want|claim(?:ed)?|mine)?\s*#?\s*(\d{1,5})\b/i)
+      if (claim) liveRaw = claim[1]
       const live = /^\d{1,4}$/.test(liveRaw) ? liveRaw.padStart(4, '0') : liveRaw
-      const qty = parseInt(get(row, 'qty') || '1', 10) || 1
-      const priceRaw = get(row, 'price').replace(/[$,\s]/g, '')
+      const qtyText = get(row, 'qty') || (get(row, 'live').match(/\bq(?:ty|uantity)?\s*(\d+)/i)?.[1] ?? '')
+      const qty = parseInt(qtyText.match(/\d+/)?.[0] ?? '1', 10) || 1
+      const priceIn = get(row, 'price')
+      const priceRaw = /^free$/i.test(priceIn) ? '0' : priceIn.replace(/[$,\s]/g, '')
       const v = variants.get(live) ?? variants.get(String(Number(liveRaw))) ?? variants.get(`upc:${liveRaw}`) ?? variants.get(`title:${get(row, 'desc').toLowerCase()}`)
       if (live || get(row, 'desc')) d.lines.push({ live, desc: get(row, 'desc'), qty, price: priceRaw ? Number(priceRaw) : null, variantId: v?.id ?? null, itemName: v?.name ?? null })
     }
