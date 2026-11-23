@@ -33,6 +33,7 @@ import Reports from './pages/Reports'
 import Lessons from './pages/Lessons'
 import Planner from './pages/Planner'
 import LivePlan from './pages/LivePlan'
+import LiveBot from './pages/LiveBot'
 
 export function Crown({ size = 28 }: { size?: number }) {
   return (
@@ -133,6 +134,7 @@ function Shell() {
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/lives/:id" element={<LiveDetail />} />
           <Route path="/lives/:id/plan" element={<LivePlan />} />
+          <Route path="/lives/:id/bot" element={<LiveBot />} />
           <Route path="/planner" element={<Planner />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/reports" element={<Reports />} />

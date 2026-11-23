@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import type { BotRules } from './livebot'
 
 export type BotColumn = { key: string; header: string }
 
@@ -12,6 +13,8 @@ export type Settings = {
   botColumns: BotColumn[]
   checklist: { before: string[]; during: string[]; after: string[] }
   monthlyGoal: number
+  /** Comment bot: which words count as a claim or a cancel. */
+  botRules?: BotRules
 }
 
 /** Every field the live-sale bot CSV can include. */
