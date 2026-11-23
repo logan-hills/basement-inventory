@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { scanBoxKeyDown } from '../lib/scanner'
 import { Link, useSearchParams } from 'react-router-dom'
 import CameraScanner from '../components/CameraScanner'
 import DamageSheet from '../components/DamageSheet'
@@ -116,7 +117,7 @@ export default function Scan() {
       {camera && <CameraScanner onCode={handle} />}
 
       <form onSubmit={submit} className="scan-input">
-        <input ref={inputRef} value={manual} onChange={e => setManual(e.target.value)}
+        <input ref={inputRef} value={manual} onChange={e => setManual(e.target.value)} onKeyDown={scanBoxKeyDown}
           placeholder="Scan with a scanner, or type a tag or Live #" autoComplete="off" autoCapitalize="characters" enterKeyHint="go" aria-label="Scan or type a code" />
         <button className="btn primary">Look up</button>
       </form>
