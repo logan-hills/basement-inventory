@@ -20,6 +20,7 @@ export default function ItemDetail() {
   const [urls, setUrls] = useState<Record<string, string>>({})
   const [photo, setPhoto] = useState(0)
   const [reprint, setReprint] = useState<Set<string>>(new Set())
+  const [bulk, setBulk] = useState<{ units: { id: string; tag_code: string; label: string }[]; choose: boolean } | null>(null)
   const toggleReprint = (code: string) => setReprint(s => { const n = new Set(s); if (n.has(code)) n.delete(code); else n.add(code); return n })
   const [damage, setDamage] = useState<{ id: string; tag_code: string; label: string } | null>(null)
   const [addQty, setAddQty] = useState<Record<string, string>>({})
@@ -156,7 +157,15 @@ export default function ItemDetail() {
                 </label>
               </div>
               <div className="unit-list">
-                <span className="eyebrow">Tags · tick to reprint · swipe left to damage out</span>
+                <div className="row-between">
+                  <span className="eyebrow">Tags · tick to reprint or damage out</span>
+                  {inStock.length > 1 && (
+                    <div className="row-gap">
+                      <button className="link-btn" onClick={() => setReprint(r => { const n = new Set(r); const all = inStock.every(u => n.has(u.tag_code)); inStock.forEach(u => (all ? n.delete(u.tag_code) : n.add(u.tag_code))); return n })}>{inStock.every(u => reprint.has(u.tag_code)) ? 'Unselect all' : 'Select all'}</button>
+                      <button className="link-btn danger-text" onClick={() => setBulk({ units: inStock.map(u => ({ id: u.id, tag_code: u.tag_code, label: `${item.name} · ${v.label}` })), choose: true })}>Damage out several</button>
+                    </div>
+                  )}
+                </div>
                 {inStock.map(u => (
                   <SwipeRow key={u.id} leftLabel="Damage out" onSwipeLeft={() => setDamage({ id: u.id, tag_code: u.tag_code, label: `${item.name} · ${v.label}` })}>
                     <div className="unit-row">
@@ -185,12 +194,14 @@ export default function ItemDetail() {
           <span><b className="gold">{reprint.size}</b> tag{reprint.size === 1 ? '' : 's'} picked</span>
           <div className="row-gap">
             <Link className="btn gold" to={`/labels?tags=${[...reprint].join(',')}`}>Reprint {reprint.size === 1 ? 'this tag' : 'these tags'}</Link>
+            <button className="btn danger" onClick={() => setBulk({ units: item.variants.flatMap(v => v.units.filter(u => u.status === 'in_stock' && reprint.has(u.tag_code)).map(u => ({ id: u.id, tag_code: u.tag_code, label: `${item.name} · ${v.label}` }))), choose: false })}>Damage out {reprint.size}</button>
             <button className="link-btn" onClick={() => setReprint(new Set())}>Clear</button>
           </div>
         </div>
       )}
 
       <DamageSheet unit={damage} onClose={() => setDamage(null)} onChanged={load} />
+      <DamageSheet units={bulk?.units ?? null} chooseQty={bulk?.choose} onClose={() => setBulk(null)} onChanged={() => { setReprint(new Set()); load() }} />
     </div>
   )
 }

@@ -509,3 +509,6 @@ button { font: inherit; cursor: pointer; }
 .sheet-panel { overflow-x: hidden; }
 .sheet-panel .row2 > label, .sheet-panel .row3 > label { min-width: 0; }
 .sheet-panel input, .sheet-panel select { min-width: 0; max-width: 100%; }
+.stepper.qty-big { border-color: var(--danger); }
+.stepper.qty-big input { flex: 1; text-align: center; border: 0; background: none; font-size: 1.4rem; font-weight: 700; min-height: 48px; }
+.stepper.qty-big button { color: var(--danger); height: 52px; width: 56px; }
