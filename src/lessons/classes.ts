@@ -57,7 +57,27 @@ export const QUEEN_SESSION = {
   firstHourOff: 0.5,
   /** About this much per hour of follow-up research, quoted first. */
   researchRate: 25,
+  /** Share of the session price paid up front to book. */
+  deposit: 0.5,
+  /** Where booking requests go: the Queen's own inbox. */
+  email: 'LaVerne_q@hotmail.com',
+  /** Ideas to get sellers started; tapping one adds it to their request. */
+  ideas: [
+    'Price my pieces so I make a real profit',
+    'Build a simple business plan for next year',
+    'Get more people to show up to my lives',
+    'Find better vendors and buy smarter',
+    'Set up my LLC, EIN and sales tax the right way',
+    'Get organized so packing takes half the time',
+    'Grow my repeat buyers and VIP list',
+    'Know when I can afford to hire help',
+    'Use AI to save hours on marketing',
+    'Plan my holiday season',
+  ],
 }
+
+/** What's due up front to book: half the session price. */
+export const consultDeposit = (hours: number) => Math.round(consultPrice(hours) * QUEEN_SESSION.deposit * 100) / 100
 
 /** What a session costs. The first full hour gets the discount; time is prorated after that.
     A session shorter than one hour is prorated at the full rate, with no discount. */
