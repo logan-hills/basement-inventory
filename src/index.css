@@ -397,8 +397,7 @@ button { font: inherit; cursor: pointer; }
 .box-label-addr { font-size: 13pt; line-height: 1.3; text-align: center; }
 .box-label.big .box-label-foot { margin-top: auto; font-size: 12pt; border-top: 2px solid #000; padding-top: .08in; }
 
-/* Landscape 4x6 bin label: shown 6x4 on screen, turned sideways onto a 4x6 page when printed */
-.land-sheet { width: 6in; height: 4in; position: relative; }
+/* Landscape 4x6 bin label: shown 6x4 on screen, turned sideways onto a 4x6 page when printed (see .turn-sheet) */
 .bin-land { width: 6in; height: 4in; padding: .22in .3in; display: flex; flex-direction: column; gap: .1in; font-family: Arial, Helvetica, sans-serif; color: #000; }
 .bin-land-head { display: flex; justify-content: space-between; font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-bottom: 3px solid #000; padding-bottom: .06in; }
 .bin-land-code { font-size: 64pt; font-weight: 900; line-height: .95; text-align: center; letter-spacing: 2px; }
@@ -408,10 +407,40 @@ button { font: inherit; cursor: pointer; }
 .bin-land-parts b { font-size: 26pt; line-height: 1; }
 .bin-land .barcode { height: .75in; width: 100%; }
 .bin-land-foot { font-size: 8pt; text-align: center; font-weight: 600; }
+/* Turned labels (DYMO, landscape 4x6): upright on screen, turned a quarter turn onto the printer's page */
+.turn-sheet { width: var(--dw); height: var(--dh); position: relative; }
+.turn-rot { position: absolute; top: 0; left: 0; width: var(--dw); height: var(--dh); }
 @media print {
-  .land-sheet { width: 4in; height: 6in; }
-  .land-rot { position: absolute; top: 0; left: 0; width: 6in; height: 4in; transform-origin: top left; transform: translateX(4in) rotate(90deg); }
+  .turn-sheet { width: var(--dh); height: var(--dw); }
+  .turn-rot { transform-origin: top left; transform: translateX(var(--dh)) rotate(90deg); }
 }
+
+/* Label size picker and preview */
+.size-pick { display: flex; flex-direction: column; gap: 14px; }
+.size-pick-group { display: flex; flex-direction: column; gap: 8px; }
+.size-pick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 10px; }
+.size-tile { display: flex; align-items: center; gap: 14px; min-height: 72px; padding: 10px 14px; border-radius: 16px; border: 2px solid var(--border-strong); background: var(--raised); color: var(--text); text-align: left; font: inherit; cursor: pointer; transition: border-color .15s, background .15s, transform .15s var(--ease); }
+.size-tile:hover { border-color: rgba(255, 211, 110, .6); }
+.size-tile.on { border-color: var(--gold); background: rgba(255, 211, 110, .12); box-shadow: 0 0 0 3px rgba(255, 211, 110, .18); }
+.size-shape { width: 48px; height: 48px; flex: none; display: grid; place-items: center; }
+.size-shape i { display: block; position: relative; background: #fff; border-radius: 3px; box-shadow: 0 1px 4px rgba(0, 0, 0, .5); overflow: hidden; }
+.size-shape em { position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(0, 0, 0, .25) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 0, 0, .25) 1px, transparent 1px); }
+.size-tile.on .size-shape i { box-shadow: 0 0 0 2px var(--gold); }
+.size-words { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.size-words b { font-size: 1rem; line-height: 1.25; }
+.size-words small { color: var(--muted); font-size: .85rem; line-height: 1.3; }
+.label-preview-card .preview-title { font-size: 1.25rem; margin: 2px 0 0; }
+.preview-turn { padding: 8px 12px; border-radius: 12px; background: var(--raised); }
+.preview-area { align-items: center; margin-top: 0; overflow: visible; width: 100%; }
+@media screen {
+  .preview-area { padding: 18px 0; border-radius: 14px; background: repeating-linear-gradient(45deg, var(--raised), var(--raised) 10px, var(--surface) 10px, var(--surface) 20px); }
+  .preview-area .sheet { zoom: var(--fit, 1); box-shadow: 0 6px 22px rgba(0, 0, 0, .45); }
+  .preview-area:not(.show-all) > .sheet:nth-child(n+5) { display: none; }
+  .print-area.capturing .sheet { zoom: 1 !important; display: block !important; }
+}
+.label-print-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (min-width: 1100px) { .label-print-layout { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-rows: auto 1fr; } .label-print-layout > .label-preview-card { grid-column: 2; grid-row: 1 / span 2; position: sticky; top: 16px; } }
+@media print { .label-print-layout { display: block; } .preview-area { align-items: flex-start; } .label-preview-card { padding: 0 !important; border: 0 !important; background: none !important; box-shadow: none !important; } .label-preview-card.card { margin: 0; } }
 
 /* ---------- Settings, lives, shop, reports ---------- */
 .tight-gap { gap: 6px !important; }
@@ -822,11 +851,10 @@ button.idea-chip:hover { border-color: var(--gold); color: var(--text); }
 .mood.link a { display: flex; gap: 8px; align-items: center; padding: 16px; word-break: break-all; }
 .mood.note textarea { width: 100%; border: 0; background: #FFF4CF; color: #3A2A10; border-radius: 0; font-family: Caveat, cursive; font-size: 1.35rem; min-height: 120px; }
 .mood-actions { display: flex; justify-content: space-between; padding: 8px 14px; }
-.check-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
-@media (max-width: 1000px) { .check-grid { grid-template-columns: minmax(0, 1fr); } }
-.check-col { border-top: 5px solid var(--gold); }
-.check-col.during { border-top-color: var(--rose); }
-.check-col.after { border-top-color: var(--emerald-hi); }
+.check-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); gap: 16px; align-items: start; }
+.plan-check-col { border-top: 5px solid var(--gold); }
+.plan-check-col.during { border-top-color: var(--rose); }
+.plan-check-col.after { border-top-color: var(--emerald-hi); }
 .check-count { font-family: Fraunces, Georgia, serif; font-size: 1.4rem; }
 .check-item { display: flex; align-items: center; gap: 12px; padding: 10px 8px; border-radius: 12px; border: 0; background: none; color: var(--text); text-align: left; transition: background .15s; }
 .check-item:hover { background: rgba(255, 255, 255, .04); }
@@ -1725,6 +1753,10 @@ input, select, textarea { min-height: 48px; font-size: 17px; }
 .tag21-name s { flex: none; font-weight: 600; }
 .tag21-code { font-size: 6pt; font-weight: 700; letter-spacing: .6px; line-height: 1; }
 .tag21.is-sale .tag21-price { font-size: 12.5pt; }
+.tag21.wide { padding: .06in .14in .05in; }
+.tag21.wide .tag21-live { font-size: 17pt; }
+.tag21.wide .tag21-price { font-size: 14pt; }
+.tag21.wide .tag21-name { font-size: 8pt; }
 .crisp-barcode { display: block; flex: none; }
 .tag.is-sale .tag-price s { font-weight: 400; font-size: 7pt; }
 .bin21 { height: 100%; padding: .05in .08in; display: flex; flex-direction: column; align-items: center; justify-content: space-between; font-family: Arial, Helvetica, sans-serif; color: #000; text-align: center; }
@@ -2929,3 +2961,21 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .team-row { gap: 12px; padding: 12px 0; border-top: 1px solid var(--border); flex-wrap: wrap; }
 .team-row:first-child { border-top: 0; }
 .team-code { font-size: 1.8rem; letter-spacing: .12em; color: var(--gold-hi); }
+
+/* Wide DYMO address bin label, and cut lines on plain-paper bin labels */
+.bin21.wide { padding: .06in .14in; }
+.bin21.wide .bin21-code { font-size: 20pt; }
+.bin21.wide .bin21-name { font-size: 7.5pt; }
+.slot.cut { outline: 1px dashed #999; }
+@media print { .slot.cut { outline: 1px dashed #999; } }
+
+/* Free camera scanner tip (Scan, Pick and pack) */
+.free-cam { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 16px; border-radius: 16px; background: linear-gradient(135deg, rgba(255, 211, 110, .16), rgba(232, 93, 142, .12)); border: 1px solid rgba(255, 211, 110, .45); }
+.free-cam .grow { display: flex; flex-direction: column; gap: 2px; min-width: min(100%, 220px); }
+.free-cam .grow > b { font-size: 1.05rem; }
+.free-cam .grow > span { color: var(--text-2); }
+.free-cam-ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: var(--goldgrad); color: #2A1A0C; flex: none; }
+.free-cam-actions { display: flex; align-items: center; gap: 14px; }
+.gear-card.free { border: 2px solid var(--gold); background: linear-gradient(160deg, rgba(255, 211, 110, .14), var(--surface) 60%); }
+.camera-error { line-height: 1.5; }
+.camera-error ol { text-align: left; margin: 8px 0 0 18px; padding: 0; }

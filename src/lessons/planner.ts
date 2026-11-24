@@ -92,7 +92,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'When to post it', text: 'Post the poster two days ahead, a sneak peek the day before, a reminder the morning of, and a behind-the-scenes an hour before. The Market your brand course goes deep on this.' },
     { kind: 'quiz', q: 'Why use a theme?', options: ['It gives buyers a reason to show up', 'The app requires it', 'It changes your prices'], answer: 0, why: 'A theme turns "another live" into an event people plan for.' },
 
-    { chapter: 'Checklists', kind: 'learn', title: 'Checklists keep you calm', text: 'Tick each step as you go. Your progress ring fills up, and Home shows what\'s next. Change the default steps in Settings.' },
+    { chapter: 'Checklists', kind: 'learn', title: 'Checklists keep you calm', text: 'The Checklist tab has three lists: Before the live, During the live and After the live. On a computer they sit side by side, on a tablet two across, and on a phone they stack so each step reads full width. Tick each step as you go. Your progress ring fills up, and Home shows what\'s next. Add a step just for this live at the bottom of any list, or change the default steps in Settings.' },
     { kind: 'quiz', q: 'Where do you change the checklist steps every new live starts with?', options: ['Settings → Live checklists', 'Each poster', 'Reports'], answer: 0, why: 'Settings holds the defaults. You can still add extra steps to one live.' },
     { kind: 'checklist', title: 'Plan your next live', prompt: 'Tick each step as you do it in the Planner.', items: [
       'Pick a theme (or spin for one)',

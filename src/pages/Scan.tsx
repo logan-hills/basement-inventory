@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { scanBoxKeyDown } from '../lib/scanner'
 import { Link, useSearchParams } from 'react-router-dom'
 import CameraScanner from '../components/CameraScanner'
+import FreeCameraTip from '../components/FreeCameraTip'
 import DamageSheet from '../components/DamageSheet'
 import { findByLiveNumber, findUnit, money, type UnitInfo } from '../lib/data'
 import { feedbackBad, feedbackOk, setSound, soundEnabled } from '../lib/feedback'
@@ -32,6 +33,9 @@ export default function Scan() {
   const [activeBin, setActiveBin] = useState<Bin | null>(null)
   const binRef = useRef<Bin | null>(null)
   binRef.current = activeBin
+
+  // "Try it now" on Recommended gear opens Scan with the camera on.
+  useEffect(() => { if (params.get('camera') === 'on') setCamera(true) }, [params])
 
   useEffect(() => {
     const b = params.get('bin')
@@ -114,6 +118,7 @@ export default function Scan() {
         <p className="muted small">Scan a bin label first to put items away into it. Scan an item tag on its own to look it up.</p>
       )}
 
+      {!camera && <FreeCameraTip onUse={() => setCamera(true)} />}
       {camera && <CameraScanner onCode={handle} />}
 
       <form onSubmit={submit} className="scan-input">

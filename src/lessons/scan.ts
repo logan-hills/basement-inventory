@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Fix a scanner that "does nothing"',
   ],
   route: { to: '/scan', label: 'Open Scan' },
-  covers: ['src/pages/Scan.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/Scan.tsx', 'src/components/FreeCameraTip.tsx', 'src/components/CameraScanner.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Put away', kind: 'learn', title: 'Scan the bin, then the pieces', nova: 'This is my favorite part. Beep, beep, beep, done.',
       text: 'Scan a bin label and a gold banner shows the bin you\'re putting away into. Every tag you scan next goes in that bin. Tap Done when you move on.',
@@ -36,7 +36,7 @@ const lesson: Lesson = {
         { text: 'Walk it to a bin now: scan the bin label, scan the tag, Done', best: true, feedback: 'Fifteen seconds and it\'s home, findable and sellable again.' },
         { text: 'Put it in your purse so you don\'t lose it', feedback: 'Your purse isn\'t a bin the app knows about! Scan it home.' },
       ] },
-    { chapter: 'Scanners', kind: 'learn', title: 'Which scanner?', text: 'Any USB or Bluetooth scanner works, because they type like a keyboard. Android scanner phones work in the browser. On an iPhone, pair a Bluetooth scanner or tap Use camera. Recommended gear (in the More menu) lists three we trust, from budget to pro, and has a scanner test box that tells you if yours is set up right.',
+    { chapter: 'Scanners', kind: 'learn', title: 'Which scanner?', text: 'Any USB or Bluetooth scanner works, because they type like a keyboard. Android scanner phones work in the browser. On an iPhone or iPad, pair a Bluetooth scanner, or use the free option: tap Use camera and Allow. Recommended gear (in the More menu) lists three we trust, from budget to pro, and has a scanner test box that tells you if yours is set up right.',
       table: { head: ['Scanner', 'Good for', 'Watch out for'], rows: [
         ['USB corded', 'A desk or packing table. Cheapest and never needs charging', 'The cord limits how far you walk'],
         ['Bluetooth or wireless', 'Walking the shelves', 'Charge it overnight'],
@@ -53,7 +53,11 @@ const lesson: Lesson = {
         { text: 'Tap into the scan box so it has a blinking cursor, then test the scanner in a notes app. If nothing types there either, re-pair it in Bluetooth settings.', best: true, feedback: 'That\'s the order that fixes 9 out of 10 cases: focus, test, re-pair.' },
         { text: 'Type the codes in by hand from now on', feedback: 'That\'s the slow road you bought a scanner to avoid. It\'s almost always a quick fix.' },
       ] },
-    { kind: 'learn', title: 'Camera tips', text: 'No scanner? Your phone camera works. Help it out:',
+    { kind: 'learn', title: 'The free scanner in your pocket', text: 'No scanner? No problem. Scan and Pick and pack show a gold note: No scanner? Your camera is free. Tap Use camera, and the first time, tap Allow when your phone or iPad asks to use the camera. That\'s all the setup there is.',
+      points: ['Works on iPhone, iPad and Android', 'Tap Got it on the note once you know, and it stays out of your way', 'Tapped Don\'t Allow? The camera box shows the steps to turn it back on'],
+      screen: { title: 'Scan', rows: ['No scanner? Your camera is free.'], buttons: ['Use camera', 'Got it'], highlight: 'Use camera' } },
+    { kind: 'tap', title: 'Practice', prompt: 'Your scanner is charging and you need to put away a haul. What do you tap?', screen: { title: 'Scan', buttons: ['Sound on', 'Use camera', 'Got it'] }, answer: 'Use camera', hint: 'Your phone camera scans just like a scanner.' },
+    { kind: 'learn', title: 'Camera tips', text: 'Help your camera out:',
       points: ['Good light. Turn on a lamp, or scan near a window.', 'Hold the barcode flat and fill about half the screen', 'Hold still for a second. Moving blurs the lines.', 'Tap Stop camera when you\'re done to save battery'] },
 
     { kind: 'quiz', q: 'Your phone camera keeps missing the barcode. What helps most?', options: ['Move the phone around faster', 'Better light and hold still, with the barcode filling about half the screen', 'Zoom all the way in'], answer: 1, why: 'Light and stillness do most of the work. Too close or too far both make it miss.' },

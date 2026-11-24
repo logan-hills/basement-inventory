@@ -65,9 +65,7 @@ export default function CameraScanner({ onCode, repeatDelay = 2000 }: Props) {
         }
         tick()
       } catch (e: any) {
-        setError(e?.name === 'NotAllowedError'
-          ? 'Camera access was blocked. Allow camera access for this site in your browser settings, then reload.'
-          : 'Could not start the camera on this device.')
+        setError(e?.name === 'NotAllowedError' ? 'blocked' : 'Could not start the camera on this device. You can still type a code in the box, or use a scanner.')
       }
     })()
 
@@ -87,6 +85,19 @@ export default function CameraScanner({ onCode, repeatDelay = 2000 }: Props) {
     } catch { /* not supported */ }
   }
 
+  if (error === 'blocked') return (
+    <div className="camera-box camera-error">
+      <div>
+        <b>The camera needs your OK</b>
+        <p>Your camera is a free scanner. It just needs permission once:</p>
+        <ol>
+          <li><b>iPhone or iPad:</b> open Settings, then Safari (or Dazzle Warehouse if you use the app), then Camera, and pick Allow.</li>
+          <li><b>Android:</b> tap the lock next to the web address, then Permissions, then Camera, and pick Allow.</li>
+          <li>Come back here and tap Use camera again.</li>
+        </ol>
+      </div>
+    </div>
+  )
   if (error) return <div className="camera-box camera-error">{error}</div>
 
   return (

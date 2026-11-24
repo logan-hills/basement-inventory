@@ -201,7 +201,7 @@ export default function LivePlan() {
             const list = steps(settings.checklist, plan).filter(s => s.phase === phase)
             const done = list.filter(s => plan.checked?.[stepKey(phase, s.text)]).length
             return (
-              <section key={phase} className={`card stack check-col ${phase}`}>
+              <section key={phase} className={`card stack plan-check-col ${phase}`}>
                 <div className="row-between"><div><h2>{title}</h2><span className="muted small">{sub}</span></div><b className="check-count">{done}/{list.length}</b></div>
                 {list.map(s => {
                   const on = !!plan.checked?.[stepKey(phase, s.text)]
