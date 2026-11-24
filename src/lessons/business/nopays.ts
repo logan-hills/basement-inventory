@@ -14,7 +14,7 @@ const lesson: Lesson = {
   sources: [
     { org: 'Consumer Financial Protection Bureau', title: 'How do I dispute a charge on my credit card bill?', url: 'https://www.consumerfinance.gov/ask-cfpb/how-do-i-dispute-a-charge-on-my-credit-card-bill-en-61/' },
     { org: 'Visa', title: 'Dispute management guidelines for Visa merchants', url: 'https://usa.visa.com/dam/VCOM/global/support-legal/documents/merchants-dispute-management-guidelines.pdf' },
-    { org: 'PayPal', title: 'Seller Protection', url: 'https://www.paypal.com/us/webapps/mpp/security/seller-protection' },
+    { org: 'PayPal', title: 'Seller Protection', url: 'https://www.paypal.com/us/legalhub/paypal/seller-protection' },
     { org: 'Federal Trade Commission', title: "Business guide to the FTC's Mail, Internet, or Telephone Order Merchandise Rule", url: 'https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule' },
     { org: 'MIT Sloan Management Review', title: 'What unhappy customers want', url: 'https://sloanreview.mit.edu/article/what-unhappy-customers-want' },
   ],

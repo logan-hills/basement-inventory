@@ -79,13 +79,16 @@ import secondplatform from './business/secondplatform'
 import brandkit from './business/brandkit'
 import hiring from './business/hiring'
 import nopays from './business/nopays'
+import familybalance from './business/familybalance'
+import selfcare from './business/selfcare'
+import wealth from './business/wealth'
 import launch from './launch'
 import printer from './printer'
 import gear from './gear'
 import giveaways from './giveaways'
 
 export const LESSONS: Lesson[] = [launch, tour, profile, team, settings, gear, receive, inventory, bulk, printer, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, giveaways, bot, sale, upload, pick, shipping, customers, reports, consult]
-export const COURSES: Lesson[] = [mindset, moneymindset, passion, persistence, herpower, launchbiz, strategy1, strategy2, growth, hiring, liveplan, industry, official, salestax, taxes, taxsimple, finance, sourcing, loads, preorder, livedrop, shipprice, vendors, brand, brandkit, camera, stories, marketing, community, aimarketing, webstart, websquare, webshopify, webgodaddy, webai, social, reels, content, canva, apps, aicalm, ai, aiedge, aistaff, aitrust, creatorpay, tiktok, secondplatform, dropship, storage, picking, packlive, lean, shipfast, retention, communication, nopays]
+export const COURSES: Lesson[] = [mindset, moneymindset, passion, persistence, herpower, familybalance, selfcare, wealth, launchbiz, strategy1, strategy2, growth, hiring, liveplan, industry, official, salestax, taxes, taxsimple, finance, sourcing, loads, preorder, livedrop, shipprice, vendors, brand, brandkit, camera, stories, marketing, community, aimarketing, webstart, websquare, webshopify, webgodaddy, webai, social, reels, content, canva, apps, aicalm, ai, aiedge, aistaff, aitrust, creatorpay, tiktok, secondplatform, dropship, storage, picking, packlive, lean, shipfast, retention, communication, nopays]
 export const ALL_LESSONS: Lesson[] = [...LESSONS, ...COURSES]
 export const lessonById = (id?: string) => ALL_LESSONS.find(l => l.id === id)
 export * from './types'

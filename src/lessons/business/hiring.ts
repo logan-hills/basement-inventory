@@ -13,12 +13,12 @@ const lesson: Lesson = {
   ],
   route: { to: '/settings/team', label: 'Open Team members' },
   sources: [
-    { org: 'U.S. Small Business Administration', title: 'Hire and manage employees', url: 'https://www.sba.gov/business-guide/manage-your-business/hire-manage-employees' },
+    { org: 'U.S. Small Business Administration', title: 'Hire and manage employees', url: 'https://www.sba.gov/counseling/manage-your-business/' },
     { org: 'IRS', title: 'Independent contractor (self-employed) or employee?', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/independent-contractor-self-employed-or-employee' },
-    { org: 'IRS', title: 'Family help: hiring your child, spouse or parent', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/family-help' },
+    { org: 'IRS', title: 'Family employees', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/family-employees' },
     { org: 'U.S. Department of Labor', title: 'Minimum wage', url: 'https://www.dol.gov/agencies/whd/minimum-wage' },
     { org: 'U.S. Citizenship and Immigration Services', title: 'Form I-9, Employment Eligibility Verification', url: 'https://www.uscis.gov/i-9' },
-    { org: 'Google re:Work', title: 'Use structured interviewing', url: 'https://rework.withgoogle.com/guides/hiring-use-structured-interviewing/steps/introduction/' },
+    { org: 'Google re:Work', title: 'Hiring and onboarding guides', url: 'https://rework.withgoogle.com/intl/en/subjects/hiring' },
   ],
   queen: {
     welcome: "Hiring your first helper is a big step, and I'm proud of you for thinking about it. It means your shop is growing. In this course I'll walk you through it the way I'd want you to do it: with your numbers, a fair tryout, the right paperwork and a real training plan.",
@@ -42,7 +42,7 @@ const lesson: Lesson = {
     { chapter: 'Find and choose', kind: 'learn', title: 'Where good helpers come from', text: "Your first helper is often closer than you think.",
       points: ['A loyal buyer who already loves your shop', 'Family members (with clear rules, see below)', 'A retired friend who wants a few hours a week', 'A student looking for flexible part-time work', 'Local church, community or neighborhood groups'],
       tip: 'Hiring a buyer? Make sure she understands that what happens behind the scenes stays private, especially other buyers\' names and addresses.' },
-    { kind: 'learn', title: 'Interview the same way, every time', text: "Google's re:Work research on hiring found that structured interviews, where every person gets the same questions and you score answers the same way, predict job performance better than casual chats. It's also fairer.",
+    { kind: 'learn', title: 'Interview the same way, every time', text: "Hiring research, including Google's re:Work guidance, finds that structured interviews, where every person gets the same questions and you score answers the same way, predict job performance better than casual chats. It's also fairer.",
       table: { head: ['Ask', 'Listen for'], rows: [
         ['"Tell me about a time you had a lot of small tasks to finish. How did you keep track?"', 'Organized, uses lists'],
         ['"What would you do if you couldn\'t find an item for an order?"', 'Asks, doesn\'t guess or skip'],

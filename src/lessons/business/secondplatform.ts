@@ -16,7 +16,7 @@ const lesson: Lesson = {
     { org: 'Whatnot Help Center', title: "Whatnot's selling and processing fees", url: 'https://help.whatnot.com/hc/en-us/articles/4847069165965-Whatnot-s-Selling-and-Processing-Fees' },
     { org: 'Tubefilter', title: 'Whatnot announces lower commission rates for growing sellers (September 2026)', url: 'https://www.tubefilter.com/2026/09/17/whatnot-new-commission-rates-lower-three-percent/' },
     { org: 'TikTok Shop Seller Center', title: 'Seller Center and fee schedule (US)', url: 'https://seller-us.tiktok.com/' },
-    { org: 'Meta Business Help Center', title: 'Shops on Facebook and Instagram', url: 'https://www.facebook.com/business/help/shops' },
+    { org: 'PPC Land', title: 'Meta phases out Facebook and Instagram Shops checkout by August 2025', url: 'https://ppc.land/meta-phases-out-facebook-and-instagram-shops-checkout-by-august-2025/' },
   ],
   queen: {
     welcome: "I love Facebook, and our Page is home. But a smart business never keeps all her eggs in one basket. This course helps you pick ONE second platform that fits you, test it properly, and protect your time while you do it.",
@@ -46,7 +46,7 @@ const lesson: Lesson = {
         ['You keep before costs', '$29.10', '$28.20', '$26.43'],
       ] },
       example: "*Whatnot charges processing on the whole order total, including shipping and tax the buyer pays, so it can run a little higher than shown. Small differences add up over hundreds of sales." },
-    { kind: 'number', title: 'Whatnot take-home', q: 'You sell a $40 bag on Whatnot. Commission is 8% of the sale price. Processing is 2.9% plus 30¢ on a $47 order total (bag plus shipping). What do you keep from the bag, before your own costs? (Round to the cent.)', prefix: '$', answer: 35.17, tolerance: 0.02, hint: 'Commission: $40 × 8% = $3.20. Processing: $47 × 2.9% = $1.36, plus $0.30.', why: '$40 − $3.20 − $1.36 − $0.30 = $35.14 to $35.17 depending on rounding. Price with the fees in mind, and check the fee page for current rates.' },
+    { kind: 'number', title: 'Whatnot take-home', q: 'You sell a $40 bag on Whatnot. Commission is 8% of the sale price. Processing is 2.9% plus 30¢ on a $47 order total (bag plus shipping). What do you keep from the bag, before your own costs? (Round to the cent.)', prefix: '$', answer: 35.14, tolerance: 0.02, hint: 'Commission: $40 × 8% = $3.20. Processing: $47 × 2.9% = $1.36, plus $0.30.', why: '$40 − $3.20 − $1.36 − $0.30 = $35.14. Price with the fees in mind, and check the fee page for current rates.' },
     { kind: 'learn', title: 'Time is a cost too', text: "Every platform needs listings, lives or videos, customer messages and shipping on its own schedule. If a second platform takes 6 hours a week, it needs to earn at least what those hours are worth to you.",
       queen: "Give yourself a time budget before you start, like 4 hours a week. If the new platform needs more than that, it has to prove it's worth it." },
 

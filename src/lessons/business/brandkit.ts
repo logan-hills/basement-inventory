@@ -15,7 +15,7 @@ const lesson: Lesson = {
     { org: 'Ehrenberg-Bass Institute (Jenni Romaniuk)', title: 'Building distinctive brand assets', url: 'https://marketingscience.info/' },
     { org: 'U.S. Patent and Trademark Office', title: 'Trademark basics', url: 'https://www.uspto.gov/trademarks/basics' },
     { org: 'U.S. Patent and Trademark Office', title: 'Search trademarks', url: 'https://tmsearch.uspto.gov/' },
-    { org: 'U.S. Small Business Administration', title: 'Choose your business name', url: 'https://www.sba.gov/business-guide/launch-your-business/choose-your-business-name' },
+    { org: 'U.S. Small Business Administration', title: 'Choose your business name', url: 'https://www.sba.gov/counseling/launch-your-business/' },
     { org: 'Canva Help Center', title: 'Set up a Brand Kit', url: 'https://www.canva.com/help/brand-kit/' },
   ],
   queen: {

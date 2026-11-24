@@ -13,9 +13,8 @@ const lesson: Lesson = {
   route: { to: '/inventory', label: 'Open Inventory' },
   sources: [
     { org: 'Harvard Business Review (Paul J. Zak)', title: 'Why your brain loves good storytelling', url: 'https://hbr.org/2014/10/why-your-brain-loves-good-storytelling' },
-    { org: 'Significant Objects project (Rob Walker and Joshua Glenn)', title: 'Thrift-store objects resold with stories', url: 'http://significantobjects.com/about/' },
+    { org: 'Significant Objects project (Rob Walker and Joshua Glenn)', title: 'Thrift-store objects resold with stories', url: 'https://significantobjects.com/about/' },
     { org: 'Federal Trade Commission', title: 'Advertising FAQs: a guide for small business', url: 'https://www.ftc.gov/business-guidance/resources/advertising-faqs-guide-small-business' },
-    { org: 'Nielsen Norman Group', title: 'Ecommerce product pages: how to write product descriptions', url: 'https://www.nngroup.com/articles/product-page-descriptions/' },
   ],
   queen: {
     welcome: "This is one of my favorite skills to teach, because it costs nothing and it changes everything. When you learn to describe a piece so a buyer can feel it, you stop competing on price. Let's find the story in every piece you own.",
@@ -24,7 +23,7 @@ const lesson: Lesson = {
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Why stories sell', kind: 'learn', title: 'Stories change what things are worth', nova: "Okay, story time! And I mean that as a business strategy.",
-      text: "In the Significant Objects project, writers Rob Walker and Joshua Glenn bought thrift-store knickknacks for about $1.25 each, then had writers invent a short story for each one and resold them online, clearly labeled as fiction. Items bought for about $129 in total sold for over $3,600. The objects didn't change. The stories did.",
+      text: "In the Significant Objects project, writers Rob Walker and Joshua Glenn collected thrift-store knickknacks, had writers invent a short story for each one, and resold them online, clearly labeled as fiction. Objects worth about $129 in total sold for $3,612.51. The objects didn't change. The stories did.",
       tip: 'Our stories should always be true! The lesson is how much meaning adds to value, not to make things up.' },
     { kind: 'learn', title: 'Your brain on a story', text: "Neuroeconomist Paul Zak, writing in Harvard Business Review, describes research showing that character-driven stories cause people's brains to release oxytocin, a chemical tied to empathy and trust, and that people who felt more for a story were more willing to give money afterward. On a live, a short true story about a piece, or about the buyer who'll wear it, builds that same trust.",
       example: "'This bracelet' gets a shrug. 'My aunt wore a bracelet just like this to every church anniversary, and she always said gold should jingle when you wave' gets 'SOLD!'" },
@@ -61,7 +60,7 @@ const lesson: Lesson = {
         { text: '"The tee you\'ll reach for every single morning. Heavy cotton that doesn\'t go see-through, and it hangs just right with your favorite jeans. $12, sizes S to 3X."', best: true, feedback: "Moment, sense and a true quality detail. Even a basic becomes a must-have." },
         { text: '"The best black tee ever made, designer quality!"', feedback: "Big claims you can't prove make buyers suspicious, and can be a false claim." },
       ] },
-    { chapter: 'Write it down', kind: 'learn', title: 'Written descriptions that sell', text: "For posts and your website, buyers skim. Nielsen Norman Group's ecommerce research shows shoppers scan product pages for key facts and leave when they can't find them. Lead with the feeling, then give the facts in an easy list.",
+    { chapter: 'Write it down', kind: 'learn', title: 'Written descriptions that sell', text: "For posts and your website, buyers skim. Online shoppers scan for key facts like size and condition, and move on when they can't find them. Lead with the feeling, then give the facts in an easy list.",
       example: "Honey-gold crossbody | Brunch-ready and hands-free.\nFits phone, keys, lipstick and cards.\n• Vegan leather, gold hardware\n• 9 × 6 × 2 in., 22-inch adjustable strap\n• Like new, no marks\n$28 | Live #1182",
       tip: 'Always include size, measurements, condition and any flaws. Facts prevent returns.' },
     { kind: 'learn', title: 'Keep it honest', text: "The FTC's advertising rules apply to small shops too: claims must be truthful and you need proof for objective claims. A story can be emotional, but the facts in it must be true.",

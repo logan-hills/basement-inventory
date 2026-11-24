@@ -12,9 +12,7 @@ const lesson: Lesson = {
   ],
   route: { to: '/planner', label: 'Open the Live planner' },
   sources: [
-    { org: 'Stanford Graduate School of Business (Matt Abrahams)', title: 'Think fast, talk smart: communication techniques', url: 'https://www.gsb.stanford.edu/insights/think-fast-talk-smart-communication-techniques' },
     { org: 'Harvard Business Review (Alison Wood Brooks)', title: 'Get excited: reappraising pre-performance anxiety as excitement', url: 'https://www.hbs.edu/faculty/Pages/item.aspx?num=45869' },
-    { org: 'Meta for Creators', title: 'Facebook Live: best practices for going live', url: 'https://www.facebook.com/creators/tools/facebook-live' },
     { org: 'Nielsen Norman Group', title: 'Video usability: what keeps viewers watching', url: 'https://www.nngroup.com/articles/video-usability/' },
   ],
   queen: {
@@ -39,7 +37,7 @@ const lesson: Lesson = {
     { kind: 'number', title: 'A glow-up budget', q: 'You buy a ring light for $35, a tripod for $18 and a clip-on mic for $24. If your lives earn about $40 profit each, how many lives pay for the whole setup? (Round up.)', suffix: 'lives', answer: 2, hint: 'Total cost is $77. How many $40 lives cover it?', why: '$77 ÷ $40 = 1.9, so 2 lives. A setup that makes you look like a boutique pays for itself almost right away.' },
     { kind: 'quiz', q: 'Your live looks dark and grainy even though you bought a new phone. What should you try first?', options: ['Buy a newer phone', 'Put a soft light in front of you and turn off the light behind you', 'Add a beauty filter', 'Move the phone farther away'], answer: 1, why: "Light in front, nothing bright behind. Graininess is the phone struggling with low light. A $35 light usually fixes what a $1,000 phone can't." },
 
-    { chapter: 'Voice and presence', kind: 'learn', title: 'Talk to one person', text: "Stanford communication lecturer Matt Abrahams teaches that great speakers aim for connection, not perfection. On a live, that means talking to one friend, not 'everyone out there.' Picture your favorite regular and talk to her.",
+    { chapter: 'Voice and presence', kind: 'learn', title: 'Talk to one person', text: "Communication coaches teach that great speakers aim for connection, not perfection. On a live, that means talking to one friend, not 'everyone out there.' Picture your favorite regular and talk to her.",
       points: ['Look at the lens when you\'re making a point, then glance at comments', 'Say people\'s names when they comment', 'Smile with your voice: it changes your tone even when you\'re reading a price', 'Slow down a little more than feels natural; nerves speed us up', 'Pause after a price. Silence gives people time to claim'],
       example: "Instead of 'Hey guys, so this is a top,' Angela says, 'Pam, you asked for green last week. Look at this emerald wrap top. It's a size large, $18, and it's going to look gorgeous on you.'" },
     { kind: 'script', title: 'Openers that pull people in', text: 'Your first 30 seconds should feel like the party already started. Pick one and make it yours.', lines: [
