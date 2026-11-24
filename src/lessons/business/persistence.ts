@@ -1,0 +1,82 @@
+import type { Lesson } from '../types'
+
+const lesson: Lesson = {
+  id: 'persistence', kind: 'course', school: 'Mindset and motivation', title: 'Keep going: persistence, slow seasons and comebacks', track: 'Business', icon: 'trend',
+  why: "Every seller hits slow seasons. The ones who last aren't luckier. They have a plan for the dips and they know when to push, when to rest and when to change course.",
+  outcomes: [
+    'Understand why persistence beats talent over time',
+    'Expect the slow seasons and plan for them ahead',
+    'Use the "push, pivot or pause" check when things stall',
+    'Bounce back from a bad week with a simple comeback plan',
+    'Build a support circle so you never grind alone',
+  ],
+  route: { to: '/reports', label: 'Open Reports' },
+  sources: [
+    { org: 'U.S. Bureau of Labor Statistics', title: '34.7 percent of business establishments born in 2013 were still operating in 2023', url: 'https://www.bls.gov/opub/ted/2024/34-7-percent-of-business-establishments-born-in-2013-were-still-operating-in-2023.htm' },
+    { org: 'Harvard Business Review (Amabile and Kramer)', title: 'The power of small wins', url: 'https://hbr.org/2011/05/the-power-of-small-wins' },
+    { org: 'American Psychological Association', title: 'Building your resilience', url: 'https://www.apa.org/topics/resilience/building-your-resilience' },
+    { org: 'University of Pennsylvania (Angela Duckworth)', title: 'Research on grit', url: 'https://angeladuckworth.com/research/' },
+  ],
+  covers: [], updated: '2026-11-24',
+  slides: [
+    { chapter: 'Why staying power wins', kind: 'learn', title: 'Staying in the game is half the battle', nova: "Let me tell you a secret, boss: the sellers you admire had slow nights too. They just kept showing up.",
+      text: "Government numbers from the Bureau of Labor Statistics show that only about half of new businesses are still open five years later. That means if you simply stay in business, keep learning and keep your costs sane, you are already ahead of half the field.",
+      table: { head: ['After', 'Businesses still open'], rows: [['1 year', 'About 4 in 5'], ['5 years', 'About 1 in 2'], ['10 years', 'About 1 in 3']] } },
+    { kind: 'learn', title: 'Grit: passion plus persistence', text: "University of Pennsylvania psychologist Angela Duckworth calls it grit: passion and perseverance for long-term goals. In her studies of groups like West Point cadets and National Spelling Bee finalists, grit helped predict who stuck it out and succeeded, over and above measures of talent. Grit isn't about never quitting anything. It's about staying loyal to the big goal while you change the small tactics.",
+      example: "A gritty seller doesn't keep doing the same failing Tuesday live forever. She keeps her goal (a shop that pays her bills) and tries Thursdays, new stock or a co-host until something works." },
+    { kind: 'quiz', q: 'Which is the best example of grit?', options: ['Doing the exact same live, the same way, for a year even though sales keep falling', 'Keeping your goal of a thriving shop while testing new days, stock and promotion', 'Quitting the first time a live is slow', 'Starting a brand new kind of shop every month'], answer: 1, why: 'Grit is firm on the goal and flexible on the method. Stubbornness about tactics is not grit.' },
+
+    { chapter: 'Plan for the dips', kind: 'learn', title: 'Slow seasons are normal', text: "Live selling has a rhythm. Knowing it ahead of time keeps a dip from feeling like a disaster.",
+      table: { head: ['When', 'What often happens', 'Smart move'], rows: [
+        ['January to February', 'Buyers recover from holiday spending', 'Lower-price lives, clearance, plan spring buys'],
+        ['Tax refund season', 'Spending picks back up', 'Have fresh stock ready'],
+        ['Summer', 'Travel and kids home, viewers dip', 'Shorter lives, more Reels, rest'],
+        ['October to December', 'Busiest season of the year', 'Stock up early, add a helper'],
+      ] },
+      tip: "Your own Reports are the best guide. After your first year, look at which months were slow and plan for them." },
+    { kind: 'number', title: 'Build a slow-season cushion', q: 'Your shop costs about $400 a month to run (supplies, apps, phone). You want two slow months covered. How much should your cushion be?', prefix: '$', answer: 800, hint: '$400 × 2.', why: "$800 set aside means a slow January is an inconvenience, not a crisis. Add a little to it from every good live." },
+    { kind: 'learn', title: 'Small wins in slow times', text: "Harvard's Teresa Amabile and Steven Kramer found that progress on meaningful work, even small, is the biggest boost to motivation. In a slow season, pick wins you control instead of sales you don't.",
+      points: ['Photograph and list 20 pieces', 'Film a week of Reels', 'Reorganize the bins and print new labels', 'Finish one University course', 'Reach out to 10 past buyers by name'] },
+
+    { chapter: 'Push, pivot or pause', kind: 'learn', title: 'When things stall, ask three questions', text: "Persistence doesn't mean doing the same thing forever. When sales stall for a month or more, run this check.",
+      table: { head: ['Choice', 'When it fits', 'Example'], rows: [
+        ['PUSH', 'The numbers are improving, just slowly', 'Viewers grew from 20 to 35. Keep going and add a co-host.'],
+        ['PIVOT', 'Effort is steady but one thing keeps failing', 'Clothes never sell; jewelry always does. Shift the stock mix.'],
+        ['PAUSE', 'You are exhausted or life needs you', 'Take two weeks off, tell your buyers, come back rested.'],
+      ] },
+      tip: 'A pause with a return date is not quitting. Tell your community when you will be back.' },
+    { kind: 'scenario', title: 'Push, pivot or pause?', situation: "For six weeks Gloria's Monday lives average 8 viewers, but her Saturday lives keep growing (now 45 viewers). She is tired from going live twice.",
+      options: [
+        { text: 'Push: keep both lives and try harder on Monday', feedback: "Six weeks of flat Mondays is a clear signal. Pushing harder there spends energy she needs for Saturdays." },
+        { text: 'Pivot: drop Monday, put that energy into a stronger Saturday and Reels during the week', best: true, feedback: "She keeps her goal and moves her effort to what's working. That's grit with good sense." },
+        { text: 'Pause everything for a month', feedback: "Saturday is growing! A full stop could lose that momentum. A smaller pivot fits better." },
+      ] },
+    { kind: 'reflect', title: 'Your check', prompt: 'Think of one part of your business that feels stuck. Is it a push, a pivot or a pause? What is your next step?', placeholder: 'What\'s stuck… Push / pivot / pause… Next step…', example: 'Reels get no views. Pivot: stop long videos and try 15-second "this or that" clips for 3 weeks.' },
+
+    { kind: 'learn', title: "Don't let sunk costs keep you stuck", text: "Persistence has an evil twin: refusing to change because you've already put so much in. Economists call this the sunk-cost trap. The money and time you already spent are gone either way. The only question is what will work best from here.",
+      example: "Dee bought $1,500 of winter coats in October. By February only a quarter had sold, and she kept them front and center every live \"to get her money back.\" Coats crowded out the jewelry that sold every night. Bundling the coats in a clearance live and moving on freed up her cash and her shelves.",
+      points: ['Ask: "If I hadn\'t already spent this, would I choose it today?"', 'Set a check date when you start something new (a product line, a live day)', 'Decide your "stop rule" ahead of time: "If it doesn\'t sell by March, it goes to clearance."'] },
+    { kind: 'quiz', q: 'A product line has barely sold for 4 months. You spent $900 on it. What is the smartest next step?', options: ['Keep featuring it every live until you earn the $900 back', 'Ask whether you would buy it today, then clear it out in a bundle or clearance live and put the cash into what sells', 'Hide it in a bin and forget about it', 'Buy more so it looks like a bigger selection'], answer: 1, why: "The $900 is spent either way. Turning dead stock back into cash for your best sellers is persistence with good sense." },
+
+    { chapter: 'The comeback', kind: 'learn', title: 'Bounce back after a bad week', text: "The American Psychological Association describes resilience as something anyone can build, through connection, caring for your body, finding purpose and keeping things in perspective. Here's how that looks after a rough week in your shop.",
+      points: ['Rest first: sleep, eat, step away for a day', 'Talk to someone: a friend, a fellow seller or your mentor', 'Look at the bigger picture: how did the last 3 months go?', 'Pick ONE small action for the next live', 'Remember your why (from the Passion course)'] },
+    { kind: 'order', title: 'Comeback in order', prompt: 'You had a terrible week: slow lives and a returned order. Put your comeback steps in order.', steps: ['Rest and step away for a day', 'Talk it through with someone you trust', 'Look at your last 3 months in Reports', 'Pick one small change for the next live', 'Go live and celebrate one win'] },
+    { kind: 'script', title: 'Words for the hard days', text: "Read these out loud when you need them. Add your own.", lines: [
+      '"Slow is not stopped."',
+      '"I don\'t have to feel ready. I just have to show up."',
+      '"Every seller I admire had a night like this."',
+      '"I am building something that lasts, one live at a time."',
+      '"Rest is part of the plan, not a break from it."',
+    ] },
+
+    { chapter: 'Never alone', kind: 'learn', title: 'Build your support circle', text: "Persistence is easier with people around you. Aim for a few different kinds of support.",
+      table: { head: ['Who', 'What they give you'], rows: [
+        ['A seller buddy', 'Someone at your stage to swap wins and problems weekly'],
+        ['A mentor', 'Someone further along (SCORE has free mentors; the Queen offers paid sessions in the app)'],
+        ['Your family', 'Help on busy nights, and permission to rest'],
+        ['Your community', 'Regulars who cheer you on and show up'],
+      ] } },
+    { kind: 'checklist', title: 'Your staying power plan', prompt: 'Tick what you will do this month.', items: ['Start a slow-season cushion and add to it every live', 'Mark my slow months on the calendar', 'Write my list of small wins for slow weeks', 'Run the push, pivot or pause check on one stuck thing', 'Save my words for hard days', 'Find one seller buddy to check in with weekly'] },
+  ],
+}
+export default lesson
