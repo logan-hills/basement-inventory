@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Keep it tidy with a few simple house rules',
   ],
   route: { to: '/locations', label: 'Open Warehouse' },
-  covers: ['src/pages/Warehouse.tsx', 'src/pages/BinDetail.tsx', 'src/pages/BinLabels.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/Warehouse.tsx', 'src/pages/BinDetail.tsx', 'src/pages/BinLabels.tsx', 'src/components/LabelKit.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'How bins are named', kind: 'learn', title: 'A home for every piece', nova: "Real warehouses don't search. They know. Let's get you there.",
       text: 'Big warehouses don\'t keep things "somewhere over there." Every spot has an address, and every piece lives at one address. You\'re about to do the same thing in your basement, and it\'s simpler than it sounds.' },
@@ -68,7 +68,7 @@ const lesson: Lesson = {
     { chapter: 'Build it in the app', kind: 'learn', title: 'Build it once, change it anytime', text: 'Warehouse → Set up your warehouse. Enter your first and last aisle number, sections per aisle, shelf levels and bins per level, and tap Create bins. Every bin is made at once. Use Edit layout to add bins or remove empty ones later.',
       screen: { title: 'Warehouse', buttons: ['Edit layout', 'Print bin labels'], highlight: 'Edit layout' } },
     { kind: 'quiz', q: 'Can you remove a bin that still has items in it?', options: ['No, empty it first', 'Yes, items are deleted too'], answer: 0, why: 'Only empty bins can be removed, so nothing goes missing.' },
-    { kind: 'learn', title: 'Bin labels', text: 'Print bin labels gives each bin a label with its code and a big barcode. Our recommended size is Thermal roll 4×4 in, one bin per label: a big bin code you can read across the room, the aisle, section, level and bin in boxes, and a barcode a scanner reads from an arm\'s length away. You can also choose a 4×6 landscape label, a letter sheet of 10 (4×2 in, Avery 5163 size), or Thermal roll 2×1 in, using the same small roll as your item tags. Stick one on the front edge of each shelf spot, or on the tub itself.',
+    { kind: 'learn', title: 'Bin labels', text: 'Print bin labels gives each bin a label with its code and a big barcode. Under 1. Pick your label size, tap the labels you have. Our recommended size is the 4 × 4 in roll: a big bin code you can read across the room, the aisle, section, level and bin in boxes, and a barcode a scanner reads from an arm\'s length away. Don\'t have 4×4? Use 4 × 6 in shipping labels in landscape (printed wide and bold), standing up, or 3 to a label. DYMO owners can use 30252 or 30336 rolls. No labels at all? Plain paper, 2 big labels per page, prints on any home printer: cut them out and tape them on. The preview shows exactly how each label will look before you print. Stick one on the front edge of each shelf spot, or on the tub itself.',
       tip: 'Label the shelf spot, not just the tub. Tubs get moved. The shelf stays put.' },
     { kind: 'learn', title: 'Open a bin', text: 'Tap any bin on the map or list to see everything in it, how many units, and the retail value. Tap Put items here, then scan tags to shelve them. Swipe a tag left to take it out.' },
 

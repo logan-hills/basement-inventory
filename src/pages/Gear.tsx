@@ -123,7 +123,7 @@ export default function Gear() {
       <div className="card gear-hero no-print">
         <span className="eyebrow light">Recommended gear</span>
         <h1>Tools that just work</h1>
-        <p>Every scanner, printer and label here has been picked to work smoothly with Dazzle Warehouse. Start with a scanner and one thermal printer, then add rolls as you grow.</p>
+        <p>Every scanner, printer and label here has been picked to work smoothly with Dazzle Warehouse. Start free with your phone's camera as your scanner, add one label printer, then add rolls as you grow.</p>
         <div className="row-gap"><Link className="btn gold" to="/lessons/gear">Take the 15 minute setup lesson</Link></div>
       </div>
 
@@ -135,7 +135,7 @@ export default function Gear() {
           </div>
           <div className="gear-grid">
             {GEAR.filter(x => x.group === g.id).map(x => (
-              <article key={x.id} className="card gear-card">
+              <article key={x.id} className={`card gear-card ${x.free ? 'free' : ''}`}>
                 <span className="gear-badge">{x.badge}</span>
                 <h3>{x.name}</h3>
                 <p className="muted">{x.why}</p>
@@ -145,7 +145,8 @@ export default function Gear() {
                   <ol>{x.setup.map((s, i) => <li key={i}>{s}</li>)}</ol>
                   <p className="small" style={{ marginTop: 8 }}>Used in: {x.useIn.map((u, i) => <span key={u.to}>{i ? ', ' : ''}<Link to={u.to}>{u.label}</Link></span>)}</p>
                 </details>
-                {x.asin ? <a className="btn ghost big" href={amazonLink(x.asin)} target="_blank" rel="noopener noreferrer">View on Amazon</a>
+                {x.free ? <Link className="btn gold big" to={x.free.to}>{x.free.label}</Link>
+                  : x.asin ? <a className="btn ghost big" href={amazonLink(x.asin)} target="_blank" rel="noopener noreferrer">View on Amazon</a>
                   : <span className="btn ghost big" aria-disabled="true">Sold at {x.store}</span>}
               </article>
             ))}
@@ -162,7 +163,7 @@ export default function Gear() {
         <TestPrint />
       </section>
 
-      <p className="muted small no-print">Already have a different scanner or printer? Most will still work. Any scanner that types like a keyboard works, and any thermal printer that prints 2×1, 4×4 and 4×6 labels does too.</p>
+      <p className="muted small no-print">Already have a different scanner or printer? Most will still work. Any scanner that types like a keyboard works, and so does any thermal printer that prints 2×1, 4×4 and 4×6 labels, or a DYMO LabelWriter.</p>
     </div>
   )
 }

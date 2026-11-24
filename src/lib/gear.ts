@@ -22,11 +22,26 @@ export type Gear = {
   setup: string[]
   /** Where in the app it gets used. */
   useIn: { to: string; label: string }[]
+  /** Free, nothing to buy: shows a "Try it now" button instead of a store link. */
+  free?: { to: string; label: string }
 }
 
 export const amazonLink = (asin: string) => `https://www.amazon.com/dp/${asin}`
 
 export const GEAR: Gear[] = [
+  {
+    id: 'camera', group: 'Scanners', name: 'Your phone or iPad camera', badge: 'Free, nothing to buy',
+    why: 'The scanner you already own. Any iPhone, iPad or Android phone reads tags, bin labels and box labels with its camera. Just allow camera access the first time.',
+    facts: ['$0', 'iPhone, iPad and Android', 'No pairing, no charging'],
+    setup: [
+      'Open Scan (or Pick and pack) and tap Use camera.',
+      'When your phone asks to use the camera, tap Allow. That\'s the whole setup.',
+      'Hold the barcode flat, about half the screen wide, in good light. It beeps when it reads.',
+      'Tapped Don\'t Allow by mistake? iPhone and iPad: Settings, then Safari (or Dazzle Warehouse), then Camera, then Allow. Android: tap the lock next to the web address, then Permissions, then Camera.',
+    ],
+    useIn: [{ to: '/scan', label: 'Scan' }, { to: '/pick', label: 'Pick and pack' }],
+    free: { to: '/scan?camera=on', label: 'Try it now' },
+  },
   {
     id: 'eyoyo', group: 'Scanners', name: 'Eyoyo Bluetooth pocket scanner', badge: 'Best for iPhone', asin: 'B09GLXVD5D',
     why: 'A little scanner that pairs with your iPhone, Android phone or computer. Clip it to your phone and pick orders with one hand.',
@@ -86,11 +101,30 @@ export const GEAR: Gear[] = [
     useIn: [{ to: '/labels', label: 'Print tags' }, { to: '/bin-labels', label: 'Bin labels' }, { to: '/box-labels', label: 'Box labels' }],
   },
   {
+    id: 'dymo-labelwriter', group: 'Label printer', name: 'DYMO LabelWriter (450, 550 or 5XL)', badge: 'Sold at Staples', store: 'Staples',
+    why: 'A desk label printer lots of sellers already own. Prints item tags and small bin labels on DYMO rolls. No ink, ever.',
+    facts: ['USB to a computer', '300 dpi, direct thermal', 'Feeds labels the long way'],
+    setup: [
+      'Install DYMO Connect from dymo.com and plug the printer into your computer with its USB cable.',
+      'Load the roll the usual DYMO way. The app turns each tag sideways to match, so nothing on the printer needs changing.',
+      'In Print tags, pick a DYMO size. In the print window choose your DYMO, paper size 30336 (or 30252), layout Portrait, scale 100%, margins None.',
+      'The 550 models only take genuine DYMO labels. Printing from a phone needs a wireless LabelWriter and the DYMO Connect app: tap "Save for printer app".',
+    ],
+    useIn: [{ to: '/labels', label: 'Print tags' }, { to: '/bin-labels', label: 'Bin labels' }],
+  },
+  {
     id: 'rollo-2x1', group: 'Labels', name: 'ROLLO 2×1 inch direct thermal labels', badge: 'Item tags', asin: 'B08NDMLGDB',
     why: 'The tag that goes on every piece: Live #, price and its own barcode. Use white for regular tags and yellow for sale tags.',
     facts: ['2 × 1 in', 'Direct thermal', 'Item tags and sale tags'],
     setup: ['In Print tags, choose "Thermal roll 2×1 in, one tag per label".', 'In the print window, paper size 2 x 1 in, scale 100%, margins None.'],
     useIn: [{ to: '/labels', label: 'Print tags' }],
+  },
+  {
+    id: 'dymo-30336', group: 'Labels', name: 'DYMO 30336 multi-purpose labels, 1 × 2⅛ in', badge: 'Item tags on a DYMO', store: 'Staples',
+    why: 'The DYMO roll for item tags: Live #, price and barcode on every piece. Fits every LabelWriter.',
+    facts: ['1 × 2⅛ in', 'Staples UPC 09704330336', 'White, direct thermal'],
+    setup: ['In Print tags, choose "DYMO 1 × 2⅛ in (30336)". The preview shows your tag.', 'In the print window: your DYMO, paper size 30336, layout Portrait, scale 100%, margins None.'],
+    useIn: [{ to: '/labels', label: 'Print tags' }, { to: '/bin-labels', label: 'Bin labels' }],
   },
   {
     id: 'munbyn-4x4', group: 'Labels', name: 'MUNBYN 4×4 inch thermal labels', badge: 'Bin labels', asin: 'B0DS1SW86D',
@@ -127,9 +161,9 @@ export const GEAR: Gear[] = [
 ]
 
 export const GEAR_GROUPS: { id: GearGroup; blurb: string; icon: string }[] = [
-  { id: 'Scanners', blurb: 'Any scanner that "types" like a keyboard works. Here are three we trust, from budget to pro.', icon: 'scan' },
-  { id: 'Label printer', blurb: 'One thermal printer handles every label in your business. Just swap the roll. Both of these are checked with every label size in the app.', icon: 'print' },
-  { id: 'Labels', blurb: 'Four sizes, four jobs. Stick to these and everything lines up the first time.', icon: 'tag' },
+  { id: 'Scanners', blurb: 'Start free with the camera on your phone or iPad. When you\'re ready to go faster, any scanner that "types" like a keyboard works. Here are three we trust, from budget to pro.', icon: 'scan' },
+  { id: 'Label printer', blurb: 'One thermal printer handles every label in your business. Just swap the roll. Already have a DYMO? It works too, for tags and small bin labels.', icon: 'print' },
+  { id: 'Labels', blurb: 'Pick the rolls that fit your printer. Every size here is built into the app, with a preview before you print.', icon: 'tag' },
   { id: 'Selling in person', blurb: 'Taking your boutique on the road? Print receipts right at your table.', icon: 'cart' },
 ]
 

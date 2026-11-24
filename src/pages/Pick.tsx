@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } fro
 import { scanBoxKeyDown } from '../lib/scanner'
 import { Link, useSearchParams } from 'react-router-dom'
 import CameraScanner from '../components/CameraScanner'
+import FreeCameraTip from '../components/FreeCameraTip'
 import { supabase } from '../lib/supabase'
 import { findUnit, photoUrls, UNIT_SELECT, type UnitInfo } from '../lib/data'
 import JsBarcode from 'jsbarcode'
@@ -281,6 +282,7 @@ export default function Pick() {
         )}
       </div>
 
+      {!camera && <FreeCameraTip onUse={() => setCamera(true)} />}
       {camera && <CameraScanner onCode={handle} repeatDelay={1500} />}
       <form onSubmit={submit} className="scan-input">
         <input ref={inputRef} value={manual} onChange={e => setManual(e.target.value)} onKeyDown={scanBoxKeyDown} placeholder={held ? 'Scan the box label (DD-…)' : 'Scan an item tag'} autoComplete="off" autoCapitalize="characters" enterKeyHint="go" aria-label="Scan" />

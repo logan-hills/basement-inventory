@@ -11,10 +11,17 @@ export async function saveLabelsAsImages(name: string, selector = '.print-area .
   const sheets = [...document.querySelectorAll<HTMLElement>(selector)]
   if (!sheets.length) return 0
   const files: File[] = []
-  for (let i = 0; i < sheets.length; i++) {
-    const el = sheets[i]
-    const blob = await toBlob(el, { pixelRatio: DPI / 96, backgroundColor: '#ffffff', style: { boxShadow: 'none' } })
-    if (blob) files.push(new File([blob], `${name}-${String(i + 1).padStart(3, '0')}.png`, { type: 'image/png' }))
+  // The on-screen preview shrinks pages to fit and hides extras. Show every page at true size while we take the pictures.
+  const areas = [...document.querySelectorAll<HTMLElement>('.print-area')]
+  areas.forEach(a => a.classList.add('capturing'))
+  try {
+    for (let i = 0; i < sheets.length; i++) {
+      const el = sheets[i]
+      const blob = await toBlob(el, { pixelRatio: DPI / 96, backgroundColor: '#ffffff', style: { boxShadow: 'none', zoom: '1' } })
+      if (blob) files.push(new File([blob], `${name}-${String(i + 1).padStart(3, '0')}.png`, { type: 'image/png' }))
+    }
+  } finally {
+    areas.forEach(a => a.classList.remove('capturing'))
   }
   // Phones: open the share sheet so the seller can pick the printer's app (or Save to Photos).
   try {

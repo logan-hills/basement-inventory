@@ -6,34 +6,45 @@ import { money } from '../lib/data'
 import CrispBarcode from '../components/CrispBarcode'
 import SaveForPrinterApp from '../components/SaveForPrinterApp'
 import PrintNudge from '../components/PrintNudge'
+import { LabelPreview, LabelSheet, LabelSizePicker, pageCss, printedPage, type LabelFormat } from '../components/LabelKit'
 
 type Tag = { tag_code: string; live_number: string; name: string; variant: string; price: number | null; sale: number | null }
 type Style = 'regular' | 'sale'
 type SaleMode = 'item' | 'pct' | 'fixed'
 
-// Label layouts. Sizes in inches.
+// Label layouts. Sizes in inches, as you read the label.
 const FORMATS = {
   roll2x1: {
-    name: 'Thermal roll 2×1 in, one tag per label (recommended)',
+    name: '2 × 1 in roll, one tag per label', sub: 'Recommended. White roll for tags, yellow for sale tags', group: 'thermal',
     page: { w: 2, h: 1 }, cols: 1, rows: 1,
     label: { w: 2, h: 1 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 },
   },
-  sheet30: {
-    name: 'Letter sheet, 30 per page (Avery 5160 / 8160 size)',
-    page: { w: 8.5, h: 11 }, cols: 3, rows: 10,
-    label: { w: 2.625, h: 1 }, margin: { top: 0.5, left: 0.1875 }, gap: { x: 0.125, y: 0 },
-  },
-  thermal4x6: {
-    name: '4×6 shipping label printer, 12 tags per label (cut apart)',
-    page: { w: 4, h: 6 }, cols: 2, rows: 6,
-    label: { w: 2, h: 1 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 },
-  },
   roll: {
-    name: 'Small thermal roll, 2.25×1.25 (one tag per label)',
+    name: '2¼ × 1¼ in roll, one tag per label', sub: 'Small thermal roll', group: 'thermal',
     page: { w: 2.25, h: 1.25 }, cols: 1, rows: 1,
     label: { w: 2.25, h: 1.25 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 },
   },
-} as const
+  thermal4x6: {
+    name: '4 × 6 in shipping label, 12 tags', sub: 'Cut them apart. Uses the labels you already have', group: 'thermal',
+    page: { w: 4, h: 6 }, cols: 2, rows: 6,
+    label: { w: 2, h: 1 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 },
+  },
+  dymo30336: {
+    name: 'DYMO 1 × 2⅛ in (30336)', sub: 'Multi-purpose labels from Staples. One tag per label', group: 'dymo',
+    page: { w: 2.125, h: 1 }, cols: 1, rows: 1,
+    label: { w: 2.125, h: 1 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 }, turn: true,
+  },
+  dymo30252: {
+    name: 'DYMO 1⅛ × 3½ in (30252)', sub: 'Address labels. One roomy tag per label', group: 'dymo',
+    page: { w: 3.5, h: 1.125 }, cols: 1, rows: 1,
+    label: { w: 3.5, h: 1.125 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 }, turn: true,
+  },
+  sheet30: {
+    name: 'Letter sheet, 30 per page', sub: 'Avery 5160 / 8160 size, any home printer', group: 'paper',
+    page: { w: 8.5, h: 11 }, cols: 3, rows: 10,
+    label: { w: 2.625, h: 1 }, margin: { top: 0.5, left: 0.1875 }, gap: { x: 0.125, y: 0 },
+  },
+} satisfies Record<string, LabelFormat>
 type FormatKey = keyof typeof FORMATS
 
 function Barcode({ value }: { value: string }) {
@@ -44,11 +55,12 @@ function Barcode({ value }: { value: string }) {
   return <svg ref={ref} className="barcode" preserveAspectRatio="none" />
 }
 
-/** 2×1 thermal tag. Pure black so it prints sharp on white or yellow rolls. */
-function RollTag({ t, sale }: { t: Tag; sale: number | null }) {
+/** One-tag-per-label tag (2×1 thermal, DYMO). Pure black so it prints sharp on white or yellow rolls.
+    DYMO LabelWriters print at 300 dots per inch, thermal shipping printers at 203. */
+function RollTag({ t, sale, widthIn = 2, dpi = 203 }: { t: Tag; sale: number | null; widthIn?: number; dpi?: number }) {
   const name = `${t.name}${t.variant && t.variant !== 'One size' ? ` · ${t.variant}` : ''}`
   return (
-    <div className={`tag21 ${sale != null ? 'is-sale' : ''}`}>
+    <div className={`tag21 ${sale != null ? 'is-sale' : ''} ${widthIn >= 3 ? 'wide' : ''}`}>
       <div className="tag21-top">
         {sale != null && <span className="tag21-sale">SALE</span>}
         <span className="tag21-live">#{t.live_number}</span>
@@ -58,7 +70,7 @@ function RollTag({ t, sale }: { t: Tag; sale: number | null }) {
         <span>{name}</span>
         {sale != null && t.price != null && <s>{money(t.price)}</s>}
       </div>
-      <CrispBarcode value={t.tag_code} heightIn={sale != null ? 0.32 : 0.36} maxWidthIn={1.8} />
+      <CrispBarcode value={t.tag_code} heightIn={sale != null ? 0.32 : 0.36} maxWidthIn={Math.min(2.6, widthIn - 0.2)} dpi={dpi} maxDots={dpi > 250 ? 4 : 3} />
       <div className="tag21-code">{t.tag_code}</div>
     </div>
   )
@@ -106,6 +118,9 @@ export default function Labels() {
   const [saleVal, setSaleVal] = useState('')
 
   useEffect(() => { try { localStorage.setItem('labelFormat', format) } catch { /* ignore */ } }, [format])
+  // Some DYMO setups turn the label themselves. Then the seller switches our turn off, once, on this device.
+  const [noTurn, setNoTurn] = useState(() => { try { return localStorage.getItem('dymoNoTurn') === '1' } catch { return false } })
+  useEffect(() => { try { localStorage.setItem('dymoNoTurn', noTurn ? '1' : '0') } catch { /* ignore */ } }, [noTurn])
 
   useEffect(() => {
     (async () => {
@@ -136,7 +151,10 @@ export default function Labels() {
     })()
   }, [itemId, variantId, itemsParam, tagsParam, variantsParam])
 
-  const f = FORMATS[format]
+  const f: LabelFormat = FORMATS[format]
+  const dymo = f.group === 'dymo'
+  const turned = !!f.turn && !(dymo && noTurn)
+  const printed = printedPage(f, turned)
   const perPage = f.cols * f.rows
   const single = perPage === 1
   const n = Number(saleVal.replace(/[$,%\s]/g, ''))
@@ -152,49 +170,70 @@ export default function Labels() {
   const pages: (Tag | null)[][] = []
   for (let i = 0; i < slots.length; i += perPage) pages.push(slots.slice(i, i + perPage))
 
-  const pageCss = `@page { size: ${f.page.w}in ${f.page.h}in; margin: 0; }`
+
+  const tagFor = (t: Tag) => (single
+    ? <RollTag t={t} sale={saleFor(t)} widthIn={f.label.w} dpi={dymo ? 300 : 203} />
+    : <TagLabel t={t} sale={saleFor(t)} />)
 
   return (
-    <div className="labels-page">
-      <style>{pageCss}</style>
-      <div className="no-print stack">
-        <h1>{style === 'sale' ? 'Sale tags' : tagsParam ? 'Reprint tags' : 'Print tags'}{title ? `: ${title}` : ''}</h1>
-        {loading ? <p className="muted">Loading…</p> : tags.length === 0 ? (
-          <p className="muted">No tags to print. <Link to="/inventory" className="link-text">Back to inventory</Link></p>
-        ) : (
-          <div className="card stack">
-            <label>Label type
-              <select value={format} onChange={e => setFormat(e.target.value as FormatKey)}>
-                {Object.entries(FORMATS).map(([k, v]) => <option key={k} value={k}>{v.name}</option>)}
-              </select>
-            </label>
-            <div className="stack tight-gap">
-              <span className="label-text">Tag style</span>
-              <div className="seg" role="group" aria-label="Tag style">
-                <button className={style === 'regular' ? 'on' : ''} aria-pressed={style === 'regular'} onClick={() => setStyle('regular')}>Regular (white roll)</button>
-                <button className={style === 'sale' ? 'on sale-on' : ''} aria-pressed={style === 'sale'} onClick={() => setStyle('sale')}>Sale (yellow roll)</button>
-              </div>
-            </div>
-            {style === 'sale' && (
-              <div className="sale-box stack">
-                <div className="row2">
-                  <label>Sale price
-                    <select value={saleMode} onChange={e => setSaleMode(e.target.value as SaleMode)}>
-                      <option value="item">Each item's own sale price</option>
-                      <option value="pct">Percent off the regular price</option>
-                      <option value="fixed">One price for all</option>
-                    </select>
-                  </label>
-                  {saleMode !== 'item' && (
-                    <label>{saleMode === 'pct' ? 'Percent off' : 'Sale price'}
-                      <span className="input-suffix"><input inputMode="decimal" value={saleVal} onChange={e => setSaleVal(e.target.value.replace(/[^0-9.]/g, ''))} placeholder={saleMode === 'pct' ? '30' : '10.00'} /><span>{saleMode === 'pct' ? '% off' : '$'}</span></span>
-                    </label>
-                  )}
+    <div className="labels-page stack">
+      <style>{pageCss(f, turned)}</style>
+      <h1 className="no-print">{style === 'sale' ? 'Sale tags' : tagsParam ? 'Reprint tags' : 'Print tags'}{title ? `: ${title}` : ''}</h1>
+      {loading ? <p className="muted">Loading…</p> : tags.length === 0 ? (
+        <p className="muted">No tags to print. <Link to="/inventory" className="link-text">Back to inventory</Link></p>
+      ) : (
+        <div className="label-print-layout">
+          <div className="no-print stack">
+            <section className="card stack">
+              <h2 className="preview-title">1. Pick your label</h2>
+              <LabelSizePicker formats={FORMATS} value={format} onChange={setFormat} />
+              <div className="stack tight-gap">
+                <span className="label-text">Tag style</span>
+                <div className="seg" role="group" aria-label="Tag style">
+                  <button className={style === 'regular' ? 'on' : ''} aria-pressed={style === 'regular'} onClick={() => setStyle('regular')}>{dymo ? 'Regular tag' : 'Regular (white roll)'}</button>
+                  <button className={style === 'sale' ? 'on sale-on' : ''} aria-pressed={style === 'sale'} onClick={() => setStyle('sale')}>{dymo ? 'Sale tag' : 'Sale (yellow roll)'}</button>
                 </div>
-                {noSale > 0 && <p className="small warn-text">{noSale} tag{noSale === 1 ? ' has' : 's have'} no sale price yet, so {noSale === 1 ? 'it shows' : 'they show'} the regular price. Set one on the item page, use Edit in Inventory, or pick Percent off.</p>}
-                <p className="muted small">Load the <b>yellow</b> roll before you print. The tag says SALE with the old price crossed out.</p>
               </div>
-            )}
+              {style === 'sale' && (
+                <div className="sale-box stack">
+                  <div className="row2">
+                    <label>Sale price
+                      <select value={saleMode} onChange={e => setSaleMode(e.target.value as SaleMode)}>
+                        <option value="item">Each item's own sale price</option>
+                        <option value="pct">Percent off the regular price</option>
+                        <option value="fixed">One price for all</option>
+                      </select>
+                    </label>
+                    {saleMode !== 'item' && (
+                      <label>{saleMode === 'pct' ? 'Percent off' : 'Sale price'}
+                        <span className="input-suffix"><input inputMode="decimal" value={saleVal} onChange={e => setSaleVal(e.target.value.replace(/[^0-9.]/g, ''))} placeholder={saleMode === 'pct' ? '30' : '10.00'} /><span>{saleMode === 'pct' ? '% off' : '$'}</span></span>
+                      </label>
+                    )}
+                  </div>
+                  {noSale > 0 && <p className="small warn-text">{noSale} tag{noSale === 1 ? ' has' : 's have'} no sale price yet, so {noSale === 1 ? 'it shows' : 'they show'} the regular price. Set one on the item page, use Edit in Inventory, or pick Percent off.</p>}
+                  <p className="muted small">{dymo
+                    ? <>DYMO rolls are white, so the tag says <b>SALE</b> in a bold black box with the old price crossed out. Want color? DYMO sells colored labels too.</>
+                    : <>Load the <b>yellow</b> roll before you print. The tag says SALE with the old price crossed out.</>}</p>
+                </div>
+              )}
+              {!single && (
+                <label>Skip used labels at the start of the sheet
+                  <input inputMode="numeric" value={skip} onChange={e => setSkip(Math.max(0, parseInt(e.target.value.replace(/\D/g, '') || '0', 10)))} />
+                </label>
+              )}
+            </section>
+          </div>
+
+          <LabelPreview f={f} turned={turned} pages={pages.length} labels={tags.length}>
+            {pages.map((p, pi) => (
+              <LabelSheet key={pi} f={f} turned={turned}>
+                {p.map((t, i) => <div key={i} className="slot">{t && tagFor(t)}</div>)}
+              </LabelSheet>
+            ))}
+          </LabelPreview>
+
+          <section className="card stack no-print">
+            <h2 className="preview-title">2. Looks good? Print</h2>
             {format === 'roll2x1' && (
               <div className="printer-tip small">
                 <b>Thermal printer setup (one time)</b>
@@ -207,33 +246,26 @@ export default function Labels() {
                 <span className="muted">Each tag prints on its own label. White roll for regular tags, yellow roll for sale tags.</span>
               </div>
             )}
-            {!single && (
-              <label>Skip used labels at the start of the sheet
-                <input inputMode="numeric" value={skip} onChange={e => setSkip(Math.max(0, parseInt(e.target.value.replace(/\D/g, '') || '0', 10)))} />
-              </label>
+            {dymo && (
+              <div className="printer-tip small">
+                <b>DYMO LabelWriter setup (one time)</b>
+                <ol>
+                  <li>Install DYMO Connect from dymo.com and plug the LabelWriter into your computer with its USB cable.</li>
+                  <li>Load the roll so the labels feed in the long way (that's how DYMO rolls go in). Your printer is fine as is. The app turns each tag to match.</li>
+                  <li>In the print window, choose your DYMO and set paper size to <b>{format === 'dymo30336' ? '30336 (1 in x 2-1/8 in)' : '30252 (1-1/8 in x 3-1/2 in)'}</b>, layout <b>Portrait</b>.</li>
+                  <li>Scale <b>100%</b> (or Actual size), margins <b>None</b>, headers and footers off.</li>
+                </ol>
+                <label className="check-line"><input type="checkbox" checked={noTurn} onChange={e => setNoTurn(e.target.checked)} />Tag came out sideways or cut off? Tick this to let the printer turn it instead, then print again.</label>
+              </div>
             )}
-            <p className="muted small">{tags.length} tag{tags.length === 1 ? '' : 's'} on {pages.length} page{pages.length === 1 ? '' : 's'}. In the print window, set scale to 100% (or "Actual size") and margins to None.</p>
-            <button className={`btn big ${style === 'sale' ? 'sale-btn' : 'primary'}`} onClick={() => window.print()}>Print</button>
+            {!single && <p className="muted small">In the print window, set scale to 100% (or "Actual size") and margins to None.</p>}
+            <button className={`btn big ${style === 'sale' ? 'sale-btn' : 'primary'}`} onClick={() => window.print()}>Print {tags.length} tag{tags.length === 1 ? '' : 's'}</button>
             <SaveForPrinterApp name={style === 'sale' ? 'sale-tags' : 'tags'} />
-            <PrintNudge w={f.page.w} h={f.page.h} />
+            <PrintNudge w={printed.w} h={printed.h} label={dymo ? `DYMO ${format === 'dymo30336' ? '30336' : '30252'} labels` : undefined} />
             <p className="muted small">Need a printer or labels? See <Link to="/gear">Recommended gear</Link>.</p>
-          </div>
-        )}
-      </div>
-
-      <div className="print-area">
-        {pages.map((p, pi) => (
-          <div key={pi} className="sheet" style={{ width: `${f.page.w}in`, height: `${f.page.h}in`, paddingTop: `${f.margin.top}in`, paddingLeft: `${f.margin.left}in` }}>
-            <div className="sheet-grid" style={{
-              gridTemplateColumns: `repeat(${f.cols}, ${f.label.w}in)`,
-              gridAutoRows: `${f.label.h}in`,
-              columnGap: `${f.gap.x}in`, rowGap: `${f.gap.y}in`,
-            }}>
-              {p.map((t, i) => <div key={i} className="slot">{t && (format === 'roll2x1' ? <RollTag t={t} sale={saleFor(t)} /> : <TagLabel t={t} sale={saleFor(t)} />)}</div>)}
-            </div>
-          </div>
-        ))}
-      </div>
+          </section>
+        </div>
+      )}
     </div>
   )
 }
