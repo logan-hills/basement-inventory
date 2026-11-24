@@ -2870,3 +2870,31 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .uni-feature-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .uni-feature-chips i { font-style: normal; font-weight: 700; font-size: .9rem; padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, .18); border: 1px solid rgba(255, 255, 255, .35); }
 .uni-feature-go { margin-top: 4px; font-weight: 800; font-size: 1.05rem; color: #FFE7A3; }
+
+/* ===== Time with the Queen: luxurious topic picker and a send button that guides ===== */
+.consult-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.consult-steps li { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; border-radius: 999px; background: #fff; border: 1px solid var(--u-line); font-size: .95rem; font-weight: 700; color: var(--u-muted); }
+.consult-steps li span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #F4ECE2; color: var(--u-ink-2); font-size: .9rem; }
+.consult-steps li.done { color: #5A3A0E; border-color: #E8C56A; background: #FFF8E6; }
+.consult-steps li.done span { background: var(--u-foil); color: #3B2600; }
+.consult-step { border-radius: 22px; transition: box-shadow .3s var(--ease); }
+.consult-step.nudge { animation: consult-nudge 1.2s var(--ease) 2; }
+@keyframes consult-nudge { 0%, 100% { box-shadow: 0 0 0 0 rgba(201, 154, 46, 0); } 40% { box-shadow: 0 0 0 8px rgba(201, 154, 46, .35); } }
+.consult-step-head, .consult-form .consult-step legend { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.35rem; font-weight: 700; color: var(--u-ink); margin-bottom: 4px; }
+.consult-step legend small { font-family: Inter, system-ui, sans-serif; font-size: .9rem; font-weight: 600; color: var(--u-muted); }
+.consult-step-no { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 50%; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.05rem; color: #3B2600; background: var(--u-foil); box-shadow: 0 4px 10px rgba(185, 134, 43, .35); }
+.consult-step > .consult-ideas, .consult-step > label { margin-top: 12px; }
+.consult-topics { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+.consult-topic { position: relative; display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 14px 44px 14px 14px; border-radius: 18px; border: 1px solid var(--u-line); background: linear-gradient(180deg, #fff, #FFFBF4); color: var(--u-ink); font: inherit; text-align: left; cursor: pointer; box-shadow: 0 4px 12px rgba(120, 40, 70, .05); transition: transform .18s var(--ease), box-shadow .18s var(--ease), border-color .18s; }
+.consult-topic:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(120, 40, 70, .1); }
+.consult-topic-ico { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 14px; color: #A3005A; background: #FCEFF5; transition: background .18s, color .18s; }
+.consult-topic-txt { display: flex; flex-direction: column; gap: 2px; }
+.consult-topic-txt b { font-size: 1.05rem; line-height: 1.25; }
+.consult-topic-txt small { font-size: .92rem; line-height: 1.35; color: var(--u-muted); }
+.consult-topic-check { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--u-line); font-size: .85rem; font-weight: 800; color: #3B2600; }
+.consult-topic.on { border-color: #D9A53A; background: linear-gradient(180deg, #FFFDF6, #FFF4D8); box-shadow: 0 0 0 2px rgba(217, 165, 58, .45), 0 12px 26px rgba(185, 134, 43, .22); }
+.consult-topic.on .consult-topic-ico { color: #3B2600; background: var(--u-foil); }
+.consult-topic.on .consult-topic-check { border-color: transparent; background: var(--u-foil); }
+.consult .btn.uni-cta.consult-guide { color: #fff; border-color: transparent; background: linear-gradient(135deg, #A3005A, #E3007D 60%, #FF4FA3); box-shadow: 0 12px 26px rgba(163, 0, 90, .3); }
+.consult-optional { font-weight: 600; font-size: .85rem; color: var(--u-muted); margin-left: 6px; }
+@media (max-width: 560px) { .consult-topics { grid-template-columns: 1fr; } .consult-topic { min-height: 68px; } }
