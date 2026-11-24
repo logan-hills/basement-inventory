@@ -50,6 +50,7 @@ import FinishSignup from './pages/FinishSignup'
 import Legal from './pages/Legal'
 import Gear from './pages/Gear'
 import Receipt from './pages/Receipt'
+import OwnerOnly from './components/OwnerOnly'
 
 export function Crown({ size = 28 }: { size?: number }) {
   return (
@@ -79,6 +80,9 @@ const ORDERS = [
   { to: '/shipping', label: 'Shipping', icon: 'truck' },
   { to: '/customers', label: 'Customers', icon: 'users' },
 ]
+/** Seller-only extras. Team members (employees) don't see these in the menu. */
+const OWNER_ONLY = new Set(['/lessons', '/consult', '/shared-page'])
+
 const MORE = [
   { to: '/reports', label: 'Reports', icon: 'reports' },
   { to: '/profile', label: 'My profile', icon: 'users' },
@@ -86,6 +90,7 @@ const MORE = [
   { to: '/gear', label: 'Recommended gear', icon: 'scan' },
   { to: '/consult', label: 'Time with the Queen', icon: 'sparkle' },
   { to: '/settings', label: 'Settings', icon: 'settings' },
+  { to: '/settings/team', label: 'Team members', icon: 'users' },
 ]
 
 /** The always-visible dock: one button per area. Each area's pages sit in a small row at the top of the page. */
@@ -142,7 +147,7 @@ function StreamShell() {
 }
 
 function Shell() {
-  const { session, shop, loading, profile } = useSession()
+  const { session, shop, loading, profile, isTeam } = useSession()
   const [menu, setMenu] = useState(false)
   const { pathname } = useLocation()
   const recovering = useRecovering()
@@ -179,7 +184,7 @@ function Shell() {
           {[['Stock', STOCK], ['Lives', LIVES], ['Orders', ORDERS], ['You and your shop', MORE]].map(([name, list]) => (
             <div key={name as string} className="stack tight-gap">
               <span className="nav-group">{name as string}</span>
-              <div className="menu-links">{(list as typeof STOCK).map(n => <NavLink key={n.to} to={n.to} className="menu-link"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}</div>
+              <div className="menu-links">{(list as typeof STOCK).filter(n => !(isTeam && (OWNER_ONLY.has(n.to) || n.to === '/settings/team'))).map(n => <NavLink key={n.to} to={n.to} className="menu-link"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}</div>
             </div>
           ))}
           <div className="row-between"><span className="muted small">{session.user.email}</span><button className="link-btn" onClick={() => supabase.auth.signOut()}>Sign out</button></div>
@@ -203,8 +208,8 @@ function Shell() {
           <Route path="/receive/bulk" element={<BulkReceive />} />
           <Route path="/live" element={<LivePrep />} />
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/shared-page" element={<SharedPage />} />
-          <Route path="/on-air/:id" element={<OnAir />} />
+          <Route path="/shared-page" element={isTeam ? <OwnerOnly what="Shared Page lives" /> : <SharedPage />} />
+          <Route path="/on-air/:id" element={isTeam ? <OwnerOnly what="Going live on the Shared Page" /> : <OnAir />} />
           <Route path="/giveaways" element={<Giveaways />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/terms" element={<Legal which="terms" />} />
@@ -218,9 +223,9 @@ function Shell() {
           <Route path="/settings/:section" element={<Settings />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/reports/:view" element={<Reports />} />
-          <Route path="/lessons" element={<Lessons />} />
-          <Route path="/consult" element={<Consult />} />
-          <Route path="/lessons/:id" element={<LessonPlayer />} />
+          <Route path="/lessons" element={isTeam ? <OwnerOnly what="Dazzle University" /> : <Lessons />} />
+          <Route path="/consult" element={isTeam ? <OwnerOnly what="Time with the Queen" /> : <Consult />} />
+          <Route path="/lessons/:id" element={isTeam ? <OwnerOnly what="Dazzle University" /> : <LessonPlayer />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/upload" element={<OrdersUpload />} />
           <Route path="/order/:code" element={<OrderDetail />} />

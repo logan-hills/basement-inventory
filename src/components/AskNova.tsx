@@ -44,7 +44,7 @@ function findTarget(step: string): HTMLElement | null {
 export default function AskNova() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const { shop } = useSession()
+  const { shop, isTeam } = useSession()
   const [open, setOpen] = useState(false)
   const [q, setQ] = useState('')
   const [said, setSaid] = useState<{ mood: NovaMood; line: string }>({ mood: 'wink', line: 'Hey love! What can I help you with? Ask me how to do anything in the app, and I can walk you through it step by step.' })
@@ -132,7 +132,7 @@ export default function AskNova() {
     setGuide({ ...guide, i: Math.min(guide.i + 1, guide.steps.length - 1) })
   }
 
-  const academy = hasAcademy(shop?.plan)
+  const academy = hasAcademy(shop?.plan) && !isTeam
   const first = guide && guide.i === 0 && guide.route && guide.steps[0].startsWith('Open ')
   return (
     <>

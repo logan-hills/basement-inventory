@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Know when to stop discounting and let a piece go',
   ],
   route: { to: '/live', label: 'Get ready for live' },
-  covers: ['src/pages/LivePrep.tsx', 'src/pages/Home.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/LivePrep.tsx', 'src/pages/Home.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Why old stock hurts', kind: 'learn', title: 'Cash on a shelf', nova: 'Let\'s get that money moving, sis.',
       text: 'Every piece on your shelf is money you already spent. While it sits, it can\'t buy the new pieces your buyers are asking for. The longer it sits, the less it\'s worth: trends move on, seasons pass, and it starts to look tired.',

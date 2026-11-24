@@ -5,7 +5,8 @@ import { supabase } from './supabase'
 import { saveSettings, withDefaults, type Settings } from './settings'
 import { loadProfile, type Profile } from './profile'
 
-export type Shop = { id: string; name: string; settings: Settings; plan: Plan | null }
+/** role: 'owner' runs the shop; 'staff' is a team member the owner invited (no classes, Queen or Shared Page booking). */
+export type Shop = { id: string; name: string; settings: Settings; plan: Plan | null; role: 'owner' | 'staff' }
 
 type Ctx = {
   session: Session | null
@@ -17,9 +18,11 @@ type Ctx = {
   refreshShop: () => Promise<void>
   settings: Settings
   updateSettings: (patch: Partial<Settings>) => Promise<void>
+  /** A team member (employee) of someone else's shop. Seller-only extras are hidden from them. */
+  isTeam: boolean
 }
 
-const SessionContext = createContext<Ctx>({ session: null, shop: null, loading: true, profile: undefined, refreshProfile: async () => {}, refreshShop: async () => {}, settings: withDefaults(null), updateSettings: async () => {} })
+const SessionContext = createContext<Ctx>({ session: null, shop: null, loading: true, profile: undefined, refreshProfile: async () => {}, refreshShop: async () => {}, settings: withDefaults(null), updateSettings: async () => {}, isTeam: false })
 
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
@@ -42,7 +45,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     if (error) ({ data, error } = await supabase.from('shops').select('id,name,settings').order('created_at').limit(1) as any)
     if (error) ({ data } = await supabase.from('shops').select('id,name').order('created_at').limit(1) as any)
     const row: any = data?.[0]
-    setShop(row ? { id: row.id, name: row.name, settings: withDefaults(row.settings), plan: row.plan ?? null } : null)
+    let role: Shop['role'] = 'owner'
+    if (row) {
+      const { data: me } = await supabase.from('shop_members').select('role').eq('shop_id', row.id).eq('user_id', s.user.id).maybeSingle()
+      if ((me as any)?.role === 'staff') role = 'staff'
+    }
+    setShop(row ? { id: row.id, name: row.name, settings: withDefaults(row.settings), plan: row.plan ?? null, role } : null)
   }
 
   useEffect(() => {
@@ -63,6 +71,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       session, shop, loading, refreshShop: () => loadShop(session),
       profile, refreshProfile: () => loadMe(session),
       settings: shop?.settings ?? withDefaults(null),
+      isTeam: shop?.role === 'staff',
       updateSettings: async patch => {
         if (!shop) return
         const next = { ...shop.settings, ...patch }

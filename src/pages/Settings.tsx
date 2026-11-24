@@ -7,9 +7,12 @@ import { useSession } from '../lib/session'
 import { useToast } from '../lib/toast'
 import { BOT_FIELDS, DEFAULT_SETTINGS, type Settings as S } from '../lib/settings'
 import { toCsv } from '../lib/csv'
+import TeamSettings from '../components/TeamSettings'
+import { teamLimit } from '../lib/team'
 
 const PAGES = [
   { k: 'shop', label: 'Your shop', icon: 'settings' },
+  { k: 'team', label: 'Team members', icon: 'users' },
   { k: 'lists', label: 'Categories and tags', icon: 'tag' },
   { k: 'lives', label: 'Live themes and hosts', icon: 'live' },
   { k: 'checklist', label: 'Live checklists', icon: 'sparkle' },
@@ -21,7 +24,7 @@ const PAGES = [
 export default function Settings() {
   const { section } = useParams<{ section?: string }>()
   const page = PAGES.find(p => p.k === section)
-  const { shop, settings, updateSettings, refreshShop } = useSession()
+  const { shop, settings, updateSettings, refreshShop, isTeam } = useSession()
   const toast = useToast()
   const [name, setName] = useState(shop?.name ?? '')
 
@@ -44,6 +47,7 @@ export default function Settings() {
 
   const hint: Record<typeof PAGES[number]['k'], string> = {
     shop: shop?.name ?? 'Your shop name',
+    team: isTeam ? `You're on the ${shop?.name ?? 'shop'} team` : `Invite up to ${teamLimit(shop?.plan)} employee${teamLimit(shop?.plan) === 1 ? '' : 's'} to help`,
     lists: `${settings.categories.length} categories · ${settings.itemTags.length} item tags`,
     lives: `${settings.liveThemes.length} themes · ${settings.hosts.length} host${settings.hosts.length === 1 ? '' : 's'}`,
     checklist: `${settings.checklist.before.length + settings.checklist.during.length + settings.checklist.after.length} steps for before, during and after`,
@@ -70,6 +74,7 @@ export default function Settings() {
     <div className="stack wide-gap settings-page">
       <Link to="/settings" className="back-link">‹ Settings</Link>
       <div className="page-head"><div><h1>{page.label}</h1><span className="muted">Changes save as you make them.</span></div></div>
+      {page.k === 'team' && <TeamSettings />}
       {page.k === 'shop' && <div className="settings-one">
         <section className="card stack">
           <label>Shop name<input value={name} onChange={e => setName(e.target.value)} onBlur={saveName} /></label>

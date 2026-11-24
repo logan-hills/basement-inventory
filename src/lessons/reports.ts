@@ -13,7 +13,7 @@ const lesson: Lesson = {
     'Run a 30-minute monthly money meeting with yourself',
   ],
   route: { to: '/reports', label: 'Open Reports' },
-  covers: ['src/pages/Reports.tsx', 'src/pages/Home.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/Reports.tsx', 'src/pages/Home.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'The big numbers', kind: 'learn', title: 'Why numbers, honestly', nova: 'Don\'t worry, no accounting degree needed. Just a few numbers that tell you the truth.',
       text: 'A live can feel amazing and still lose money. Another can feel slow and be your most profitable night. Reports (Money in the dock) tells you which is which, so you decide with facts instead of feelings.' },
