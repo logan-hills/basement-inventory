@@ -29,7 +29,7 @@ const saveGuide = (g: Guide | null) => { try { if (g) sessionStorage.setItem(GUI
 function findTarget(step: string): HTMLElement | null {
   const text = ` ${step.toLowerCase().replace(/[^a-z0-9#×]+/g, ' ')} `
   let best: HTMLElement | null = null, bestScore = 0
-  for (const el of document.querySelectorAll<HTMLElement>('main button, main a, main [role="button"], main [role="tab"], .dock a, .dock button, .tabbar a')) {
+  for (const el of document.querySelectorAll<HTMLElement>('main button, main a, main [role="button"], main [role="tab"], .topnav a, .topnav button, .tabbar a')) {
     if (el.closest('.nova-guide, .sheet-panel, .ask-nova-fab')) continue
     if (!el.getClientRects().length) continue
     const label = (el.innerText || el.getAttribute('aria-label') || '').toLowerCase().replace(/[^a-z0-9#×]+/g, ' ').trim()

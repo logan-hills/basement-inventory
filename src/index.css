@@ -1200,7 +1200,7 @@ button.idea-chip:hover { border-color: var(--gold); color: var(--text); }
 .profile-photo { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .profile-photo .show-toggle { margin-left: auto; }
 .file-btn { cursor: pointer; }
-.field-with-toggle { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: end; }
+.field-with-toggle { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: end; }
 .field-note { margin-top: -8px; }
 .show-toggle { min-height: 40px; padding: 0 14px; border-radius: 20px; border: 1px solid var(--border-strong); background: none; color: var(--muted); font-size: .82rem; font-weight: 600; white-space: nowrap; }
 .show-toggle.on { border-color: var(--emerald-hi); color: #7FD9AE; background: rgba(34, 176, 116, .12); }
@@ -2989,6 +2989,62 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .camera-error { line-height: 1.5; }
 .camera-error ol { text-align: left; margin: 8px 0 0 18px; padding: 0; }
 
+/* ===== Computer top bar =====
+   Computers, Macs and iPads held sideways get one roomy bar across the top with a button for each area,
+   plus Customers and University when there is room. Phones and iPads held upright keep the compact
+   top strip (Home + Menu) and the bottom tabs. Narrower computer screens tuck the extras under More. */
+:root { --topnav-h: 0px; }
+.shell { display: block; }
+.dock { display: none !important; }
+.topnav { display: none; }
+@media (min-width: 900px) {
+  :root { --topnav-h: 76px; }
+  .topnav {
+    position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 14px;
+    height: var(--topnav-h); padding: 0 24px; padding-top: env(safe-area-inset-top, 0px);
+    background: rgba(24, 16, 13, .92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .topnav-brand { display: flex; align-items: center; gap: 10px; flex: none; color: var(--text); text-decoration: none; }
+  .topnav-brand:hover { color: var(--text); }
+  .topnav-brand .dock-logo.small { width: 44px; height: 44px; border-radius: 14px; box-shadow: 0 6px 18px rgba(255, 211, 110, .3); }
+  .topnav-brand b { font-family: Fraunces, Georgia, serif; color: var(--gold); font-size: 1.15rem; letter-spacing: .3px; white-space: nowrap; }
+  .topnav-links { display: flex; align-items: center; gap: 4px; flex: 1 1 auto; min-width: 0; justify-content: center; }
+  .topnav-end { display: flex; align-items: center; gap: 6px; flex: none; }
+  .topnav-link {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px; border-radius: 999px; border: 0; background: none;
+    font: inherit; font-size: 1.02rem; font-weight: 700; color: var(--text-2); white-space: nowrap; text-decoration: none; cursor: pointer;
+    transition: background .15s, color .15s, transform .15s var(--ease);
+  }
+  .topnav-link .icon { flex: none; }
+  .topnav-link:hover { color: var(--text); background: rgba(255, 255, 255, .06); }
+  .topnav-link:active { transform: scale(.96); }
+  .topnav-link.active { background: var(--gold); color: #2A1A0C; box-shadow: 0 6px 18px rgba(255, 211, 110, .28); }
+  .topnav-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .topnav-link.icon-only { width: 48px; padding: 0; justify-content: center; }
+  .topnav-more { border: 1px solid var(--border-strong); }
+  .topnav-more.active { border-color: var(--gold); }
+  .content { padding-top: 26px; }
+  /* Things that stick while you scroll sit under the top bar, not behind it. */
+  .detail-media { top: calc(var(--topnav-h) + 20px); }
+  .ps-preview { top: calc(var(--topnav-h) + 16px) !important; }
+  .label-print-layout > .label-preview-card { top: calc(var(--topnav-h) + 16px) !important; }
+  .uni-nav { top: calc(var(--topnav-h) + 10px); }
+  .uni-part, .uni-school { scroll-margin-top: calc(var(--topnav-h) + 90px); }
+}
+/* Narrower computer screens: logo only, then fewer buttons (the rest stay under More). */
+@media (min-width: 900px) and (max-width: 1439px) { .topnav-brand b { display: none; } .topnav { gap: 10px; padding: 0 18px; } }
+@media (min-width: 900px) and (max-width: 1279px) { .topnav-link.fit-wider { display: none; } .topnav-more.holds-wider { background: var(--gold); color: #2A1A0C; border-color: var(--gold); } .topnav-link { padding: 0 13px; } }
+@media (min-width: 900px) and (max-width: 1139px) { .topnav-link.fit-wide { display: none; } .topnav-more.holds-wide { background: var(--gold); color: #2A1A0C; border-color: var(--gold); } .topnav-link { padding: 0 11px; font-size: .98rem; } }
+@media print { .topnav { display: none !important; } }
+/* Phones and iPads upright: every sub-page button stays in view. The row wraps instead of hiding buttons off the edge. */
+@media (max-width: 899px) {
+  .subnav { margin: 0 0 16px; padding: 0; }
+  /* Even rows: 3 buttons → one row, 4 → two rows of 2, 5 → a row of 3 then a row of 2. */
+  .subnav-links { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); overflow: visible; border-radius: 22px; gap: 4px; }
+  .subnav-link { grid-column: span 2; text-align: center; min-height: 46px; padding: 8px 6px; display: flex; align-items: center; justify-content: center; white-space: normal; line-height: 1.15; }
+  .subnav-links[data-count="4"] .subnav-link, .subnav-links[data-count="5"] .subnav-link:nth-child(n+4), .subnav-links[data-count="2"] .subnav-link { grid-column: span 3; }
+}
 /* The Queen's touch: her tips on slides and her signed notes on lesson covers and finish pages. */
 .queen-crown { color: var(--gold); flex: none; filter: drop-shadow(0 2px 6px rgba(255, 211, 110, .35)); }
 .queen-tip { display: flex; gap: 12px; align-items: flex-start; margin-top: 6px; padding: 14px 16px; border-radius: 16px;

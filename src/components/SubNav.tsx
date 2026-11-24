@@ -42,11 +42,12 @@ export default function SubNav({ path }: { path: string }) {
   if (!(key in SECTIONS)) return null
   const sec = SECTIONS[key as SectionKey]
   if (!sec.links.some(l => l.to === path)) return null
+  const links = sec.links.filter(l => !(isTeam && l.to === '/shared-page'))
   return (
     <nav className="subnav no-print" aria-label={`${sec.label} pages`}>
       <span className="subnav-area">{sec.label}</span>
-      <div className="subnav-links">
-        {sec.links.filter(l => !(isTeam && l.to === '/shared-page')).map(l => <NavLink key={l.to} to={l.to} end className="subnav-link">{l.label}</NavLink>)}
+      <div className="subnav-links" data-count={links.length}>
+        {links.map(l => <NavLink key={l.to} to={l.to} end className="subnav-link">{l.label}</NavLink>)}
       </div>
     </nav>
   )
