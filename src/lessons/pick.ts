@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Pack each box so it arrives looking like a gift',
   ],
   route: { to: '/orders', label: 'Open Pick and pack' },
-  covers: ['src/pages/Pick.tsx', 'src/pages/Orders.tsx', 'src/pages/BoxLabels.tsx', 'src/pages/OrderDetail.tsx', 'src/pages/Receipt.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/Pick.tsx', 'src/pages/Orders.tsx', 'src/pages/BoxLabels.tsx', 'src/pages/OrderDetail.tsx', 'src/pages/Receipt.tsx', 'src/components/FreeCameraTip.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Why scan twice', kind: 'learn', title: 'The grocery store way', nova: 'This is the part that makes buyers trust you. Let\'s make it foolproof.',
       text: 'At the grocery store, every item gets scanned at the register, so you pay for exactly what\'s in your cart. Pick and pack works the same way: scan the piece, then scan the buyer\'s box. The two scans together prove the right piece went to the right person.' },
@@ -41,7 +41,9 @@ const lesson: Lesson = {
     { kind: 'quiz', q: 'Why scan the box after the piece?', options: ['To prove it went in the right box', 'To print a label', 'To mark it damaged'], answer: 0, why: 'The two scans together match the piece to the buyer.' },
 
     { kind: 'quiz', q: 'You scan Keisha\'s hoops, then scan Monique\'s box by mistake. What happens?', options: ['The hoops go in Monique\'s order', 'The app buzzes and shows you Keisha\'s box is the right one', 'Both orders get deleted'], answer: 1, why: 'The second scan is the safety check. A wrong box is caught before anything goes in it.' },
-    { chapter: 'When things go sideways', kind: 'learn', title: 'No scanner? Tap Picked it', text: 'Tap Picked it to pick without scanning. If only one customer needs it, it goes straight in her box. If several do, tap the right box under "No scanner? Tap the box".', tip: 'Skip for now moves to the next item and comes back later.' },
+    { chapter: 'When things go sideways', kind: 'learn', title: 'No scanner? Use your camera for free', text: 'Your phone or iPad camera is a free scanner. On the Picking screen, the gold note says No scanner? Your camera is free. Tap Use camera, then tap Allow the first time your phone asks. Scan each tag, then the box label, just like with a scanner. Tap Got it to hide the note once you know.',
+      screen: { title: 'Picking', rows: ['No scanner? Your camera is free.'], buttons: ['Use camera', 'Got it'], highlight: 'Use camera' } },
+    { kind: 'learn', title: 'No scanner? Tap Picked it', text: 'Tap Picked it to pick without scanning. If only one customer needs it, it goes straight in her box. If several do, tap the right box under "No scanner? Tap the box".', tip: 'Skip for now moves to the next item and comes back later.' },
     { kind: 'quiz', q: 'Your scanner battery died. How do you keep picking?', options: ['Tap Picked it, then tap her box', 'Stop until it charges', 'Type every tag by hand'], answer: 0, why: 'Picked it works without any scanner.' },
     { kind: 'learn', title: 'Can\'t find it', text: 'Can\'t find a piece? Tap Can\'t find it. It\'s marked short so you know to follow up, and the rest of the order keeps moving.' },
     { kind: 'tap', title: 'Practice', prompt: 'The list says Keisha\'s hoops, but the bin is empty. Tap…', screen: { title: 'Picking', rows: ['#4821 Gold hoops → Keisha J.'], buttons: ['Picked it', 'Can\'t find it', 'Delete order'] }, answer: 'Can\'t find it', hint: 'Can\'t find it marks it short so you can follow up with her.' },
