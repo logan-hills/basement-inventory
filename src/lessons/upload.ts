@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Keep customer details clean so shipping just works',
   ],
   route: { to: '/orders/upload', label: 'Upload live sales' },
-  covers: ['src/pages/OrdersUpload.tsx', 'src/pages/Orders.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/OrdersUpload.tsx', 'src/pages/Orders.tsx', 'src/lib/customers.ts'], updated: '2026-11-23',
   slides: [
     { chapter: 'Three ways in', kind: 'learn', title: 'Three ways in', nova: 'The live is over, the money is waiting. Let\'s turn claims into boxes.',
       text: 'Pick the one that matches how you sell.',
@@ -22,9 +22,11 @@ const lesson: Lesson = {
       ] } },
     { kind: 'quiz', q: 'You used the Dynamic Dazzle comment bot tonight. What\'s next?', options: ['Download a file and upload it here', 'Tap Make orders in the bot', 'Type each sale in by hand'], answer: 1, why: 'Our bot makes the orders for you. Uploads are for Loyal Shops, other bots, and handwritten sales.' },
 
-    { chapter: 'From Loyal Shops', kind: 'learn', title: 'Export, then upload', text: 'In Loyal Shops, open Sales History for the live and tap Export Sales. Then come to Upload live sales and choose that file. Items match by claim number (your Live #), UPC, or product title. Claims like "Sold 123 Blue M" or "Sold 88 Q2" read fine, and waitlisted runner-ups are skipped so you only pack for the winner.',
+    { chapter: 'From Loyal Shops', kind: 'learn', title: 'Export, then upload', text: 'In Loyal Shops, open Sales History for the live and tap Export Sales. Then come to Upload live sales and choose that file. Items match by claim number (your Live #), UPC, or product title. Claims like "Sold 123 Blue M" or "Sold 88 Q2" read fine. The Status column marks the winner 1st; 2nd and 3rd+ are backup claims, so they are left out unless you tick Also pack the backup claims. Free Item rows come in at $0, and a "-" in the file counts as blank.',
       screen: { title: 'Upload live sales', rows: ['Using Loyal Shops?'], buttons: ['Choose the sales CSV'], highlight: 'Choose the sales CSV' } },
-    { kind: 'quiz', q: 'Your Loyal Shops file lists a waitlisted runner-up for #123. What happens to that row?', options: ['It is skipped, only the winner gets packed', 'She gets a second box'], answer: 0, why: 'Runner-ups only matter if the winner passes. Loyal Shops moves the claim to them, and the next export shows them as the winner.' },
+    { kind: 'quiz', q: 'Your Loyal Shops file shows Brenda as "2nd" on #123. What happens to that row?', options: ['It is left out, only the 1st (winner) gets packed', 'She gets a second box'], answer: 0, why: '2nd and 3rd+ are backups. If the winner passes, Loyal Shops moves the claim to them. Tick Also pack the backup claims only if you really sold extra.' },
+    { kind: 'learn', title: 'New and missing customers', text: 'Before you create orders, each card shows New customer for buyers who aren\'t in Customers yet, and a red Missing tag when there is no address or email. Addresses, emails and phones in the file fill in their profile for you. After you create orders, tap Fill them in to finish anyone who is missing details.',
+      screen: { title: 'Upload live sales', rows: ['Renee Walker · Ohio', 'New customer · Missing address, city, ZIP'], buttons: ['Create 3 orders'] } },
     { kind: 'learn', title: 'When to export', text: 'Export after your payment deadline, not the second the live ends. That way the file shows who actually kept their pieces, and claims that moved to the next in line are already sorted out.',
       example: 'Tuesday live ends at 8 PM. Payment is due Wednesday 8 PM. At 8:15 Wednesday you export, upload, and print box labels. Packing starts Thursday morning with only paid orders.' },
 

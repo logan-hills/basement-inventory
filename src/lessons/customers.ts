@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Protect your customers\' personal details',
   ],
   route: { to: '/customers', label: 'Open Customers' },
-  covers: ['src/pages/Customers.tsx'], updated: '2026-11-23',
+  covers: ['src/pages/Customers.tsx', 'src/lib/customers.ts'], updated: '2026-11-23',
   slides: [
     { chapter: 'Your list builds itself', kind: 'learn', title: 'Built for you', nova: 'Every name on this page is a real person who chose YOU. Let\'s treat them that way.',
       text: 'Every sale you bring in adds or updates the customer: name, Facebook name, email, phone, address, and everything they\'ve bought. You never have to type a customer list.' },
@@ -26,6 +26,9 @@ const lesson: Lesson = {
       tip: 'Buyers with 3 or more orders get a Repeat badge, so regulars stand out at a glance.' },
     { kind: 'tap', title: 'Practice', prompt: 'You want to send a thank-you gift to your 5 biggest spenders. Which sort?', screen: { title: 'Customers · Sort', buttons: ['Top spenders', 'Most recent', 'Most orders', 'Name A–Z'] }, answer: 'Top spenders', hint: 'Top spenders puts the most money spent at the top.' },
 
+    { kind: 'learn', title: 'Fill in missing details', text: 'Buyers from a Loyal Shops file often come in with no address or email. Tap Needs details to see just those buyers, tap one, then tap Edit details, fill in what is missing and Save. Phone is optional, so it is never flagged.',
+      screen: { title: 'Customers', rows: ['Renee Walker · Needs address, city, ZIP'], buttons: ['Needs details', 'Edit details', 'Save'], highlight: 'Needs details' } },
+    { kind: 'tap', title: 'Practice', prompt: 'You want to see only the buyers you still need an address for. What do you tap?', screen: { title: 'Customers', buttons: ['Download CSV', 'Needs details', 'Top spenders'] }, answer: 'Needs details', hint: 'It filters the list to buyers missing an address or email.' },
     { chapter: 'Why regulars matter', kind: 'learn', title: 'The repeat rate', text: 'Your repeat rate is the share of your buyers who\'ve bought more than once. It\'s one of the healthiest numbers in your business: regulars cost nothing to bring back, buy more often, and bring friends.',
       table: { head: ['', 'Shop A', 'Shop B'], rows: [
         ['Buyers this month', '100', '100'],
