@@ -13,9 +13,8 @@ const lesson: Lesson = {
   route: { to: '/receive/bulk', label: 'Open Bulk receive' },
   sources: [
     { org: 'National Retail Federation and Happy Returns', title: '2024 consumer returns in the retail industry', url: 'https://nrf.com/research/2024-consumer-returns-retail-industry' },
-    { org: 'U.S. Consumer Product Safety Commission', title: 'Resale Roundup: it is illegal to sell recalled products', url: 'https://www.cpsc.gov/Business--Manufacturing/Business-Education/Resale-Roundup' },
     { org: 'U.S. Consumer Product Safety Commission', title: 'Recalls and product safety warnings', url: 'https://www.cpsc.gov/Recalls' },
-    { org: 'Federal Trade Commission', title: 'Business opportunity and resale schemes: what to watch for', url: 'https://consumer.ftc.gov/articles/business-opportunity-scams' },
+    { org: 'Federal Trade Commission', title: 'Advertising FAQs: a guide for small business', url: 'https://www.ftc.gov/business-guidance/resources/advertising-faqs-guide-small-business' },
     { org: 'U.S. Small Business Administration', title: 'Manage your finances', url: 'https://www.sba.gov/business-guide/manage-your-business/manage-your-finances' },
   ],
   queen: {
@@ -101,7 +100,7 @@ const lesson: Lesson = {
         { text: 'Throw them away to be safe', feedback: "Safe, but you may be throwing away good, legal stock. A two-minute check tells you for sure." },
       ] },
 
-    { chapter: 'Buy smart, not scammed', kind: 'learn', title: 'Red flags in bulk buying', text: "The FTC warns about resale schemes that promise easy profits. Watch for these before you send money:",
+    { chapter: 'Buy smart, not scammed', kind: 'learn', title: 'Red flags in bulk buying', text: "Liquidation has honest sellers and some who aren't. Watch for these before you send money:",
       points: ['"Guaranteed" profits or retail values that sound unreal', 'Only payment by wire, gift card, Zelle or crypto (no buyer protection)', 'No business address, reviews or return policy', 'Pressure to "buy now before it\'s gone"', 'Photos that are clearly from a stock photo site'],
       tip: 'Pay with a credit card or a platform with buyer protection for your first orders with anyone new.' },
     { kind: 'order', title: 'From lot to live', prompt: 'Put the steps of buying a liquidation lot in order.', steps: ['Check the source\'s reviews and policies', 'Read the manifest and condition label', 'Work out cost per sellable piece and your walk-away price', 'Buy only at or under your walk-away price', 'Sort, test and recall-check every piece', 'Bulk receive the sellable pieces and print tags'] },
