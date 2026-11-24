@@ -19,9 +19,13 @@ const lesson: Lesson = {
     { org: 'PA Code via Cornell LII', title: '61 Pa. Code § 53.1: Clothing', url: 'https://law.cornell.edu/regulations/pennsylvania/61-Pa-Code-SS-53-1' },
     { org: 'Streamlined Sales Tax Governing Board', title: 'Sales tax registration system', url: 'https://www.streamlinedsalestax.org/for-businesses/sales-tax-registration-sstrs' },
   ],
-  covers: ['src/lessons/resources.ts'], updated: '2026-11-23',
+  queen: {
+    welcome: "Sales tax isn't your money. You're holding it for the state. Get this right, and you stay out of trouble and buy wholesale tax-free. Let's make it simple.",
+    signoff: "Register, set up your categories, file on time and keep your resale certificates handy. Remember: this is general education, so check with your state or a tax pro for your situation.",
+  },
+  covers: ['src/lessons/resources.ts'], updated: '2026-11-24',
   slides: [
-    { chapter: 'How sales tax works', kind: 'learn', title: 'You\'re the collector', nova: 'Sales tax sounds scary, but it\'s really just: collect it, keep it safe, send it in. Let\'s make it simple.',
+    { chapter: 'How sales tax works', queen: "Move the sales tax into its own bucket the day you collect it. Then it's never in your spending money.", kind: 'learn', title: 'You\'re the collector', nova: 'Sales tax sounds scary, but it\'s really just: collect it, keep it safe, send it in. Let\'s make it simple.',
       text: 'The buyer pays sales tax. You collect it at checkout, hold it, and send it to the state on a schedule. It was never your money, so don\'t spend it.',
       points: ['Your state decides what\'s taxable and the rate', 'Local areas can add on (in PA: +1% Allegheny County, +2% Philadelphia)', 'You file returns on a schedule the state sets, even when you had no taxable sales', 'Keep tax money in a separate savings account until you pay it'],
       tip: NOT_ADVICE },
@@ -65,7 +69,7 @@ const lesson: Lesson = {
       example: 'A PA seller who ships $8,000 a year to New Jersey buyers is usually well under New Jersey\'s threshold. A seller who ships $150,000 a year to Ohio should check Ohio\'s rules.',
       tip: 'Most small live sellers only need their home state. Check again as you grow, and when sales into one state get big.' },
 
-    { chapter: 'Buy tax-free, file on time', kind: 'learn', title: 'Resale certificates', text: 'When you buy stock to resell, you generally don\'t pay sales tax on it. Your buyer pays tax when you sell it. You give your vendor a resale or exemption certificate with your sales tax number. In Pennsylvania, that\'s the exemption certificate form REV-1220.',
+    { chapter: 'Buy tax-free, file on time', queen: "Keep a copy of your resale certificate on your phone. Vendors ask for it at the worst moments.", kind: 'learn', title: 'Resale certificates', text: 'When you buy stock to resell, you generally don\'t pay sales tax on it. Your buyer pays tax when you sell it. You give your vendor a resale or exemption certificate with your sales tax number. In Pennsylvania, that\'s the exemption certificate form REV-1220.',
       points: ['Only for items you\'ll resell, not supplies you use up (tape, mailers, your ring light)', 'Vendors keep your certificate on file', 'Using it for personal purchases is not allowed'] },
     { kind: 'scenario', title: 'The wholesale order', situation: 'You\'re buying $600 of handbags from a wholesale vendor to resell, plus $80 of mailers and tape for shipping.',
       options: [

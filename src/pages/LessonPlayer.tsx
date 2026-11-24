@@ -230,6 +230,36 @@ function LearnCard({ slide }: { slide: Extract<Slide, { kind: 'learn' }> }) {
   )
 }
 
+/** A small crown for the Queen's notes. */
+const Crown = () => (
+  <svg className="queen-crown" viewBox="0 0 32 24" width="30" height="22" aria-hidden="true">
+    <path d="M3 20 L1 6 L9 12 L16 2 L23 12 L31 6 L29 20 Z" fill="currentColor" />
+    <rect x="3" y="20" width="26" height="3" rx="1.5" fill="currentColor" opacity=".75" />
+    <circle cx="16" cy="2.5" r="2" fill="#fff" opacity=".9" /><circle cx="1.5" cy="6" r="1.5" fill="#fff" opacity=".8" /><circle cx="30.5" cy="6" r="1.5" fill="#fff" opacity=".8" />
+  </svg>
+)
+
+/** The Queen's tip on a slide: hand-picked advice from our CEO. */
+function QueenTip({ text }: { text: string }) {
+  return (
+    <aside className="queen-tip" aria-label="The Queen's tip">
+      <Crown />
+      <div><b>The Queen's tip</b><p>{text}</p></div>
+    </aside>
+  )
+}
+
+/** The Queen's personal note on a lesson cover or finish page, signed like a letter. */
+function QueenNote({ text, title }: { text: string; title: string }) {
+  return (
+    <div className="queen-note">
+      <div className="queen-note-head"><Crown /><span>{title}</span></div>
+      <p>{text}</p>
+      <span className="queen-sign">The Queen <small>CEO · curator of Dazzle University</small></span>
+    </div>
+  )
+}
+
 /** Everything she wrote or planned in this lesson, to print or keep. */
 function Workbook({ lessonId, slides }: { lessonId: string; slides: Slide[] }) {
   const entries = slides.flatMap(s => {
@@ -346,6 +376,7 @@ function Player({ id }: { id?: string }) {
               </div>
             </div>
           )}
+          {lesson.queen && <QueenNote title="Before you go, from the Queen" text={lesson.queen.signoff} />}
           <p className="big-text">{total ? <>You got <b className="gold">{right} of {total}</b> right on the first try.</> : 'All done.'}</p>
           {score < 80 && <p className="muted">Take it again any time. Practice makes it second nature.</p>}
           <div className="row-gap center-row no-print">
@@ -372,8 +403,9 @@ function Player({ id }: { id?: string }) {
       </div>
       {i === 0 && (
         <div className={`uni-cover tone-${lessonTone(lesson)}`}>
-          <span className="cert-kicker">{isCourse ? 'A course by Nova' : 'A lesson by Nova'} · about {minutes} minutes</span>
+          <span className="cert-kicker">{isCourse ? 'A course' : 'A lesson'} curated by the Queen · taught by Nova · about {minutes} minutes</span>
           <h1>{lesson.title}</h1>
+          {lesson.queen && <QueenNote title="A note from the Queen" text={lesson.queen.welcome} />}
           {lesson.outcomes && <div className="stack tight-gap"><span className="eyebrow">By the end you'll be able to</span><ul className="lesson-points">{lesson.outcomes.map(o => <li key={o}>{o}</li>)}</ul></div>}
           {chapters.length > 0 && <div className="chapter-list">{chapters.map((c, n) => <span key={c}><b>{String(n + 1).padStart(2, '0')}</b>{c}</span>)}</div>}
           <Sources lesson={lesson} title="Built on trusted sources" />
@@ -403,6 +435,7 @@ function Player({ id }: { id?: string }) {
               }} />
           </div>
         )}
+        {slide.queen && <QueenTip text={slide.queen} />}
       </div>
 
       <div className="row-between lesson-nav">

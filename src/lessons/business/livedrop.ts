@@ -1,0 +1,117 @@
+import type { Lesson } from '../types'
+
+const lesson: Lesson = {
+  id: 'livedrop', kind: 'course', school: 'Money and buying', title: "Sell what you don't stock: drop shipping on your live", track: 'Business', icon: 'truck',
+  why: "Drop shipping can widen your racks without filling your basement, but on a live your buyers expect to see it, claim it and get it fast. Done right, it adds sales. Done wrong, it costs you your regulars.",
+  outcomes: [
+    'Decide which items are safe to sell on a live without stocking them',
+    'Vet a supplier with a simple scorecard and the "sample first" rule',
+    'Say ship times on camera in a way that is honest and keeps you inside the FTC rule',
+    'Do the full money math, including returns and the orders that go wrong',
+    'Handle a late or wrong supplier order without losing the buyer',
+  ],
+  route: { to: '/planner', label: 'Open the Live planner' },
+  sources: [
+    { org: 'Federal Trade Commission', title: "Business guide to the FTC's Mail, Internet, or Telephone Order Merchandise Rule", url: 'https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule' },
+    { org: 'Federal Trade Commission', title: 'Advertising FAQs: a guide for small business', url: 'https://www.ftc.gov/business-guidance/resources/advertising-faqs-guide-small-business' },
+    { org: 'U.S. Consumer Product Safety Commission', title: 'Recalls and product safety warnings', url: 'https://www.cpsc.gov/Recalls' },
+    { org: 'Harvard Business School Working Knowledge', title: 'The right way to manage churn for maximum profit', url: 'https://www.library.hbs.edu/working-knowledge/the-right-way-to-manage-churn-for-maximum-profit' },
+    { org: 'U.S. Small Business Administration', title: 'Manage your finances', url: 'https://www.sba.gov/business-guide/manage-your-business/manage-your-finances' },
+  ],
+  queen: {
+    welcome: "I put this course together because I've watched good sellers lose good customers over one slow box. Drop shipping can grow your racks without filling your house, but only if you protect your name. Go slow here, take notes, and promise me you'll test before you sell.",
+    signoff: "Your word is the most valuable thing in your shop. Order the sample, time it, and say the ship date out loud every single time. Do that, and your buyers will trust you with anything you bring them.",
+  },
+  covers: [], updated: '2026-11-24',
+  slides: [
+    { chapter: 'Why a live is different', kind: 'learn', title: 'Same idea, higher stakes', nova: "Ooh, I love a bigger closet I don't have to dust. But let's do this the smart way, because on a live your name is on every single box.",
+      text: "Drop shipping means a supplier ships the item straight to your buyer, so you never hold the stock. On a website, a buyer reads a ship time and decides. On a live, she claims in two seconds because she trusts you and the piece in your hand. That trust is the whole business, so drop-shipped items need their own rules.",
+      table: { head: ['', 'From your shelf', 'Drop shipped'], rows: [
+        ['Buyer sees the real piece', 'Yes, in your hand', 'Only a sample or a photo'],
+        ['Ships in', '1 to 3 days', 'Often 7 to 15 days'],
+        ['Quality check before it ships', 'You do it', 'The supplier does (or doesn\'t)'],
+        ['Money tied up in stock', 'Yes', 'No'],
+        ['Combined shipping with her other items', 'Easy', 'Usually a separate box'],
+      ] },
+      tip: "Your regulars judge you on the slowest, worst box they get from you, not the average one." },
+    { kind: 'learn', title: 'What sells well this way, and what doesn\'t', text: "Some items are naturally safe to sell without stocking. Others are trouble almost every time.",
+      table: { head: ['Good fits', 'Risky fits'], rows: [
+        ['Items with no sizing (tumblers, phone cases, home decor)', 'Clothes and shoes (fit complaints, returns)'],
+        ['Made-to-order pieces buyers expect to wait for', 'Fragile glass and ceramics from far away'],
+        ['Restocks of a best seller from a supplier you already trust', 'Anything with a battery, cord or skin contact you haven\'t tested'],
+        ['Bigger or bulky pieces you can\'t store', 'Trend items that may be gone by the time it ships'],
+      ] },
+      example: "Tasha sells boutique clothes on Thursdays. She keeps clothes on her own racks, and drop ships only insulated tumblers in her brand colors. Buyers get the tumbler in about a week, nobody needs a size, and she has nothing to store." },
+    { kind: 'quiz', q: 'Which item is the safest first drop-ship item for a live seller?', options: ['A sequined dress in 8 sizes from a supplier you have never used', 'A tumbler from a supplier whose sample you have already tested', 'A space heater with a cord', 'A trendy bag that might sell out at the supplier this week'], answer: 1, why: "No sizing, a tested sample and a known supplier. That's the low-risk starting point. Save the riskier items until your system is proven." },
+
+    { chapter: 'Vet the supplier', queen: "Keep a little basket of your tested samples by your live setup. When a buyer asks 'is it good quality?', you can hold up the real one and tell the truth. That basket sells more than any description.", kind: 'learn', title: 'The sample-first rule', nova: "Repeat after me, love: I don't sell what I haven't held.",
+      text: "Before an item ever appears on your live, order it yourself, from the same supplier, shipped to your home the normal way. Time the delivery, open it like a buyer would, and wear, use or wash it. The sample costs a few dollars. One bad batch of 30 orders costs you your reputation.",
+      points: ['Write down the date ordered and the date delivered', 'Photograph the package as it arrived (that\'s what your buyer gets)', 'Check for strong smells, loose threads, peeling finishes and wrong colors', 'Use it for a week if it is something buyers will use every day', 'Look it up on the CPSC recall list if it is for kids, has a cord or a battery'] },
+    { kind: 'learn', title: 'The supplier scorecard', text: "Score every supplier from 1 (poor) to 5 (great) on these six things before you sell for them. Anything under 20 out of 30 isn't ready for your live.",
+      table: { head: ['Score them on', 'What a 5 looks like'], rows: [
+        ['Sample quality', 'Matches the photos, feels worth the price'],
+        ['Real delivery time', 'Your sample arrived inside the time they promised'],
+        ['Communication', 'They answer in 1 business day, in clear words'],
+        ['Tracking', 'Every order gets real tracking you can share'],
+        ['Problems', 'Written policy for wrong, broken and lost orders'],
+        ['Packaging', 'No supplier invoice or other store\'s name in the box'],
+      ] },
+      tip: 'Keep the scorecard in a note on your phone. Re-score each supplier every three months.' },
+    { kind: 'number', title: 'Score this supplier', q: 'A supplier scores: sample quality 4, delivery time 2, communication 4, tracking 3, problems policy 3, packaging 3. What is the total out of 30?', answer: 19, hint: 'Add the six scores.', why: "4 + 2 + 4 + 3 + 3 + 3 = 19. Just under 20, and the weak spot is delivery time, which is the one live buyers feel most. Ask them about faster shipping or keep looking." },
+    { kind: 'scenario', title: 'The sample is late', situation: "You ordered a sample necklace from a new supplier who promised 5 to 7 days. It shows up on day 16. It looks beautiful. Your big Friday live is tomorrow.",
+      options: [
+        { text: 'Sell it tomorrow and say "ships in 5 to 7 days," because that is what the supplier promised', feedback: "You now know that promise isn't reliable. Repeating it to buyers puts you at risk under the FTC rule and with your regulars." },
+        { text: 'Skip it this week, ask the supplier why it took 16 days, and order a second sample to test again', best: true, feedback: "Smart. One late sample could be a fluke. Two is a pattern. Your buyers never see the risk while you find out." },
+        { text: 'Sell it and say "ships in about 3 weeks" so you are covered', feedback: "Honest, which is good! But a necklace that takes 3 weeks will disappoint live buyers. Testing again first is the better move." },
+      ] },
+
+    { chapter: 'Say it right on camera', kind: 'learn', title: 'The ship-time rule (it\'s the law)', text: "The FTC's Mail, Internet, or Telephone Order Merchandise Rule covers orders taken online, including on a live. In plain words:",
+      points: [
+        'You must have a reasonable basis to ship in the time you say',
+        'If you say no time at all, you must ship within 30 days',
+        'If you can\'t ship on time, you must tell the buyer, give a new date and offer to cancel with a full refund',
+        'Refunds must go out promptly (within 7 working days for most payments)',
+      ],
+      tip: "\"Reasonable basis\" means proof, like your sample's real delivery time and the supplier's track record. Your scorecard is that proof. This is general education, not legal advice." },
+    { queen: "Say the ship time even when it feels repetitive. New people join every minute, and the one who missed it is the one who will message you upset in two weeks.", kind: 'script', title: 'How to say it on your live', text: 'Say the ship time out loud every time you show a drop-shipped item, and put it in the comment or invoice too.', lines: [
+      '"Ladies, this one ships straight from my maker, not my basement. That means it ships on its own and arrives in about 10 to 14 days."',
+      '"If you need it for a date, tell me in the comments before you claim. I don\'t want you disappointed."',
+      '"I tested this exact one myself. I wore it for a week, and here is the real one on my wrist."',
+      '"Your shelf items still ship this week. This piece comes separately, and I\'ll send you tracking."',
+    ], tip: 'Use a small sign or sticker on camera that says "Ships from my maker: 10 to 14 days." Repeat it for late joiners.' },
+    { kind: 'learn', title: 'Keep the claims separate', text: "Mixing drop-shipped claims into the same pick list as your shelf items is how orders get lost. Give them their own lane.",
+      points: ['Give drop-shipped items their own Live number range (for example 9000 to 9099) so they stand out on the order sheet', 'Put "DS" in the item name in your Inventory', 'Place the supplier orders the same night, while the claims are fresh', 'Send each buyer a note with the supplier\'s tracking within 2 days'],
+      example: "Monique gives every drop-shipped piece a Live number that starts with 9. When she uploads her order sheet, anything starting with 9 goes on her supplier list instead of her pick list." },
+    { kind: 'order', title: 'After the live, in order', prompt: 'Put the night-of steps for drop-shipped claims in the right order.', steps: ['Pull the drop-ship claims (the 9000 numbers) off the order sheet', 'Collect payment from each buyer', 'Place the orders with the supplier, using each buyer\'s address', 'Save each supplier order number next to the buyer', 'Send buyers their tracking as it comes in'] },
+
+    { chapter: 'The money math', queen: "Never price a drop-shipped piece off the supplier cost alone. Price it off what it costs you when something goes wrong. That's how you stay generous with refunds and still get paid.", kind: 'learn', title: 'Count the hidden costs', text: "Drop shipping looks like pure profit because you never paid for stock. But some orders go wrong, and you pay for those. A smart seller builds that in.",
+      table: { head: ['Per piece', 'Example'], rows: [
+        ['Your price on the live', '$28.00'],
+        ['Supplier price with shipping', '− $13.00'],
+        ['Payment fees (about 3%)', '− $0.84'],
+        ['Your sample (spread over 20 sales)', '− $0.75'],
+        ['Problem allowance (5% of price for refunds and reships)', '− $1.40'],
+        ['Profit', '$12.01'],
+      ] },
+      tip: "The problem allowance is the line most people skip. When nothing goes wrong, it's a bonus. When something does, it's already paid for." },
+    { kind: 'number', title: 'Your turn', q: 'You sell a phone case for $22. The supplier charges $8 with shipping. Payment fees are $0.66, the sample costs you $0.50 a piece, and you set aside 5% of the price for problems. What is your profit per case?', prefix: '$', answer: 11.74, tolerance: 0.02, hint: '5% of $22 is $1.10. Subtract everything from $22.', why: '$22 − $8 − $0.66 − $0.50 − $1.10 = $11.74. A healthy margin, and you\'re covered if one order goes sideways.' },
+    { kind: 'learn', title: 'Why one bad box costs so much', text: "Research from Harvard Business School on customer churn shows that keeping good customers is worth far more than any single sale. Live selling is built on regulars. If a drop-shipped order shows up three weeks late and cheap, the loss isn't $28. It's every future live that buyer would have shopped.",
+      example: "A regular who spends $40 a week for a year is worth about $2,000 in sales. Losing her over one $28 tumbler is the most expensive tumbler you'll ever sell." },
+
+    { chapter: 'When it goes wrong', queen: "Bad news travels better when it comes from you first. I would rather send ten apology messages today than answer one angry comment on my live.", kind: 'scenario', title: 'The supplier is running late', situation: "You told buyers 10 to 14 days. It's day 12 and the supplier says 12 orders won't ship for another 10 days.",
+      options: [
+        { text: 'Say nothing and hope they don\'t notice', feedback: "They will notice, and the FTC rule says you must tell them and offer to cancel. Silence turns a delay into a broken promise." },
+        { text: 'Message every buyer today with the new date, an apology and the choice of waiting or a full refund', best: true, feedback: "That's the rule and it's the right thing. Most buyers wait happily when you tell them first. Adding a small thank-you, like free shipping next order, wins them over." },
+        { text: 'Refund everyone without asking', feedback: "Kind, but many buyers still want the item. Give them the choice." },
+      ] },
+    { kind: 'script', title: 'The delay message', lines: [
+      'Hi [name]! I want you to hear this from me first. Your [item] from my maker is running behind. The new date is [date].',
+      'If you\'d rather not wait, just reply "refund" and I\'ll send your money back today, no questions asked.',
+      'If you\'re happy to wait, thank you! Your next order ships free as my way of saying sorry.',
+    ] },
+    { kind: 'quiz', q: 'A drop-shipped bracelet arrives broken. What do you do?', options: ['Tell the buyer to contact the supplier', 'Apologize, offer a replacement or refund right away, then take it up with the supplier yourself', 'Ask her to mail it back before you do anything', 'Ignore it if it was under $20'], answer: 1, why: "Your buyer doesn't know or care who the supplier is. She bought from you. Fix it fast for her, then collect from the supplier. That's what your problem allowance is for." },
+    { kind: 'reflect', title: 'Your drop-ship plan', prompt: 'Name one item you could test as a drop-shipped piece, the supplier you\'d sample, and the ship time you\'d say on camera.', placeholder: 'Item… Supplier… Ship time I will say…', example: 'Brand-color tumblers. Order samples from two suppliers this week. If they arrive in under 8 days, I\'ll say "10 to 14 days" on camera.' },
+    { kind: 'checklist', title: 'Before your first drop-ship item goes live', prompt: 'Tick each one off.', items: ['Order and time a sample from at least two suppliers', 'Score each supplier on the six-point scorecard', 'Pick a ship time with room to spare', 'Set aside a 5% problem allowance in my price', 'Give drop-ship items their own Live number range', 'Write my on-camera ship-time line and my delay message'] },
+  ],
+}
+export default lesson

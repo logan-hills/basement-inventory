@@ -20,13 +20,17 @@ const lesson: Lesson = {
     { org: 'Pennsylvania Business One-Stop Shop', title: 'Register your business', url: 'https://business.pa.gov/register/special-registrations/' },
     { org: 'U.S. Small Business Administration', title: 'Manage your finances', url: 'https://www.sba.gov/business-guide/manage-your-business/manage-your-finances' },
   ],
-  covers: ['src/lessons/resources.ts'], updated: '2026-11-23',
+  queen: {
+    welcome: "Being official isn't about paperwork for its own sake. It protects you, opens doors with vendors and banks, and makes tax time calm. Let's take it one step at a time.",
+    signoff: "Do the steps in order, keep your money separate, and file everything in one folder. You're not a side hustle anymore. You're a business.",
+  },
+  covers: ['src/lessons/resources.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'Why go official', kind: 'learn', title: 'From side hustle to business', nova: 'Quick note, love: I\'m a handbag, not a lawyer. This is education to get you started. Check the official sites or a pro before you file.',
       text: 'Lots of live sellers start informally. That\'s normal. But once you\'re selling every week, going official protects you and opens doors.',
       points: ['Wholesale vendors and liquidators often ask for a sales tax license or resale certificate', 'Banks want a business account for business money', 'Payment apps and platforms ask for tax info', 'Apple, Google and some programs ask for a D-U-N-S Number', 'Clean records make taxes faster and cheaper'],
       tip: NOT_ADVICE },
-    { kind: 'learn', title: 'The order to do it in', text: 'Most sellers go official in this order. Each step uses the one before it.',
+    { queen: "Don't buy anything with your business name on it until the name is registered. Order matters here.", kind: 'learn', title: 'The order to do it in', text: 'Most sellers go official in this order. Each step uses the one before it.',
       table: { head: ['Step', 'What', 'Cost'], rows: [
         ['1', 'Pick your structure (sole proprietor or LLC)', 'Free for sole proprietor; state fee for an LLC'],
         ['2', 'Register your business name if needed (DBA or LLC name)', 'State filing fee'],
@@ -69,7 +73,7 @@ const lesson: Lesson = {
         ['Local', 'City or township business license or tax', 'Philadelphia requires a Commercial Activity License; some townships have business privilege taxes'],
       ] },
       tip: 'Call or check your city or township\'s website and ask: "Do I need a license to sell online from home?" Ask about home business (zoning) rules too.' },
-    { kind: 'learn', title: 'Separate your money', text: 'The SBA\'s first money advice for small businesses is to keep business and personal finances separate. Open a business checking account with your EIN or LLC paperwork.',
+    { queen: "One business account, one business card. Mixing money is the number one headache at tax time.", kind: 'learn', title: 'Separate your money', text: 'The SBA\'s first money advice for small businesses is to keep business and personal finances separate. Open a business checking account with your EIN or LLC paperwork.',
       points: ['All sales payouts go into it', 'All stock, supplies and shipping come out of it', 'Pay yourself by transferring to personal, on a schedule', 'It makes taxes, loans and LLC protection much stronger'] },
     { kind: 'reflect', title: 'Your status today', prompt: 'Which of these do you already have: structure chosen, business name registered, EIN, sales tax license, local license checked, business bank account, D-U-N-S? Which is next?', placeholder: 'I have… Next I\'ll…', example: 'I have an EIN and a business account. Next: sales tax license on myPATH, then call my township about local licenses.' },
     { kind: 'learn', title: 'Case study: getting official in Pennsylvania', text: 'Here\'s how one Pennsylvania seller did it in two weeks.',

@@ -18,7 +18,11 @@ const lesson: Lesson = {
     { org: 'JPMorganChase Institute', title: 'The AI adoption gap by gender and generation among small business owners (May 2026)', url: 'https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/ai-adoption-gap-gender-generation-among-small-business-owners' },
     { org: 'Yale School of Management', title: 'Teaching through a technological revolution (2026)', url: 'https://som.yale.edu/story/2026/teaching-through-technological-revolution' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "New AI apps show up every week, and it's easy to feel behind. You're not. I want you to pick a few tools, use them on purpose, and keep your own good judgment in charge.",
+    signoff: "One tool per job, set AI hours, and always check the work. Calm and consistent beats chasing every new app.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Where things stand', kind: 'learn', title: 'You are not behind', nova: 'Deep breath, boss. You don\'t need every app. You need a plan.',
       text: 'It can feel like everybody else already uses AI for everything. The numbers say otherwise. Most small business owners are still figuring it out, and the ones who started slow and steady are doing just fine.',
@@ -49,7 +53,7 @@ const lesson: Lesson = {
         { text: 'Quit AI for good', feedback: 'She\'d lose the hours it really does save. Trimming beats quitting.' },
       ] },
 
-    { chapter: 'The three-tool rule', kind: 'learn', title: 'One tool, one job', text: 'Give each AI tool one clear job, like hiring a person. If you can\'t say its job in one sentence, you don\'t need it yet. Most live sellers need two, and never more than three.',
+    { chapter: 'The three-tool rule', queen: "Before you try a new AI app, name the job it would replace. No job, no download.", kind: 'learn', title: 'One tool, one job', text: 'Give each AI tool one clear job, like hiring a person. If you can\'t say its job in one sentence, you don\'t need it yet. Most live sellers need two, and never more than three.',
       table: { head: ['Job', 'One good choice', 'Skip if…'], rows: [
         ['Writing and planning: captions, scripts, emails, themes', 'One AI assistant, such as Claude or ChatGPT', 'Never skip. This one saves the most time'],
         ['Designs: posters, graphics, thumbnails', 'Canva (with its built-in AI)', 'You already like your poster templates'],
@@ -75,7 +79,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'tap', title: 'Practice: the right job', prompt: 'Which job is the best fit for your AI assistant?', screen: { title: 'Pick one for AI', buttons: ['Look up PA sales tax rules', 'Draft 10 hooks for Thursday', 'Check if a bag is real Coach', 'Decide your profit margin'] }, answer: 'Draft 10 hooks for Thursday', hint: 'Pick the one you can check at a glance.' },
 
-    { chapter: 'Stay the boss', kind: 'learn', title: 'You decide, AI assists', text: 'Yale School of Management added an AI course to its MBA core in 2026. Their teachers say the skill that matters now is deciding what problem to solve and telling whether the answer is right. Yale also warns that AI tends to flatter you. It agrees too easily.',
+    { chapter: 'Stay the boss', queen: "AI is a smart assistant, not the boss. You know your buyers better than any app ever will.", kind: 'learn', title: 'You decide, AI assists', text: 'Yale School of Management added an AI course to its MBA core in 2026. Their teachers say the skill that matters now is deciding what problem to solve and telling whether the answer is right. Yale also warns that AI tends to flatter you. It agrees too easily.',
       points: ['Ask "What\'s wrong with this idea?" not "Is this a good idea?"', 'Ask it to argue the other side before you decide', 'Think first, then ask. Write your own rough answer before you open the app', 'If it sounds too good, check it'],
       tip: 'Try this prompt: "Be my tough business coach. Here\'s my plan: [plan]. Give me the three biggest risks, honestly."' },
     { kind: 'scenario', title: 'The flattering answer', situation: 'You ask an AI, "Is raising all my prices by $10 a good idea?" It says, "What a smart move! Your buyers will love the premium feel."',

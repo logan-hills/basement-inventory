@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'U.S. Small Business Administration', title: 'Write your business plan', url: 'https://www.sba.gov/business-guide/plan-your-business/write-your-business-plan' },
     { org: 'Lean Enterprise Institute', title: 'Lean lexicon (PDCA, root cause)', url: 'https://www.lean.org/explore-lean/lexicon-terms/' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "A plan only matters if it turns into goals you check on. This is where we set the bar, give it a deadline, and build the habit of checking in.",
+    signoff: "Keep your plan to one page, review it every quarter, and celebrate the goals you hit. A plan you look at is a plan that works.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Goals that work', kind: 'learn', title: 'Make them SMART', nova: 'Bring your part 1 workbook. We\'re turning it into a plan you can actually follow.',
       text: 'A wish says "I want to grow." A goal says exactly what, by how much, and by when. A common way to check a goal is SMART.',
@@ -29,7 +33,7 @@ const lesson: Lesson = {
       ] },
       example: 'Wish: "Sell more accessories." SMART: "Grow accessories from 62% to 75% of sales by June 30 by moving accessories to the golden zone and running a weekly accessories-only live."' },
     { kind: 'quiz', q: 'Which goal is SMART?', options: ['Be the best shop on Facebook', 'Get more viewers soon', 'Average 150 viewers per live by March 31 with posters 2 days ahead and two co-host swaps a month'], answer: 2, why: 'It has a number (150), a date (March 31) and the moves to get there.' },
-    { kind: 'learn', title: 'Fewer goals, done well', text: 'Most small businesses do best with 3 to 5 goals for the year. More than that and nothing gets enough attention. Cover the areas that match your top issues.',
+    { queen: "Three goals you finish beat ten goals you forget. Choose the ones that matter most.", kind: 'learn', title: 'Fewer goals, done well', text: 'Most small businesses do best with 3 to 5 goals for the year. More than that and nothing gets enough attention. Cover the areas that match your top issues.',
       table: { head: ['Area', 'Example goal'], rows: [
         ['Sales', 'Average $900 per live by Q2'],
         ['Profit', 'Keep 35% profit margin every month'],
@@ -75,7 +79,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'number', title: 'Are you on pace?', q: 'Your goal is $10,800 in sales this quarter (13 weeks). After 6 weeks you\'re at $4,500. To hit the goal, how much do you need per week for the last 7 weeks? (Round to the nearest dollar.)', prefix: '$', answer: 900, tolerance: 1, hint: '$10,800 − $4,500 = what\'s left. Divide by 7.', why: '$6,300 ÷ 7 = $900 a week. Now you know exactly what each week needs, instead of hoping.' },
 
-    { chapter: 'Review and adjust', kind: 'learn', title: 'The quarterly review', text: 'Once a quarter, take 60 minutes with your scorecard. SCORE mentors recommend revisiting your plan regularly instead of filing it away. Use the same agenda every time.',
+    { chapter: 'Review and adjust', queen: "Put your quarterly review on the calendar right now, with the date and a time. Plans fade without appointments.", kind: 'learn', title: 'The quarterly review', text: 'Once a quarter, take 60 minutes with your scorecard. SCORE mentors recommend revisiting your plan regularly instead of filing it away. Use the same agenda every time.',
       points: ['10 min: what did we hit, what did we miss? (scorecard)', '15 min: why? Celebrate wins, find causes for misses', '15 min: update the SWOT: anything new outside or inside?', '15 min: next quarter\'s 2 or 3 projects, with owners and deadlines', '5 min: put the next review on the calendar'] },
     { kind: 'script', title: 'Your one-page plan', text: 'Copy this onto one page and keep it where you pack.', lines: [
       'MISSION: ______________________',

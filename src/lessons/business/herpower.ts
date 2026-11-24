@@ -17,6 +17,10 @@ const lesson: Lesson = {
     { org: 'U.S. Small Business Administration', title: "Women's Business Centers", url: 'https://www.sba.gov/local-assistance/resource-partners/womens-business-centers' },
     { org: 'U.S. Small Business Administration', title: 'Women-owned businesses', url: 'https://www.sba.gov/business-guide/grow-your-business/women-owned-businesses' },
   ],
+  queen: {
+    welcome: "This course is close to my heart. Women, and Black women especially, are building businesses at a pace the world has never seen. I want you to walk into every room, every vendor meeting and every live like you belong there, because you do.",
+    signoff: "Price with confidence, ask for what you're worth, and tell your story proudly. Every time you go live, you're changing the picture for the women watching. Take your seat.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'The real story', kind: 'learn', title: 'Look how far we have come', nova: "Sis, this one is personal. Sit up tall. You belong in every room you walk into.",
@@ -48,7 +52,7 @@ const lesson: Lesson = {
       '"Please send that in writing so I have it for my records."',
     ] },
 
-    { chapter: 'Know your worth', kind: 'learn', title: 'Stop apologizing for your prices', text: "Many women are taught to keep the peace, so they discount before anyone asks. In business, that habit costs real money. Your price pays for your time, your eye for style, your packing and your service.",
+    { chapter: 'Know your worth', queen: "Say your price, then stop talking. Silence after a price is confidence, not rudeness.", kind: 'learn', title: 'Stop apologizing for your prices', text: "Many women are taught to keep the peace, so they discount before anyone asks. In business, that habit costs real money. Your price pays for your time, your eye for style, your packing and your service.",
       table: { head: ['Instead of', 'Say'], rows: [
         ['"Sorry, I know it\'s a lot…"', '"This one is $32. It\'s real leather and it will last."'],
         ['"I can do it cheaper if you want"', '"Bundle it with the earrings and I\'ll do both for $40."'],
@@ -56,7 +60,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'number', title: 'What the discount costs', q: 'You habitually knock $3 off pieces that cost you $10 and sell for $25. You sell 40 a month. How much profit do the "just because" discounts cost you each month?', prefix: '$', answer: 120, hint: '$3 × 40.', why: "$120 a month is $1,440 a year, from habit alone. That's a new ring light, a month of supplies, or money in YOUR pocket." },
 
-    { kind: 'learn', title: 'Negotiate like you mean it', text: "Negotiating isn't being pushy. It's business. Vendors expect it, and a few dollars per piece adds up fast.",
+    { queen: "Always ask for one more thing: better terms, free shipping, first pick. The worst they can say is no, and they often say yes.", kind: 'learn', title: 'Negotiate like you mean it', text: "Negotiating isn't being pushy. It's business. Vendors expect it, and a few dollars per piece adds up fast.",
       points: ['Know your number before you walk in: the most you can pay and still keep your profit', 'Ask for case or volume pricing, free shipping over a set amount, or a first-order discount', 'Be quiet after you ask. Let them answer.', 'Get the deal in writing (an email or invoice)', 'Be ready to walk away kindly: "Thank you, that doesn\'t work for me this time."'] },
     { kind: 'number', title: 'A small ask, a big result', q: 'You negotiate $1.50 off each piece on a vendor order of 200 pieces. How much do you save?', prefix: '$', answer: 300, hint: '$1.50 × 200.', why: "$300 saved on one order, just by asking. Do that on four orders a year and that's $1,200 back in your business." },
     { kind: 'scenario', title: 'The comment on your live', situation: 'A stranger comments on your live: "Who told you that you could run a business? Stick to cooking." Your regulars see it.',

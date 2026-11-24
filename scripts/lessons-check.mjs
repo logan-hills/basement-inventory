@@ -28,4 +28,10 @@ for (const l of ALL_LESSONS) {
   if (flag) short++
   console.log(`  ${String(m).padStart(3)} min  ${l.kind === 'course' ? 'course' : 'lesson'}  ${l.id}${flag}`)
 }
-console.log(stale || short ? `\n${stale} lesson(s) to bring up to date, ${short} with a time to fix.` : '\nAll lessons are up to date with their features and run 15 to 25 minutes.')
+// The Queen curates every lesson: a signed note and at least two of her tips.
+let queenless = 0
+for (const l of ALL_LESSONS) {
+  const tips = l.slides.filter(s => s.queen).length
+  if (!l.queen || tips < 2) { queenless++; console.log(`  👑 ${l.id} needs the Queen's touch (${l.queen ? 'note ok' : 'no note'}, ${tips} tip${tips === 1 ? '' : 's'})`) }
+}
+console.log(stale || short || queenless ? `\n${stale} lesson(s) to bring up to date, ${short} with a time to fix, ${queenless} missing the Queen's touch.` : '\nAll lessons are up to date, run 15 to 25 minutes, and carry the Queen\'s touch.')

@@ -1,0 +1,111 @@
+import type { Lesson } from '../types'
+
+const lesson: Lesson = {
+  id: 'loads', kind: 'course', school: 'Money and buying', title: 'Wholesale, liquidation and thrift: buy loads that pay', track: 'Business', icon: 'box',
+  why: "Pallets, bins and thrift hauls can stock a live for pennies on the dollar, or bury your basement in things nobody wants. The difference is reading the load and doing the math before you buy.",
+  outcomes: [
+    'Know the difference between wholesale, liquidation and thrift buying',
+    'Read a liquidation manifest and its condition words like a pro',
+    'Work out your real cost per sellable piece before you bid',
+    'Set a "walk away" price for pallets and thrift trips',
+    'Keep unsafe and recalled items out of your shop',
+  ],
+  route: { to: '/receive/bulk', label: 'Open Bulk receive' },
+  sources: [
+    { org: 'National Retail Federation and Happy Returns', title: '2024 consumer returns in the retail industry', url: 'https://nrf.com/research/2024-consumer-returns-retail-industry' },
+    { org: 'U.S. Consumer Product Safety Commission', title: 'Recalls and product safety warnings', url: 'https://www.cpsc.gov/Recalls' },
+    { org: 'Federal Trade Commission', title: 'Advertising FAQs: a guide for small business', url: 'https://www.ftc.gov/business-guidance/resources/advertising-faqs-guide-small-business' },
+    { org: 'U.S. Small Business Administration', title: 'Manage your finances', url: 'https://www.sba.gov/business-guide/manage-your-business/manage-your-finances' },
+  ],
+  queen: {
+    welcome: "Pallets and thrift hauls can feel like Christmas morning, and that's exactly why they're dangerous. I want you buying with your head and selling with your heart. This course gives you the math I want every one of my sellers doing before they spend a dollar on a load.",
+    signoff: "Write your walk-away price down before every auction and every thrift trip, and honor it. The best deal you'll ever make is sometimes the one you walk away from. Now go treasure hunt like a CEO.",
+  },
+  covers: [], updated: '2026-11-24',
+  slides: [
+    { chapter: 'Three ways to buy', kind: 'learn', title: 'Wholesale, liquidation, thrift', nova: "Treasure hunting time! But we hunt with a calculator in one hand, sis.",
+      text: "Most live sellers mix these three. Each one trades money, time and risk in a different way.",
+      table: { head: ['', 'Wholesale', 'Liquidation', 'Thrift and estate'], rows: [
+        ['What it is', 'New items from a vendor, in sizes and colors you choose', 'Returns, overstock and closeouts from big stores, sold by the lot', 'Used and vintage pieces you hand-pick'],
+        ['Price', 'Often 40 to 60% off retail', 'Often 5 to 25% of retail', 'Varies; you pay per piece'],
+        ['What you know before you buy', 'Exactly what arrives', 'A manifest, sometimes; never the condition of each piece', 'Everything, you hold it'],
+        ['Your time per piece', 'Low', 'Medium to high (sorting, testing, cleaning)', 'High (hunting, cleaning)'],
+        ['Biggest risk', 'Minimum orders', 'Damaged or unsellable items', 'Spending a day for a few winners'],
+      ] } },
+    { queen: "Ignore the retail value on any lot. It's a sales number, not your number. Your number is what YOUR buyers pay on YOUR live.", kind: 'learn', title: 'Why liquidation exists', text: "Big stores take back a huge amount of merchandise. The National Retail Federation and Happy Returns estimated about $890 billion in U.S. retail returns in 2024, roughly 17% of sales. Stores can't put most of it back on shelves, so they sell it in bulk to liquidators, who sell it again by the pallet, box or bin. That's where your bargains come from, and why condition is never guaranteed.",
+      tip: "When a deal looks too good, ask: why didn't the store or the liquidator sell this themselves?" },
+    { kind: 'quiz', q: 'Which kind of buying gives you the most control over exactly what you get?', options: ['A mystery liquidation pallet', 'Wholesale from a vendor', 'An unmanifested truckload', 'A "mystery box" from social media'], answer: 1, why: "Wholesale costs more per piece, but you pick the exact items, sizes and colors. That's why many sellers use wholesale for their core and liquidation or thrift for the thrill items." },
+
+    { chapter: 'Read the manifest', kind: 'learn', title: 'Condition words decoded', nova: "These words tell you almost everything. Learn them once, save money forever.",
+      text: "A manifest is the list of what is supposed to be in a lot. The condition label matters more than the brand names.",
+      table: { head: ['Label', 'What it usually means', 'What sells as new'], rows: [
+        ['New / overstock', 'Never sold, extra stock, often in original packaging', 'Most of it'],
+        ['Shelf pulls', 'Taken off shelves, maybe old packaging or seasonal', 'Most of it'],
+        ['Customer returns (untested)', 'Brought back by buyers, nobody checked it', 'Some of it; plan on losses'],
+        ['Salvage', 'Damaged, broken or for parts', 'Very little'],
+        ['Unmanifested', 'No list at all', 'Unknown; a gamble'],
+      ] },
+      tip: "Manifests list the original retail price (often called MSRP). That number is not what you'll sell it for. Use your own selling price instead." },
+    { kind: 'learn', title: 'The three numbers to pull from any lot', text: "Before you bid or buy, write down three numbers.",
+      points: [
+        'Your total cost: the price, the buyer\'s premium or fees, sales tax if any, and freight to your door',
+        'How many pieces you can really sell (not how many are listed)',
+        'What each one will really sell for on YOUR live, not the retail tag',
+      ],
+      example: "A pallet lists 120 pieces worth $3,600 retail. Sounds amazing! But it's untested returns, freight is $180, and your buyers pay about $12 for this kind of item. The retail number is noise. The 120 pieces, the $12 and the condition are what matter." },
+    { kind: 'scenario', title: 'Pick the safer pallet', situation: "Two pallets of home decor are each $400 delivered. Pallet A is 'shelf pulls, manifested, 90 pieces.' Pallet B is 'untested customer returns, unmanifested, approx. 150 pieces, retail value $6,000.'",
+      options: [
+        { text: 'Pallet B: more pieces and a bigger retail value', feedback: "The retail number and the 'approx.' count aren't promises, and untested returns can mean a lot of broken pieces. It's a gamble, not a plan." },
+        { text: 'Pallet A: fewer pieces, but you know what is in it and most should sell as new', best: true, feedback: "You can actually do the math on Pallet A. As you learn a liquidator and their loads, you can take more risk. Start with what you can count." },
+        { text: 'Buy both to compare', feedback: "That's $800 at risk on your first try. Start with one, learn, then grow." },
+      ] },
+
+    { chapter: 'Pallet math', queen: "Always plan for the broken ones before you buy. If the lot surprises you with fewer losses, that's your bonus, not your budget.", kind: 'learn', title: 'Cost per sellable piece', text: "This is the most important number in bulk buying. It tells you if the lot is a deal.",
+      table: { head: ['Step', 'Example'], rows: [
+        ['Price of the lot', '$350'],
+        ['Fees and freight', '+ $150'],
+        ['Total cost', '$500'],
+        ['Pieces listed', '100'],
+        ['Expect unsellable (untested returns: plan on 25%)', '− 25'],
+        ['Sellable pieces', '75'],
+        ['Cost per sellable piece', '$500 ÷ 75 = $6.67'],
+      ] },
+      tip: "Rule of thumb many sellers use: aim for a cost per sellable piece that's a quarter or less of what it sells for on your live. That leaves room for fees, shipping, your time and the slow sellers." },
+    { kind: 'number', title: 'Do the pallet math', q: 'A lot of 80 handbags costs $420 plus $100 freight. You expect 20% to be unsellable. What is your cost per sellable bag?', prefix: '$', answer: 8.13, tolerance: 0.02, hint: 'Total cost $520. Sellable bags: 80 minus 20% = 64. Then divide.', why: '$520 ÷ 64 = $8.13. If your buyers pay $30 to $35 for a bag like this, you\'re at about a quarter of the price. That passes the test.' },
+    { kind: 'number', title: 'Your walk-away price', q: 'You want your cost per sellable piece to be no more than $5. A lot has 120 pieces, you expect 25% unsellable, and freight is $160. What is the most you should pay for the lot itself?', prefix: '$', answer: 290, tolerance: 1, hint: 'Sellable: 120 × 75% = 90. 90 × $5 = $450 total. Take out the freight.', why: '90 sellable × $5 = $450 total budget, minus $160 freight leaves $290. Decide this before the auction, write it down, and don\'t bid a penny over.' },
+    { kind: 'learn', title: 'Sell-through: the slow money', text: "Cheap stock that sits is not cheap. Sell-through is the share of a lot you've sold after a set time. Track it in your Reports.",
+      table: { head: ['After 60 days', 'What it tells you'], rows: [
+        ['70% or more sold', 'Great lot. Buy from this source again.'],
+        ['40 to 70% sold', 'OK. Bundle or price down the rest.'],
+        ['Under 40% sold', 'Wrong mix for your buyers. Clear it and buy differently next time.'],
+      ] },
+      example: "Renee's kitchen pallet cost $4 a piece, but after 60 days only 30% had sold. Her buyers want jewelry and bags, not spatulas. She ran a $5 clearance live, got her money back, and switched to accessory lots." },
+
+    { chapter: 'Thrift and estate', queen: "Go thrifting with your Top categories on your phone screen. When your hands reach for something outside that list, ask yourself who on your live is going to buy it.", kind: 'learn', title: 'Thrift with a plan', text: "Thrift is the opposite of a pallet: you know every piece, but you pay with your time. Give your trips a budget and a time limit.",
+      points: [
+        'Shop with a list: the 3 categories your buyers love most (check Top categories in Reports)',
+        'Use the quarter rule here too: pay a quarter or less of your live price',
+        'Check quality fast: seams, zippers, stains in good light, smells, missing parts',
+        'Set a timer. Two focused hours usually beat a whole wandering day',
+        'Know your store\'s sale days and color-tag discounts',
+      ] },
+    { kind: 'number', title: 'Is the trip worth it?', q: 'You spend 3 hours and $60 thrifting and find 15 pieces. You will sell them for $18 each. Packaging and fees are about $2 a piece. What profit did you make per hour of thrifting?', prefix: '$', answer: 60, tolerance: 0.5, hint: 'Sales: 15 × $18 = $270. Costs: $60 + (15 × $2) = $90. Profit ÷ 3 hours.', why: '$270 − $90 = $180 profit, ÷ 3 hours = $60 an hour. Worth it! If a trip comes out under what you want to earn per hour, switch stores, days or categories.' },
+    { queen: "Anything for babies, anything that plugs in, anything someone sleeps in: look it up first, every time. Our buyers trust us with their families.", kind: 'learn', title: 'Recalls and safety: it\'s the law', text: "The U.S. Consumer Product Safety Commission is clear: it is illegal to sell recalled products, including used ones and resold liquidation stock. Returns pallets can hold recalled items.",
+      points: ['Check cpsc.gov/Recalls for anything for kids, anything with a battery or cord, and anything you heat, sleep in or ride on', 'Skip used car seats, cribs and drop-side cribs, helmets, and children\'s sleepwear you can\'t verify', 'Throw out cosmetics and skin products with broken seals', 'Never sell anything you can\'t test if it plugs in'],
+      tip: 'When in doubt, leave it out. One unsafe item is not worth your shop.' },
+    { kind: 'scenario', title: 'The baby aisle', situation: 'Your liquidation box includes a baby bouncer still in its box, a set of baby bottles and a toddler bed rail.',
+      options: [
+        { text: 'List them all; they\'re new in box', feedback: "New in box doesn't mean not recalled. Baby items are exactly where recalls happen most." },
+        { text: 'Look up each one on cpsc.gov/Recalls by brand and model before deciding', best: true, feedback: "Exactly right. If any are recalled, don't sell them. Many liquidators will credit you for recalled items too, so ask." },
+        { text: 'Throw them away to be safe', feedback: "Safe, but you may be throwing away good, legal stock. A two-minute check tells you for sure." },
+      ] },
+
+    { chapter: 'Buy smart, not scammed', kind: 'learn', title: 'Red flags in bulk buying', text: "Liquidation has honest sellers and some who aren't. Watch for these before you send money:",
+      points: ['"Guaranteed" profits or retail values that sound unreal', 'Only payment by wire, gift card, Zelle or crypto (no buyer protection)', 'No business address, reviews or return policy', 'Pressure to "buy now before it\'s gone"', 'Photos that are clearly from a stock photo site'],
+      tip: 'Pay with a credit card or a platform with buyer protection for your first orders with anyone new.' },
+    { kind: 'order', title: 'From lot to live', prompt: 'Put the steps of buying a liquidation lot in order.', steps: ['Check the source\'s reviews and policies', 'Read the manifest and condition label', 'Work out cost per sellable piece and your walk-away price', 'Buy only at or under your walk-away price', 'Sort, test and recall-check every piece', 'Bulk receive the sellable pieces and print tags'] },
+    { kind: 'reflect', title: 'Your buying mix', prompt: 'What share of your stock will come from wholesale, liquidation and thrift for the next three months? What is your walk-away rule?', placeholder: 'Wholesale…% Liquidation…% Thrift…%. My walk-away rule…', example: '60% wholesale for my core, 25% accessory liquidation boxes, 15% thrift for vintage nights. I never pay more than a quarter of my live price per sellable piece.' },
+    { kind: 'checklist', title: 'Your bulk-buying toolkit', prompt: 'Tick what you will set up.', items: ['Write my "quarter rule" on a card in my wallet', 'Make a note with the three numbers to pull from any lot', 'Bookmark cpsc.gov/Recalls on my phone', 'Track sell-through for each lot after 60 days', 'Pick one trusted liquidator and one thrift route to test', 'Set my monthly budget for bulk buys'] },
+  ],
+}
+export default lesson

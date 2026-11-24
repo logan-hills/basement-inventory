@@ -12,7 +12,11 @@ const lesson: Lesson = {
     'Decide what to do with damaged pieces: sell, fix, claim or donate',
   ],
   route: { to: '/damaged', label: 'Open Damaged' },
-  covers: ['src/pages/Damaged.tsx', 'src/components/DamageSheet.tsx', 'src/components/DamageQtySheet.tsx', 'src/pages/Inventory.tsx', 'src/pages/ItemDetail.tsx'], updated: '2026-11-23',
+  queen: {
+    welcome: "Broken pieces happen in every shop. What matters is that you take them out of stock fast and learn why they broke. That's how you protect your buyers and your profit.",
+    signoff: "Damage it out, note the reason, and fix the cause. Then ask your supplier for credit. Every piece you save is profit you keep.",
+  },
+  covers: ['src/pages/Damaged.tsx', 'src/components/DamageSheet.tsx', 'src/components/DamageQtySheet.tsx', 'src/pages/Inventory.tsx', 'src/pages/ItemDetail.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Why it matters', kind: 'learn', title: 'The piece you can\'t ship', nova: 'Nobody likes this part, but it saves you from a bad night.',
       text: 'If a broken piece stays "in stock," it shows up in Get ready for live, someone claims it, and you find out at the packing table. Now you\'re messaging a buyer to cancel, and she\'s disappointed. Damaging it out the moment you spot it prevents all of that.' },
@@ -27,7 +31,7 @@ const lesson: Lesson = {
     { kind: 'tap', title: 'Practice', prompt: 'You ticked 4 items in Inventory that got crushed in a fall. Tap the button that lets you set how many of each…', screen: { title: 'Inventory · 4 selected', buttons: ['Print tags', 'Edit', 'More: Damage out'] }, answer: 'More: Damage out', hint: 'Tap More, then Damage out. It opens a list of your ticked items with a quantity for each.' },
     { kind: 'learn', title: 'Put back several', text: 'On the Damaged page, tick the pieces that turned out fine (or the box at the top for all) and tap Put back. They go back in stock with their old tags.' },
     { kind: 'tap', title: 'Practice', prompt: 'You found two of the hoop sets tarnished. You ticked both tags. Tap…', screen: { title: 'Gold hoop set', rows: ['☑ 4821-002', '☑ 4821-005', '☐ 4821-006'], buttons: ['Reprint 2', 'Damage out 2', 'Print tags'] }, answer: 'Damage out 2', hint: 'Damage out takes the ticked tags out of stock with a reason.' },
-    { kind: 'learn', title: 'Pick a reason', text: 'Choose a reason and add a note. The Damaged page lists every piece with its reason, and Reports shows Damage by reason, so you can spot what keeps going wrong.',
+    { queen: "Always choose a reason. After a few months, the reasons tell you exactly where your money is leaking.", kind: 'learn', title: 'Pick a reason', text: 'Choose a reason and add a note. The Damaged page lists every piece with its reason, and Reports shows Damage by reason, so you can spot what keeps going wrong.',
       table: { head: ['Reason', 'Use it when', 'Note example'], rows: [
         ['Damaged', 'Broken, bent, torn, cracked', '"Clasp snapped"'],
         ['Stained', 'Marks, makeup, discoloring, tarnish', '"Tarnish on 2 hoops"'],
@@ -79,7 +83,7 @@ const lesson: Lesson = {
         'Donate it, and keep a note for your records',
       ],
       tip: 'Never sell a flawed piece without showing the flaw. Honesty is what makes a flaw sale work.' },
-    { kind: 'script', title: 'Ask your supplier for credit', lines: [
+    { queen: "Take a photo the day the box arrives. Suppliers say yes to credit far more often when you have proof.", kind: 'script', title: 'Ask your supplier for credit', lines: [
       '"Hi [supplier], my order [order number] arrived on [date] and [number] pieces came damaged: [short description]. Photos are attached.',
       'Could you send a credit or replacement for those pieces? Thank you, I\'m looking forward to ordering again."',
     ], tip: 'Send it within a few days of delivery. Most suppliers have a short window for damage claims.' },

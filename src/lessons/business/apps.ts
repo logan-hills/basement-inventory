@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'Pirate Ship', title: 'Buy batches of labels at one time', url: 'https://support.pirateship.com/en/articles/1068423-can-i-buy-batches-of-multiple-labels-at-one-time' },
     { org: 'Federal Trade Commission', title: 'Cybersecurity for small business', url: 'https://www.ftc.gov/business-guidance/small-businesses/cybersecurity' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "The right few apps save you hours. The wrong pile of subscriptions quietly eats your profit. Let's build a lean set of tools that actually earn their keep.",
+    signoff: "One app per job, a quarterly audit, and strong passwords everywhere. Keep your tools working for you.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Your tool stack', kind: 'learn', title: 'One app per job', nova: 'Apps are like handbags: you need a few great ones, not a closet full you never use.',
       text: 'List the jobs in your shop, then pick one tool for each. Here\'s a starting stack many live sellers use. Prices change, so always check.',
@@ -43,11 +47,11 @@ const lesson: Lesson = {
         { text: 'Ignore every new app forever', feedback: 'Some new tools really do save time. Test them, don\'t ban them.' },
       ] },
 
-    { chapter: 'Subscription check', kind: 'learn', title: 'The quarterly app audit', text: 'Subscriptions creep. Every quarter, look at every charge on your business account.',
+    { chapter: 'Subscription check', queen: "Look at every subscription on your bank statement each quarter. If you didn't use it last month, cancel it.", kind: 'learn', title: 'The quarterly app audit', text: 'Subscriptions creep. Every quarter, look at every charge on your business account.',
       points: ['Did I use it this month?', 'Does another tool I pay for already do this?', 'Is there a cheaper plan, or a yearly price that saves money?', 'Cancel anything that fails, today', 'Put the next audit on your calendar'] },
     { kind: 'number', title: 'Creep adds up', q: 'You find three forgotten subscriptions: $12, $9 and $19 a month. How much do you save in a year by canceling them?', prefix: '$', answer: 480, hint: 'Add them, then × 12.', why: '$40 a month × 12 = $480 a year back in your pocket. That\'s a haul of new stock.' },
 
-    { chapter: 'Stay safe', kind: 'learn', title: 'Protect your accounts', text: 'Your Facebook page, payment apps and email are your business. The FTC\'s small business cybersecurity guidance comes down to a few habits.',
+    { chapter: 'Stay safe', queen: "Turn on two-step sign-in for your Facebook, email and bank today. It's the best ten minutes you'll spend this week.", kind: 'learn', title: 'Protect your accounts', text: 'Your Facebook page, payment apps and email are your business. The FTC\'s small business cybersecurity guidance comes down to a few habits.',
       points: ['Turn on two-step verification everywhere, especially Facebook and payments', 'Use a password manager; never reuse passwords', 'Give helpers their own logins instead of sharing yours', 'Be suspicious of messages asking you to "verify your page" through a link', 'Keep customer addresses and phone numbers inside your tools, not in screenshots or group chats'] },
     { kind: 'quiz', q: 'You get a Messenger message: "Your page will be disabled in 24 hours, verify here," with a link. What do you do?', options: ['Click and verify fast', 'Ignore the link and check alerts inside Facebook\'s own settings', 'Forward it to your helpers to deal with'], answer: 1, why: 'This is a common phishing scam. Real account alerts show up in your account settings. Never log in through a link in a message.' },
     { kind: 'learn', title: 'Case study: a $40 stack', text: 'Here\'s a lean monthly stack for a seller doing two lives a week.',

@@ -17,6 +17,10 @@ const lesson: Lesson = {
     { org: 'Federal Trade Commission', title: "Business guide to the FTC's Mail, Internet, or Telephone Order Merchandise Rule", url: 'https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule' },
     { org: 'SCORE (SBA mentoring partner)', title: 'Free small business mentoring', url: 'https://www.score.org/' },
   ],
+  queen: {
+    welcome: "The first 30 days set the tone for everything after. I've put together the plan I'd hand any seller starting today: a clear lane, a real budget and a rhythm you can keep.",
+    signoff: "Write your one-sentence shop, protect your cushion, and do your first live even if it's quiet. Every big shop started with a small first night.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Start on purpose', kind: 'learn', title: 'Why the first 30 days matter', nova: "Welcome, future CEO! I'm so proud of you for starting. Let's do this the smart way so you're still smiling a year from now.",
@@ -41,7 +45,7 @@ const lesson: Lesson = {
         { text: 'Start with styled accessories (hair pieces plus a few bags and jewelry) that she can show on herself, and add shoes once sales are steady', best: true, feedback: "She has a supply line, a skill (styling) and a lane people can describe. Shoes can come later when the cash allows." },
         { text: 'Only sell shoes because she loves them most', feedback: 'Love matters, but shoes need lots of sizes, which ties up cash fast. Start where your supply and skills already line up.' },
       ] },
-    { kind: 'reflect', title: 'Your one-sentence shop', prompt: 'Finish this: "I help ___ find ___ so they can ___."', placeholder: 'I help… find… so they can…', example: 'I help busy grown women find boutique bags and jewelry under $40 so they can walk in feeling like a million bucks.' },
+    { queen: "If you can't say what you sell and who it's for in one sentence, your buyers can't either. Keep editing until it's simple.", kind: 'reflect', title: 'Your one-sentence shop', prompt: 'Finish this: "I help ___ find ___ so they can ___."', placeholder: 'I help… find… so they can…', example: 'I help busy grown women find boutique bags and jewelry under $40 so they can walk in feeling like a million bucks.' },
 
     { chapter: 'Money first', kind: 'learn', title: 'The starter budget', text: "Split your starting money before you buy a single piece. A simple split many small sellers use: about half on stock, a quarter on supplies and setup, and a quarter kept back as a cushion.",
       table: { head: ['Bucket', 'Share', 'On a $1,000 start'], rows: [
@@ -90,7 +94,7 @@ const lesson: Lesson = {
         ['3', 'First two lives', 'Same day and time each week. 45 to 60 minutes. Ship within your promise.'],
         ['4', 'Learn and adjust', 'Check Reports, ask buyers what they want, plan live 3 and 4.'],
       ] } },
-    { kind: 'scenario', title: 'The quiet first live', situation: 'Your first live had 11 viewers and 4 sales. You feel embarrassed and want to cancel next week.',
+    { queen: "Treat your first quiet lives as rehearsals. Practice your openings, your pitches and your thank-yous. The crowd comes later.", kind: 'scenario', title: 'The quiet first live', situation: 'Your first live had 11 viewers and 4 sales. You feel embarrassed and want to cancel next week.',
       options: [
         { text: 'Cancel and wait until you have more followers', feedback: "Followers come from showing up. Waiting usually means you never start." },
         { text: 'Go live again same day and time, thank your 4 buyers by name, ask them to share, and post their (happy) unboxings', best: true, feedback: "Four buyers is four people who trusted you. Consistency plus gratitude is how 11 viewers becomes 50." },

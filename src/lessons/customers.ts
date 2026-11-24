@@ -11,7 +11,11 @@ const lesson: Lesson = {
     'Protect your customers\' personal details',
   ],
   route: { to: '/customers', label: 'Open Customers' },
-  covers: ['src/pages/Customers.tsx', 'src/lib/customers.ts'], updated: '2026-11-23',
+  queen: {
+    welcome: "Your regulars are the heart of your business. When you know them, their sizes, their favorites, their birthdays, you can treat them like family. That's what this lesson is about.",
+    signoff: "Thank them, remember them, and reach out when they go quiet. People shop where they feel known.",
+  },
+  covers: ['src/pages/Customers.tsx', 'src/lib/customers.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'Your list builds itself', kind: 'learn', title: 'Built for you', nova: 'Every name on this page is a real person who chose YOU. Let\'s treat them that way.',
       text: 'Every sale you bring in adds or updates the customer: name, Facebook name, email, phone, address, and everything they\'ve bought. You never have to type a customer list.' },
@@ -46,7 +50,7 @@ const lesson: Lesson = {
         ['Birthday', 'Anyone who tells you', 'A birthday shout-out and a tiny gift in that month\'s box'],
       ] },
       tip: 'Make a "VIP freebie" bin: hair ties, small earrings, old stock near its floor. Pennies to you, a big smile for her.' },
-    { kind: 'script', title: 'Thank-you messages', lines: [
+    { queen: "A personal thank-you after a first order is the cheapest marketing you'll ever do.", kind: 'script', title: 'Thank-you messages', lines: [
       'FIRST ORDER: "Welcome to the family, [name]! 💛 Thank you for your first order. I hope you love it. See you [next live day]!"',
       'THIRD ORDER: "[Name], you\'re officially a regular! Thank you for coming back. There\'s a little something extra in your box this time 😉"',
       'TOP SPENDER: "I just want to say thank you, [name]. You\'re one of my favorite people to see in the comments. Your VIP gift ships with your next order!"',
@@ -67,7 +71,7 @@ const lesson: Lesson = {
         { text: 'Tag her in every post until she responds', feedback: 'That feels pushy, and public. One kind private message beats ten tags.' },
       ] },
 
-    { chapter: 'Protect their trust', kind: 'learn', title: 'Their details are private', text: 'Buyers trust you with their home address, phone and email. Guard them like your own.',
+    { chapter: 'Protect their trust', queen: "Treat your customers' details like your own. Never share them, never sell them, never post them.", kind: 'learn', title: 'Their details are private', text: 'Buyers trust you with their home address, phone and email. Guard them like your own.',
       points: ['Never post a screenshot that shows a buyer\'s address, phone or email', 'Don\'t share your customer list with other sellers or businesses', 'Only add helpers who need to see orders, each with their own sign-in', 'Download CSV is for your own records, so keep that file somewhere safe and delete old copies'] },
     { kind: 'quiz', q: 'Another seller asks for your customer list so she can invite them to her live. What do you say?', options: ['Sure, we\'re friends', 'No, their details were given to you, not her. Offer to shout out her live instead.', 'Send just the emails'], answer: 1, why: 'Buyers shared their details to shop with you. A shout-out helps her without breaking their trust.' },
     { kind: 'checklist', title: 'Customer habits', prompt: 'Tick the ones you\'ll start this month.', items: [

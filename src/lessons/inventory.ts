@@ -11,7 +11,11 @@ const lesson: Lesson = {
     'Run a quick weekly tidy-up and a monthly count',
   ],
   route: { to: '/inventory', label: 'Open Stock' },
-  covers: ['src/pages/Inventory.tsx', 'src/components/BulkEditSheet.tsx', 'src/components/CategoryRail.tsx', 'src/lib/itemFields.ts', 'src/pages/ItemDetail.tsx'], updated: '2026-11-23',
+  queen: {
+    welcome: "Your inventory is your money sitting on shelves. When you can find any piece in seconds, you prep faster, sell more and stop buying things you already own.",
+    signoff: "Ten minutes a week keeps your stock honest. Do the weekly tidy, count a little often, and your shelves will always tell you the truth.",
+  },
+  covers: ['src/pages/Inventory.tsx', 'src/components/BulkEditSheet.tsx', 'src/components/CategoryRail.tsx', 'src/lib/itemFields.ts', 'src/pages/ItemDetail.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Your stock at a glance', kind: 'learn', title: 'Why this screen matters', nova: 'This is your shop floor. Let\'s make it work for you, not the other way around.',
       text: 'Inventory is every piece you own, in one list. Big stores win because they always know what they have, where it is, and how long it has been sitting. You can have the same superpower with a phone and a few habits. Every minute you don\'t spend hunting is a minute you spend selling.',
@@ -33,7 +37,7 @@ const lesson: Lesson = {
       tip: 'Check Sold out before you shop a haul. Your best reorders are the pieces that sold out fast.' },
     { kind: 'quiz', q: 'You want a list of what to buy more of. Which view?', options: ['In stock', 'Sold out', 'All'], answer: 1, why: 'Sold out shows what\'s gone. Sort it by Newest first and the fastest sellers jump out.' },
 
-    { chapter: 'Filter and sort', kind: 'learn', title: 'Filters answer questions', text: 'Tap Sort and filter. It opens one pop-up with everything: show In stock, Sold out or Everything, sort the list, switch between List and Photos, and narrow the list by brand, tag, condition, department, color, season, supplier or bin. You can also filter by age (new this week, or old stock) and by missing info. Each active filter shows as a chip under the search. Tap a chip\'s × to remove it, or Clear all.',
+    { chapter: 'Filter and sort', queen: "Before every buying trip, filter for what's sold out and what's been sitting. Buy more of the first, none of the second.", kind: 'learn', title: 'Filters answer questions', text: 'Tap Sort and filter. It opens one pop-up with everything: show In stock, Sold out or Everything, sort the list, switch between List and Photos, and narrow the list by brand, tag, condition, department, color, season, supplier or bin. You can also filter by age (new this week, or old stock) and by missing info. Each active filter shows as a chip under the search. Tap a chip\'s × to remove it, or Clear all.',
       screen: { title: 'Sort and filter', rows: ['Supplier: Atlanta market', 'Condition: New with tags', 'Age: 60+ days (old stock)'], buttons: ['Clear filters', 'Show 14'], highlight: 'Show 14' } },
     { kind: 'learn', title: 'Sort to see what matters', text: 'The sort menu puts the list in the order you need. Sizes and colors of the same item stay together.',
       table: { head: ['Sort', 'Use it to'], rows: [
@@ -90,7 +94,7 @@ const lesson: Lesson = {
         { text: 'Reorder from all three equally', feedback: 'You\'d keep buying the slow sellers. The supplier filter shows you which one is pulling its weight.' },
       ] },
 
-    { chapter: 'Tidy-up habits', kind: 'learn', title: 'The 10-minute weekly tidy', text: 'Open Sort and filter, use Missing info, and fix one list at a time. Pieces with no price can\'t go to a live. Pieces not in a bin can\'t be picked fast. Ten minutes a week keeps the list clean.',
+    { chapter: 'Tidy-up habits', queen: "Put the weekly tidy on your calendar like an appointment. Shops stay tidy on purpose, never by accident.", kind: 'learn', title: 'The 10-minute weekly tidy', text: 'Open Sort and filter, use Missing info, and fix one list at a time. Pieces with no price can\'t go to a live. Pieces not in a bin can\'t be picked fast. Ten minutes a week keeps the list clean.',
       screen: { title: 'Missing info (to tidy up)', rows: [], buttons: ['No photo', 'No price', 'No cost', 'Not in a bin', 'No category', 'No weight'], highlight: 'Not in a bin' } },
     { kind: 'learn', title: 'Count a little, often', text: 'Big warehouses don\'t shut down to count everything once a year. They do cycle counts: a small section every week, so the whole store gets counted every month or two. You can too.',
       points: ['Each week, filter to one bin or one aisle', 'Count what\'s really there and compare to the Stock column', 'Missing? Search the inbox spot, then damage it out as Missing', 'Extra? Scan it, it may be in the wrong bin'],

@@ -11,7 +11,11 @@ const lesson: Lesson = {
     'Run a receiving station that handles a whole haul in one sitting',
   ],
   route: { to: '/intake', label: 'Receive an item' },
-  covers: ['src/pages/Intake.tsx', 'src/pages/ItemDetail.tsx', 'src/pages/Inventory.tsx'], updated: '2026-11-23',
+  queen: {
+    welcome: "Receiving is where good habits start. When every piece gets its tag, photo and price the day it arrives, your whole shop runs smoother. Let's make this your calmest job of the week.",
+    signoff: "Tag it, photo it, price it, shelve it, the same day. Do that every time, and you'll never dig through a box looking for a piece again.",
+  },
+  covers: ['src/pages/Intake.tsx', 'src/pages/ItemDetail.tsx', 'src/pages/Inventory.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Items, variations, tags', kind: 'learn', title: 'Three words to know', nova: 'Get this part right and everything else in the app just works.',
       text: 'An item is the product (a gold hoop set). A variation is a size or color, and gets a 4-digit Live Number buyers type in comments. Every single piece gets its own tag, like 4821-003.',
@@ -37,7 +41,7 @@ const lesson: Lesson = {
       ] },
       tip: 'Formula: color + material or pattern + what it is + one detail.' },
 
-    { chapter: 'Price it for profit', kind: 'learn', title: 'Why "what you paid" matters', text: 'Your cost turns sales into profit. Reports, Home and Get ready for live all use it to show your real money. Without it, a "great live" might have lost you money and you\'d never know.', tip: 'Guess if you have to. A close number beats no number.' },
+    { chapter: 'Price it for profit', queen: "Always enter what you paid. You can't know your profit without it, and profit is what pays you.", kind: 'learn', title: 'Why "what you paid" matters', text: 'Your cost turns sales into profit. Reports, Home and Get ready for live all use it to show your real money. Without it, a "great live" might have lost you money and you\'d never know.', tip: 'Guess if you have to. A close number beats no number.' },
     { kind: 'learn', title: 'Count every cost', text: 'The price you paid isn\'t your only cost. Before you set a price, think about everything that comes out of the sale.',
       points: ['What you paid for the piece (and its share of shipping to you)', 'Card or invoice fee, often around 3% (check your Square rate)', 'Packaging: mailer, tissue, card', 'Any shipping you cover or discount'] },
     { kind: 'learn', title: 'A simple pricing rule', text: 'Many bargain sellers start at 2 to 3 times what they paid, then adjust for how special the piece is. Here\'s the math on a bag you paid $6 for.',
@@ -68,7 +72,7 @@ const lesson: Lesson = {
       points: ['1. Unpack everything and sort like with like', '2. Check for damage and set those aside', '3. Photograph each group in your photo corner', '4. Add the items and print the tags', '5. Tag every piece', '6. Scan them into bins right away'],
       tip: 'Over 30 items? Use Bulk upload from a spreadsheet instead. It has its own lesson.' },
     { kind: 'number', title: 'Cost per piece in a lot', q: 'You paid $36 for a mixed lot of 48 pieces of jewelry. What should you enter as the cost for each piece?', prefix: '$', answer: 0.75, tolerance: 0.01, hint: 'Divide what you paid for the lot by the number of pieces.', why: '$36 ÷ 48 = $0.75 each. If the lot had shipping, add that to the $36 first.' },
-    { kind: 'checklist', title: 'Set up your receiving station', prompt: 'Tick what you have. The rest is your shopping or setup list.', items: [
+    { queen: "Keep your receiving table clear of anything else. One spot, one job, every time.", kind: 'checklist', title: 'Set up your receiving station', prompt: 'Tick what you have. The rest is your shopping or setup list.', items: [
       'A table where I can sort a whole haul',
       'A photo corner by a window with a white board',
       'My label printer or label sheets ready',

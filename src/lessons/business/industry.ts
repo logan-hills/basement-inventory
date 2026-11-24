@@ -17,7 +17,11 @@ const lesson: Lesson = {
     { org: 'Meta', title: 'Meta Newsroom', url: 'https://about.fb.com/news/' },
     { org: 'IRS', title: 'Form 1099-K threshold FAQs', url: 'https://www.irs.gov/newsroom/irs-issues-faqs-on-form-1099-k-threshold-under-the-one-big-beautiful-bill-dollar-limit-reverts-to-20000' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Our industry changes every year: platforms, postage, tax rules and buyer expectations. The sellers still standing are the ones who keep learning. Here's how to stay ahead without feeling overwhelmed.",
+    signoff: "Keep your official source list close, test new features small, and protect one hour a week for learning. That hour keeps your shop current.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'What changes', kind: 'learn', title: 'Five kinds of change', nova: 'The rules of this game change constantly. Let\'s make sure you hear about it first, not last.',
       text: 'Almost every surprise that hurts a live seller comes from one of five places. Watch all five and very little catches you off guard.',
@@ -32,7 +36,7 @@ const lesson: Lesson = {
       tip: 'One thing never changed: all business income is taxable whether or not you get a 1099-K. The IRS says so plainly.' },
     { kind: 'quiz', q: 'You hear in a seller group that "Facebook is banning live sales next month." What do you do first?', options: ['Panic and move everything to another app', 'Check Meta\'s official newsroom and help center', 'Share the post so everyone knows'], answer: 1, why: 'Go to the source. Rumors spread fast in seller groups. Official pages tell you what is actually changing and when.' },
 
-    { chapter: 'Follow the source', kind: 'learn', title: 'Your official source list', text: 'Bookmark these. When something big changes, it shows up here first.',
+    { chapter: 'Follow the source', queen: "When you hear a rule change on social media, check the official source before you act. Rumors spread faster than facts.", kind: 'learn', title: 'Your official source list', text: 'Bookmark these. When something big changes, it shows up here first.',
       table: { head: ['Topic', 'Official source'], rows: [
         ['Facebook and Instagram', 'Meta Newsroom (about.fb.com/news) and Meta for Creators'],
         ['TikTok Shop', 'TikTok Shop Seller Center announcements and Seller University'],
@@ -59,7 +63,7 @@ const lesson: Lesson = {
       tip: 'This isn\'t legal advice. When in doubt, read the FTC\'s plain-language business guides or ask a professional.' },
     { kind: 'quiz', q: 'You promised "ships in 5 business days," but a vendor delay means you can\'t. What does the FTC rule expect?', options: ['Ship whenever it arrives, no message', 'Tell the buyer about the delay and offer to cancel for a refund', 'Cancel every order without asking'], answer: 1, why: 'When you can\'t meet your stated shipping time, the rule expects you to tell the buyer and give them the choice to wait or cancel for a refund.' },
 
-    { chapter: 'Test early', kind: 'learn', title: 'Try new features small', text: 'Platforms often reward early users of new features with extra reach. Test new things in a small, low-risk way and keep what works.',
+    { chapter: 'Test early', queen: "Test any new feature on one live before you change everything. Small tests, big lessons.", kind: 'learn', title: 'Try new features small', text: 'Platforms often reward early users of new features with extra reach. Test new things in a small, low-risk way and keep what works.',
       points: ['Pick one new feature a month to try', 'Test it on one live or one post, not your whole week', 'Write down what you expect, then what happened', 'Keep it, change it or drop it'] },
     { kind: 'reflect', title: 'Your experiment', prompt: 'Name one new feature, format or idea you\'ll test this month, and how you\'ll know if it worked.', placeholder: 'I\'ll test… I\'ll know it worked if…', example: 'Post a 30-second Reel of my best piece the morning of each live. It worked if viewers go up 10% over 4 lives.' },
     { kind: 'learn', title: 'Where live commerce is heading', text: 'Researchers at the Wharton School and consultants at McKinsey describe live commerce as shopping plus entertainment: real people, real time, and buying without leaving the video. It grew huge in China first and keeps growing in the US.',

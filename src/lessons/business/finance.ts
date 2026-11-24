@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'SCORE (SBA mentoring partner)', title: 'Business planning and financial statements templates', url: 'https://www.score.org/resource/business-plan-template-established-business' },
     { org: 'IRS', title: 'Estimated taxes', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Sales feel good, but profit and cash keep the lights on. I want every seller of mine to know her numbers, because when you know your numbers, you make every decision with confidence.",
+    signoff: "Split every payout into buckets, hold your money hour every month, and pay yourself on purpose. That's how a CEO runs her money.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Three different numbers', kind: 'learn', title: 'Sales, profit, cash', nova: 'Money talk! This is where hobby shops and real businesses part ways. You\'ve got this.',
       text: 'Lots of sellers watch only sales. But a $2,000 live can lose money, and a profitable month can still leave you with no cash to buy stock.',
@@ -40,7 +44,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Price on purpose', text: 'Many resale boutiques aim for the price to be at least 2.5 to 3 times what they paid, so there\'s room for fees, supplies, sales and slow movers. Start there, then adjust for the brand, condition and what buyers will pay.',
       points: ['Cost × 3 is a good starting point for most pieces', 'Designer and rare pieces can go higher', 'Price endings matter less than clarity; keep it simple on live', 'Never price below cost + fees + packing, except to clear very old stock'] },
 
-    { chapter: 'Where the money goes', kind: 'learn', title: 'Buckets, not one pile', text: 'One bank balance makes it easy to spend tax money or stock money by accident. Split every payout into buckets. The SBA recommends separate business accounts; many owners add savings "buckets" too.',
+    { chapter: 'Where the money goes', queen: "Name your buckets: Stock, Taxes, Bills, Me, Cushion. Names make the money harder to borrow from.", kind: 'learn', title: 'Buckets, not one pile', text: 'One bank balance makes it easy to spend tax money or stock money by accident. Split every payout into buckets. The SBA recommends separate business accounts; many owners add savings "buckets" too.',
       table: { head: ['Bucket', 'Share of each payout (example)', 'For'], rows: [
         ['Restock', '35%', 'Next hauls and wholesale orders'],
         ['Taxes', '15% of sales (about 25% of profit)', 'Quarterly estimates and sales tax'],
@@ -74,7 +78,7 @@ const lesson: Lesson = {
       ] },
       example: 'Starting from $1,000, she can see the trade show and tax payment coming and never dips below zero.' },
     { kind: 'number', title: 'Break-even', q: 'Your monthly fixed costs (apps, storage rent, phone) are $300. Your average profit per piece is $12. How many pieces must you sell each month just to break even?', answer: 25, suffix: 'pieces', hint: '$300 ÷ $12.', why: '$300 ÷ $12 = 25 pieces. Everything after the 25th piece is real profit.' },
-    { kind: 'scenario', title: 'Pay yourself?', situation: 'Your shop made $1,600 profit last month. You\'ve never paid yourself; everything goes back into stock.',
+    { queen: "Pay yourself something, even a small amount, on a schedule. A business that never pays its owner is a very expensive hobby.", kind: 'scenario', title: 'Pay yourself?', situation: 'Your shop made $1,600 profit last month. You\'ve never paid yourself; everything goes back into stock.',
       options: [
         { text: 'Keep reinvesting everything forever', feedback: 'Reinvesting is good, but a business that never pays its owner can burn her out.' },
         { text: 'Pay yourself a set amount, even small, on a schedule, and reinvest the rest by plan', best: true, feedback: 'You prove the business works for you, and you keep growing. Raise your pay as profit grows.' },

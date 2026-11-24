@@ -17,6 +17,10 @@ const lesson: Lesson = {
     { org: 'American Psychological Association', title: 'Building your resilience', url: 'https://www.apa.org/topics/resilience/building-your-resilience' },
     { org: 'University of Pennsylvania (Angela Duckworth)', title: 'Research on grit', url: 'https://angeladuckworth.com/research/' },
   ],
+  queen: {
+    welcome: "Every one of us has had the live where hardly anyone showed up. What separates the sellers who last is what they do the next morning. Let's build your plan for the dips before you need it.",
+    signoff: "Slow is not stopped. Keep your cushion, run the push, pivot or pause check, and lean on your people. I'll see you on the other side of the slow season.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Why staying power wins', kind: 'learn', title: 'Staying in the game is half the battle', nova: "Let me tell you a secret, boss: the sellers you admire had slow nights too. They just kept showing up.",
@@ -34,7 +38,7 @@ const lesson: Lesson = {
         ['October to December', 'Busiest season of the year', 'Stock up early, add a helper'],
       ] },
       tip: "Your own Reports are the best guide. After your first year, look at which months were slow and plan for them." },
-    { kind: 'number', title: 'Build a slow-season cushion', q: 'Your shop costs about $400 a month to run (supplies, apps, phone). You want two slow months covered. How much should your cushion be?', prefix: '$', answer: 800, hint: '$400 × 2.', why: "$800 set aside means a slow January is an inconvenience, not a crisis. Add a little to it from every good live." },
+    { queen: "Add a little to your cushion from every good live, even $5. You'll thank yourself every January.", kind: 'number', title: 'Build a slow-season cushion', q: 'Your shop costs about $400 a month to run (supplies, apps, phone). You want two slow months covered. How much should your cushion be?', prefix: '$', answer: 800, hint: '$400 × 2.', why: "$800 set aside means a slow January is an inconvenience, not a crisis. Add a little to it from every good live." },
     { kind: 'learn', title: 'Small wins in slow times', text: "Harvard's Teresa Amabile and Steven Kramer found that progress on meaningful work, even small, is the biggest boost to motivation. In a slow season, pick wins you control instead of sales you don't.",
       points: ['Photograph and list 20 pieces', 'Film a week of Reels', 'Reorganize the bins and print new labels', 'Finish one University course', 'Reach out to 10 past buyers by name'] },
 
@@ -69,7 +73,7 @@ const lesson: Lesson = {
       '"Rest is part of the plan, not a break from it."',
     ] },
 
-    { chapter: 'Never alone', kind: 'learn', title: 'Build your support circle', text: "Persistence is easier with people around you. Aim for a few different kinds of support.",
+    { chapter: 'Never alone', queen: "Find one seller buddy and check in every week. Accountability turns 'someday' into 'this week.'", kind: 'learn', title: 'Build your support circle', text: "Persistence is easier with people around you. Aim for a few different kinds of support.",
       table: { head: ['Who', 'What they give you'], rows: [
         ['A seller buddy', 'Someone at your stage to swap wins and problems weekly'],
         ['A mentor', 'Someone further along (SCORE has free mentors; the Queen offers paid sessions in the app)'],

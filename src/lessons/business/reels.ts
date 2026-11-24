@@ -16,13 +16,17 @@ const lesson: Lesson = {
     { org: 'HubSpot Academy', title: 'Facebook marketing training (free)', url: 'https://academy.hubspot.com/courses/facebook-marketing-training' },
     { org: 'Federal Trade Commission', title: 'Disclosures 101 for social media influencers', url: 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "One great Reel can bring more new faces to your live than a week of posts. You don't need fancy gear, just a phone, good light and a strong first two seconds. Let's make some.",
+    signoff: "Hook them fast, keep it short, and turn your lives into clips. Post consistently and watch what works. Your next viewer is scrolling right now.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Why short video', kind: 'learn', title: 'Your 24-hour billboard', nova: 'Lights, camera, Nova! Short videos are your storefront window, and they work while you sleep.',
       text: 'Feeds now favor short vertical video, and Reels are shown to people who don\'t follow you yet. That makes them the cheapest way to reach new buyers. On Facebook, eligible creators can also earn from views through Meta\'s content monetization program.',
       points: ['Reach: shown to non-followers', 'Proof: buyers see the piece moving, on a real person', 'Reminder: every Reel can end with your next live day and time', 'Bonus: some Reels earn money on their own'] },
 
-    { chapter: 'The hook', kind: 'learn', title: 'Two seconds to win', text: 'Most people decide in the first second or two whether to keep watching. Your hook is the first line AND the first picture.',
+    { chapter: 'The hook', queen: "Start with the piece already in frame and moving. Never start a Reel with 'Hey y'all, so today…'", kind: 'learn', title: 'Two seconds to win', text: 'Most people decide in the first second or two whether to keep watching. Your hook is the first line AND the first picture.',
       table: { head: ['Hook type', 'Example'], rows: [
         ['Price shock', '"This bag retails for $180. I\'m selling it Tuesday for $35."'],
         ['Question', '"Would you wear this to church or to brunch?"'],
@@ -41,7 +45,7 @@ const lesson: Lesson = {
         ['Pack an order', '15 to 25 sec', 'Wrap a piece with care, add the thank-you card'],
         ['Live highlight', '15 to 30 sec', 'The best moment from your last live: a sellout, a laugh, a big reveal'],
       ] } },
-    { kind: 'learn', title: 'Live to Reels', text: 'Your lives are full of Reels. After each live, save the replay and cut 2 or 3 short highlights. One live becomes a week of content.',
+    { queen: "Clip your best 20 seconds from every live the next morning. You already did the hard part on camera.", kind: 'learn', title: 'Live to Reels', text: 'Your lives are full of Reels. After each live, save the replay and cut 2 or 3 short highlights. One live becomes a week of content.',
       example: 'Tuesday live ends. Wednesday morning you clip the moment the gold set sold out in 30 seconds, add "SOLD OUT in 30 seconds. Thursday 7 PM, more coming," and post it.' },
 
     { chapter: 'Filming', kind: 'learn', title: 'Look premium on a phone', text: 'Luxury brands shoot simply: good light, clean background, steady camera.',

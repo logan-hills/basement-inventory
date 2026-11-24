@@ -14,9 +14,13 @@ const lesson: Lesson = {
     { org: 'Harvard Business School Working Knowledge', title: 'The right way to manage churn for maximum profit', url: 'https://www.library.hbs.edu/working-knowledge/the-right-way-to-manage-churn-for-maximum-profit' },
     { org: 'U.S. Small Business Administration', title: 'Marketing and sales', url: 'https://www.sba.gov/business-guide/manage-your-business/marketing-sales' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Delays happen in every shop. Silence is what loses customers. In this course I'll give you the words to speak up early, calmly and kindly.",
+    signoff: "Set expectations up front, own mistakes quickly, and never ghost a buyer. Clear, kind words keep your shop's good name.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
-    { chapter: 'Why it matters', kind: 'learn', title: 'Silence is the real problem', nova: 'Real talk: a late package rarely loses a customer. Ghosting her does.',
+    { chapter: 'Why it matters', queen: "When in doubt, send the message. Buyers forgive delays; they don't forgive being ignored.", kind: 'learn', title: 'Silence is the real problem', nova: 'Real talk: a late package rarely loses a customer. Ghosting her does.',
       text: "When something goes wrong, buyers mostly want two things: to know you see it, and to know you're handling it. Speak up first and most will happily wait and come back. Go quiet and even a small problem feels like a scam.",
       points: ['Speaking up first shows respect', 'A date calms worry, even if it\'s a later date', 'Every public reply is watched by future buyers'] },
     { kind: 'quiz', q: 'A box will ship two days late. When do you tell the buyer?', options: ['When she asks', 'As soon as you know', 'Never, it\'s only two days'], answer: 1, why: 'Telling her first shows respect and stops the worry before it starts.' },
@@ -70,7 +74,7 @@ const lesson: Lesson = {
         { text: '"Keisha, I\'m so sorry I missed your messages, that\'s on me. It shipped yesterday, here\'s tracking: [number]. If you still want a refund, I\'ll do that right away, no problem."', best: true, feedback: 'Listen, apologize, solve, and give her the choice. Most buyers keep the order once they see you care.' },
         { text: 'Wait until morning so you\'re not answering upset', feedback: 'Calming down is wise, but a one-line "I see this, checking now!" tonight stops it from getting worse.' },
       ] },
-    { kind: 'scenario', title: 'A complaint in public', situation: 'A buyer comments on your Page post: "Ordered 2 weeks ago and still nothing. Be careful y\'all." It already has 6 likes.',
+    { queen: "Answer a public complaint once, kindly, then move the conversation to private messages. Everyone watching sees how you handle it.", kind: 'scenario', title: 'A complaint in public', situation: 'A buyer comments on your Page post: "Ordered 2 weeks ago and still nothing. Be careful y\'all." It already has 6 likes.',
       options: [
         { text: 'Delete the comment and block her', feedback: 'People already saw it. Deleting looks like hiding, and she may post screenshots.' },
         { text: 'Reply publicly: "Tasha, I\'m so sorry! Sending you a message right now to fix this today." Then fix it in private and, once solved, ask if she\'d update her comment.', best: true, feedback: 'Everyone watching sees a seller who responds fast and takes care of people. The details stay private.' },

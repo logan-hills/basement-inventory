@@ -16,12 +16,16 @@ const lesson: Lesson = {
     { org: 'Pirate Ship', title: 'Upload address spreadsheets', url: 'https://support.pirateship.com/en/articles/1068428-how-do-i-upload-address-spreadsheets-into-pirate-ship' },
     { org: 'Pirate Ship', title: 'Buy batches of labels at one time', url: 'https://support.pirateship.com/en/articles/1068423-can-i-buy-batches-of-multiple-labels-at-one-time' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "The moment the box arrives is when your buyer decides whether to shop with you again. Fast, honest shipping keeps her coming back. Let's build your promise and your routine.",
+    signoff: "Pick a ship-by promise you can keep, say it on every live, and keep your station ready. Speed is a kindness your buyers feel.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Speed is service', kind: 'learn', title: 'Why speed wins', nova: 'Think about the last time a package took forever. How did you feel about that seller?',
       text: "Buyers judge you most in the days between \"paid\" and \"delivered.\" That's when excitement turns into either trust or worry. Fast, tracked shipping builds the trust that brings her back to your next live.",
       points: ['Fast shipping turns one purchase into a habit', 'Slow shipping makes buyers hesitate to claim next time', 'Tracking answers "where\'s my stuff?" before she has to ask'] },
-    { kind: 'learn', title: 'Pick a promise you can keep', text: 'Say it at every live: "Orders ship within X business days of payment." Then beat it, every time.',
+    { queen: "Promise the speed you can hit on your busiest week. Beating your promise feels great; missing it doesn't.", kind: 'learn', title: 'Pick a promise you can keep', text: 'Say it at every live: "Orders ship within X business days of payment." Then beat it, every time.',
       points: ['Under-promise, over-deliver', 'Count business days, not calendar days', 'Say it at the start and end of every live', 'Put it in your pinned post and your invoice note'] },
     { kind: 'quiz', q: 'You usually ship in 2 days. What should you promise?', options: ['Same day', '3 business days, then beat it', 'No promise'], answer: 1, why: 'A promise you beat feels like a gift. One you miss feels like a lie.' },
 
@@ -76,7 +80,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Protect yourself', text: 'A few habits make lost and damaged packages much less painful.',
       points: ['Always ship with tracking. Never skip it to save a few cents.', 'Take a quick photo of each packed box with its label for high-value orders', 'Check what insurance your label includes, and add more for big orders', 'Keep your packing slips and label receipts for at least a few months'] },
 
-    { chapter: 'The unboxing', kind: 'learn', title: 'Unboxing on a budget', text: 'The box is the last thing your brand says. Make it count for pennies.',
+    { chapter: 'The unboxing', queen: "Tissue paper and a handwritten note cost little and make your box feel like a boutique.", kind: 'learn', title: 'Unboxing on a budget', text: 'The box is the last thing your brand says. Make it count for pennies.',
       table: { head: ['Touch', 'About what it costs'], rows: [
         ['Tissue in your brand color', '5 to 10 cents a sheet'],
         ['Handwritten "Thank you, [name]!"', 'A minute of your time'],

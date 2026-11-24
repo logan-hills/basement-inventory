@@ -16,6 +16,10 @@ const lesson: Lesson = {
     { org: 'U.S. Small Business Administration', title: 'Write your business plan', url: 'https://www.sba.gov/business-guide/plan-your-business/write-your-business-plan' },
     { org: 'ASQ (American Society for Quality)', title: 'What is 5S?', url: 'https://asq.org/quality-resources/five-s-tutorial' },
   ],
+  queen: {
+    welcome: "Welcome to the family. I built Orientation so you don't have to figure out a live-selling business alone, the way so many of us once did. Take these 30 days one step at a time. You're not behind, you're right on time.",
+    signoff: "You have a plan now, and a plan is what separates a hobby from a business. Pick your launch date, put it on the calendar, and come to a live class this week. I can't wait to see you on the Page.",
+  },
   covers: ['src/components/ClassSignup.tsx', 'src/lib/classSignups.ts', 'src/components/ClassScheduleEditor.tsx', 'src/lib/classSchedule.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'Welcome to Dazzle', kind: 'learn', title: 'You\'re building a real business', nova: 'Welcome to the family, boss! I\'m Nova, and I\'ll walk with you every step of the way.',
@@ -33,7 +37,7 @@ const lesson: Lesson = {
       points: ['Only hosts of the shared Page see Edit class times', 'A No class date disappears from the dates sellers can pick', 'Who\'s coming, on the Live classes page, lists every saved seat'] },
     { kind: 'reflect', title: 'Why you\'re here', prompt: 'In one or two sentences: what do you want your shop to look like 6 months from now?', placeholder: 'In 6 months my shop…', example: 'Two lives a week, 50 orders each, packed in under 2 hours, and $2,000 profit a month so I can cut back my second job.' },
 
-    { chapter: 'Your starter kit', kind: 'learn', title: 'The gear you actually need', text: 'You don\'t need fancy equipment to start. Here\'s a starter kit most sellers can put together for a few hundred dollars. Prices are rough and change often, so shop around.',
+    { chapter: 'Your starter kit', queen: "Start with the free camera scanner and one good label printer. Buy the fancy gear after your lives pay for it, not before.", kind: 'learn', title: 'The gear you actually need', text: 'You don\'t need fancy equipment to start. Here\'s a starter kit most sellers can put together for a few hundred dollars. Prices are rough and change often, so shop around.',
       table: { head: ['Gear', 'What to get', 'About'], rows: [
         ['Label printer', '4×6 direct thermal printer (does 2×1 tags too)', '$80 to $150'],
         ['Labels', 'White 2×1 roll for tags and bins, yellow 2×1 for sale, 4×6 for shipping', '$20 to $60 to start'],
@@ -45,7 +49,7 @@ const lesson: Lesson = {
       ] },
       tip: 'Your phone is a scanner on day one. Buy a handheld scanner when you\'re scanning more than about 50 pieces a week.' },
     { kind: 'number', title: 'Your launch budget', q: 'You buy a $90 printer, $45 of labels, a $30 scanner, two $75 shelving units and 30 bins at $3 each. What\'s your total?', prefix: '$', answer: 405, hint: '90 + 45 + 30 + (2 × 75) + (30 × 3).', why: '$90 + $45 + $30 + $150 + $90 = $405. Write it down as a business expense. The SBA recommends keeping business money separate from personal money from the very first purchase.' },
-    { kind: 'learn', title: 'Keep the money separate', text: 'The U.S. Small Business Administration\'s first piece of advice on managing money: keep business and personal money apart. It makes taxes simpler, shows you the truth about profit, and protects you.',
+    { queen: "Open the business account this week, even if there's only $50 in it. The habit matters more than the balance.", kind: 'learn', title: 'Keep the money separate', text: 'The U.S. Small Business Administration\'s first piece of advice on managing money: keep business and personal money apart. It makes taxes simpler, shows you the truth about profit, and protects you.',
       points: ['Open a separate checking account (many are free) for the shop', 'Pay for gear and stock from it, and send payouts into it', 'Save every receipt; snap a photo the day you buy', 'Put a little aside from every payout for taxes'] },
 
     { chapter: 'Set up your space', kind: 'learn', title: 'Four zones', nova: 'Even a spare bedroom can run like a mini warehouse. It\'s all about zones.',
@@ -89,7 +93,7 @@ const lesson: Lesson = {
         ['Profit for the month', 'Home and Reports', 'Set it in Settings, then beat it'],
       ] } },
     { kind: 'order', title: 'Your 30 days', prompt: 'Put the launch weeks in order.', steps: ['Gear, space and four zones', 'Settings, shelves, and your best sellers tagged', 'First live planned and run on the system', 'Review Reports and tune up'] },
-    { kind: 'scenario', title: 'The overwhelmed week', situation: 'It\'s week 2. You\'ve tagged 30 pieces, but 400 more are still in tubs, and you feel behind.',
+    { queen: "When it all feels like too much, shrink the goal, don't quit the goal. One live, one tidy shelf, one good night's sleep.", kind: 'scenario', title: 'The overwhelmed week', situation: 'It\'s week 2. You\'ve tagged 30 pieces, but 400 more are still in tubs, and you feel behind.',
       options: [
         { text: 'Stop lives until every piece is in the system', feedback: 'No sales means no money and no motivation. You don\'t need everything in to start.' },
         { text: 'Tag what you\'ll sell in the next live, run it on the system, and add one tub a week', best: true, feedback: 'That\'s the way. Every live adds to the system, and in a couple of months the tubs are gone.' },

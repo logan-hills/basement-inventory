@@ -16,6 +16,10 @@ const lesson: Lesson = {
     { org: 'Website Builder Expert', title: 'Shopify pricing 2026: plans and fees explained', url: 'https://www.websitebuilderexpert.com/shopify-pricing' },
     { org: 'Tech.co', title: 'Best AI website builders (2026)', url: 'https://tech.co/website-builders/best-ai-website-builders' },
   ],
+  queen: {
+    welcome: "Shopify gives you the strongest checkout and the most room to grow. It costs more, so I want you to use it wisely. Let's get you from trial to first order without the expensive mistakes.",
+    signoff: "Start with the basics, add apps slowly, and test before you open the doors. Grow into Shopify; don't try to use all of it on day one.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Is Shopify for you?', kind: 'learn', title: 'The store that grows with you', nova: 'Shopify is the big leagues, boss. Let\'s make sure you walk in ready.',
@@ -56,7 +60,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Step 5: your domain', text: 'Your store starts at a myshopify.com address. Connect your own domain so buyers trust it. Buying through Shopify costs about $16 a year for a .com, or connect one you already own.',
       tip: 'Pick a short name that\'s easy to say on a live: say it out loud three times before you buy.' },
 
-    { chapter: 'Apps and AI', kind: 'learn', title: 'Apps: add slowly', text: 'There are thousands of apps, and each can add a monthly fee. Start with zero. Add one only when you can name the problem it solves.',
+    { chapter: 'Apps and AI', queen: "Add one app a month at most, and only to solve a real problem. App bills sneak up quietly.", kind: 'learn', title: 'Apps: add slowly', text: 'There are thousands of apps, and each can add a monthly fee. Start with zero. Add one only when you can name the problem it solves.',
       table: { head: ['Problem', 'Kind of app'], rows: [
         ['Buyers leave without checking out', 'Shopify\'s built-in abandoned checkout emails (try these first)'],
         ['You want an email list', 'Shopify Email (free to start) or a mailing app'],
@@ -90,7 +94,7 @@ const lesson: Lesson = {
     ], tip: 'Measure every bag the same way (width x height x depth) and say it the same way every time.' },
     { kind: 'learn', title: 'Sell on Facebook and Instagram too', text: 'Shopify\'s Facebook and Instagram sales channel sends your products to your Meta shop, so buyers can tap a tagged product in a post and check out. Your stock stays in one place, in Shopify.',
       points: ['Add the Facebook and Instagram channel from Sales channels in Shopify', 'Connect the Facebook Page and Instagram account you sell from', 'Tag products in your posts and Reels', 'Keep live claims in your live routine; a piece claimed on a live must be marked sold in Shopify right away'] },
-    { kind: 'script', title: 'Discount codes that work', text: 'Make codes under Discounts. Keep them simple to say on a live.', lines: [
+    { queen: "Give your live viewers their own code. It rewards them and tells you exactly where sales came from.", kind: 'script', title: 'Discount codes that work', text: 'Make codes under Discounts. Keep them simple to say on a live.', lines: [
       'LAUNCH10: 10% off, first week only',
       'VIPSHIP: free shipping for your VIP list',
       'LIVEFAN: $5 off orders over $40, good for 48 hours after a live',

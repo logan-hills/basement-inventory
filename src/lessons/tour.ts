@@ -11,6 +11,10 @@ const lesson: Lesson = {
     'Run a weekly rhythm that leaves no surprises before a live',
   ],
   route: { to: '/', label: 'Go to Home' },
+  queen: {
+    welcome: "Before we go anywhere, I want you to see the whole road, from the box at your door to the buyer's doorstep. Once you see the flow, every button in this app will make sense.",
+    signoff: "Now you know the path. Every piece you own follows it. Come back to this lesson any time you feel lost, and remember Nova is one tap away.",
+  },
   covers: ['src/App.tsx', 'src/components/SubNav.tsx', 'src/components/ActionSheet.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/novaArt.tsx', 'src/components/AskNova.tsx', 'src/lib/novaBrain.ts', 'src/pages/Lessons.tsx', 'src/components/Certificate.tsx', 'src/lessons/awards.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'Why a system', kind: 'learn', title: 'From "where is it?" to "got it"', nova: "Welcome, boss! Let's make sure you never dig through a box before a live again.",
@@ -25,7 +29,7 @@ const lesson: Lesson = {
       ] } },
 
     { kind: 'reflect', title: 'Where does your time go?', prompt: 'What takes you the longest in a normal week of selling right now? Write down the task and about how many hours.', placeholder: 'The longest part is…', example: 'Finding pieces before a live, about 2 hours. And matching comments to buyers after, about an hour.' },
-    { chapter: 'The flow', kind: 'learn', title: 'One app, one flow', text: 'Every piece you sell travels the same road. This app has a stop for each part of the trip.',
+    { chapter: 'The flow', queen: "Teach this flow to anyone who helps you. When everyone knows where a piece goes next, nothing sits in a corner.", kind: 'learn', title: 'One app, one flow', text: 'Every piece you sell travels the same road. This app has a stop for each part of the trip.',
       points: ['Receive it and give it a tag', 'Give it a home on a shelf', 'Plan it into a live', 'Sell it on live', 'Pick it into the customer\'s box', 'Ship it, then see your money in Reports'] },
     { kind: 'learn', title: 'Follow one piece', text: 'Here\'s the whole trip for one pair of earrings, so you can picture it.',
       table: { head: ['Day', 'What happens', 'Where in the app'], rows: [
@@ -105,7 +109,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'If you have helpers', text: 'The app is built so a helper can jump in without you standing over them. Each person signs in as themselves, and the tags, bins and pick screens tell them exactly what to do.',
       points: ['Receiving helper: adds items and prints tags', 'Put-away helper: scans bins and tags', 'Packing helper: picks and scans into boxes', 'Everyone: takes the University lessons for their part'] },
     { kind: 'quiz', q: 'Your niece is helping pack on Wednesday. What does she need from you?', options: ['Your password', 'Her own sign-in and the Pick and pack lesson', 'A printed list of every order'], answer: 1, why: 'Each person has their own sign-in, and the pick screen shows her where everything is and which box it goes in.' },
-    { kind: 'reflect', title: 'Your rhythm', prompt: 'Which days will you go live, and which days will you receive, pack and ship?', placeholder: 'I go live on…', example: 'I go live Tuesday 7 PM. I receive on Monday, pack and ship Wednesday, and check Reports on Saturday morning.' },
+    { queen: "Pick the same days for receiving, lives and shipping every week. A rhythm makes the work lighter, I promise.", kind: 'reflect', title: 'Your rhythm', prompt: 'Which days will you go live, and which days will you receive, pack and ship?', placeholder: 'I go live on…', example: 'I go live Tuesday 7 PM. I receive on Monday, pack and ship Wednesday, and check Reports on Saturday morning.' },
     { kind: 'checklist', title: 'Your first-week plan', prompt: 'Tick each day as you finish it.', items: [
       'Day 1: Profile and Settings',
       'Day 2: Warehouse and bin labels',

@@ -20,7 +20,11 @@ const lesson: Lesson = {
     { org: 'Morgan Lewis', title: 'New California AI disclosure rules become operative (August 2026)', url: 'https://www.morganlewis.com/pubs/2026/08/new-california-ai-disclosure-rules-become-operative' },
     { org: 'DLA Piper', title: 'FTC AI-washing action (May 2026)', url: 'https://www.dlapiper.com/insights/publications/2026/05/ftc-ai-washing-action-underscores-enforcement-in-business-to-business-context' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Buyers forgive a lot, but not feeling fooled. This course helps you use AI openly and honestly, protect your buyers' information, and stay on the right side of the rules.",
+    signoff: "Real photos, real reviews, honest labels and clear fine print. Trust is your best inventory, so protect it.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Why honesty wins', kind: 'learn', title: 'Trust is your best inventory', nova: 'Your buyers come back because they trust you. Let\'s keep it that way, AI and all.',
       text: 'Using AI isn\'t wrong. Hiding it in ways that mislead people is. The Federal Trade Commission (FTC) has one simple rule underneath everything: don\'t deceive buyers. That rule covers words and pictures whether a person or a computer made them.',
@@ -33,10 +37,10 @@ const lesson: Lesson = {
       tip: NOT_ADVICE },
     { kind: 'quiz', q: 'What\'s the FTC\'s main rule underneath AI use in selling?', options: ['Never use AI for any business task', 'Don\'t mislead buyers, no matter who or what made the content', 'Only big companies have to follow it'], answer: 1, why: 'The FTC Act applies to every business, any size. AI is a tool; misleading people is the problem.' },
 
-    { chapter: 'Rules to know', kind: 'learn', title: 'No fake reviews, ever', text: 'Since October 2024, an FTC rule bans fake reviews and testimonials, including reviews written by AI and posted as if they came from real customers. Breaking it can bring civil penalties for each violation.',
+    { chapter: 'Rules to know', queen: "One fake review can undo years of real ones. Earn every star.", kind: 'learn', title: 'No fake reviews, ever', text: 'Since October 2024, an FTC rule bans fake reviews and testimonials, including reviews written by AI and posted as if they came from real customers. Breaking it can bring civil penalties for each violation.',
       points: ['Don\'t post AI-written "customer" reviews or comments', 'Don\'t buy reviews or followers', 'Don\'t pay for good reviews, or only ask happy buyers to post', 'Don\'t hide bad reviews and show only the good ones as if that\'s all there is', 'Do share real buyer words, with permission, exactly as they wrote them'],
       tip: 'Real reviews from your regulars beat anything a computer can write. Ask after the box arrives: "If you love it, would you leave a quick review?"' },
-    { kind: 'learn', title: 'Photos must show the real thing', text: 'AI can make a bag look new, change its color, or put it on a model who never wore it. In a listing, that misleads buyers about what they\'ll get. Keep your item photos real, and use AI images only for decoration.',
+    { queen: "If you edit a photo, the piece should still look exactly like what arrives. Disappointment ends loyalty.", kind: 'learn', title: 'Photos must show the real thing', text: 'AI can make a bag look new, change its color, or put it on a model who never wore it. In a listing, that misleads buyers about what they\'ll get. Keep your item photos real, and use AI images only for decoration.',
       table: { head: ['OK', 'Not OK'], rows: [
         ['Brightening a photo, cleaning up the background', 'Removing scratches, stains or wear from the item'],
         ['An AI-made poster that says "Thursday Purse Party"', 'An AI picture of a bag you\'ll ship as if it\'s the real one'],

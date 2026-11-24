@@ -17,6 +17,10 @@ const lesson: Lesson = {
     { org: 'All About Cookies', title: 'We tested 15+ AI website builders (October 2026)', url: 'https://allaboutcookies.org/best-AI-website-builder' },
     { org: 'Federal Trade Commission', title: 'Consumer Reviews and Testimonials Rule: questions and answers', url: 'https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers' },
   ],
+  queen: {
+    welcome: "AI website builders are a wonderful head start, but they're not a finished store. Let's use them for speed and add your own polish before buyers see it.",
+    signoff: "Give the AI your six details, fix the usual mistakes, and keep every photo and claim honest. Then launch with pride.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'What AI builders do', kind: 'learn', title: 'From a description to a website', nova: 'You talk, it builds. Then you make it yours. That last part is the magic, boss.',
@@ -57,7 +61,7 @@ const lesson: Lesson = {
     ], tip: 'If the first result misses, change one thing in your prompt and try again rather than starting from nothing.' },
     { kind: 'order', title: 'Build an AI site, in order', prompt: 'Put these steps in order.', steps: ['Pick a builder with a selling plan', 'Choose "online store" as the site type', 'Paste your prompt with all six details', 'Review the draft on your phone', 'Replace photos and rewrite the text', 'Set up payments, shipping and tax', 'Test, then publish'] },
 
-    { chapter: 'Fix what AI gets wrong', kind: 'learn', title: 'The usual AI mistakes', text: 'Every AI builder makes some of these. Go through your draft page by page and fix them before anyone sees it.',
+    { chapter: 'Fix what AI gets wrong', queen: "Read every word the AI wrote on your site out loud. If it doesn't sound like you, rewrite it.", kind: 'learn', title: 'The usual AI mistakes', text: 'Every AI builder makes some of these. Go through your draft page by page and fix them before anyone sees it.',
       table: { head: ['AI often…', 'Fix it by…'], rows: [
         ['Uses stock photos of products you don\'t have', 'Replacing them with your real items'],
         ['Invents details ("handmade in Italy", "award-winning")', 'Deleting anything that isn\'t true'],
@@ -66,7 +70,7 @@ const lesson: Lesson = {
         ['Leaves "Lorem ipsum" or placeholder text', 'Searching every page for it'],
         ['Guesses your colors', 'Setting your exact brand colors'],
       ] } },
-    { kind: 'learn', title: 'Keep it honest', text: 'The FTC bans fake reviews, including ones written by AI. Buyers also notice when a photo doesn\'t match the bag that arrives. Honest sites earn repeat buyers.',
+    { queen: "Use your real product photos, not AI pictures, for anything you sell. Buyers deserve to see what they'll get.", kind: 'learn', title: 'Keep it honest', text: 'The FTC bans fake reviews, including ones written by AI. Buyers also notice when a photo doesn\'t match the bag that arrives. Honest sites earn repeat buyers.',
       points: ['Every product photo is the real piece', 'Only real reviews from real buyers', 'Label any realistic AI image as an illustration', 'No claims you can\'t back up: "authentic", "new", "designer" must be true', 'Your privacy page says how you use buyer information'] },
     { kind: 'tap', title: 'Practice: what goes first?', prompt: 'Your AI site added a section of five glowing reviews from people you\'ve never met. What do you do?', screen: { title: 'Home page sections', buttons: ['Keep them, they look great', 'Delete the section until you have real reviews', 'Change the names to your friends'] }, answer: 'Delete the section until you have real reviews', hint: 'Fake reviews break FTC rules, even when AI wrote them.' },
     { kind: 'scenario', title: 'Speed versus polish', situation: 'Your AI site looks gorgeous after 10 minutes. You want to announce it on tonight\'s live, but the shipping page still says "We ship worldwide in 24 hours" and half the photos are stock.',

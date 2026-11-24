@@ -11,9 +11,13 @@ const lesson: Lesson = {
     'Fix a scanner that "does nothing"',
   ],
   route: { to: '/scan', label: 'Open Scan' },
+  queen: {
+    welcome: "Scanning is how you stop typing and start flying. Once you get the rhythm, putting away a whole haul feels like a game. Let's learn it together.",
+    signoff: "Scan the bin, then the pieces. Do a little count each week. That simple rhythm keeps your whole shop accurate.",
+  },
   covers: ['src/pages/Scan.tsx', 'src/components/FreeCameraTip.tsx', 'src/components/CameraScanner.tsx'], updated: '2026-11-24',
   slides: [
-    { chapter: 'Put away', kind: 'learn', title: 'Scan the bin, then the pieces', nova: 'This is my favorite part. Beep, beep, beep, done.',
+    { chapter: 'Put away', queen: "Say it out loud while you learn: bin first, pieces next. Your hands will learn it in a week.", kind: 'learn', title: 'Scan the bin, then the pieces', nova: 'This is my favorite part. Beep, beep, beep, done.',
       text: 'Scan a bin label and a gold banner shows the bin you\'re putting away into. Every tag you scan next goes in that bin. Tap Done when you move on.',
       screen: { title: 'Scan', rows: ['Putting away into A1-S2-B-03', '✓ 4821-003', '✓ 4821-004'], buttons: ['Done'], highlight: 'Done' } },
     { kind: 'order', title: 'Practice', prompt: 'Put away three pieces. Tap the steps in order.', steps: ['Open Scan', 'Scan the bin label', 'Scan each tag', 'Tap Done'] },
@@ -64,7 +68,7 @@ const lesson: Lesson = {
     { chapter: 'Work fast', kind: 'learn', title: 'The rhythm', text: 'Keep the scan box focused and never touch the mouse: bin, scan, scan, scan. Turn sound on so you hear each scan land, and you don\'t have to look up after every beep.',
       tip: 'Put away right after you receive. A tub of tagged but un-binned pieces is a tub you\'ll be digging through on live night.' },
     { kind: 'number', title: 'Is it worth it?', q: 'Typing a tag code by hand takes about 8 seconds. Scanning takes about 2. How many seconds do you save putting away 150 pieces?', answer: 900, suffix: 'seconds', hint: 'Find the seconds saved per piece, then multiply by 150.', why: '(8 − 2) × 150 = 900 seconds. That\'s 15 minutes saved on one haul, with no typos.' },
-    { kind: 'learn', title: 'A 10-minute weekly count', text: 'Pieces wander: a helper sets one down, a buyer returns one. Count one aisle a week and you\'ll check the whole basement every month without a big inventory day.',
+    { queen: "Count one shelf every week instead of everything once a year. Small counts catch small problems before they grow.", kind: 'learn', title: 'A 10-minute weekly count', text: 'Pieces wander: a helper sets one down, a buyer returns one. Count one aisle a week and you\'ll check the whole basement every month without a big inventory day.',
       points: ['Pick one aisle this week', 'Scan a bin label to see what the app thinks is there (with no bin active, it\'s a lookup)', 'Compare to what\'s really on the shelf', 'Found a stray? Scan the right bin, then scan it in', 'Missing something? Check the "inbox" spot, then mark it in Damaged as Missing if it\'s truly gone'] },
     { kind: 'reflect', title: 'Your scan plan', prompt: 'Which scanner (or camera) will you use, and which day each week will you count one aisle?', placeholder: 'I\'ll use…', example: 'A USB scanner at the packing table and my phone camera on the shelves. I\'ll count one aisle every Monday morning.' },
     { kind: 'checklist', title: 'Scanner setup', prompt: 'Tick each one.', items: [

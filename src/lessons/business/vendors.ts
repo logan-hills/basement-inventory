@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'SCORE (SBA mentoring partner)', title: 'Free business mentoring', url: 'https://www.score.org/' },
     { org: 'U.S. Small Business Administration', title: 'Marketing and sales', url: 'https://www.sba.gov/business-guide/manage-your-business/marketing-sales' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "A great vendor relationship is worth more than any single deal. Vendors who trust you give you first pick and second chances. Let's find yours and keep them.",
+    signoff: "Vet carefully, communicate like a pro, pay on time and say thank you. That's how you become the customer vendors call first.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Where to find them', kind: 'learn', title: 'Look in the right places', nova: 'Vendors are people. Treat them like partners and they\'ll treat you like a VIP.',
       text: 'Good vendors rarely find you. You find them.',
@@ -32,7 +36,7 @@ const lesson: Lesson = {
 
     { chapter: 'Vet before you pay', kind: 'learn', title: 'Check them out', text: 'Most vendors are honest, but scams target new sellers. Ten minutes of checking can save hundreds of dollars.',
       points: ['A real business name, address and phone you can verify', 'Reviews from other sellers, and not only on their own site', 'Clear terms: returns, damages, shipping times', 'They ask for your resale certificate (legit wholesalers usually do)', 'They take payment methods with buyer protection (credit card, PayPal Goods & Services)', 'Start with a small test order'] },
-    { kind: 'learn', title: 'Red flags', text: 'Walk away from these.',
+    { queen: "If a vendor rushes you to pay before you've seen anything real, slow down. Good vendors are patient with good buyers.", kind: 'learn', title: 'Red flags', text: 'Walk away from these.',
       table: { head: ['Red flag', 'Why it\'s a problem'], rows: [
         ['Only takes wire transfer, gift cards, crypto or "friends and family" payments', 'No way to get your money back'],
         ['Prices that are far too good for real designer goods', 'Often counterfeit, which is illegal to sell'],
@@ -70,7 +74,7 @@ const lesson: Lesson = {
       points: ['Lower minimums for your first order', 'Free or reduced shipping over a certain amount', 'First look at new arrivals or new lots', 'Payment terms (like Net 30) once you\'ve built trust', 'Exclusive styles or colors for your area', 'A credit or partial refund process for damaged pieces'],
       tip: 'Always be polite and pay on time. Your reputation travels fast among vendors.' },
 
-    { chapter: 'Build the relationship', kind: 'learn', title: 'Follow up like a pro', text: 'Most sellers order and disappear. Stand out by following up.',
+    { chapter: 'Build the relationship', queen: "Send a short thank-you after every order. Vendors remember the buyers who treat them like people.", kind: 'learn', title: 'Follow up like a pro', text: 'Most sellers order and disappear. Stand out by following up.',
       table: { head: ['When', 'What to send'], rows: [
         ['Order arrives', 'A quick thanks and confirmation it arrived (or photos of any damage within their window)'],
         ['After your live', 'What sold out and what buyers loved. A screenshot of happy comments goes a long way.'],
