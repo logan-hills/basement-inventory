@@ -1843,6 +1843,7 @@ input, select, textarea { min-height: 48px; font-size: 17px; }
 .uni .tone-crimson, .uni-tab.tone-crimson, .bag-wrap.tone-crimson, .uni-cover.tone-crimson, .cert.tone-crimson, .medal.tone-crimson { --t1: #C8102E; --t2: #FF5A6E; --t3: #6E0618; }
 .uni .tone-onyx, .uni-tab.tone-onyx, .bag-wrap.tone-onyx, .uni-cover.tone-onyx, .cert.tone-onyx, .medal.tone-onyx { --t1: #2A2230; --t2: #6B5A72; --t3: #120C16; }
 .uni .tone-plum, .uni-tab.tone-plum, .bag-wrap.tone-plum, .uni-cover.tone-plum, .cert.tone-plum, .medal.tone-plum { --t1: #8E1F7A; --t2: #E06CC4; --t3: #4A0A3E; }
+.uni .tone-sky, .uni-tab.tone-sky, .bag-wrap.tone-sky, .uni-cover.tone-sky, .cert.tone-sky, .medal.tone-sky { --t1: #0A7BD1; --t2: #4FC8F5; --t3: #053F6E; }
 
 /* Hero */
 .uni-hero { position: relative; display: flex; gap: 28px; align-items: center; padding: 34px; border-radius: 24px; overflow: hidden; color: #fff;
@@ -2850,3 +2851,22 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .uni .sheet-panel .sched-ok { background: #E7F6EC; color: #145A35; }
 .uni .class-ticket { position: relative; overflow: hidden; }
 .uni .class-ticket::after { content: '✦'; position: absolute; right: 16px; top: 10px; font-size: 1.4rem; opacity: .7; }
+
+/* ===== Class dates right on the card ===== */
+.uni-coming { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+.uni-coming-label { font-size: .78rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--u-muted); margin-right: 2px; }
+.uni-coming-date { min-height: 40px; padding: 6px 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--t1) 30%, transparent); background: #fff; color: var(--t3, var(--u-ink)); font: inherit; font-size: .95rem; font-weight: 700; cursor: pointer; transition: transform .15s var(--ease), background .15s; }
+.uni-coming-date:hover, .uni-coming-date:focus-visible { transform: translateY(-1px); background: color-mix(in srgb, var(--t1) 10%, #fff); }
+.uni-next { font-style: normal; font-size: .82rem; font-weight: 700; max-width: 100%; padding: 2px 8px; margin: 2px 0; border-radius: 999px; background: rgba(255, 255, 255, .22); }
+.uni-class-time .uni-next { align-self: flex-start; background: color-mix(in srgb, var(--t1) 12%, #fff); color: var(--t3); }
+
+/* ===== Featured school banner on the Business school page ===== */
+.uni-feature { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; width: 100%; margin: 4px 0 8px; padding: 24px; border: 0; border-radius: 24px; text-align: left; font: inherit; color: #fff; cursor: pointer; background: radial-gradient(circle at 92% 12%, rgba(255, 255, 255, .35), transparent 38%), linear-gradient(135deg, var(--t3), var(--t1) 55%, var(--t2)); box-shadow: 0 18px 40px color-mix(in srgb, var(--t1) 35%, transparent); transition: transform .2s var(--ease); }
+.uni-feature:hover { transform: translateY(-2px); }
+.uni-feature::after { content: '✦'; position: absolute; right: 22px; bottom: 10px; font-size: 4rem; opacity: .18; }
+.uni-feature-tag { padding: 4px 12px; border-radius: 999px; font-size: .78rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #3B2600; background: var(--u-foil); }
+.uni-feature b { font-family: 'Bodoni Moda', Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.05; }
+.uni-feature > span:not([class]) { font-size: 1.05rem; line-height: 1.5; max-width: 640px; opacity: .95; }
+.uni-feature-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.uni-feature-chips i { font-style: normal; font-weight: 700; font-size: .9rem; padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, .18); border: 1px solid rgba(255, 255, 255, .35); }
+.uni-feature-go { margin-top: 4px; font-weight: 800; font-size: 1.05rem; color: #FFE7A3; }

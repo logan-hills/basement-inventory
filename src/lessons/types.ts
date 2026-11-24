@@ -48,12 +48,13 @@ export const INTERACTIVE: SlideKind[] = [...GRADED, 'reflect', 'checklist']
 export type Source = { org: string; title: string; url: string }
 
 /** Business courses are grouped into schools on the University page. */
-export type School = 'Strategy and growth' | 'Make it official' | 'Money and buying' | 'Brand and marketing' | 'Social media' | 'Tools and apps' | 'AI know-how' | 'Platforms and trends' | 'Operations' | 'Customer care'
+export type School = 'Strategy and growth' | 'Make it official' | 'Money and buying' | 'Brand and marketing' | 'Launching your website' | 'Social media' | 'Tools and apps' | 'AI know-how' | 'Platforms and trends' | 'Operations' | 'Customer care'
 export const SCHOOLS: { id: School; blurb: string; tone: string; icon: string }[] = [
   { id: 'Strategy and growth', blurb: 'Plan like a CEO: find your strengths and weak spots, set the goals, grow on purpose, and stay ahead.', tone: 'onyx', icon: 'trend' },
   { id: 'Make it official', blurb: 'Licenses, EIN, sales tax and calm tax seasons. Run it like a real business.', tone: 'gold', icon: 'reports' },
   { id: 'Money and buying', blurb: 'Manage your money, buy smarter and build vendors who look out for you.', tone: 'teal', icon: 'dollar' },
   { id: 'Brand and marketing', blurb: 'Look like the boutique buyers trust, grow your audience and fill every live.', tone: 'fuchsia', icon: 'sparkle' },
+  { id: 'Launching your website', blurb: 'Open a shop that sells between lives: pick a builder, then launch step by step with Square, Shopify, GoDaddy or AI.', tone: 'sky', icon: 'cart' },
   { id: 'Social media', blurb: 'Reels, posts and a content plan that sells while you sleep.', tone: 'violet', icon: 'live' },
   { id: 'Tools and apps', blurb: 'Canva and the apps worth paying for, minus the ones that aren\'t.', tone: 'crimson', icon: 'settings' },
   { id: 'AI know-how', blurb: 'Use AI without drowning in it, make it work for your shop, and stay honest with your buyers.', tone: 'plum', icon: 'sparkle' },

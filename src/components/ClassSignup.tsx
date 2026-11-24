@@ -10,14 +10,14 @@ import { lessonById } from '../lessons'
 /* Save a seat in a live class, in a pop-up: pick daytime or evening, pick a date, check your
    name and how to reach you, done. Then add it to your calendar. */
 
-export default function ClassSignup({ c, label, onClose, signups }: {
-  c: LiveClass; label: 'Daytime' | 'Evening'; onClose: () => void; signups: ReturnType<typeof useClassSignups>
+export default function ClassSignup({ c, label, date: startDate, onClose, signups }: {
+  c: LiveClass; label: 'Daytime' | 'Evening'; date?: string; onClose: () => void; signups: ReturnType<typeof useClassSignups>
 }) {
   const { shop, session, profile } = useSession()
   const [sessionLabel, setSessionLabel] = useState(label)
   const sess = c.sessions.find(s => s.label === sessionLabel) ?? c.sessions[0]
   const dates = nextDates(c, sess.time)
-  const [date, setDate] = useState(dates[0])
+  const [date, setDate] = useState(startDate && dates.includes(startDate) ? startDate : dates[0])
   const [name, setName] = useState(profile?.display_name || shop?.name || '')
   const [email, setEmail] = useState(profile?.email || session?.user.email || '')
   const [phone, setPhone] = useState(profile?.phone || '')
