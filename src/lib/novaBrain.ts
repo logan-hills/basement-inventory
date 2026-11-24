@@ -13,6 +13,8 @@ export type Answer = {
   points?: string[]
   route?: { to: string; label: string }
   lessonId?: string
+  /** A step-by-step tutorial for this answer (filled in by ask). */
+  steps?: string[]
   score: number
 }
 
@@ -56,18 +58,18 @@ type Doc = { a: Omit<Answer, 'score'>; title: Set<string>; body: Map<string, num
 let docs: Doc[] | null = null
 let df = new Map<string, number>()
 
-const QUICK: { q: string; title: string; text: string; to: string; label: string; lessonId: string }[] = [
+const QUICK: { q: string; title: string; text: string; to: string; label: string; lessonId: string; steps?: string[] }[] = [
   { q: 'live number what is', title: 'What a Live Number is', text: 'Every item and variation gets its own 4-digit Live Number when you receive it. Buyers type it in your live comments to claim it, like "sold 4821". Pieces that are exactly the same share one Live Number, and each piece still gets its own tag.', to: '/intake', label: 'Receive an item', lessonId: 'receive' },
-  { q: 'print tag label sticker', title: 'Print tags', text: 'Tags print when you receive an item. To print again, open the item in Stock, tick the tags you need and tap Reprint. White 2×1 labels are your normal tags; for sale tags, load the yellow roll, select the items in Stock and tap More, then Print yellow sale tags.', to: '/labels', label: 'Open Print tags', lessonId: 'printer' },
+  { q: 'print tag label sticker', title: 'Print tags', text: 'Tags print when you receive an item. To print again, open the item in Stock, tick the tags you need and tap Reprint. White 2×1 labels are your normal tags; for sale tags, load the yellow roll, select the items in Stock and tap More, then Print yellow sale tags.', to: '/inventory', label: 'Open Stock', lessonId: 'labels', steps: ['Find the item in Stock and open it', 'Tick the tags you need', 'Tap Reprint (or Print tags for the whole item)', 'For sale tags, load the yellow roll first, select the items in Stock, tap More, then Print yellow sale tags'] },
   { q: 'pack order box pick', title: 'Pack an order', text: 'Open Pick and pack, pick an order, scan each piece, then scan the buyer\'s box label. The app checks every piece made it into the right box before you close it.', to: '/orders', label: 'Open Pick and pack', lessonId: 'pick' },
   { q: 'tracking ship pirate', title: 'Add tracking', text: 'Buy the label in Pirate Ship, then open Shipping in the app, add the tracking number to the order and tap Shipped. That closes the order and updates the customer\'s history.', to: '/shipping', label: 'Open Shipping', lessonId: 'shipping' },
-  { q: 'shelf bin warehouse set up location', title: 'Set up your shelves', text: 'Open Warehouse to add shelves and bins, then print a label for each bin. Scan the bin, then scan the pieces you put there.', to: '/locations', label: 'Open Warehouse', lessonId: 'warehouse' },
+  { q: 'shelf bin warehouse set up location', title: 'Set up your shelves', text: 'Open Warehouse to add shelves and bins, then print a label for each bin. Scan the bin, then scan the pieces you put there.', to: '/locations', label: 'Open Warehouse', lessonId: 'warehouse', steps: ['Tap Create bins and add your aisles, shelves and bins', 'Tap Print bin labels and stick one on each bin', 'Go to Scan, scan a bin label, then scan each piece you put in that bin'] },
   { q: 'upload sales orders after live', title: 'Bring in your live sales', text: 'After a live, download the sales file from your comment bot and upload it in Upload live sales. Each buyer becomes an order, ready to pick and pack.', to: '/orders/upload', label: 'Upload live sales', lessonId: 'upload' },
 ]
 
 function build() {
   const list: Omit<Answer, 'score'>[] = []
-  QUICK.forEach((x, n) => list.push({ id: `q${n}`, from: 'Quick answer', title: x.title, text: x.text, route: { to: x.to, label: x.label }, lessonId: x.lessonId }))
+  QUICK.forEach((x, n) => list.push({ id: `q${n}`, from: 'Quick answer', title: x.title, text: x.text, route: { to: x.to, label: x.label }, lessonId: x.lessonId, steps: x.steps }))
   const extra = new Map<string, string>(QUICK.map((x, n) => [`q${n}`, x.q]))
   for (const l of ALL_LESSONS) addLesson(list, l)
   docs = list.map(a => {
@@ -119,7 +121,7 @@ export function ask(question: string, max = 3): Answer[] {
     out.push(a)
     if (out.length >= max) break
   }
-  return out
+  return out.map(a => ({ ...a, steps: tutorial(a, q) }))
 }
 
 /** Little things she says that aren't app questions. */
@@ -130,4 +132,33 @@ export function smallTalk(q: string): string | null {
   if (/thank/.test(t)) return 'Anytime, boss. Go sell something fabulous!'
   if (/ka-?ching|dance|spin|curtsy/.test(t)) return 'You asked for it!'
   return null
+}
+
+/* ---------- step-by-step tutorials ---------- */
+
+/** Build a short step-by-step tutorial for an answer. She uses the lesson's own "put the steps in
+   order" practice when it fits the question (those are the real steps, kept current by the lesson
+   rule), then a list of points from the lesson, then the answer itself, sentence by sentence. */
+const VERB = /^(tap|open|scan|print|pick|add|type|choose|stick|download|upload|paste|check|walk|set|load|hold|put|select|save|snap|name|tick|drop|read|send|close|slide|let|import|buy|go|find|make|write|mark|share|turn|post|wait|export|fill|start|unpack|photograph|tag|sort|give|move|enter|copy|book|spin)\b/i
+
+function tutorial(a: Omit<Answer, 'score'>, q: string[]): string[] {
+  const lesson = ALL_LESSONS.find(l => l.id === a.lessonId)
+  const want = new Set([...q, ...tokens(a.title)])
+  const overlap = (text: string) => tokens(text).filter(w => want.has(w)).length
+  // Real steps start with something to do: "Tap Pick", "Scan its box".
+  const doable = (list: string[]) => list.filter(x => VERB.test(x.replace(/^\d+\.\s*/, ''))).length / list.length
+  const lists: { steps: string[]; score: number }[] = []
+  for (const sl of lesson?.slides ?? []) {
+    if (sl.kind === 'order') lists.push({ steps: sl.steps, score: overlap(`${sl.title} ${sl.prompt} ${sl.steps.join(' ')}`) + 2 + doable(sl.steps) * 4 })
+    else if (sl.kind === 'learn' && (sl.points?.length ?? 0) >= 3) lists.push({ steps: sl.points!, score: overlap(`${sl.title} ${sl.text} ${sl.points!.join(' ')}`) * 0.6 + (sl.title === a.title ? 3 : 0) + doable(sl.points!) * 4 - (doable(sl.points!) < 0.5 ? 4 : 0) })
+  }
+  lists.sort((x, y) => y.score - x.score)
+  let steps = a.steps ?? (lists[0] && lists[0].score >= 3 ? lists[0].steps : a.points && a.points.length >= 2 ? a.points : sentences(a.text))
+  steps = steps.slice(0, 8).map(x => x.replace(/^\d+\.\s*/, '').replace(/\s+/g, ' ').trim()).filter(Boolean)
+  if (a.route) steps = [`Open ${a.route.label.replace(/^Open /, '')}. Tap the button below and I'll come with you.`, ...steps]
+  return steps
+}
+
+function sentences(t: string) {
+  return t.split(/(?<=[.!?])\s+(?=[A-Z"])/).filter(x => x.length > 3)
 }

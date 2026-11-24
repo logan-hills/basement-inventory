@@ -138,6 +138,14 @@ export default function Home() {
         <Link to="/intake" className="btn gold"><Icon name="plus" size={18} />Add stock</Link>
       </div>
 
+      {/* Nova greets you at the top with today's tip. Tap her for another one. */}
+      <section className="nova-strip home-nova" aria-label="A tip from Nova">
+        <NovaSays mood={HOME_TIPS[tip][0]} key={tip} size={96} onNovaClick={() => setTip(t => (t + 1) % HOME_TIPS.length)}>
+          {HOME_TIPS[tip][1]}
+        </NovaSays>
+        {hasAcademy(shop?.plan) && <Link to="/lessons" className="btn ghost small nova-strip-link"><Icon name="lessons" size={16} />Dazzle University</Link>}
+      </section>
+
       <div className="top-grid">
         {next ? (
           <div className="gh-hero">
@@ -190,14 +198,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="stack">
-        <div className="section-head"><h2 className="section-title">A tip from Nova</h2>{hasAcademy(shop?.plan) && <Link to="/lessons" className="link-btn"><Icon name="lessons" size={16} /> Dazzle University →</Link>}</div>
-        <div className="nova-strip">
-          <NovaSays mood={HOME_TIPS[tip][0]} key={tip} onNovaClick={() => setTip(t => (t + 1) % HOME_TIPS.length)}>
-            {HOME_TIPS[tip][1]}
-          </NovaSays>
-        </div>
-      </section>
     </div>
   )
 }
