@@ -13,7 +13,7 @@ import CourseBag from '../components/CourseBag'
 import LessonTag from '../components/LessonTag'
 import { CertificateWindow, Medal } from '../components/Certificate'
 import ClassSignup from '../components/ClassSignup'
-import { downloadIcs, prettyDate, useClassSignups, type Signup } from '../lib/classSignups'
+import { downloadIcs, nextDates, prettyDate, useClassSignups, type Signup } from '../lib/classSignups'
 import type { LiveClass } from '../lessons/classes'
 import { awardStatus, type AwardStatus } from '../lessons/awards'
 import { CLASS_TZ, ONE_ON_ONE, QUEEN_SESSION } from '../lessons/classes'
@@ -84,7 +84,7 @@ export default function Lessons() {
   const signups = useClassSignups()
   const { classes } = useLiveClasses()
   const [editTimes, setEditTimes] = useState(false)
-  const [seat, setSeat] = useState<{ c: LiveClass; label: 'Daytime' | 'Evening' } | null>(null)
+  const [seat, setSeat] = useState<{ c: LiveClass; label: 'Daytime' | 'Evening'; date?: string } | null>(null)
   const [showAllCerts, setShowAllCerts] = useState(false)
   const awards = useMemo(() => awardStatus(progress), [progress])
   const s = q.trim().toLowerCase()
@@ -203,10 +203,12 @@ export default function Lessons() {
                   <span className="uni-live-list">
                     {classes.map(c => (
                       <span key={c.id} className={`uni-live tone-${c.tone}`}>
-                        <span className="uni-live-what"><small>{c.day}</small><b>{c.title}</b></span>
+                        <span className="uni-live-what"><small>{c.day}</small><b>{c.title}</b>
+                          <ComingUp c={c} onPick={date => setSeat({ c, label: 'Daytime', date })} />
+                        </span>
                         <span className="uni-live-times">
                           {c.sessions.map(x => (
-                            <button key={x.label} type="button" className="uni-live-time" onClick={() => setSeat({ c, label: x.label })}><small>{x.label}</small><b>{x.time}</b><span>Save my seat ›</span></button>
+                            <button key={x.label} type="button" className="uni-live-time" onClick={() => setSeat({ c, label: x.label })}><small>{x.label}</small><b>{x.time}</b><i className="uni-next">{nextLabel(c, x.time)}</i><span>Save my seat ›</span></button>
                           ))}
                         </span>
                         <MySeats c={c} signups={signups} />
@@ -296,7 +298,7 @@ export default function Lessons() {
         </section>
       ) : tab === 'classes' ? (
         <section className="stack wide-gap">
-          <LiveClasses classes={classes} isDone={isDone} signups={signups} onSeat={(c, label) => setSeat({ c, label })} onEditTimes={() => setEditTimes(true)} />
+          <LiveClasses classes={classes} isDone={isDone} signups={signups} onSeat={(c, label, date) => setSeat({ c, label, date })} onEditTimes={() => setEditTimes(true)} />
         </section>
       ) : tab === 'business' ? (
         <section className="stack wide-gap">
@@ -318,6 +320,13 @@ export default function Lessons() {
                 <h2 className="uni-h2">Grow your business</h2>
                 <p className="uni-sub">{COURSES.length} courses, 15 to 20 minutes each, with a workbook and a certificate. Built on Wharton, Harvard Business School, MIT Sloan, McKinsey, Georgia Tech, the SBA, the IRS and the FTC.</p>
               </div>
+              <button type="button" className="uni-feature tone-sky" onClick={() => go('business', { school: 'sky' })}>
+                <span className="uni-feature-tag">✦ New school</span>
+                <b>Launching your website</b>
+                <span>Open a shop that sells between lives. Pick the right builder, then launch step by step with Square, Shopify, GoDaddy or AI.</span>
+                <span className="uni-feature-chips">{['Square', 'Shopify', 'GoDaddy', 'AI builders'].map(x => <i key={x}>{x}</i>)}</span>
+                <span className="uni-feature-go">{COURSES.filter(l => l.school === 'Launching your website').length} courses · Start here ›</span>
+              </button>
               {starters.length > 0 && (
                 <div className="uni-start-with">
                   <h3 className="uni-h3">New here? Start with these</h3>
@@ -433,13 +442,28 @@ export default function Lessons() {
         </section>
       )}
       {editTimes && <ClassScheduleEditor onClose={() => setEditTimes(false)} />}
-      {seat && <ClassSignup c={seat.c} label={seat.label} signups={signups} onClose={() => setSeat(null)} />}
+      {seat && <ClassSignup c={seat.c} label={seat.label} date={seat.date} signups={signups} onClose={() => setSeat(null)} />}
       {cert && <CertificateWindow a={cert} shopName={shop?.name ?? ''} shopId={shop?.id} onClose={() => setCert(null)} />}
     </div>
   )
 }
 
 /** Weekly live classes, 1:1 coaching and time with the Queen. */
+/** "Next: Mon, Nov 30" for one session time. */
+const nextLabel = (c: LiveClass, time: string) => { const d = nextDates(c, time, 1)[0]; return d ? `Next: ${prettyDate(d).replace(/^\w+, /, '')}` : 'No date yet' }
+
+/** The next three class dates, right on the card. Tap one to save a seat for that day. */
+function ComingUp({ c, onPick }: { c: LiveClass; onPick: (date: string) => void }) {
+  const dates = nextDates(c, c.sessions[c.sessions.length - 1]?.time ?? '11:59 PM', 3)
+  if (!dates.length) return null
+  return (
+    <span className="uni-coming">
+      <span className="uni-coming-label">Coming up</span>
+      {dates.map(d => <button key={d} type="button" className="uni-coming-date" onClick={() => onPick(d)}>{prettyDate(d)}</button>)}
+    </span>
+  )
+}
+
 /** "You're in" rows for the seats I've saved in one class, with add-to-calendar and cancel. */
 function MySeats({ c, signups }: { c: LiveClass; signups: ReturnType<typeof useClassSignups> }) {
   const mine = signups.mine.filter(m => m.class_id === c.id)
@@ -487,7 +511,7 @@ function WhosComing({ signups, classes }: { signups: ReturnType<typeof useClassS
   )
 }
 
-function LiveClasses({ classes, isDone, signups, onSeat, onEditTimes }: { classes: LiveClass[]; isDone: (l: Lesson) => boolean; signups: ReturnType<typeof useClassSignups>; onSeat: (c: LiveClass, label: 'Daytime' | 'Evening') => void; onEditTimes: () => void }) {
+function LiveClasses({ classes, isDone, signups, onSeat, onEditTimes }: { classes: LiveClass[]; isDone: (l: Lesson) => boolean; signups: ReturnType<typeof useClassSignups>; onSeat: (c: LiveClass, label: 'Daytime' | 'Evening', date?: string) => void; onEditTimes: () => void }) {
   return (
     <div className="uni-classes" id="u-classes">
       <div className="uni-classes-head">
@@ -500,12 +524,13 @@ function LiveClasses({ classes, isDone, signups, onSeat, onEditTimes }: { classe
           <article key={c.id} className={`uni-class tone-${c.tone}`}>
             <span className="uni-class-day">{c.day}</span>
             <h4>{c.title}</h4>
+            <ComingUp c={c} onPick={date => onSeat(c, 'Daytime', date)} />
             <p>{c.what}</p>
             <ul className="uni-class-covers">{c.covers.map(x => <li key={x}>{x}</li>)}</ul>
             <div className="uni-class-times">
               {c.sessions.map(s => (
                 <button key={s.label} type="button" className="uni-class-time" onClick={() => onSeat(c, s.label)}>
-                  <small>{s.label}</small><b>{s.time}</b><span>Save my seat ›</span>
+                  <small>{s.label}</small><b>{s.time}</b><i className="uni-next">{nextLabel(c, s.time)}</i><span>Save my seat ›</span>
                 </button>
               ))}
             </div>

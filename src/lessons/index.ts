@@ -22,6 +22,11 @@ import consult from './consult'
 import sharedpage from './sharedpage'
 import profile from './profile'
 import brand from './business/brand'
+import webstart from './business/webstart'
+import websquare from './business/websquare'
+import webshopify from './business/webshopify'
+import webgodaddy from './business/webgodaddy'
+import webai from './business/webai'
 import marketing from './business/marketing'
 import social from './business/social'
 import creatorpay from './business/creatorpay'
@@ -61,7 +66,7 @@ import gear from './gear'
 import giveaways from './giveaways'
 
 export const LESSONS: Lesson[] = [launch, tour, profile, settings, gear, receive, inventory, bulk, printer, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, giveaways, bot, sale, upload, pick, shipping, customers, reports, consult]
-export const COURSES: Lesson[] = [strategy1, strategy2, growth, liveplan, industry, official, salestax, taxes, finance, sourcing, vendors, brand, marketing, aimarketing, social, reels, content, canva, apps, aicalm, ai, aiedge, aistaff, aitrust, creatorpay, tiktok, dropship, storage, picking, packlive, lean, shipfast, retention, communication]
+export const COURSES: Lesson[] = [strategy1, strategy2, growth, liveplan, industry, official, salestax, taxes, finance, sourcing, vendors, brand, marketing, aimarketing, webstart, websquare, webshopify, webgodaddy, webai, social, reels, content, canva, apps, aicalm, ai, aiedge, aistaff, aitrust, creatorpay, tiktok, dropship, storage, picking, packlive, lean, shipfast, retention, communication]
 export const ALL_LESSONS: Lesson[] = [...LESSONS, ...COURSES]
 export const lessonById = (id?: string) => ALL_LESSONS.find(l => l.id === id)
 export * from './types'
