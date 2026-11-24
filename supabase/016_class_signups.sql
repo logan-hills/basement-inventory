@@ -21,11 +21,14 @@ alter table public.class_signups enable row level security;
 revoke all on public.class_signups from anon;
 grant select, insert, delete on public.class_signups to authenticated;
 
--- Is this person a host on any shared Page? Hosts run the classes, so they see the full list.
+-- Is this person a host of the community calendar (the shared Page everyone joins)?
+-- Those hosts run the classes, so they see the full list. Hosts of a seller's own private Page don't count.
 create or replace function public.is_any_host() returns boolean
 language sql stable security definer set search_path = public as $$
-  select exists (select 1 from public.stage_members where user_id = auth.uid() and role = 'host');
+  select exists (select 1 from public.stage_members m join public.stages s on s.id = m.stage_id
+                 where m.user_id = auth.uid() and m.role = 'host' and s.open_to_all);
 $$;
+grant execute on function public.is_any_host() to authenticated;
 
 drop policy if exists class_signups_own_insert on public.class_signups;
 create policy class_signups_own_insert on public.class_signups for insert to authenticated

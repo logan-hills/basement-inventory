@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { supabase } from './supabase'
 import { useSession } from './session'
 import { CONTACT } from './legal'
-import { CLASS_TZ_ID, LIVE_CLASSES, type LiveClass } from '../lessons/classes'
+import { CLASS_TZ_ID, type LiveClass } from '../lessons/classes'
+import { getLiveClasses } from './classSchedule'
 
 /* Live class sign-ups. Saved to Supabase (016_class_signups.sql) so hosts can see who's coming.
    Until that table exists, a seat is kept on this device and the seller is offered an email
@@ -37,13 +38,14 @@ export function timeToMinutes(t: string): number {
 const addDays = (iso: string, n: number) => { const d = new Date(`${iso}T12:00:00Z`); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10) }
 const weekdayOf = (iso: string) => new Date(`${iso}T12:00:00Z`).getUTCDay()
 
-/** The next `count` dates this class meets, skipping today if that session has already started. */
+/** The next `count` dates this class meets, skipping no-class dates and today if that session has already started. */
 export function nextDates(c: LiveClass, time: string, count = 4): string[] {
   const now = nowInClassTz()
   let d = now.date
   const out: string[] = []
-  for (let i = 0; i < 7 * (count + 1) && out.length < count; i++, d = addDays(d, 1)) {
+  for (let i = 0; i < 7 * (count + 1 + (c.skip?.length ?? 0)) && out.length < count; i++, d = addDays(d, 1)) {
     if (weekdayOf(d) !== c.weekday) continue
+    if (c.skip?.includes(d)) continue
     if (d === now.date && now.minutes >= timeToMinutes(time)) continue
     out.push(d)
   }
@@ -56,7 +58,7 @@ export const prettyDate = (iso: string, long = false) => new Date(`${iso}T12:00:
 const stamp = (iso: string, mins: number) => `${iso.replace(/-/g, '')}T${String(Math.floor(mins / 60)).padStart(2, '0')}${String(mins % 60).padStart(2, '0')}00`
 
 function sessionOf(s: Signup) {
-  const c = LIVE_CLASSES.find(x => x.id === s.class_id)
+  const c = getLiveClasses().find(x => x.id === s.class_id)
   const sess = c?.sessions.find(x => x.label === s.session_label)
   return { c, sess }
 }
@@ -119,11 +121,11 @@ export function useClassSignups() {
 
   const load = useCallback(async () => {
     if (!session) return
+    const { data: host } = await supabase.rpc('is_any_host')
+    setIsHost(host === true)
     const { data, error } = await supabase.from('class_signups').select('id,user_id,class_id,session_label,class_date,name,email,phone,note,created_at').gte('class_date', today).order('class_date')
     if (error) { setOnline(!missingTable(error) ? null : false); return }
     setOnline(true)
-    const { data: host } = await supabase.from('stage_members').select('role').eq('user_id', session.user.id).eq('role', 'host').limit(1)
-    setIsHost(!!host?.length)
     const rows = (data ?? []) as Signup[]
     setMine(rows.filter(r => r.user_id === session.user.id))
     setAll(rows)

@@ -16,7 +16,9 @@ import ClassSignup from '../components/ClassSignup'
 import { downloadIcs, prettyDate, useClassSignups, type Signup } from '../lib/classSignups'
 import type { LiveClass } from '../lessons/classes'
 import { awardStatus, type AwardStatus } from '../lessons/awards'
-import { CLASS_TZ, LIVE_CLASSES, ONE_ON_ONE, QUEEN_SESSION } from '../lessons/classes'
+import { CLASS_TZ, ONE_ON_ONE, QUEEN_SESSION } from '../lessons/classes'
+import { useLiveClasses } from '../lib/classSchedule'
+import ClassScheduleEditor from '../components/ClassScheduleEditor'
 import { CONTACT } from '../lib/legal'
 import novaLaverne from '../assets/nova-laverne.webp'
 
@@ -80,6 +82,8 @@ export default function Lessons() {
   const [st, setSt] = useState('Pennsylvania')
   const [cert, setCert] = useState<AwardStatus | null>(null)
   const signups = useClassSignups()
+  const { classes } = useLiveClasses()
+  const [editTimes, setEditTimes] = useState(false)
   const [seat, setSeat] = useState<{ c: LiveClass; label: 'Daytime' | 'Evening' } | null>(null)
   const [showAllCerts, setShowAllCerts] = useState(false)
   const awards = useMemo(() => awardStatus(progress), [progress])
@@ -197,7 +201,7 @@ export default function Lessons() {
                 <span className="uni-step-text"><b>Join a live class</b><span>Free on camera with our team. Tap a time to save your seat. Times are {CLASS_TZ}.</span></span>
                 <span className="uni-live-wrap">
                   <span className="uni-live-list">
-                    {LIVE_CLASSES.map(c => (
+                    {classes.map(c => (
                       <span key={c.id} className={`uni-live tone-${c.tone}`}>
                         <span className="uni-live-what"><small>{c.day}</small><b>{c.title}</b></span>
                         <span className="uni-live-times">
@@ -210,6 +214,7 @@ export default function Lessons() {
                     ))}
                   </span>
                   <button type="button" className="uni-live-more" onClick={() => go('classes')}>Class details and 1:1 coaching ›</button>
+                  {signups.isHost && <button type="button" className="uni-live-more uni-edit-times" onClick={() => setEditTimes(true)}>✎ Edit class times</button>}
                 </span>
               </div></li>
               <li><button type="button" className="uni-step tone-gold" onClick={() => go('business')}>
@@ -291,7 +296,7 @@ export default function Lessons() {
         </section>
       ) : tab === 'classes' ? (
         <section className="stack wide-gap">
-          <LiveClasses isDone={isDone} signups={signups} onSeat={(c, label) => setSeat({ c, label })} />
+          <LiveClasses classes={classes} isDone={isDone} signups={signups} onSeat={(c, label) => setSeat({ c, label })} onEditTimes={() => setEditTimes(true)} />
         </section>
       ) : tab === 'business' ? (
         <section className="stack wide-gap">
@@ -427,6 +432,7 @@ export default function Lessons() {
           </div>
         </section>
       )}
+      {editTimes && <ClassScheduleEditor onClose={() => setEditTimes(false)} />}
       {seat && <ClassSignup c={seat.c} label={seat.label} signups={signups} onClose={() => setSeat(null)} />}
       {cert && <CertificateWindow a={cert} shopName={shop?.name ?? ''} shopId={shop?.id} onClose={() => setCert(null)} />}
     </div>
@@ -454,7 +460,7 @@ function MySeats({ c, signups }: { c: LiveClass; signups: ReturnType<typeof useC
 }
 
 /** For hosts: who has saved a seat, by class and date. */
-function WhosComing({ signups }: { signups: ReturnType<typeof useClassSignups> }) {
+function WhosComing({ signups, classes }: { signups: ReturnType<typeof useClassSignups>; classes: LiveClass[] }) {
   if (!signups.isHost) return null
   const groups = new Map<string, Signup[]>()
   for (const r of signups.all) {
@@ -467,7 +473,7 @@ function WhosComing({ signups }: { signups: ReturnType<typeof useClassSignups> }
       {groups.size === 0 && <p>No seats saved yet.</p>}
       {[...groups.entries()].map(([k, rows]) => {
         const [date, id, label] = k.split('|')
-        const c = LIVE_CLASSES.find(x => x.id === id)
+        const c = classes.find(x => x.id === id)
         const emails = rows.map(r => r.email).filter(Boolean).join(', ')
         return (
           <details key={k} className="uni-whos-group">
@@ -481,15 +487,16 @@ function WhosComing({ signups }: { signups: ReturnType<typeof useClassSignups> }
   )
 }
 
-function LiveClasses({ isDone, signups, onSeat }: { isDone: (l: Lesson) => boolean; signups: ReturnType<typeof useClassSignups>; onSeat: (c: LiveClass, label: 'Daytime' | 'Evening') => void }) {
+function LiveClasses({ classes, isDone, signups, onSeat, onEditTimes }: { classes: LiveClass[]; isDone: (l: Lesson) => boolean; signups: ReturnType<typeof useClassSignups>; onSeat: (c: LiveClass, label: 'Daytime' | 'Evening') => void; onEditTimes: () => void }) {
   return (
     <div className="uni-classes" id="u-classes">
       <div className="uni-classes-head">
         <h3>Live orientation classes</h3>
         <p>Learn it with us, on camera, with time for your questions. Pick daytime or evening. All times are {CLASS_TZ}.</p>
+        {signups.isHost && <button type="button" className="btn uni-ghost-dark uni-edit-times" onClick={onEditTimes}>✎ Edit class times <small>Hosts only</small></button>}
       </div>
       <div className="uni-class-grid">
-        {LIVE_CLASSES.map(c => (
+        {classes.map(c => (
           <article key={c.id} className={`uni-class tone-${c.tone}`}>
             <span className="uni-class-day">{c.day}</span>
             <h4>{c.title}</h4>
@@ -519,7 +526,7 @@ function LiveClasses({ isDone, signups, onSeat }: { isDone: (l: Lesson) => boole
           </div>
         </article>
       </div>
-      <WhosComing signups={signups} />
+      <WhosComing signups={signups} classes={classes} />
       <article className="uni-queen">
         <div className="uni-queen-copy">
           <span className="uni-class-day">{QUEEN_SESSION.tagline}</span>
