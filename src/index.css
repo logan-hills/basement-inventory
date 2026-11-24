@@ -2771,7 +2771,6 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 
 /* ===== Class schedule editor (hosts) ===== */
 .sched-class { display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 18px; border: 1px solid var(--border-strong); border-left: 6px solid var(--t1, var(--gold)); }
-.sched-class.tone-violet { --t1: #B07BFF; } .sched-class.tone-fuchsia { --t1: #FF4FA3; }
 .sched-class h3 { margin: 0; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.35rem; }
 .sched-class fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .sched-class legend { font-weight: 700; margin-bottom: 8px; }
@@ -2787,3 +2786,38 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .uni-classes-head .uni-edit-times small { opacity: .75; margin-left: 6px; }
 .uni-live-more.uni-edit-times { font-weight: 800; }
 @media (max-width: 420px) { .sched-times { grid-template-columns: 1fr; } }
+
+/* ===== University pop-ups: ivory, foil and class colors, to match the University page ===== */
+.uni .sheet-backdrop { background: rgba(42, 20, 32, .55); backdrop-filter: blur(4px); }
+.uni .sheet-panel { position: relative; background: var(--u-canvas); color: var(--u-ink); border: 0; box-shadow: 0 30px 80px rgba(60, 0, 30, .45); padding-top: 26px; }
+.uni .sheet-panel::before { content: ''; position: absolute; inset: 0 0 auto; height: 6px; background: var(--u-foil); }
+.uni .sheet-panel, .uni .sheet-panel h2, .uni .sheet-panel legend, .uni .sheet-panel label { color: var(--u-ink); }
+.uni .sheet-panel h2 { font-size: 1.7rem; }
+.uni .sheet-panel .sheet-grip { background: var(--u-line); }
+.uni .sheet-panel .icon-btn { background: #fff; color: var(--u-ink); border: 1px solid var(--u-line); }
+.uni .sheet-panel .muted, .uni .sheet-panel .small { color: var(--u-muted); }
+.uni .sheet-panel legend, .uni .sheet-panel label { font-size: 1.05rem; font-weight: 700; }
+.uni .sheet-panel input { background: #fff; color: var(--u-ink); border: 1px solid var(--u-line); border-radius: 14px; min-height: 52px; font-size: 1.1rem; color-scheme: light; }
+.uni .sheet-panel input:focus { outline: 3px solid color-mix(in srgb, var(--t1, #C4006C) 35%, transparent); border-color: var(--t1, #C4006C); }
+.uni .sheet-panel .error { color: #B3261E; font-weight: 700; }
+.pop-banner { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; border-radius: 18px; color: #fff; background: radial-gradient(circle at 88% 15%, rgba(255, 255, 255, .35), transparent 40%), linear-gradient(135deg, var(--t1, #C4006C), var(--t2, #FF4FA3)); box-shadow: 0 12px 28px color-mix(in srgb, var(--t1, #C4006C) 35%, transparent); }
+.pop-banner small { font-size: .8rem; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; opacity: .95; }
+.pop-banner b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.6rem; line-height: 1.1; }
+.pop-banner span { font-size: 1rem; line-height: 1.45; opacity: .95; }
+.pop-banner.foil { color: #3B2600; background: radial-gradient(circle at 90% 10%, rgba(255, 255, 255, .7), transparent 35%), var(--u-foil); box-shadow: 0 12px 28px rgba(185, 134, 43, .35); }
+.uni .sheet-panel .class-chip { background: #fff; color: var(--u-ink); border: 1px solid var(--u-line); box-shadow: 0 3px 8px rgba(120, 40, 70, .06); transition: transform .15s var(--ease), box-shadow .15s var(--ease); }
+.uni .sheet-panel .class-chip:hover { transform: translateY(-2px); }
+.uni .sheet-panel .class-chip small { color: var(--u-muted); opacity: 1; }
+.uni .sheet-panel .class-chip.on { color: #fff; border-color: transparent; background: linear-gradient(135deg, var(--t1, #C4006C), var(--t2, #FF4FA3)); box-shadow: 0 8px 18px color-mix(in srgb, var(--t1, #C4006C) 35%, transparent); }
+.uni .sheet-panel .class-chip.on small { color: rgba(255, 255, 255, .92); }
+.uni .sheet-panel .class-chip.sched-date.off { background: #FFF1F3; color: #9A3B52; border: 1px dashed #E7A3B4; box-shadow: none; opacity: 1; }
+.uni .sheet-panel .class-chip.sched-date.off small { color: #9A3B52; font-weight: 800; }
+.uni .sheet-panel .btn.gold { background: var(--u-foil); color: #3B2600; border: 1px solid #E8C56A; box-shadow: 0 10px 24px rgba(185, 134, 43, .35); font-weight: 800; }
+.uni .sheet-panel .btn.ghost, .uni .sheet-panel .btn.outline-gold { background: #fff; color: #A3005A; border: 1px solid var(--u-line); }
+.uni .sheet-panel .class-prep a { color: #A3005A; }
+.uni .sheet-panel .class-prep small { color: var(--u-muted); }
+.uni .sheet-panel .sched-class { background: #fff; border: 1px solid var(--u-line); border-left: 0; border-top: 6px solid var(--t1, #C99A2E); box-shadow: 0 10px 26px rgba(120, 40, 70, .08); }
+.uni .sheet-panel .sched-class h3 { color: var(--u-ink); }
+.uni .sheet-panel .sched-ok { background: #E7F6EC; color: #145A35; }
+.uni .class-ticket { position: relative; overflow: hidden; }
+.uni .class-ticket::after { content: '✦'; position: absolute; right: 16px; top: 10px; font-size: 1.4rem; opacity: .7; }

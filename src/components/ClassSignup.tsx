@@ -36,9 +36,9 @@ export default function ClassSignup({ c, label, onClose, signups }: {
   }
 
   return (
-    <Sheet open onClose={onClose} title={done ? 'You\'re in!' : `Save my seat: ${c.title}`}>
+    <Sheet open onClose={onClose} title={done ? 'You\'re in!' : 'Save my seat'}>
       {done ? (
-        <div className="stack class-done">
+        <div className={`stack class-done tone-${c.tone}`}>
           <div className={`class-ticket tone-${c.tone}`}>
             <small>{c.day.replace(/s$/, '')} · {CLASS_TZ}</small>
             <b>{c.title}</b>
@@ -61,7 +61,11 @@ export default function ClassSignup({ c, label, onClose, signups }: {
           <button type="button" className="btn ghost" onClick={onClose}>Done</button>
         </div>
       ) : (
-        <div className="stack class-form">
+        <div className={`stack class-form tone-${c.tone}`}>
+          <div className="pop-banner">
+            <small>✦ Free live class · {c.day} · {CLASS_TZ}</small>
+            <b>{c.title}</b>
+          </div>
           <fieldset>
             <legend>Daytime or evening?</legend>
             <div className="class-chips">

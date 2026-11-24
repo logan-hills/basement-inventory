@@ -39,7 +39,11 @@ export default function ClassScheduleEditor({ onClose }: { onClose: () => void }
   return (
     <Sheet open onClose={onClose} title="Edit class times" wide>
       <div className="stack sched">
-        <p className="muted">Pick the day and times for each class. Tap a date to mark it "No class" for a holiday or a week off. Times are {CLASS_TZ}.</p>
+        <div className="pop-banner foil">
+          <small>♛ Hosts only · Class schedule</small>
+          <b>Set the week's live classes</b>
+          <span>Pick the day and times for each class. Tap a date to mark it "No class" for a holiday or a week off. Times are {CLASS_TZ}.</span>
+        </div>
         {classes.map(c => {
           const d = drafts[c.id]
           const upcoming = nextDates({ ...c, weekday: d.weekday, skip: [] }, to12(d.day), 8)
