@@ -14,7 +14,7 @@ export const SECONDS_PER_KIND: Record<Slide['kind'], number> = {
 const words = (s?: string) => (s ? s.split(/\s+/).filter(Boolean).length : 0)
 
 function slideWords(s: Slide): number {
-  const n = words(s.nova)
+  const n = words(s.nova) + words(s.queen)
   switch (s.kind) {
     case 'learn': return n + words(s.title) + words(s.text) + (s.points ?? []).reduce((a, p) => a + words(p), 0) + words(s.example) + words(s.tip)
       + (s.table ? [s.table.head, ...s.table.rows].flat().reduce((a, c) => a + words(c), 0) : 0) + (s.screen ? 10 : 0)
@@ -31,6 +31,7 @@ function slideWords(s: Slide): number {
 }
 
 export function lessonMinutes(l: Lesson): number {
-  const secs = l.slides.reduce((a, s) => a + (slideWords(s) / WORDS_PER_MINUTE) * 60 + SECONDS_PER_KIND[s.kind], 0)
+  const note = l.queen ? ((words(l.queen.welcome) + words(l.queen.signoff)) / WORDS_PER_MINUTE) * 60 : 0
+  const secs = note + l.slides.reduce((a, s) => a + (slideWords(s) / WORDS_PER_MINUTE) * 60 + SECONDS_PER_KIND[s.kind], 0)
   return Math.max(1, Math.round(secs / 60))
 }

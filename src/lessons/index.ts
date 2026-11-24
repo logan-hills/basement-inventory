@@ -67,13 +67,16 @@ import mindset from './business/mindset'
 import passion from './business/passion'
 import persistence from './business/persistence'
 import herpower from './business/herpower'
+import livedrop from './business/livedrop'
+import loads from './business/loads'
+import preorder from './business/preorder'
 import launch from './launch'
 import printer from './printer'
 import gear from './gear'
 import giveaways from './giveaways'
 
 export const LESSONS: Lesson[] = [launch, tour, profile, team, settings, gear, receive, inventory, bulk, printer, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, giveaways, bot, sale, upload, pick, shipping, customers, reports, consult]
-export const COURSES: Lesson[] = [mindset, passion, persistence, herpower, launchbiz, strategy1, strategy2, growth, liveplan, industry, official, salestax, taxes, finance, sourcing, vendors, brand, marketing, community, aimarketing, webstart, websquare, webshopify, webgodaddy, webai, social, reels, content, canva, apps, aicalm, ai, aiedge, aistaff, aitrust, creatorpay, tiktok, dropship, storage, picking, packlive, lean, shipfast, retention, communication]
+export const COURSES: Lesson[] = [mindset, passion, persistence, herpower, launchbiz, strategy1, strategy2, growth, liveplan, industry, official, salestax, taxes, finance, sourcing, loads, preorder, livedrop, vendors, brand, marketing, community, aimarketing, webstart, websquare, webshopify, webgodaddy, webai, social, reels, content, canva, apps, aicalm, ai, aiedge, aistaff, aitrust, creatorpay, tiktok, dropship, storage, picking, packlive, lean, shipfast, retention, communication]
 export const ALL_LESSONS: Lesson[] = [...LESSONS, ...COURSES]
 export const lessonById = (id?: string) => ALL_LESSONS.find(l => l.id === id)
 export * from './types'
