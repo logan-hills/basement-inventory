@@ -17,6 +17,10 @@ const lesson: Lesson = {
     { org: 'World Health Organization', title: 'Burn-out an "occupational phenomenon"', url: 'https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases' },
     { org: 'Stanford University', title: "Why 'Find your passion!' may be bad advice", url: 'https://news.stanford.edu/stories/2018/06/find-passion-may-bad-advice' },
   ],
+  queen: {
+    welcome: "You started this because you love it. I want you to still love it five years from now. This course is about protecting that spark while the business grows.",
+    signoff: "Guard your shop hours, delegate what drains you, and celebrate your small wins out loud. A joyful seller is a magnetic seller.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Two kinds of passion', kind: 'learn', title: 'Not all passion is good for you', nova: "I love this job, boss, and I want YOU to love yours for a long, long time. Let's protect that.",
@@ -40,7 +44,7 @@ const lesson: Lesson = {
       points: ['Don\'t wait to feel passionate before you start; passion grows as you get good', 'Expect the hard middle part; it doesn\'t mean you picked the wrong thing', 'Feed your interest: learn more about your product, your buyers and your craft', 'Try new corners of the work (styling, theme nights, Reels) to find what lights you up'] },
     { kind: 'quiz', q: 'The packing and bookkeeping parts of your shop feel boring. What does the Stanford research suggest?', options: ['You picked the wrong business and should quit', 'Hard and boring parts are normal; passion grows as you build skill and shape the work', 'Real passion means loving every single task', 'Wait until you feel passionate again before going live'], answer: 1, why: 'Interest is developed. Every business has dull parts. Shape the work, build skill, and your passion has room to grow.' },
 
-    { chapter: 'Love the work', kind: 'learn', title: 'Sort your tasks by energy', text: "Every shop has parts you love and parts you dread. Write them down. The goal is a week with more of the first and less of the second.",
+    { chapter: 'Love the work', queen: "Do your most draining job right before something you love. The reward on the other side makes it go faster.", kind: 'learn', title: 'Sort your tasks by energy', text: "Every shop has parts you love and parts you dread. Write them down. The goal is a week with more of the first and less of the second.",
       table: { head: ['Lights me up', 'Neutral', 'Drains me'], rows: [
         ['Styling looks on live', 'Pricing and tagging', 'Chasing unpaid invoices'],
         ['Chatting with regulars', 'Shelving stock', 'Printing labels at midnight'],
@@ -58,7 +62,7 @@ const lesson: Lesson = {
 
     { chapter: 'Boundaries', kind: 'learn', title: 'Your shop hours', text: "The World Health Organization describes burnout as coming from chronic work stress that hasn't been managed: exhaustion, feeling distant or cynical about the work, and feeling less effective. Boundaries are how you manage it before it manages you.",
       points: ['Set message hours and post them ("I answer messages 9 AM to 7 PM")', 'Pick one full day a week with no shop work', 'Turn off notifications during family time', 'Plan your lives a week ahead so nothing is last-minute', 'Say no to "just one more" live when you are tired'] },
-    { kind: 'script', title: 'Kind boundary lines', text: 'Copy these. Boundaries sound warm when you say them with love.', lines: [
+    { queen: "You can be kind and still say 'my shop is closed for the night.' Boundaries are how you stay kind long-term.", kind: 'script', title: 'Kind boundary lines', text: 'Copy these. Boundaries sound warm when you say them with love.', lines: [
       'Auto-reply: "Thank you for your message! I answer between 9 AM and 7 PM, and I\'ll get back to you soon. 💛"',
       'On live: "Tonight is our last live of the week, ladies. I\'m resting Sunday so I can bring you my best Tuesday!"',
       'To a pushy buyer: "I want to get this right for you, so I\'ll look into it first thing in the morning."',

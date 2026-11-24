@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'U.S. Small Business Administration', title: 'Marketing and sales', url: 'https://www.sba.gov/business-guide/manage-your-business/marketing-sales' },
     { org: 'Lean Enterprise Institute', title: 'Lean lexicon (batching and flow)', url: 'https://www.lean.org/explore-lean/lexicon-terms/' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Posting every day feels impossible until you batch it. One afternoon a month can keep your page busy and your lives full. Let me show you how I'd plan it.",
+    signoff: "Anchor your posts around your lives, keep an idea bank, and show your face. One afternoon a month, and your page runs itself.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'The content mix', kind: 'learn', title: 'Not every post is a sales pitch', nova: 'If every post says "buy," people tune out. Mix it up and they\'ll lean in.',
       text: 'Strong small-business pages mix a few kinds of posts. A simple split many marketers use: most posts give value or build connection, and a smaller share asks for the sale.',
@@ -40,7 +44,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'order', title: 'Warm-up order', prompt: 'Put this week\'s posts in order for a Thursday live.', steps: ['Monday: teach post on the theme', 'Tuesday: poster and sneak peek Reel', 'Wednesday: 3 hero pieces', 'Thursday morning: "Tonight at 7" reminder', 'Friday: live highlight and buyer shout-outs'] },
 
-    { chapter: 'Batch it', kind: 'learn', title: 'The batching afternoon', text: 'Switching between tasks wastes time (the lean course calls it waste). Do all of one kind of task at once.',
+    { chapter: 'Batch it', queen: "Batch on the same afternoon every month, with music and a snack. Make it a ritual, not a chore.", kind: 'learn', title: 'The batching afternoon', text: 'Switching between tasks wastes time (the lean course calls it waste). Do all of one kind of task at once.',
       table: { head: ['Block', 'Time', 'What you make'], rows: [
         ['1. Plan', '30 min', 'Calendar of 20 to 30 posts mapped to your lives'],
         ['2. Shoot photos', '60 min', 'All product and styled photos in one lighting setup'],
@@ -78,7 +82,7 @@ const lesson: Lesson = {
       ] },
     { kind: 'learn', title: 'An idea bank', text: 'Keep a running note of ideas so batching day starts full.',
       points: ['Every question a buyer asks is a teach post', 'Every sellout is a celebrate post', 'Every haul is an unboxing Reel', 'Every behind-the-scenes moment is a connect post', 'Every holiday and season is a theme'] },
-    { kind: 'learn', title: 'Show your face', text: "Posts where buyers see you, not just the product, tend to build trust faster, because people buy from people. You don't need to be on camera all day. One face post for every two product posts is a good rhythm.",
+    { queen: "Your face is your brand. Posts with you in them build trust that product photos alone can't.", kind: 'learn', title: 'Show your face', text: "Posts where buyers see you, not just the product, tend to build trust faster, because people buy from people. You don't need to be on camera all day. One face post for every two product posts is a good rhythm.",
       points: ["A 15-second 'what I found today' clip from the thrift run", "A photo of you wearing the piece of the week", "A thank-you to a buyer (with her permission)", "A quick story about why you started selling"] },
     { kind: 'scenario', title: 'Nobody comments', situation: "Your posts get likes but almost no comments, and the Facebook algorithm seems to be showing them to fewer people each week.",
       options: [

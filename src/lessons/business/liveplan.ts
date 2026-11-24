@@ -17,7 +17,11 @@ const lesson: Lesson = {
     { org: 'McKinsey & Company', title: 'Ready for prime time? The state of live commerce', url: 'https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/ready-for-prime-time-the-state-of-live-commerce' },
     { org: 'Nielsen Norman Group', title: 'Livestream e-commerce: lessons from China', url: 'https://www.nngroup.com/articles/livestream-ecommerce-china/' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "The lives that look effortless are the ones planned the day before. I'll walk you through how I'd plan a live that sells out, with the research behind why it works.",
+    signoff: "Plan your energy, price ahead, nail your opening 60 seconds, and look at your five numbers after every live. Do that, and your lives will get better every week.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Why lives sell', kind: 'learn', title: 'Shopping plus a show', nova: 'Here\'s a secret, boss: your live isn\'t a catalog. It\'s a show where people can buy. Let\'s plan it like one.',
       text: 'Researchers at Wharton describe livestream shopping as a mix of entertainment and buying, where viewers can ask questions and get answers in real time. McKinsey\'s research on live commerce found that the format can turn watchers into buyers far better than a regular online store, because shoppers see the product in use, hear a trusted host, and feel the energy of other people buying.',
@@ -64,7 +68,7 @@ const lesson: Lesson = {
 
     { chapter: 'Get the word out', kind: 'learn', title: 'Fill the room ahead of time', text: 'McKinsey notes that live commerce works best when the event is promoted ahead, like a TV premiere. Most viewers decide to show up before you hit Go Live.',
       points: ['Same day and time every week so it becomes a habit', 'Poster 2 days before and again 2 hours before', 'A short video of one star piece the night before', 'A reminder in your VIP group or text list 30 minutes before', 'Book your slot on the shared calendar early so you get your favorite time'] },
-    { kind: 'script', title: 'Your opening 60 seconds', text: 'The first minute sets the tone. Say this, then go.', lines: [
+    { queen: "Open with energy and your best piece teased, not with 'let's wait for people to join.' The people watching now matter most.", kind: 'script', title: 'Your opening 60 seconds', text: 'The first minute sets the tone. Say this, then go.', lines: [
       '"Hey, hey! Welcome in, y\'all. Say hi and tell me where you\'re watching from!"',
       '"Tonight I\'ve got 8 gold pieces, 4 designer bags, and a $5 tray you\'re going to love."',
       '"Here\'s how to claim: type SOLD and the Live number. SOLD four-eight-two-one."',
@@ -84,7 +88,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'tap', title: 'Name the fix', prompt: 'On your last live, viewers kept typing "can\'t see it." Your window was behind you. What do you fix first?', screen: { title: 'Prep checklist', buttons: ['Sound', 'Light', 'Internet', 'Helper'] }, answer: 'Light', hint: 'A bright window behind you turns you into a shadow. Light belongs in front of you.' },
 
-    { chapter: 'Review and improve', kind: 'learn', title: 'Five numbers after every live', text: 'McKinsey advises brands to track live commerce with clear numbers so each event gets better. You only need five, and the Reports page gives you most of them.',
+    { chapter: 'Review and improve', queen: "Write your five numbers down the same night. Memory makes good lives sound better and bad lives sound worse.", kind: 'learn', title: 'Five numbers after every live', text: 'McKinsey advises brands to track live commerce with clear numbers so each event gets better. You only need five, and the Reports page gives you most of them.',
       table: { head: ['Number', 'What it tells you'], rows: [
         ['Peak viewers', 'Did your promotion work?'],
         ['Buyers', 'How many people said yes'],

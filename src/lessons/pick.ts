@@ -11,6 +11,10 @@ const lesson: Lesson = {
     'Pack each box so it arrives looking like a gift',
   ],
   route: { to: '/orders', label: 'Open Pick and pack' },
+  queen: {
+    welcome: "Picking is where the promise of your live becomes a real box at someone's door. The grocery-store way keeps it fast and accurate. Let's get every piece in the right box.",
+    signoff: "Label the boxes first, scan every piece into its box, and pack like it's a gift. Accurate boxes are how you keep your regulars.",
+  },
   covers: ['src/pages/Pick.tsx', 'src/pages/Orders.tsx', 'src/pages/BoxLabels.tsx', 'src/pages/OrderDetail.tsx', 'src/pages/Receipt.tsx', 'src/components/FreeCameraTip.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Why scan twice', kind: 'learn', title: 'The grocery store way', nova: 'This is the part that makes buyers trust you. Let\'s make it foolproof.',
@@ -25,7 +29,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'number', title: 'Add it up', q: 'You pack 200 boxes a month. Without scanning, 2% go wrong. At about $12 each, what do mistakes cost you a month?', prefix: '$', answer: 48, hint: '2% of 200 boxes is how many? Then multiply by $12.', why: '200 × 0.02 = 4 wrong boxes × $12 = $48 a month, plus 4 buyers who may not come back. Two quick scans make it nearly zero.' },
 
-    { chapter: 'Set up', kind: 'learn', title: 'Label the boxes first', text: 'Go to Pick and pack and tap Print box labels for the orders you\'re packing. Each label has the customer\'s name and the order barcode (DD-…). Print on a 4×6 shipping label printer (one box per label, roll or fan-fold) or a letter sheet of 10. Selling at a pop-up or doing local pickup? Open the order and tap Print receipt for a receipt on a 2¼ or 3⅛ inch receipt roll.',
+    { chapter: 'Set up', queen: "Boxes before pieces, every time. A labeled box can't get mixed up.", kind: 'learn', title: 'Label the boxes first', text: 'Go to Pick and pack and tap Print box labels for the orders you\'re packing. Each label has the customer\'s name and the order barcode (DD-…). Print on a 4×6 shipping label printer (one box per label, roll or fan-fold) or a letter sheet of 10. Selling at a pop-up or doing local pickup? Open the order and tap Print receipt for a receipt on a 2¼ or 3⅛ inch receipt roll.',
       screen: { title: 'Orders', rows: ['To pick · 14', 'Packed · 0'], buttons: ['Print box labels', 'Upload live sales'], highlight: 'Print box labels' } },
     { kind: 'learn', title: 'Lay out the boxes', text: 'Stick a label on each open mailer or box and line them up in one place, in the same order as the labels. You\'ll walk the shelves with the pieces, then come back and drop each one in.',
       points: ['A long table, or the floor along a wall', 'Labels facing you so you can read the names', 'Bigger orders at the end of the row, so they don\'t block the small ones', 'Thank-you cards and tissue already within reach'] },
@@ -54,7 +58,7 @@ const lesson: Lesson = {
         { text: 'Hold her whole box until the hoops turn up', feedback: 'Her other pieces would ship late for something that may never turn up. Ship what you have and make the rest right.' },
       ] },
 
-    { chapter: 'Pack it pretty', kind: 'learn', title: 'Pack like it\'s a gift', text: 'Once a box is complete, pack it the same way every time, so it\'s fast and always looks good.',
+    { chapter: 'Pack it pretty', queen: "A handwritten thank-you note costs pennies and gets remembered for months.", kind: 'learn', title: 'Pack like it\'s a gift', text: 'Once a box is complete, pack it the same way every time, so it\'s fast and always looks good.',
       points: ['Wrap in tissue in your brand color', 'Jewelry in its little bag, so it can\'t tangle', 'Handwritten "Thank you, [name]!" card with your next live day', 'Shake test: nothing should rattle or slide', 'Seal it and set it in the "ready to ship" spot'],
       tip: 'When every piece in an order is picked, the order moves to Packed and shows up in Shipping on its own.' },
     { kind: 'reflect', title: 'Your packing area', prompt: 'Where will you line up boxes, and what does your "pack it pretty" routine include?', placeholder: 'I\'ll line boxes up on…', example: 'On the folding table by the stairs, labels facing me. Every box gets emerald tissue, a handwritten card, and a sticker with "Tuesdays 7 PM ET".' },

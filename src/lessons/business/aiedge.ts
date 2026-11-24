@@ -17,7 +17,11 @@ const lesson: Lesson = {
     { org: 'Federal Reserve Bank of San Francisco', title: 'Early findings on small business use of AI (2026)', url: 'https://www.frbsf.org/research-and-insights/publications/community-articles/2026/03/ai-and-small-businesses/' },
     { org: 'JPMorganChase Institute', title: 'Small business in the age of AI', url: 'https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/small-business-in-the-age-of-ai' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "The research is clear: AI helps on the right tasks and hurts on the wrong ones. This course shows you exactly which is which for a live shop, so you get the advantage without the mistakes.",
+    signoff: "Start with one workflow, check the output, and build from there. Small sellers who use AI wisely can compete with anyone.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'The jagged frontier', kind: 'learn', title: 'What Harvard found', nova: 'This is the study every business school talks about. And it\'s simpler than it sounds.',
       text: 'Researchers from Harvard Business School and Boston Consulting Group gave 758 consultants real work, some with AI and some without. On tasks AI is good at, the AI group finished more, faster, and better. On one task AI is bad at, the AI group got it wrong more often, because they trusted it.',
@@ -27,7 +31,7 @@ const lesson: Lesson = {
         ['Quality', 'More than 40% higher', 'People were 19 points less likely to get it right'],
       ] },
       tip: 'They called it a "jagged frontier": AI is great at some things and poor at others that look just as easy. Your job is knowing where the line is.' },
-    { kind: 'learn', title: 'Where the line is for a live seller', text: 'Here\'s the frontier, drawn for your shop. Inside: words, ideas, structure. Outside: facts you can\'t see, money decisions, and anything only you know.',
+    { queen: "Let AI write and organize. Keep pricing, buying and buyer relationships in your own hands.", kind: 'learn', title: 'Where the line is for a live seller', text: 'Here\'s the frontier, drawn for your shop. Inside: words, ideas, structure. Outside: facts you can\'t see, money decisions, and anything only you know.',
       table: { head: ['Inside: AI makes you better', 'Outside: AI can make you worse'], rows: [
         ['Captions, hooks, scripts, emails', 'Today\'s tax rates, laws and shipping prices'],
         ['Turning notes into clean descriptions', 'Whether a piece is authentic'],
@@ -75,7 +79,7 @@ const lesson: Lesson = {
         { text: 'Ignore it and start at $25 anyway', feedback: 'She might leave real money on the table. A five-minute check is worth it.' },
       ] },
 
-    { chapter: 'Your advantage', kind: 'learn', title: 'Why small sellers can win with AI', text: 'Big companies need months to change how they work. You can change by Sunday. JPMorganChase research also shows small business owners are adopting AI steadily, so the edge goes to those who use it well, not just first.',
+    { chapter: 'Your advantage', queen: "Big companies move slowly. You can try a new idea tonight. That speed is your advantage.", kind: 'learn', title: 'Why small sellers can win with AI', text: 'Big companies need months to change how they work. You can change by Sunday. JPMorganChase research also shows small business owners are adopting AI steadily, so the edge goes to those who use it well, not just first.',
       points: ['You know your buyers by name; AI handles the busywork so you have more time for them', 'You can test a new idea on one live and keep it if it works', 'You decide your rules on privacy and honesty, and buyers notice', 'Your voice is the brand. AI drafts; you make it sound like you'] },
     { kind: 'reflect', title: 'Your first workflow', prompt: 'Pick the one workflow you\'ll try this week. Write the exact prompt you\'ll use.', placeholder: 'Workflow… My prompt…', example: 'Workflow 1. "Here\'s the transcript of my Thursday live, names removed. Give me 5 short posts and 3 Reel hooks in my voice: warm, playful, church-to-brunch."' },
     { kind: 'checklist', title: 'AI advantage plan', prompt: 'Tick these off this month.', items: ['Turn one live into a week of posts', 'Write descriptions from my tagging notes', 'Ask AI to read my weekly totals, no names', 'Make a one-page helper guide', 'Use "the coach" prompt on my next big idea', 'Verify every fact that\'s outside the frontier'] },

@@ -11,11 +11,15 @@ const lesson: Lesson = {
     'Handle a dropped stream, a late start, and the hard stop like a pro',
   ],
   route: { to: '/shared-page', label: 'Open the live calendar' },
+  queen: {
+    welcome: "Our shared Page is a stage with thousands of people in the seats. I want every seller who goes live there to shine, follow the house rules and leave the room better than she found it.",
+    signoff: "Read the guidelines every time, start on time, end on time, and thank the next seller on your way out. That's how we keep the Page strong for everyone.",
+  },
   covers: ['src/components/GuidelinesGate.tsx', 'src/lib/guidelines.ts', 'src/pages/SharedPage.tsx', 'src/pages/OnAir.tsx', 'src/components/StreamSetup.tsx', 'src/components/OnAirBar.tsx', 'src/lib/stage.ts', 'src/components/LiveControl.tsx', 'src/pages/Overlay.tsx'],
   updated: '2026-11-24',
   slides: [
     { chapter: 'Book your hour', kind: 'learn', title: 'One calendar, one seller per hour', text: 'Everyone shares one live calendar for the Facebook Page. Time is booked in whole hours, and once an hour is taken nobody else can book it.', points: ['Your name shows next to the hours you book', 'Tap any name to see that seller\'s profile', 'Cancel early if plans change, so someone else can use the hour'] },
-    { kind: 'learn', title: 'The house rules, every time', text: 'Each time you open the live calendar, the Vendor Live Selling Guidelines pop up. Read to the end and tap I have read and agree. The app saves the date and time you agreed.', points: ['Log in 5 to 10 minutes early', 'More than 10 minutes late means the live is canceled automatically', 'No music, TV or designer names on your live'], tip: 'Breaking the guidelines can get your account revoked with no refund, so give them a real read.' },
+    { queen: "Those guidelines protect every seller on the Page, including you. Take them seriously, every visit.", kind: 'learn', title: 'The house rules, every time', text: 'Each time you open the live calendar, the Vendor Live Selling Guidelines pop up. Read to the end and tap I have read and agree. The app saves the date and time you agreed.', points: ['Log in 5 to 10 minutes early', 'More than 10 minutes late means the live is canceled automatically', 'No music, TV or designer names on your live'], tip: 'Breaking the guidelines can get your account revoked with no refund, so give them a real read.' },
     {
       kind: 'tap', title: 'Book your hour', prompt: 'You want Thursday at 7 PM. What do you tap?',
       screen: { title: 'Shared Page lives', rows: ['Thu · 6 PM Bee Boutique', 'Thu · 7 PM wide open'], buttons: ['+ Book your hour', 'Host tools', 'All slots'] },
@@ -49,7 +53,7 @@ const lesson: Lesson = {
       points: ['Wi-Fi: sit close to the router, or use a wired connection on a computer. Ask others at home to pause big downloads and streaming.', 'Power: phone plugged in the whole time, and a ring light or window light on your face', 'Sound: a quiet room, TV and radio off, phone on Do Not Disturb so calls don\'t cut your stream', 'Camera: phone on a stand at eye level, lens wiped, upright', 'Table: pieces laid out in run-of-show order, within arm\'s reach'] },
     { chapter: 'Go live', kind: 'learn', title: 'Your Go Live key unlocks on time', text: 'Nobody gets the Page login. 5 minutes before your start time, on the night you booked, your private Go Live key appears on the On Air screen for a hidden test. You go public at exactly your start time. Paste it into Prism or Larix on your phone, or OBS or Streamlabs on a computer, and start streaming. It only works for your hour.', tip: 'Set up your streaming app earlier in the day so at start time you just paste and go.' },
     { kind: 'order', title: 'Going live, step by step', prompt: 'Put these in order.', steps: ['Book your hour', 'Set up your streaming app ahead of time', '5 minutes before, open On Air and copy your key', 'Paste the key and start a private test stream', 'Go public automatically at your start time', 'Wrap up when the 5-minute warning chimes'] },
-    { kind: 'learn', title: 'Hard start, hard stop', text: 'The app puts you live at your start time and ends the live on Facebook at your stop time, even mid-sentence. A chime and a gold banner give you a 5-minute warning, and the countdown shows on every screen of the app.' },
+    { queen: "End on time even when sales are hot. The next seller is counting on that hour, just like you count on yours.", kind: 'learn', title: 'Hard start, hard stop', text: 'The app puts you live at your start time and ends the live on Facebook at your stop time, even mid-sentence. A chime and a gold banner give you a 5-minute warning, and the countdown shows on every screen of the app.' },
     { kind: 'checklist', title: 'Your 10-minutes-before routine', prompt: 'Tick these every time, starting 10 minutes before your hour.', items: [
       'Phone plugged in, Do Not Disturb on, TV and music off',
       'Light on my face, camera at eye level',

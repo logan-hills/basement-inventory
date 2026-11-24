@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'Shopify', title: 'Warehouse slotting and inventory strategy', url: 'https://www.shopify.com/enterprise/blog/warehouse-slotting' },
     { org: 'PA Department of Revenue', title: 'Sales, use and hotel occupancy tax (resale exemptions)', url: 'https://www.pa.gov/en/agencies/revenue/resources/tax-types-and-information/sales-use-and-hotel-occupancy-tax.html' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "You make your money the day you buy, not the day you sell. In this course I'll teach you to buy like a real retailer: with a budget, a plan and your Reports in hand.",
+    signoff: "Know your landed cost, watch your sell-through, and set your budget before you shop. Smart buying is the most profitable skill in this business.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Where stock comes from', kind: 'learn', title: 'Your sourcing options', nova: 'Here\'s a secret the big retailers live by: you make your money the day you buy.',
       text: 'Live sellers usually mix several sources. Each has a different cost, risk and amount of work.',
@@ -50,7 +54,7 @@ const lesson: Lesson = {
       tip: 'Reports shows your top categories and the percent of sales each makes. Use it before every buying trip.' },
     { kind: 'number', title: 'Sell-through', q: 'You bought 80 scarves and sold 52 in 60 days. What\'s the sell-through in percent?', answer: 65, tolerance: 0.5, suffix: '%', hint: '52 ÷ 80 × 100.', why: '52 ÷ 80 = 65%. Solid. Compare it to your other categories before you reorder.' },
 
-    { chapter: 'Open to buy', kind: 'learn', title: 'A budget before you shop', text: 'Retail buyers use an "open to buy" budget: how much they can spend on new stock this month without overloading the shelves or the bank account.',
+    { chapter: 'Open to buy', queen: "Leave your budget number on a sticky note on your card. It's harder to overspend when you can see the limit.", kind: 'learn', title: 'A budget before you shop', text: 'Retail buyers use an "open to buy" budget: how much they can spend on new stock this month without overloading the shelves or the bank account.',
       points: ['Start with your Restock bucket (from the money course)', 'Subtract anything already ordered', 'Look at old stock: if it\'s over about 15 to 20% of your shelves, buy less and run a sale', 'Split the budget by category using sell-through', 'Bring the number with you. When it\'s spent, you\'re done.'] },
     { kind: 'scenario', title: 'The trade show', situation: 'You\'re at a trade show with a $1,500 open-to-buy budget. You\'ve spent $1,300. A vendor shows you gorgeous home decor for $600, "today only."',
       options: [
@@ -59,7 +63,7 @@ const lesson: Lesson = {
         { text: 'Buy it and skip next month\'s buying instead', feedback: 'That leaves you short on your best sellers next month. Stick to the plan.' },
       ] },
 
-    { chapter: 'Receiving', kind: 'learn', title: 'Check every delivery', text: 'Problems are easiest to fix the day a delivery arrives. Big retailers check every shipment against the order before it goes on a shelf.',
+    { chapter: 'Receiving', queen: "Open and count every delivery the day it arrives. Suppliers fix problems you report fast and ignore ones you report late.", kind: 'learn', title: 'Check every delivery', text: 'Problems are easiest to fix the day a delivery arrives. Big retailers check every shipment against the order before it goes on a shelf.',
       points: ['Count pieces against the invoice or packing list', 'Photograph damage before you unpack further', 'Record cost on each item as you receive it', 'Contact the vendor within their claim window (often a few days)', 'Tag and shelve within 48 hours so it can sell'] },
     { kind: 'learn', title: 'Case study: two lots', text: 'Two lots, same price. Which is better?',
       table: { head: ['', 'Lot A: mixed returns', 'Lot B: manifested closeouts'], rows: [

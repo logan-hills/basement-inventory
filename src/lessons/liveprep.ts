@@ -11,7 +11,11 @@ const lesson: Lesson = {
     'Send the list to Loyal Shops or any bot',
   ],
   route: { to: '/live', label: 'Get ready for live' },
-  covers: ['src/pages/LivePrep.tsx', 'src/lib/cart.ts', 'src/pages/LiveDetail.tsx'], updated: '2026-11-23',
+  queen: {
+    welcome: "The best lives are won before you press Go Live. When you choose your lineup ahead of time, you sell calmer and smarter. Let's get you ready.",
+    signoff: "Build a lineup with something for everyone, set prices that still pay you, and lay out your table in order. Ready sellers are confident sellers.",
+  },
+  covers: ['src/pages/LivePrep.tsx', 'src/lib/cart.ts', 'src/pages/LiveDetail.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Shop your shelves', kind: 'learn', title: 'Shop your own shelves', nova: 'This is where a great live is really made: before you ever hit Go.',
       text: 'Get ready for live works like an online store. Tap a category tile (Jewelry, Bags…) to browse it, filter by tag, and sort. Each card shows how many are on your shelf.' },
@@ -25,7 +29,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'tap', title: 'Practice', prompt: 'You want the pieces that make you the most money for tonight\'s payday live. Which sort?', screen: { title: 'Get ready for live · Sort', buttons: ['Newest first', 'Oldest first', 'Best profit margin', 'Most in stock'] }, answer: 'Best profit margin', hint: 'Best profit margin puts the pieces with the biggest gap between price and cost on top.' },
 
-    { chapter: 'Build the lineup', kind: 'learn', title: 'A lineup with something for everyone', text: 'A great lineup has a mix. If everything is $25, half your viewers can\'t play. If everything is $2, you work hard for very little.',
+    { chapter: 'Build the lineup', queen: "Always include a few low-price pieces. They get new buyers to claim for the very first time.", kind: 'learn', title: 'A lineup with something for everyone', text: 'A great lineup has a mix. If everything is $25, half your viewers can\'t play. If everything is $2, you work hard for very little.',
       table: { head: ['Tier', 'Share of pieces', 'Its job'], rows: [
         ['Door-openers ($2 to $8)', 'About 30%', 'Get everyone claiming early, build momentum'],
         ['Core ($10 to $20)', 'About 50%', 'Where most of your money comes from'],
@@ -66,7 +70,7 @@ const lesson: Lesson = {
     { chapter: 'Send it to your bot', kind: 'learn', title: 'Send the list to your bot', text: 'Open the live from the Calendar, tap More, and pick your bot. The main buttons on a live are Add items and Comment bot; the downloads wait under More.',
       points: ['Loyal Shops: tap Download for Loyal Shops, then upload it in Loyal Shops\' Upload Inventory List box before the live', 'Another bot: tap Download my bot CSV (change its columns in Settings → Bot CSV columns)', 'Our Comment bot: nothing to download, it already knows the list'],
       screen: { title: '$2 Tuesday, More', buttons: ['Download for Loyal Shops', 'Download my bot CSV', 'Planner and poster', 'Edit the details'], highlight: 'Download for Loyal Shops' } },
-    { kind: 'learn', title: 'Lay out the table', text: 'Your cart is also your pull list. Pull every piece, then lay them out on your table in the order of your run of show. Put door-openers closest to you, showstoppers to the side, bundles at the end.',
+    { queen: "Lay pieces out in the order you'll show them. You'll never fumble on camera again.", kind: 'learn', title: 'Lay out the table', text: 'Your cart is also your pull list. Pull every piece, then lay them out on your table in the order of your run of show. Put door-openers closest to you, showstoppers to the side, bundles at the end.',
       tip: 'Pull pieces the night before or the morning of, never in the last hour. Last-minute pulling is how lives start late.' },
     { kind: 'reflect', title: 'Your next lineup', prompt: 'For your next live: how many pieces, which tiers, which old pieces will you mix in, and what\'s your showstopper?', placeholder: 'Next live I\'ll bring…', example: '48 pieces. 15 door-openers at $5, 24 core at $12 to $18, 6 showstoppers, 3 bundles. 8 pieces over 60 days old mixed in. Showstopper: the croc tote.' },
     { kind: 'checklist', title: 'Get-ready routine', prompt: 'Tick each step before your next live.', items: [

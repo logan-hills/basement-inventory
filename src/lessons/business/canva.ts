@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'Canva', title: 'Connect Canva to an AI assistant', url: 'https://www.canva.com/help/mcp-agent-setup/' },
     { org: 'U.S. Small Business Administration', title: 'Marketing and sales', url: 'https://www.sba.gov/business-guide/manage-your-business/marketing-sales' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Polished graphics make a small shop look like a boutique. Canva makes it possible without hiring a designer. Let's set up your brand once and design in minutes.",
+    signoff: "Set up your brand kit, keep it simple and roomy, and reuse your best templates. Luxury looks calm, not crowded.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Set up once', kind: 'learn', title: 'Your brand in one place', nova: 'Ten minutes of setup and every design after looks on-brand. Let\'s do it.',
       text: 'Canva lets you save your colors, fonts and logo so every design starts on-brand. On the free plan, keep them in a "Brand" design you copy from. On Canva Pro, the Brand Kit applies them with one click.',
@@ -31,7 +35,7 @@ const lesson: Lesson = {
       ] },
       tip: 'If background remover and resize save you more than an hour a month, Pro usually pays for itself. Try the free trial during your busiest month.' },
 
-    { chapter: 'Look expensive', kind: 'learn', title: 'Five rules luxury brands follow', text: 'Luxury design isn\'t about more. It\'s about less, done perfectly.',
+    { chapter: 'Look expensive', queen: "When in doubt, take something off the poster. Space is what makes a design look expensive.", kind: 'learn', title: 'Five rules luxury brands follow', text: 'Luxury design isn\'t about more. It\'s about less, done perfectly.',
       table: { head: ['Rule', 'Do', 'Avoid'], rows: [
         ['Space', 'Leave lots of empty space around the product', 'Filling every corner'],
         ['Fonts', 'Two fonts max; elegant serif for headlines', 'Five fonts, curly fonts for everything'],
@@ -73,7 +77,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'learn', title: 'Photos that look expensive', text: 'The best template in the world can\'t save a dark, blurry photo.',
       points: ['Shoot by a window in daylight, or with a ring light in front', 'Use a plain backdrop: a white sheet, a neutral wall', 'Shoot from slightly above for bags, straight on for jewelry', 'Fill the frame with the piece', 'Use Canva\'s adjust tools lightly: a touch of brightness and warmth'] },
-    { kind: 'scenario', title: 'The copycat temptation', situation: 'You love a big brand\'s Instagram post and want your poster to look exactly like it, logo placement and all.',
+    { queen: "Get inspired by other sellers, never copy them. Your own look is the one buyers will remember.", kind: 'scenario', title: 'The copycat temptation', situation: 'You love a big brand\'s Instagram post and want your poster to look exactly like it, logo placement and all.',
       options: [
         { text: 'Recreate it exactly with your products', feedback: 'Copying a brand\'s design closely can confuse buyers and cause trouble. Get inspired, don\'t clone.' },
         { text: 'Note what you love (the space, the font style, one big photo) and apply those ideas with your own brand colors and photos', best: true, feedback: 'That\'s how designers work: learn the principle, make it yours.' },

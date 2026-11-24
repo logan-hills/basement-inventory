@@ -17,7 +17,11 @@ const lesson: Lesson = {
     { org: 'Toyota', title: 'Toyota Production System', url: 'https://global.toyota/en/company/vision-and-philosophy/production-system/' },
     { org: 'Federal Trade Commission', title: 'Business guide to the Mail, Internet, or Telephone Order Merchandise Rule', url: 'https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "The fastest sellers start packing before the live even ends. With the right station and a helper, you can ship while you sell. Let's set it up without mistakes.",
+    signoff: "Only pack what's paid, scan twice, and keep your beat. Same-day shipping is a gift your buyers will talk about.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Why pack in real time', kind: 'learn', title: 'The pile problem', nova: 'Picture 60 sold pieces in a heap at 10 PM. Now picture 40 of them already boxed. That\'s what we\'re building.',
       text: 'Most sellers sell for an hour, then face a mountain: every piece, every buyer, all at once. Lean thinkers call this batch-and-queue: work piles up, then waits. Toyota built its system on the opposite idea, called flow: move work along in small steps so nothing sits. For a live seller, flow means packing paid orders during and right after the live, in small waves, instead of one giant pile the next day.',
@@ -43,7 +47,7 @@ const lesson: Lesson = {
       example: 'No helper? You can still flow: drop each sold piece in a bag labeled with the buyer\'s name, then pack in waves during short breaks and right after you end the live.' },
     { kind: 'order', title: 'One sold piece, start to finish', prompt: 'Put the steps for one sold piece in order during a live.', steps: ['Host says "Sold to Keisha" and puts the piece on the sold tray', 'Helper checks the claim in the comment bot list', 'Helper scans the piece into Keisha\'s order', 'Keisha pays her invoice', 'Helper packs, labels and seals the box', 'Box goes on the ready-to-ship shelf'] },
 
-    { chapter: 'Claim, pay, pack', kind: 'learn', title: 'Only pack what\'s paid', nova: 'Boxing up an unpaid order is like baking a cake for someone who might not come to the party.',
+    { chapter: 'Claim, pay, pack', queen: "Never pack a box before the money is in. Unpaid boxes turn into unpacking work.", kind: 'learn', title: 'Only pack what\'s paid', nova: 'Boxing up an unpaid order is like baking a cake for someone who might not come to the party.',
       text: 'Packing before payment feels fast, but unpaid orders have to be unpacked and restocked if the buyer backs out. The rule the pros use: claim at the live, invoice right away, and pack in waves as payments land.',
       points: ['Send invoices during or right after the live, not the next day', 'Set a clear pay-by time and say it on every live, like "Pay by 10 AM tomorrow"', 'Pack a wave every time 5 to 10 payments come in', 'Unpaid by the deadline? Send one friendly reminder, then return the piece to stock', 'Never ship before payment clears'] },
     { kind: 'scenario', title: 'The rush of payments', situation: 'It\'s 9:15 PM, the live ended 15 minutes ago, and 18 buyers just paid. You have 2 hours before bed.',
@@ -75,7 +79,7 @@ const lesson: Lesson = {
         { text: 'Check the comment bot list for the first claim, give it to her, and offer the other buyer a similar piece on the spot', best: true, feedback: 'Right. A clear, fair rule keeps trust, and offering a backup often saves the second sale.' },
         { text: 'Ask both to fight it out in the comments', feedback: 'That slows the live and can sour the mood for everyone watching.' },
       ] },
-    { kind: 'learn', title: 'The second scan is your safety net', text: 'When you\'re packing fast, mistakes happen. The answer is not "be careful." It\'s a check built into the process, what Toyota calls poka-yoke, or mistake-proofing. In Pick and pack, scanning the piece and then the box label is that check: a green check means the right box, a red X means stop.',
+    { queen: "That second scan takes two seconds and saves a wrong-item apology. Never skip it.", kind: 'learn', title: 'The second scan is your safety net', text: 'When you\'re packing fast, mistakes happen. The answer is not "be careful." It\'s a check built into the process, what Toyota calls poka-yoke, or mistake-proofing. In Pick and pack, scanning the piece and then the box label is that check: a green check means the right box, a red X means stop.',
       points: ['Scan every piece, every time, even when you\'re sure', 'A red X: take the piece out, find the right box, scan again', 'Never "fix it later": a mistake that leaves the table becomes a return'] },
 
     { chapter: 'Keep your promise', kind: 'learn', title: 'Ship time is part of the product', text: 'The FTC\'s Mail Order Rule says that when you sell by mail or online, you must have a reasonable basis for any shipping time you promise. If you don\'t state a time, you\'re expected to ship within 30 days. If you\'ll be late, you must tell the buyer and give her the option to cancel for a full refund.',

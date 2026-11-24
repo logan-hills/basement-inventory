@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'Meta for Creators', title: 'Facebook Content Monetization', url: 'https://creators.facebook.com/tools/facebook-content-monetization' },
     { org: 'Meta', title: 'Creator Fast Track', url: 'https://about.fb.com/news/2026/03/creator-fast-track-grow-your-audience-earn-money-on-facebook/' },
   ],
-  covers: ['src/lessons/business/trends.ts'], updated: '2026-11-23',
+  queen: {
+    welcome: "Your videos can sell your lives and pay you for the views. I want you to put your energy where the money is, and treat it like the business income it is.",
+    signoff: "Make every video earn three ways: new viewers, sales and creator pay. Keep good records, and watch that extra income add up.",
+  },
+  covers: ['src/lessons/business/trends.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'How creators get paid', kind: 'learn', title: 'Three kinds of creator money', nova: "Let's get clear on where the money actually comes from.",
       text: "When people say \"I get paid for my videos,\" they mean one of three things. Knowing which is which keeps you from chasing the wrong one.",
@@ -40,7 +44,7 @@ const lesson: Lesson = {
         'Check the app\'s monetization or creator page for the current requirements and whether you\'ve been invited',
       ] },
 
-    { chapter: 'One video, three jobs', kind: 'learn', title: 'Make every video earn three ways', text: "A smart seller never films \"just for views.\" Every video should do three jobs at the same time.",
+    { chapter: 'One video, three jobs', queen: "Every video should invite people to your next live. Views are nice; buyers are better.", kind: 'learn', title: 'Make every video earn three ways', text: "A smart seller never films \"just for views.\" Every video should do three jobs at the same time.",
       points: ['Earn views (and views pay, where you qualify)', 'Show off a piece so people want it', 'Invite people to your next live, with the day and time'],
       example: "A 20-second Reel of the emerald bag styled three ways gets 4,000 views. The views pay a little. Thirty people comment \"price?\". Eight of them come to Thursday's live and buy. The views paid for your coffee. The live paid your light bill." },
     { kind: 'number', title: 'What did the Reel really earn?', q: 'A Reel brings 8 new buyers to your live. Each spends $22 on average. How much in sales did the Reel bring?', prefix: '$', answer: 176, hint: 'Multiply the number of buyers by what each spent.', why: 'That\'s 8 × $22. And if even half of them come back next week, that one Reel keeps paying. That\'s why the invite at the end matters more than the views.' },
@@ -75,7 +79,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'order', title: 'Build the invite into the video', prompt: 'Put the parts of a double-duty Reel in order.', steps: ['Hook in the first second', 'Show the piece up close', 'Show it on you', 'Live day, time and price on screen'] },
 
-    { chapter: 'Keep the money right', kind: 'learn', title: 'Treat it like business income', text: "Creator payouts are income, just like your sales. Keep it clean from day one so tax time isn't scary.",
+    { chapter: 'Keep the money right', queen: "Put creator payouts straight into your tax bucket share. It's income, and the IRS sees it that way.", kind: 'learn', title: 'Treat it like business income', text: "Creator payouts are income, just like your sales. Keep it clean from day one so tax time isn't scary.",
       points: ['Have payouts sent to your business bank account if you have one', 'Write down each payout and the date in one place', 'Platforms may send you a tax form when you earn enough', 'Ask a tax professional how to report it in your state'],
       tip: 'This is general information, not tax advice. A local tax pro can answer for your situation.' },
     { kind: 'quiz', q: 'Views pay dropped by half this month because the program changed. What should you do?', options: ['Quit making videos', 'Keep posting, because the videos still bring buyers to your lives', 'Post ten times a day to make it up'], answer: 1, why: 'Views pay was always the bonus. The buyers your videos bring are the real paycheck.' },

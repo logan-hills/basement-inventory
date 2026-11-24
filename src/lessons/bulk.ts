@@ -11,7 +11,11 @@ const lesson: Lesson = {
     'Fix the five mistakes that trip up most uploads',
   ],
   route: { to: '/receive/bulk', label: 'Bulk upload' },
-  covers: ['src/pages/BulkReceive.tsx'], updated: '2026-11-23',
+  queen: {
+    welcome: "A big delivery shouldn't eat your whole weekend. Bulk upload lets you bring in a haul all at once. Let's learn it so your next big order goes in smoothly.",
+    signoff: "Use the template, check your rows before you import, and spread the lot's cost fairly. Your next haul will be on the shelves before dinner.",
+  },
+  covers: ['src/pages/BulkReceive.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Spreadsheet in, tags out', kind: 'learn', title: 'When to use bulk upload', nova: 'Got a big box from your supplier? Let\'s do it in one go.',
       text: 'Fill in one row per variation in Excel or Google Sheets, save it as CSV, and upload it. Every item, variation and tag is made for you.',
@@ -28,7 +32,7 @@ const lesson: Lesson = {
         { text: 'In Excel, use File → Save As and choose CSV UTF-8, then upload that new file', best: true, feedback: 'That\'s it. .xlsx is Excel\'s own format. Save As CSV makes the plain version the app reads.' },
         { text: 'Take a photo of the spreadsheet and upload that', feedback: 'The app needs the data itself, not a picture of it.' },
       ] },
-    { chapter: 'The template', kind: 'learn', title: 'Use the template', text: 'Tap Download CSV template so your columns match. Only Item name and Quantity are required, but the more you fill in, the less you\'ll type later.',
+    { chapter: 'The template', queen: "Always start from the template. Building your own spreadsheet from scratch is where the mistakes sneak in.", kind: 'learn', title: 'Use the template', text: 'Tap Download CSV template so your columns match. Only Item name and Quantity are required, but the more you fill in, the less you\'ll type later.',
       table: { head: ['Column', 'What goes in it', 'Example'], rows: [
         ['Item name', 'The product', 'Croc handbag'],
         ['Variation', 'Size or color (blank = one size)', 'Emerald'],
@@ -66,7 +70,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'number', title: 'Simple split', q: 'A liquidation box cost $150 plus $30 shipping, and it has 90 pieces. Using the simple split, what\'s the cost per piece?', prefix: '$', answer: 2, hint: 'Add the shipping to the price first, then divide by the number of pieces.', why: '($150 + $30) ÷ 90 = $2.00 per piece. Leave out the shipping and every profit number in Reports would look better than it really is.' },
 
-    { chapter: 'Check and import', kind: 'learn', title: 'Check before importing', text: 'The app shows a preview of everything it will make. Rows with a problem are marked in red, with the reason. Fix those rows in your spreadsheet, save, and upload again. When everything is ready, import and print every tag in one go.' },
+    { chapter: 'Check and import', queen: "Read the preview line by line the first few times. Once you trust your process, you'll speed up naturally.", kind: 'learn', title: 'Check before importing', text: 'The app shows a preview of everything it will make. Rows with a problem are marked in red, with the reason. Fix those rows in your spreadsheet, save, and upload again. When everything is ready, import and print every tag in one go.' },
     { kind: 'learn', title: 'The five common mistakes', text: 'Nearly every upload problem is one of these.',
       table: { head: ['Mistake', 'The fix'], rows: [
         ['"Price is not a number"', 'Type 12 or 12.00, not "$12" or "twelve"'],

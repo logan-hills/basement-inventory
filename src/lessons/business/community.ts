@@ -17,6 +17,10 @@ const lesson: Lesson = {
     { org: 'Kevin Kelly, The Technium', title: '1,000 true fans', url: 'https://kk.org/thetechnium/1000-true-fans/' },
     { org: 'Federal Trade Commission', title: 'Disclosures 101 for social media influencers', url: 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers' },
   ],
+  queen: {
+    welcome: "Followers can scroll past you, but a community shows up. In this course, I want to help you build the kind of shop people feel they belong to.",
+    signoff: "Start your rituals, let your members shine, and protect your group with kind house rules. A community is the strongest business asset you'll ever own.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Audience vs community', kind: 'learn', title: 'Two very different things', nova: "Followers are nice, boss. But a community? That's family. Family shows up.",
@@ -52,10 +56,10 @@ const lesson: Lesson = {
       '"Who already got last week\'s pearl set? Show the ladies how you styled it!"',
       '"Share the live and tag a friend who needs this bag in her life."',
     ] },
-    { kind: 'learn', title: 'Let members shine', text: "Harvard Business Review's writing on customer communities keeps coming back to a simple truth: people engage more when they can contribute, not just consume. Give your members a stage.",
+    { queen: "Feature a buyer's photo wearing her piece every week. People love to be celebrated, and others love to join them.", kind: 'learn', title: 'Let members shine', text: "Harvard Business Review's writing on customer communities keeps coming back to a simple truth: people engage more when they can contribute, not just consume. Give your members a stage.",
       points: ['Repost customer photos (with permission) as "Styled by the Fam"', 'Ask opinions: "Which color should I order more of?"', 'Feature a "Regular of the Month"', 'Let superfans help welcome new people in the group'] },
 
-    { chapter: 'Your VIP group', kind: 'learn', title: 'A group with house rules', text: "A Facebook Group for regulars works best when it feels warm and safe. Clear rules keep it that way and make moderating easy.",
+    { chapter: 'Your VIP group', queen: "Post your house rules on day one. It's much easier to keep a group kind than to fix one that isn't.", kind: 'learn', title: 'A group with house rules', text: "A Facebook Group for regulars works best when it feels warm and safe. Clear rules keep it that way and make moderating easy.",
       points: ['Be kind. No bashing other members or other sellers.', 'No selling your own items or links without asking', 'Keep personal info (addresses, phone numbers) out of the group; use private messages', 'Problems with an order? Message the Page so we can fix it fast', 'Paid or gifted partners say so clearly (the FTC requires clear disclosure)'] },
     { kind: 'scenario', title: 'Drama in the group', situation: 'Two members start arguing in the VIP group over who claimed a bag first. Others are taking sides.',
       options: [

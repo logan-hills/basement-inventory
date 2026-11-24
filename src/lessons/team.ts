@@ -12,6 +12,10 @@ const lesson: Lesson = {
     'Protect your stock with checks that keep everyone honest',
   ],
   route: { to: '/settings/team', label: 'Open Team members' },
+  queen: {
+    welcome: "There comes a day when you can't do it all yourself, and that's a good sign. This lesson shows you how to bring in help the right way, so your shop grows and your business stays private.",
+    signoff: "Give each helper their own sign-in, train them for a week, and check their work kindly. Good help, well trained, is how small shops get big.",
+  },
   covers: ['src/components/TeamSettings.tsx', 'src/lib/team.ts', 'src/pages/CreateShop.tsx', 'src/components/OwnerOnly.tsx', 'src/lib/session.tsx', 'supabase/018_private_shops_and_teams.sql'],
   updated: '2026-11-24',
   slides: [
@@ -57,7 +61,7 @@ const lesson: Lesson = {
     { chapter: 'Privacy', kind: 'learn', title: 'Every shop is private', nova: 'Your stock is your secret sauce. We guard it like the crown jewels.',
       text: 'No seller can see another seller\'s inventory, bins, customers, orders, lives or reports, and that goes for team members too. Another seller\'s products only show up during their live, on their own stream. Even your on-stream product card stays private until you put it on your stream.',
       points: ['One account belongs to one shop', 'A team member can\'t also start their own shop on the same sign-in', 'Photos of your items are private files, not public links'] },
-    { kind: 'learn', title: 'Never share your password', text: 'Sharing your own sign-in feels easy, but it means your helper could change your plan, book your Shared Page hours, read your private messages from the Queen, or lock you out. It also breaks the Terms you agreed to. Team member sign-ins exist so you never have to.',
+    { queen: "If someone needs your password to help you, the setup is wrong. Every helper gets their own invite, every time.", kind: 'learn', title: 'Never share your password', text: 'Sharing your own sign-in feels easy, but it means your helper could change your plan, book your Shared Page hours, read your private messages from the Queen, or lock you out. It also breaks the Terms you agreed to. Team member sign-ins exist so you never have to.',
       table: { head: ['', 'Shared password', 'Team member sign-in'], rows: [
         ['You can see who did what', 'No', 'Yes, scans and moves are saved under each person'],
         ['Take away access', 'Change your password everywhere', 'One tap'],
@@ -88,7 +92,7 @@ const lesson: Lesson = {
         { text: 'Pay her in cash and skip the paperwork', feedback: 'That puts you at risk with taxes and leaves her without a work record. Do it the right way from the start.' },
       ] },
 
-    { chapter: 'Training and trust', kind: 'learn', title: 'A one-week training plan', text: 'People learn a warehouse by doing it next to you. Show, then watch, then let go.',
+    { chapter: 'Training and trust', queen: "Have your new helper shadow you for one live before they touch a single box. Watching teaches what words can't.", kind: 'learn', title: 'A one-week training plan', text: 'People learn a warehouse by doing it next to you. Show, then watch, then let go.',
       table: { head: ['Day', 'What they do'], rows: [
         ['1', 'Watch you receive 10 items, print tags and put them in bins'],
         ['2', 'Receive and tag 10 items while you watch; fix mistakes together'],

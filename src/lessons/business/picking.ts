@@ -17,7 +17,11 @@ const lesson: Lesson = {
     { org: 'Oracle NetSuite', title: 'What is batch picking?', url: 'https://www.netsuite.com/portal/resource/articles/inventory-management/batch-picking.shtml' },
     { org: 'Lean Enterprise Institute', title: 'Lean lexicon: standardized work', url: 'https://www.lean.org/explore-lean/lexicon-terms/' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "The pros don't pack faster by rushing; they walk less. I'll show you the playbook the big warehouses use, sized for your shop.",
+    signoff: "Batch your picks, walk the S, and keep everything within arm's reach. You'll be done packing before you know it.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Where picking time goes', kind: 'learn', title: 'It\'s the walking', nova: 'I\'m a handbag, so trust me: I know a thing or two about being carried around. Let\'s make every trip count.',
       text: 'Warehouse researchers break a picker\'s time into four parts: walking between spots, searching for the item, grabbing it, and paperwork or setup. In study after study, walking is the biggest slice, often around half the time. The textbook Warehouse and Distribution Science from Georgia Tech calls travel the biggest single cost in picking. So the pros don\'t ask "how do I grab faster?" They ask "how do I walk less?"',
@@ -37,7 +41,7 @@ const lesson: Lesson = {
         ['Zone', 'Each person owns an area and picks only from it', 'Two or more helpers, bigger space'],
         ['Wave', 'Release orders in groups by time, like "all paid by noon"', 'Several lives a week, or a daily ship cutoff'],
       ] } },
-    { kind: 'learn', title: 'Batch picking is your superpower', text: 'Live sales are perfect for batch picking: lots of buyers, one or two pieces each. Instead of 30 walks for 30 orders, you take one walk with a cart, pull every piece in bin order, and then scan each piece into its buyer\'s box at the table. Pick and pack in this app is built for exactly this: scan the piece, then scan the box.',
+    { queen: "Pick for the whole live at once, not one buyer at a time. Your feet will thank you.", kind: 'learn', title: 'Batch picking is your superpower', text: 'Live sales are perfect for batch picking: lots of buyers, one or two pieces each. Instead of 30 walks for 30 orders, you take one walk with a cart, pull every piece in bin order, and then scan each piece into its buyer\'s box at the table. Pick and pack in this app is built for exactly this: scan the piece, then scan the box.',
       example: 'Tuesday\'s live has 32 orders and 51 pieces. One-at-a-time picking means 32 trips to the shelves. One batch walk with a laundry basket takes about 12 minutes, then 25 minutes of scanning into boxes. Done in under 40 minutes.',
       tip: 'Batch picking only works if you scan at the table. Without the second scan, two buyers\' pieces can land in the wrong boxes.' },
     { kind: 'scenario', title: 'Pick the method', situation: 'Thursday\'s live sold 46 orders, mostly one or two pieces each. Your cousin is coming to help, and your stock is split between the basement and the garage.',
@@ -74,7 +78,7 @@ const lesson: Lesson = {
         ['Under the table', 'Mailers sorted by size, refill tape'],
       ] },
       tip: 'Flow one direction: picked pieces come in on one side, sealed boxes leave on the other. Nothing crosses back.' },
-    { kind: 'script', title: 'A pack card for helpers', text: 'Print this and tape it to your table. A helper can follow it on her first day.', lines: [
+    { queen: "Post a pack card at your station so every helper packs the same way. Consistent boxes build trust.", kind: 'script', title: 'A pack card for helpers', text: 'Print this and tape it to your table. A helper can follow it on her first day.', lines: [
       '1. Scan the piece.',
       '2. Scan the buyer\'s box label. Wait for the green check.',
       '3. Wrap the piece in tissue. Add the thank-you card.',

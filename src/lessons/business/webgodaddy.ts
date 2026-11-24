@@ -17,6 +17,10 @@ const lesson: Lesson = {
     { org: 'Fit Small Business', title: 'Best AI website builders', url: 'https://fitsmallbusiness.com/best-ai-website-builders/' },
     { org: 'Tech.co', title: 'Best AI website builders (2026)', url: 'https://tech.co/website-builders/best-ai-website-builders' },
   ],
+  queen: {
+    welcome: "If your domain already lives at GoDaddy, Airo can give you a fast first draft of your site. I'll show you how to use it well and how to watch those year-two prices.",
+    signoff: "Write a great prompt, check everything the AI builds, and mark your renewal date on the calendar. A fast start is only good if the price stays fair.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Why GoDaddy', kind: 'learn', title: 'Domain and website under one roof', nova: 'One login for your name and your shop. I like simple, boss!',
@@ -34,9 +38,9 @@ const lesson: Lesson = {
         ['Ultimate', '$99.99/mo', '$149.99/mo', '$199.99/mo', '750 a month'],
       ] },
       tip: 'GoDaddy Payments charges about 2.7% + 30¢ per online sale. You can also connect Stripe.' },
-    { kind: 'number', title: 'The year-two jump', q: 'Professional is $24.99 a month the first year and renews at $36.99. How much more will you pay in year two than year one?', prefix: '$', answer: 144, tolerance: 1, hint: '($36.99 − $24.99) × 12.', why: '$12 × 12 = $144 more a year. Put the renewal date on your calendar so it\'s never a surprise.' },
+    { queen: "Put your renewal date in your calendar the day you sign up, with a reminder a month before.", kind: 'number', title: 'The year-two jump', q: 'Professional is $24.99 a month the first year and renews at $36.99. How much more will you pay in year two than year one?', prefix: '$', answer: 144, tolerance: 1, hint: '($36.99 − $24.99) × 12.', why: '$12 × 12 = $144 more a year. Put the renewal date on your calendar so it\'s never a surprise.' },
 
-    { chapter: 'Build with Airo', kind: 'learn', title: 'Step 1: write a great prompt', text: 'Airo builds what you describe, so the more specific you are, the less you fix later. Reviewers found vague prompts gave generic sites. Use this recipe, and split very long prompts into two messages.',
+    { chapter: 'Build with Airo', queen: "Describe your dream buyer in your prompt, not just your products. The AI builds better when it knows who the site is for.", kind: 'learn', title: 'Step 1: write a great prompt', text: 'Airo builds what you describe, so the more specific you are, the less you fix later. Reviewers found vague prompts gave generic sites. Use this recipe, and split very long prompts into two messages.',
       table: { head: ['Tell it', 'Example'], rows: [
         ['Who you are', 'Dazzle Finds, a live-selling boutique run by a mother of three in Atlanta'],
         ['What you sell', 'Pre-loved designer handbags and jewelry, $15 to $120'],

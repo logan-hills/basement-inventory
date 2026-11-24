@@ -14,14 +14,18 @@ const lesson: Lesson = {
     { org: 'HubSpot Academy', title: 'Facebook marketing training (free)', url: 'https://academy.hubspot.com/courses/facebook-marketing-training' },
     { org: 'Federal Trade Commission', title: 'Disclosures 101 for social media influencers', url: 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Social media is your storefront window, and it can fill your lives while you sleep. I'll show you what to post, how often, and how to stay out of trouble.",
+    signoff: "Keep your Page fresh, post videos people want to watch, and answer every 'price?' comment kindly. Your window is open for business.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Pick your platforms', kind: 'learn', title: 'Go where your buyers are', nova: "You don't need to be everywhere. You need to be where SHE is.",
       text: "Pick one home base and one helper. Do those two well for 90 days before you add anything else. Spreading thin across six apps is the fastest way to burn out and grow nowhere.",
       points: ['Home base: where you go live and sell (for most of our sellers, Facebook)', 'Helper: where new people discover you (Facebook Reels, Instagram Reels or TikTok)', 'Everything else: only after the first two are steady'] },
     { kind: 'quiz', q: "You're just starting. How many platforms should you post on daily?", options: ['All of them', 'One or two, done well', 'None until you\'re famous'], answer: 1, why: 'Consistency on two beats burnout on six.' },
 
-    { chapter: 'A Page that works for you', kind: 'learn', title: 'Your Page is your storefront', text: "When someone new taps your name, you have about five seconds to tell them what you sell, when you go live, and why they should follow. Check these four spots today.",
+    { chapter: 'A Page that works for you', queen: "Update your cover photo for every season or big live. A fresh window tells people the shop is open.", kind: 'learn', title: 'Your Page is your storefront', text: "When someone new taps your name, you have about five seconds to tell them what you sell, when you go live, and why they should follow. Check these four spots today.",
       points: [
         'Profile photo: your smiling face or a clear logo. Same photo on every platform.',
         'Cover photo: your live days and times, in big letters ("LIVE Tue & Thu 7 PM ET")',
@@ -69,7 +73,7 @@ const lesson: Lesson = {
 
     { chapter: 'Talk back and stay safe', kind: 'learn', title: 'The first hour matters', text: "Answer comments in the first hour after you post. Every reply tells the app people care about the post, so it shows it to more people. It also tells buyers you're real and paying attention.",
       points: ['Reply to every comment with a question back ("Which color would you pick?")', '"Price?" gets the price AND the live time, every time', 'Thank people by name. It costs nothing and they remember.'] },
-    { kind: 'scenario', title: 'The "price?" comment', situation: 'Someone you\'ve never seen before comments "price?" on your Reel of a pearl set.',
+    { queen: "Answer every price comment warmly and invite them to the live. That comment is a buyer raising her hand.", kind: 'scenario', title: 'The "price?" comment', situation: 'Someone you\'ve never seen before comments "price?" on your Reel of a pearl set.',
       options: [
         { text: 'Ignore it. If she really wants it she\'ll come to the live.', feedback: 'Curious strangers are your next regulars. Silence sends them to another seller.' },
         { text: '"Hi Angela! It\'s $14, and it\'s on Thursday\'s live at 7 PM ET. Tap Follow so you get the reminder 💛"', best: true, feedback: 'Name, price, when, and one easy next step. That\'s how a stranger becomes a buyer.' },

@@ -17,7 +17,11 @@ const lesson: Lesson = {
     { org: 'Lean Enterprise Institute', title: 'Lean lexicon: all terms', url: 'https://www.lean.org/explore-lean/lexicon-terms/' },
     { org: 'ASQ (American Society for Quality)', title: 'What is 5S?', url: 'https://asq.org/quality-resources/five-s-tutorial' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Lean is simply hunting for wasted time and giving it back to yourself. These habits helped big companies; they can give you back your evenings too.",
+    signoff: "Name your biggest waste, fix one small thing every week, and write down your best way. Small fixes add up to free evenings.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'What lean means', kind: 'learn', title: 'Value, through your buyer\'s eyes', nova: 'Lean isn\'t about working harder. It\'s about stopping the work that doesn\'t matter.',
       text: 'Lean thinking grew out of the Toyota Production System. The idea is simple: look at every step through the customer\'s eyes. A step that makes the product better, faster or more trusted adds value. A step the customer would never pay for is waste (the Japanese word is muda). The Lean Enterprise Institute describes the goal as removing waste so the work flows smoothly to the customer.',
@@ -63,7 +67,7 @@ const lesson: Lesson = {
       example: 'Hands-on time adds up to 5.5 hours, but the whole trip takes about 10 days. Most of the time, the piece is just sitting. The quickest win here: tag the haul the day it arrives, and it can be in a live 2 days sooner.' },
     { kind: 'number', title: 'Hands-on vs total', q: 'In the map above, hands-on time is 5.5 hours. The total trip is 10 days (240 hours). About what percent of the time is someone actually working on the piece?', answer: 2.3, tolerance: 0.3, suffix: '%', hint: 'Divide 5.5 by 240, then multiply by 100.', why: '5.5 ÷ 240 ≈ 2.3%. That\'s normal! Lean teams find the same thing in factories. The big wins are usually in the waiting, not in working faster.' },
 
-    { chapter: 'Fix the cause', kind: 'learn', title: 'Ask "why?" five times', nova: 'Toddlers already know this trick. Why? Why? Why?',
+    { chapter: 'Fix the cause', queen: "When something goes wrong twice, stop and ask why until you hit the real cause. Fix the cause, not the symptom.", kind: 'learn', title: 'Ask "why?" five times', nova: 'Toddlers already know this trick. Why? Why? Why?',
       text: 'Toyota made "5 whys" famous: when something goes wrong, ask why, then ask why about that answer, and keep going until you hit a cause you can fix. It stops you from patching the same problem every week.',
       points: [
         'Problem: a buyer got the wrong earrings.',
@@ -83,7 +87,7 @@ const lesson: Lesson = {
       ] },
       tip: 'One 10-minute improvement a week adds up to more than 8 hours saved by the end of the year, and they stack.' },
 
-    { chapter: 'Standard work', kind: 'learn', title: 'Write down your best way', text: 'In lean, standardized work means writing down the current best way to do a task, so it\'s done the same way every time, by anyone. It\'s not a cage. It\'s the starting line for the next improvement. Checklists are the simplest version, and they work: pilots and surgeons use them for exactly this reason.',
+    { chapter: 'Standard work', queen: "When you find a better way to do a job, write it down that same day. That's how it becomes the way.", kind: 'learn', title: 'Write down your best way', text: 'In lean, standardized work means writing down the current best way to do a task, so it\'s done the same way every time, by anyone. It\'s not a cage. It\'s the starting line for the next improvement. Checklists are the simplest version, and they work: pilots and surgeons use them for exactly this reason.',
       points: ['Write it while you do the task, not from memory', 'Keep it to one page, in plain words', 'Tape it where the work happens', 'When you find a better way, update the sheet the same day'] },
     { kind: 'script', title: 'Your pre-live checklist', text: 'Copy this, then make it yours. Run it 2 hours before every live.', lines: [
       '☐ Live planned in the app, pieces added',

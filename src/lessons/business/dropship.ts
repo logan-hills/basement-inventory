@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'Shopify', title: 'What is dropshipping?', url: 'https://www.shopify.com/blog/what-is-dropshipping' },
     { org: 'Federal Trade Commission', title: 'Business guide to the Mail, Internet, or Telephone Order Merchandise Rule', url: 'https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Drop shipping is everywhere online, with big promises. Let's look at it with clear eyes, the margins, the risks and the right setup, so you decide what's right for you.",
+    signoff: "Test before you list, do the full math including ads, and remember your name is on every order. If it fits your shop, start small.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'How it works', kind: 'learn', title: 'You sell, they ship', nova: 'Drop shipping is all over the internet with big promises. Let\'s look at it with clear eyes.',
       text: 'With drop shipping, you list a product in your online store. When someone buys, you pass the order to a supplier, who ships it straight to your customer. You never hold the stock.',
@@ -70,7 +74,7 @@ const lesson: Lesson = {
         ['Basic accessories and add-ons', 'Anything your buyers expect within a few days'],
       ] } },
     { kind: 'reflect', title: 'Your verdict', prompt: 'Would drop shipping help your shop? If yes, what would you sell and how would you find buyers? If no, why not?', placeholder: 'For my shop, drop shipping…', example: 'Not on lives. Maybe a small Shopify store for phone accessories as add-ons, after I test 3 samples.' },
-    { kind: 'learn', title: 'Customer service is on you', text: 'In drop shipping, you never touch the product, but every question, complaint and return still comes to you.',
+    { queen: "Your buyer doesn't know your supplier exists. Answer every problem like it was your own shelf.", kind: 'learn', title: 'Customer service is on you', text: 'In drop shipping, you never touch the product, but every question, complaint and return still comes to you.',
       points: ['Write clear policies for returns and damaged items before you launch', 'Know your supplier\'s return process and how long refunds take', 'Answer messages within a day', 'Track every problem order by supplier so you can drop bad ones'] },
     { kind: 'scenario', title: 'The wrong color', situation: 'A Shopify customer orders a gold necklace and receives silver from your supplier.',
       options: [
@@ -79,7 +83,7 @@ const lesson: Lesson = {
         { text: 'Ignore it, she\'ll get over it', feedback: 'That\'s how chargebacks and bad reviews happen.' },
       ] },
     { kind: 'quiz', q: "A supplier says delivery takes 'about 2 to 3 weeks.' What must your store say?", options: ["Fast shipping", "Nothing, buyers don't read it", "A clear delivery time you can actually meet, like 'Arrives in 2 to 3 weeks'"], answer: 2, why: "The FTC's Mail Order Rule says you need a reasonable basis for any shipping time you state, and if you don't state one, you must ship within 30 days. Honest times protect you." },
-    { kind: 'learn', title: 'Test before you list', text: "Order the product yourself before you sell it. You'll see the quality, the packaging, and the real delivery time your buyer will get. It's the cheapest insurance in drop shipping.",
+    { queen: "Order the product to your own door first. If it doesn't delight you, it won't delight your buyer.", kind: 'learn', title: 'Test before you list', text: "Order the product yourself before you sell it. You'll see the quality, the packaging, and the real delivery time your buyer will get. It's the cheapest insurance in drop shipping.",
       points: ["Order 1 of each new product to your own house", "Time how long it took to arrive", "Check the packaging for supplier logos or price tags", "Photograph it yourself instead of using the supplier's photos"] },
     { kind: 'number', title: 'The real profit', q: "You sell a bag for $40. The supplier charges $18 plus $6 shipping, payment fees are about $1.50, and you spend $5 on ads for each sale. What's your profit per bag?", prefix: '$', answer: 9.5, tolerance: 0.1, hint: "Add up every cost, then subtract from $40.", why: "$18 + $6 + $1.50 + $5 = $30.50 in costs, so $9.50 profit. One return wipes out the profit of several sales, which is why careful suppliers and honest listings matter so much." },
     { kind: 'checklist', title: 'Before you start', prompt: 'If you try drop shipping, tick these first.', items: ['Pick a niche that fits my brand', 'Order and time samples from 2 or 3 suppliers', 'Do the full margin math, including ads', 'Set realistic shipping times on every page', 'Start a Shopify free trial and build one collection', 'Decide a test budget and a stop date'] },

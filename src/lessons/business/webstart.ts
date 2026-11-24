@@ -18,6 +18,10 @@ const lesson: Lesson = {
     { org: 'Tech.co', title: 'GoDaddy pricing (October 2026)', url: 'https://tech.co/website-builders/godaddy-pricing' },
     { org: 'Fit Small Business', title: 'Best AI website builders', url: 'https://fitsmallbusiness.com/best-ai-website-builders/' },
   ],
+  queen: {
+    welcome: "Your lives sell for an hour; a website sells all week. I want you to pick the right builder once, so you don't waste a month or a dollar. Let's choose together.",
+    signoff: "Pick the builder that fits your shop today, build your six pages, and announce your launch on your live. Your shop is about to be open 24 hours a day.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Why a website', kind: 'learn', title: 'Your shop, open all week', nova: 'Boss, Facebook is the party. Your website is your storefront. You need both!',
@@ -67,7 +71,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Watch for these extra costs', text: 'Most surprise bills come from the same few places. Know them before you click Buy.',
       points: ['Renewal prices: many first-year deals go up in year two', 'Paid themes: Shopify\'s premium themes run about $100 to $500 one time; free themes are fine to start', 'Apps: each one adds a monthly fee; add only what earns its keep', 'Using an outside payment company on Shopify adds a 0.6% to 2% fee per sale', 'Email at your own domain, like hello@yourshop.com, is often extra', 'Free plans show the builder\'s ads and usually can\'t use your own domain'] },
 
-    { chapter: 'Your name online', kind: 'learn', title: 'Pick a domain buyers can remember', text: 'Your domain is your web address, like dazzlefinds.com. It costs about $16 to $23 a year and moves with you if you ever change builders, so it\'s the one thing to get right from the start.',
+    { chapter: 'Your name online', queen: "Say your domain out loud on a live before you buy it. If people can't spell it after hearing it, keep looking.", kind: 'learn', title: 'Pick a domain buyers can remember', text: 'Your domain is your web address, like dazzlefinds.com. It costs about $16 to $23 a year and moves with you if you ever change builders, so it\'s the one thing to get right from the start.',
       table: { head: ['Do', 'Avoid'], rows: [
         ['Short and easy to say on a live', 'Long names buyers can\'t spell'],
         ['.com when you can get it', 'Odd endings buyers forget'],
@@ -92,7 +96,7 @@ const lesson: Lesson = {
       tip: 'Keep your Live Numbers or item codes in the SKU column so online orders match your bins.' },
 
     { chapter: 'Launch in 14 days', kind: 'checklist', title: 'Your 14-day launch plan', prompt: 'Tick these off over the next two weeks.', items: ['Days 1 to 2: pick a builder and start the trial', 'Day 3: get your domain', 'Days 4 to 5: theme, logo, colors and Home page', 'Days 6 to 8: add your first 20 to 30 pieces with real photos', 'Day 9: About, Lives, Shipping and returns, Contact and privacy pages', 'Day 10: turn on payments and sales tax', 'Day 11: place a test order and refund it', 'Day 12: check every page on your phone', 'Day 13: add the link to Facebook, Instagram and your bio', 'Day 14: announce it on your live with a launch code'] },
-    { kind: 'script', title: 'Announce it on your live', text: 'Say this near the start of the live, while the crowd is biggest.', lines: [
+    { queen: "Give your website launch its own live with a special code. Make it an event, not an afterthought.", kind: 'script', title: 'Announce it on your live', text: 'Say this near the start of the live, while the crowd is biggest.', lines: [
       '"Y\'all, big news! The boutique is officially online at [yourshop.com]."',
       '"Everything I don\'t get to tonight goes up there after the live."',
       '"Use code LAUNCH10 for 10% off this week only."',

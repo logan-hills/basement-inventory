@@ -21,7 +21,11 @@ const lesson: Lesson = {
     { org: 'IRS', title: 'Standard mileage rates', url: 'https://www.irs.gov/tax-professionals/standard-mileage-rates' },
     { org: 'IRS', title: 'Simplified option for home office deduction', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/simplified-option-for-home-office-deduction' },
   ],
-  covers: ['src/lessons/resources.ts'], updated: '2026-11-23',
+  queen: {
+    welcome: "Taxes feel big because nobody explains them. I want tax time to be one calm afternoon for you, not a week of panic. Good records all year are the whole secret.",
+    signoff: "Save your receipts, set aside a share of every payout, and gather your tax packet by February. And remember, this is education, not tax advice, so find a good tax pro for your situation.",
+  },
+  covers: ['src/lessons/resources.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'How you\'re taxed', kind: 'learn', title: 'Profit, not sales', nova: 'Deep breath. Taxes feel big because nobody explains them. I\'ll keep it plain. And remember: this is education, not tax advice.',
       text: 'As a sole proprietor or single-member LLC, you\'re generally taxed on your profit: sales minus business costs. That profit goes on Schedule C with your personal return. You pay regular income tax on it, plus self-employment tax.',
@@ -32,7 +36,7 @@ const lesson: Lesson = {
       ] },
       tip: NOT_ADVICE },
     { kind: 'number', title: 'Self-employment tax', q: 'Your shop\'s profit for the year is $12,000. Roughly how much is 15.3% self-employment tax on that? (The real form uses 92.35% of profit, so this is a quick upper estimate.)', prefix: '$', answer: 1836, tolerance: 1, hint: '$12,000 × 0.153.', why: '$12,000 × 15.3% = $1,836 (the actual form comes out a little lower, about $1,695). That\'s before income tax, which is why setting money aside matters.' },
-    { kind: 'learn', title: 'Set aside every payout', text: 'A common rule of thumb for self-employed people is to set aside 25 to 30% of profit for taxes. Your real number depends on your situation; a tax pro can help you pick it.',
+    { queen: "Move your tax set-aside the same day you're paid. Money left in checking has a way of getting spent.", kind: 'learn', title: 'Set aside every payout', text: 'A common rule of thumb for self-employed people is to set aside 25 to 30% of profit for taxes. Your real number depends on your situation; a tax pro can help you pick it.',
       example: 'Every Friday, move 25% of the week\'s profit into a "Tax" savings account. When estimates are due, the money is already there.' },
 
     { chapter: 'Records', kind: 'learn', title: 'What to keep', text: 'If it\'s not written down, it didn\'t happen, as far as the IRS is concerned. Keep proof of income and every business cost.',
@@ -72,7 +76,7 @@ const lesson: Lesson = {
       tip: 'Pay online at IRS.gov (IRS Direct Pay or your IRS Online Account). Dates move to the next business day if they land on a weekend or holiday.' },
 
     { chapter: 'Tax time', kind: 'checklist', title: 'Your tax-time packet', prompt: 'Gather these by February so tax season is one calm afternoon.', items: ['Sales totals for the year (print from Reports)', 'Every 1099-K or 1099 form you received', 'Cost of goods sold (purchases and starting/ending inventory)', 'Shipping, supplies and fee totals', 'Equipment receipts with dates and prices', 'Mileage log total', 'Home office square footage', 'Estimated tax payments you made, with dates', 'Last year\'s tax return'] },
-    { kind: 'learn', title: 'Find a good tax pro', text: 'A good tax professional often saves more than they cost, especially your first year in business.',
+    { queen: "Ask other sellers who they use. A tax pro who understands live sellers is worth every penny.", kind: 'learn', title: 'Find a good tax pro', text: 'A good tax professional often saves more than they cost, especially your first year in business.',
       points: ['Look for an enrolled agent (EA) or CPA who works with small businesses', 'Ask: do you work with online sellers and inventory?', 'Bring your tax-time packet to the first meeting', 'Ask what to track differently next year', 'The IRS also lists free help programs for some taxpayers on IRS.gov'] },
     { kind: 'scenario', title: 'April panic', situation: 'It\'s April 10. You have a shoebox of receipts, no sales totals, and no estimated payments made.',
       options: [
