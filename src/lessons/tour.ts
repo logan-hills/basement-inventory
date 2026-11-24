@@ -11,7 +11,7 @@ const lesson: Lesson = {
     'Run a weekly rhythm that leaves no surprises before a live',
   ],
   route: { to: '/', label: 'Go to Home' },
-  covers: ['src/App.tsx', 'src/components/SubNav.tsx', 'src/components/ActionSheet.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/nova3d.ts', 'src/components/AskNova.tsx', 'src/lib/novaBrain.ts', 'src/pages/Lessons.tsx', 'src/components/Certificate.tsx', 'src/lessons/awards.ts'], updated: '2026-11-23',
+  covers: ['src/App.tsx', 'src/components/SubNav.tsx', 'src/components/ActionSheet.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/nova3d.ts', 'src/components/AskNova.tsx', 'src/lib/novaBrain.ts', 'src/pages/Lessons.tsx', 'src/components/Certificate.tsx', 'src/lessons/awards.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'Why a system', kind: 'learn', title: 'From "where is it?" to "got it"', nova: "Welcome, boss! Let's make sure you never dig through a box before a live again.",
       text: "Most live sellers start the same way: pieces in tubs, a notebook of who bought what, and two hours of searching before every show. It works until it doesn't. One lost earring, one wrong box, one buyer who never got her order, and the stress starts eating the fun.",

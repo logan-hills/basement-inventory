@@ -13,20 +13,26 @@ export type LiveClass = {
   prep: string[]
   sessions: ClassSession[]
   tone: string
+  /** Day of the week, 0 = Sunday. Used to list the next class dates. */
+  weekday: number
+  /** How long the class runs, for calendar invites. */
+  minutes: number
 }
 
 export const CLASS_TZ = 'Eastern Time'
+/** The time zone the class times are in, for calendar invites. */
+export const CLASS_TZ_ID = 'America/New_York'
 
 export const LIVE_CLASSES: LiveClass[] = [
   {
-    id: 'implementation', day: 'Mondays', title: 'Implementation meeting', tone: 'violet',
+    id: 'implementation', day: 'Mondays', weekday: 1, minutes: 60, title: 'Implementation meeting', tone: 'violet',
     what: 'Set your shop up with us, step by step, and leave ready to receive and tag your first pieces.',
     covers: ['Your settings, profile and team', 'Receiving and tagging', 'Printing 2×1 tags and bin labels', 'Shelves, bins and scanning'],
     prep: ['launch', 'tour', 'settings'],
     sessions: [{ label: 'Daytime', time: '12:00 PM' }, { label: 'Evening', time: '7:00 PM' }],
   },
   {
-    id: 'golive', day: 'Wednesdays', title: 'How to go Live', tone: 'fuchsia',
+    id: 'golive', day: 'Wednesdays', weekday: 3, minutes: 60, title: 'How to go Live', tone: 'fuchsia',
     what: 'Plan a live, book your slot on the shared calendar, and run the comment bot so no sale gets missed.',
     covers: ['Planning a live in the app', 'Booking the shared calendar', 'Comment bot setup and claims', 'Turning claims into orders'],
     prep: ['planner', 'calendar', 'liveprep', 'bot'],
@@ -51,7 +57,27 @@ export const QUEEN_SESSION = {
   firstHourOff: 0.5,
   /** About this much per hour of follow-up research, quoted first. */
   researchRate: 25,
+  /** Share of the session price paid up front to book. */
+  deposit: 0.5,
+  /** Where booking requests go: the Queen's own inbox. */
+  email: 'LaVerne_q@hotmail.com',
+  /** Ideas to get sellers started; tapping one adds it to their request. */
+  ideas: [
+    'Price my pieces so I make a real profit',
+    'Build a simple business plan for next year',
+    'Get more people to show up to my lives',
+    'Find better vendors and buy smarter',
+    'Set up my LLC, EIN and sales tax the right way',
+    'Get organized so packing takes half the time',
+    'Grow my repeat buyers and VIP list',
+    'Know when I can afford to hire help',
+    'Use AI to save hours on marketing',
+    'Plan my holiday season',
+  ],
 }
+
+/** What's due up front to book: half the session price. */
+export const consultDeposit = (hours: number) => Math.round(consultPrice(hours) * QUEEN_SESSION.deposit * 100) / 100
 
 /** What a session costs. The first full hour gets the discount; time is prorated after that.
     A session shorter than one hour is prorated at the full rate, with no discount. */

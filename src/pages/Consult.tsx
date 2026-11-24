@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSession } from '../lib/session'
-import { CONTACT } from '../lib/legal'
-import { QUEEN_SESSION as Q, consultPrice } from '../lessons/classes'
+import { QUEEN_SESSION as Q, consultPrice, consultDeposit } from '../lessons/classes'
 
 /* Schedule time with the Queen: a paid 1:1 business consult. Sellers learn how pricing works,
    prepare, and send a request that arrives as an email with everything the Queen needs. */
@@ -22,12 +21,15 @@ export default function Consult() {
   const [when, setWhen] = useState<'Daytime' | 'Evening'>('Daytime')
   const [hours, setHours] = useState(1)
   const price = consultPrice(hours)
+  const deposit = consultDeposit(hours)
+  const addIdea = (idea: string) => setGoal(g => (g.includes(idea) ? g : `${g.trim() ? `${g.trim()}\n` : ''}• ${idea}`))
   const toggle = (t: string) => setTopics(x => (x.includes(t) ? x.filter(y => y !== t) : [...x, t]))
   const ready = topics.length > 0 && goal.trim().length > 0
 
   const body = [
     `Shop: ${shop?.name ?? ''}`,
     `Length: ${len(hours)} (estimate ${fmt(price)})`,
+    `Deposit to book (50%): ${fmt(deposit)}, balance ${fmt(price - deposit)} after the session`,
     `Best time: ${when}`,
     `Topics: ${topics.join(', ')}`,
     `Business plan: ${plan}`,
@@ -38,7 +40,7 @@ export default function Consult() {
     'What I\'m doing now:',
     now.trim() || '(not filled in)',
   ].join('\n')
-  const href = `mailto:${CONTACT}?subject=${encodeURIComponent(`Schedule time with the Queen: ${shop?.name ?? 'my shop'}`)}&body=${encodeURIComponent(body)}`
+  const href = `mailto:${Q.email}?subject=${encodeURIComponent(`Schedule time with the Queen: ${shop?.name ?? 'my shop'}`)}&body=${encodeURIComponent(body)}`
 
   return (
     <div className="uni stack wide-gap consult">
@@ -61,6 +63,7 @@ export default function Consult() {
           <div><b>{fmt(Q.rate * (1 - Q.firstHourOff))}</b><span>Your first full hour, {Math.round(Q.firstHourOff * 100)}% off</span></div>
           <div><b>{fmt(Q.rate)}/hr</b><span>Each additional hour, prorated by the minute. 30 more minutes is {fmt(Q.rate / 2)}.</span></div>
           <div><b>No discount</b><span>On a session shorter than an hour. It's prorated at {fmt(Q.rate)} an hour, so 30 minutes is {fmt(consultPrice(0.5))}, the same as a full first hour.</span></div>
+          <div><b>{Math.round(Q.deposit * 100)}% to book</b><span>Pay half up front to hold your time, the rest after your session. A full first hour is {fmt(consultPrice(1))}, so the deposit is {fmt(consultDeposit(1))}.</span></div>
           <div><b>About {fmt(Q.researchRate)}/hr</b><span>Follow-up research and written solutions, when your question needs digging. You'll get the estimate before any research starts.</span></div>
         </div>
       </section>
@@ -84,6 +87,10 @@ export default function Consult() {
           <div className="consult-chips">{TOPICS.map(t => <button key={t} type="button" aria-pressed={topics.includes(t)} className={`consult-chip${topics.includes(t) ? ' on' : ''}`} onClick={() => toggle(t)}>{t}</button>)}</div>
         </fieldset>
 
+        <div className="consult-ideas">
+          <span>Need ideas? Tap any to add it.</span>
+          <div className="consult-chips">{Q.ideas.map(i => <button key={i} type="button" className={`consult-chip idea${goal.includes(i) ? ' on' : ''}`} onClick={() => addIdea(i)}>{goal.includes(i) ? '✓ ' : '+ '}{i}</button>)}</div>
+        </div>
         <label>What do you want to work on?
           <textarea rows={4} value={goal} onChange={e => setGoal(e.target.value)} placeholder="My questions, and what I want to leave the session with…" />
         </label>
@@ -100,12 +107,13 @@ export default function Consult() {
         </fieldset>
 
         <fieldset><legend>How long?</legend>
-          <div className="consult-chips">{LENGTHS.map(h => <button key={h} type="button" aria-pressed={hours === h} className={`consult-chip${hours === h ? ' on' : ''}`} onClick={() => setHours(h)}>{len(h)}<small>{fmt(consultPrice(h))}</small></button>)}</div>
+          <div className="consult-chips">{LENGTHS.map(h => <button key={h} type="button" aria-pressed={hours === h} className={`consult-chip${hours === h ? ' on' : ''}`} onClick={() => setHours(h)}>{len(h)}<small>{fmt(consultPrice(h))} · {fmt(consultDeposit(h))} to book</small></button>)}</div>
         </fieldset>
 
         <div className="consult-total">
           <span>Estimated session cost</span>
           <b>{fmt(price)}</b>
+          <span className="consult-deposit">Deposit to book today: <b>{fmt(deposit)}</b> · Balance after your session: {fmt(price - deposit)}</span>
           {hours < 1 && <small>Tip: a full hour is the same price with the first-hour discount. Use the full hour, it's worth it!</small>}
           {hours >= 1 && <small>Includes {Math.round(Q.firstHourOff * 100)}% off your first hour. Follow-up research, if you want it, is about {fmt(Q.researchRate)} an hour and quoted first.</small>}
         </div>
@@ -113,7 +121,7 @@ export default function Consult() {
         {ready
           ? <a className="btn uni-cta consult-send" href={href}>♛ Send my request</a>
           : <button type="button" className="btn uni-cta consult-send" disabled>♛ Pick a topic and tell us what you want to work on</button>}
-        <p className="consult-small">Your request opens as an email to {CONTACT}. We'll reply to confirm a time and how to pay. Sessions are business coaching, not legal or tax advice.</p>
+        <p className="consult-small">Your request opens as an email to the Queen at {Q.email}. She'll reply to confirm a time and send how to pay your {fmt(deposit)} deposit. Your time is booked once the deposit is paid. Sessions are business consulting, not legal or tax advice.</p>
       </section>
     </div>
   )
