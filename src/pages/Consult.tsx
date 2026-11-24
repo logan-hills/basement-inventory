@@ -1,12 +1,22 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSession } from '../lib/session'
+import Icon from '../components/Icon'
 import { QUEEN_SESSION as Q, consultPrice, consultDeposit } from '../lessons/classes'
 
 /* Schedule time with the Queen: a paid 1:1 business consult. Sellers learn how pricing works,
    prepare, and send a request that arrives as an email with everything the Queen needs. */
 
-const TOPICS = ['Strategy and planning', 'Money and pricing', 'Sourcing and vendors', 'Marketing and social media', 'Lives and sales', 'Operations and packing', 'Making it official and taxes', 'Something else']
+const TOPIC_CARDS: { t: string; line: string; icon: string }[] = [
+  { t: 'Strategy and planning', line: 'Goals, a plan for the year, and what to do first', icon: 'trend' },
+  { t: 'Money and pricing', line: 'Price for profit, cash flow and your numbers', icon: 'dollar' },
+  { t: 'Sourcing and vendors', line: 'Better vendors and smarter buying', icon: 'box' },
+  { t: 'Marketing and social media', line: 'Fill your lives and grow your following', icon: 'sparkle' },
+  { t: 'Lives and sales', line: 'Sell more on every live', icon: 'live' },
+  { t: 'Operations and packing', line: 'Get organized and pack faster', icon: 'pack' },
+  { t: 'Making it official and taxes', line: 'LLC, EIN and sales tax, done right', icon: 'reports' },
+  { t: 'Something else', line: 'Bring any business question', icon: 'lessons' },
+]
 const LENGTHS = [0.5, 1, 1.5, 2, 3]
 const PLAN = ['Yes, I\'ll bring it', 'It\'s in progress', 'Not yet']
 const fmt = (n: number) => `$${n % 1 ? n.toFixed(2) : n}`
@@ -25,6 +35,23 @@ export default function Consult() {
   const addIdea = (idea: string) => setGoal(g => (g.includes(idea) ? g : `${g.trim() ? `${g.trim()}\n` : ''}• ${idea}`))
   const toggle = (t: string) => setTopics(x => (x.includes(t) ? x.filter(y => y !== t) : [...x, t]))
   const ready = topics.length > 0 && goal.trim().length > 0
+  const topicsRef = useRef<HTMLFieldSetElement>(null)
+  const goalRef = useRef<HTMLTextAreaElement>(null)
+  const [nudge, setNudge] = useState<'topics' | 'goal' | null>(null)
+  /** The send button never dead-ends: it takes you to whatever is still missing. */
+  function guide() {
+    const step = topics.length ? 'goal' : 'topics'
+    setNudge(step)
+    const el = step === 'topics' ? topicsRef.current : goalRef.current
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    if (step === 'goal') setTimeout(() => goalRef.current?.focus({ preventScroll: true }), 450)
+    setTimeout(() => setNudge(null), 2400)
+  }
+  const steps = [
+    { label: 'Pick your topics', done: topics.length > 0 },
+    { label: 'Say what you want to work on', done: goal.trim().length > 0 },
+    { label: 'Choose a time and length', done: true },
+  ]
 
   const body = [
     `Shop: ${shop?.name ?? ''}`,
@@ -83,18 +110,37 @@ export default function Consult() {
       <section className="stack consult-form">
         <div className="uni-section-head"><span className="uni-eyebrow">Request a session</span><h2 className="uni-h2">Tell the Queen what you need</h2></div>
 
-        <fieldset><legend>What do you want to talk about? Pick any.</legend>
-          <div className="consult-chips">{TOPICS.map(t => <button key={t} type="button" aria-pressed={topics.includes(t)} className={`consult-chip${topics.includes(t) ? ' on' : ''}`} onClick={() => toggle(t)}>{t}</button>)}</div>
+        <ol className="consult-steps" aria-label="Before you send">
+          {steps.map((x, i) => <li key={x.label} className={x.done ? 'done' : ''}><span>{x.done ? '✓' : i + 1}</span>{x.label}</li>)}
+        </ol>
+
+        <fieldset ref={topicsRef} className={`consult-step${nudge === 'topics' ? ' nudge' : ''}`}>
+          <legend><span className="consult-step-no">1</span> What would you like to talk about? <small>Pick one or more</small></legend>
+          <div className="consult-topics">
+            {TOPIC_CARDS.map(({ t, line, icon }) => {
+              const on = topics.includes(t)
+              return (
+                <button key={t} type="button" aria-pressed={on} className={`consult-topic${on ? ' on' : ''}`} onClick={() => { toggle(t); setNudge(null) }}>
+                  <span className="consult-topic-ico"><Icon name={icon} size={22} /></span>
+                  <span className="consult-topic-txt"><b>{t}</b><small>{line}</small></span>
+                  <span className="consult-topic-check" aria-hidden="true">{on ? '✓' : ''}</span>
+                </button>
+              )
+            })}
+          </div>
         </fieldset>
 
-        <div className="consult-ideas">
-          <span>Need ideas? Tap any to add it.</span>
-          <div className="consult-chips">{Q.ideas.map(i => <button key={i} type="button" className={`consult-chip idea${goal.includes(i) ? ' on' : ''}`} onClick={() => addIdea(i)}>{goal.includes(i) ? '✓ ' : '+ '}{i}</button>)}</div>
-        </div>
-        <label>What do you want to work on?
-          <textarea rows={4} value={goal} onChange={e => setGoal(e.target.value)} placeholder="My questions, and what I want to leave the session with…" />
+        <div className={`consult-step${nudge === 'goal' ? ' nudge' : ''}`}>
+          <div className="consult-step-head"><span className="consult-step-no">2</span> What do you want to work on?</div>
+          <div className="consult-ideas">
+            <span>♛ Need ideas? Tap any to add it to your request.</span>
+            <div className="consult-chips">{Q.ideas.map(i => <button key={i} type="button" className={`consult-chip idea${goal.includes(i) ? ' on' : ''}`} onClick={() => { addIdea(i); setNudge(null) }}>{goal.includes(i) ? '✓ ' : '+ '}{i}</button>)}</div>
+          </div>
+        <label>Your questions and goals
+          <textarea ref={goalRef} rows={4} value={goal} onChange={e => setGoal(e.target.value)} placeholder="My questions, and what I want to leave the session with…" />
         </label>
-        <label>What are you doing now?
+        </div>
+        <label>What are you doing now? <small className="consult-optional">Optional</small>
           <textarea rows={3} value={now} onChange={e => setNow(e.target.value)} placeholder="How I buy, sell, price and ship today…" />
         </label>
 
@@ -102,6 +148,7 @@ export default function Consult() {
           <div className="consult-chips">{PLAN.map(p => <button key={p} type="button" aria-pressed={plan === p} className={`consult-chip${plan === p ? ' on' : ''}`} onClick={() => setPlan(p)}>{p}</button>)}</div>
         </fieldset>
 
+        <div className="consult-step-head"><span className="consult-step-no">3</span> Time and length</div>
         <fieldset><legend>Best time for you</legend>
           <div className="consult-chips">{(['Daytime', 'Evening'] as const).map(w => <button key={w} type="button" aria-pressed={when === w} className={`consult-chip${when === w ? ' on' : ''}`} onClick={() => setWhen(w)}>{w}</button>)}</div>
         </fieldset>
@@ -120,7 +167,7 @@ export default function Consult() {
 
         {ready
           ? <a className="btn uni-cta consult-send" href={href}>♛ Send my request</a>
-          : <button type="button" className="btn uni-cta consult-send" disabled>♛ Pick a topic and tell us what you want to work on</button>}
+          : <button type="button" className="btn uni-cta consult-send consult-guide" onClick={guide}>♛ {topics.length ? 'Next: tell the Queen what you want to work on' : 'Start by picking your topics'} ›</button>}
         <p className="consult-small">Your request opens as an email to the Queen at {Q.email}. She'll reply to confirm a time and send how to pay your {fmt(deposit)} deposit. Your time is booked once the deposit is paid. Sessions are business consulting, not legal or tax advice.</p>
       </section>
     </div>
