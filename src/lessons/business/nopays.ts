@@ -1,0 +1,102 @@
+import type { Lesson } from '../types'
+
+const lesson: Lesson = {
+  id: 'nopays', kind: 'course', school: 'Customer care', title: 'No-pays, chargebacks and sizing complaints', track: 'Business', icon: 'users',
+  why: "Every shop meets the buyer who claims and never pays, the surprise card dispute, and the 'it doesn't fit' message. Clear rules, good records and calm words protect your money and your name.",
+  outcomes: [
+    'Write fair shop rules for payment, returns and sizing',
+    'Handle a no-pay without drama, and know when to block',
+    'Prevent most chargebacks, and answer one with the right proof',
+    'Cut sizing complaints with measurements and fit notes',
+    'Decide refunds, exchanges and store credit consistently',
+  ],
+  route: { to: '/customers', label: 'Open Customers' },
+  sources: [
+    { org: 'Consumer Financial Protection Bureau', title: 'How do I dispute a charge on my credit card bill?', url: 'https://www.consumerfinance.gov/ask-cfpb/how-do-i-dispute-a-charge-on-my-credit-card-bill-en-61/' },
+    { org: 'Visa', title: 'Dispute management guidelines for Visa merchants', url: 'https://usa.visa.com/dam/VCOM/global/support-legal/documents/merchants-dispute-management-guidelines.pdf' },
+    { org: 'PayPal', title: 'Seller Protection', url: 'https://www.paypal.com/us/webapps/mpp/security/seller-protection' },
+    { org: 'Federal Trade Commission', title: "Business guide to the FTC's Mail, Internet, or Telephone Order Merchandise Rule", url: 'https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule' },
+    { org: 'MIT Sloan Management Review', title: 'What unhappy customers want', url: 'https://sloanreview.mit.edu/article/what-unhappy-customers-want' },
+  ],
+  queen: {
+    welcome: "The hard customer moments are part of every shop, and they don't mean you're doing anything wrong. What matters is having rules before you need them and staying calm when you use them. This course gives you both, plus the exact words to say.",
+    signoff: "Post your rules, keep your records, measure your pieces and answer every hard message with grace. You'll protect your money, and the buyers watching will trust you even more.",
+  },
+  covers: [], updated: '2026-11-24',
+  slides: [
+    { chapter: 'Rules first', kind: 'learn', title: 'Rules protect everyone', nova: "Rules aren't mean, love. They're kind, because everybody knows what to expect.",
+      text: "Write your shop rules once, pin them, link them on every invoice and say the short version on every live. When a problem comes up, you point to the rule instead of arguing.",
+      table: { head: ['Rule', 'Example wording'], rows: [
+        ['Payment window', '"Invoices are due within 24 hours of the live."'],
+        ['Unpaid claims', '"Unpaid after 24 hours, the piece goes back up for sale."'],
+        ['No-pay policy', '"Two unpaid invoices and you\'ll need to prepay for future claims."'],
+        ['Returns', '"All sales final, except items damaged in shipping or sent in error."'],
+        ['Damage claims', '"Message me within 3 days of delivery with photos."'],
+        ['Sizing', '"Please check the measurements I give before claiming."'],
+      ] },
+      tip: "Whatever your policy is, say it clearly before people buy. Surprises are what turn into complaints." },
+    { kind: 'reflect', title: 'Your shop rules', prompt: 'Write your payment window, your no-pay policy and your return policy in one sentence each.', placeholder: 'Payment… No-pays… Returns…', example: 'Pay within 24 hours. Two no-pays and you prepay from then on. Final sale, except damage or my mistake, reported within 3 days with photos.' },
+
+    { chapter: 'No-pays', kind: 'learn', title: 'Handle a no-pay calmly', text: "Most unpaid invoices aren't bad people. They're busy people, forgetful people, or people who claimed in the excitement. A friendly reminder fixes most of them.",
+      table: { head: ['When', 'What to do'], rows: [
+        ['Invoice sent', 'Include the due time and a thank-you'],
+        ['12 hours later', 'Friendly reminder'],
+        ['At the deadline', 'Last reminder: "I\'ll release it tonight at 8"'],
+        ['After the deadline', 'Release the piece; offer it to the waitlist'],
+        ['Second no-pay', 'Prepay rule kicks in, kindly'],
+      ] },
+      queen: "Never call out a no-pay on your live. Handle it privately and kindly. Your whole audience is watching how you treat people." },
+    { kind: 'script', title: 'No-pay messages', lines: [
+      'Reminder: "Hi [name]! Just a reminder your invoice for the [item] is ready. It\'s due by [time] tomorrow. Can\'t wait to ship it to you!"',
+      'Last call: "Hi [name], I\'ll need to release the [item] at [time] tonight so another buyer can have it. If you still want it, the link is here."',
+      'Released: "No worries, [name]! I\'ve released the [item]. I hope to see you at the next live."',
+      'Prepay rule: "Hi [name], because of two unpaid invoices, future claims will need to be paid before I hold them. Thank you for understanding!"',
+    ] },
+    { kind: 'number', title: 'What no-pays cost you', q: 'In a month, 6 claims went unpaid. Each piece averaged $25 and you resold only 2 of them at the same price. If your profit on each piece is about 60% of the price, how much profit did no-pays cost you that month?', prefix: '$', answer: 60, hint: '4 pieces didn\'t resell. Each one\'s profit is 60% of $25.', why: '4 × $15 = $60 in lost profit, plus your time. That\'s why a waitlist and a clear payment window matter so much.' },
+
+    { chapter: 'Chargebacks', kind: 'learn', title: 'What a chargeback is', text: "A chargeback, or dispute, is when a buyer asks her card company or payment app to take a payment back. The CFPB explains that under federal law, card holders can dispute billing errors, including goods that weren't delivered as agreed. Card networks like Visa have their own dispute rules and deadlines, and payment apps like Square and PayPal have seller protection programs with their own requirements.",
+      points: ['The most common reasons: "never received it," "not as described," and "I don\'t recognize this charge"', 'The money is usually held while the dispute is reviewed', 'You answer with proof through your payment app, by its deadline', 'Many disputes can be avoided with clear invoices and tracking'] },
+    { kind: 'learn', title: 'Prevent most disputes', text: "The best chargeback defense is never getting one.",
+      points: [
+        'Use your shop name on invoices and payment statements so buyers recognize the charge',
+        'Ship with tracking, always, and send the tracking number',
+        'For pricier orders, consider signature confirmation',
+        'Describe pieces honestly, including flaws, sizes and measurements',
+        'Answer messages quickly; most disputes start as unanswered messages',
+        'Keep your shop rules on every invoice',
+      ],
+      queen: "Answer every 'where's my package?' message within a day. A buyer who hears from you doesn't call her bank." },
+    { kind: 'order', title: 'Answer a dispute', prompt: 'Put the steps of answering a chargeback in order.', steps: ['Read the dispute reason and the deadline', 'Gather the invoice, claim screenshot and your shop rules', 'Add tracking showing delivery (and photos of the item)', 'Add your messages with the buyer', 'Submit everything through your payment app before the deadline', 'Note the buyer in Customers and require prepay going forward'] },
+    { kind: 'scenario', title: '"Never received it"', situation: "A buyer files a dispute saying she never received her $65 order. Your tracking shows it was delivered to her address 9 days ago. She never messaged you.",
+      options: [
+        { text: 'Refund her right away to avoid trouble', feedback: "You might refund a package she has. Respond with your proof first; you can still be generous if something's truly wrong." },
+        { text: 'Message her kindly to check with neighbors and her post office, and submit your tracking, invoice and messages to the dispute', best: true, feedback: "Calm and well documented. Many buyers find the package and cancel the dispute, and if not, your proof is in." },
+        { text: 'Post about her in your group', feedback: "Never shame buyers in public. It hurts your reputation more than hers." },
+      ] },
+
+    { kind: 'quiz', q: 'Which habit prevents the most chargebacks?', options: ['Using a different business name on every invoice', 'Shipping with tracking and answering messages quickly', 'Never giving refunds for any reason', 'Taking payments only in cash'], answer: 1, why: "Most disputes start with a buyer who can't find her package or can't reach you. Tracking plus quick answers stops them before they start." },
+    { chapter: 'Sizing and returns', kind: 'learn', title: 'Measurements beat "true to size"', text: "Sizing complaints drop when buyers can compare real numbers. Sizes vary wildly between brands, so measure.",
+      table: { head: ['For', 'Measure (laid flat)'], rows: [
+        ['Tops and dresses', 'Armpit to armpit, and length from shoulder'],
+        ['Pants and skirts', 'Waist across, hips across, inseam'],
+        ['Shoes', 'Insole length'],
+        ['Bags', 'Width × height × depth, strap drop'],
+      ] },
+      example: "Carla adds 'Pit to pit: 21 in. / Length: 27 in.' to every top and says it on camera. Her 'it doesn't fit' messages fell from several a week to a couple a month." },
+    { kind: 'learn', title: 'Refund, exchange or credit?', text: "Decide ahead of time, so you treat everyone the same. MIT Sloan research on unhappy customers found that people want to be heard and treated fairly as much as they want money back. A quick, warm answer goes a long way.",
+      table: { head: ['Situation', 'Fair answer'], rows: [
+        ['Your mistake (wrong item, damage in shipping)', 'Full refund or replacement, plus your apology'],
+        ['Not as described (a flaw you missed)', 'Refund or partial refund; it\'s on you'],
+        ['Doesn\'t fit, measurements were listed', 'Final sale per your rules; offer to help her resell or a one-time store credit as a kindness'],
+        ['Changed her mind', 'Final sale per your rules, said kindly'],
+      ] } },
+    { kind: 'scenario', title: '"It doesn\'t fit"', situation: "A regular messages that a dress you listed with measurements is too tight. Your rules say final sale. She's upset.",
+      options: [
+        { text: '"Sorry, all sales final." and nothing more', feedback: "You're within your rules, but that answer can lose a regular over one dress." },
+        { text: 'Empathize, point gently to the measurements, and offer a one-time store credit if she sends it back unworn', best: true, feedback: "Fair to your rules, warm to her. A one-time kindness for a good regular usually earns far more than it costs." },
+        { text: 'Give a full refund and pay return shipping', feedback: "Generous, but if you do it every time, your 'final sale' rule stops meaning anything." },
+      ] },
+    { kind: 'checklist', title: 'Protect your shop', prompt: 'Tick what you\'ll put in place.', items: ['Write and pin my shop rules', 'Add my rules to every invoice', 'Save my no-pay reminder messages', 'Ship every order with tracking', 'Add measurements to every clothing piece', 'Decide my refund, exchange and credit rules', 'Make a folder for dispute proof'] },
+  ],
+}
+export default lesson

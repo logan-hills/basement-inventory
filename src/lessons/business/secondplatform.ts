@@ -1,0 +1,84 @@
+import type { Lesson } from '../types'
+
+const lesson: Lesson = {
+  id: 'secondplatform', kind: 'course', school: 'Platforms and trends', title: 'Your second platform: TikTok Shop, Instagram or Whatnot', track: 'Business', icon: 'trend',
+  why: "Selling only on Facebook means one algorithm change can empty your live. A second platform reaches new buyers and protects you, but only if you pick the right one and don't spread yourself too thin.",
+  outcomes: [
+    'Compare TikTok Shop, Instagram and Whatnot for a live seller like you',
+    'Work out what each platform really costs per sale',
+    'Choose one second platform with a simple scorecard',
+    'Keep stock in sync so you never sell the same piece twice',
+    'Run a 30-day test and decide with real numbers',
+  ],
+  route: { to: '/reports', label: 'Open Reports' },
+  sources: [
+    { org: 'Pew Research Center', title: 'Social media use fact sheet', url: 'https://www.pewresearch.org/internet/fact-sheet/social-media/' },
+    { org: 'Whatnot Help Center', title: "Whatnot's selling and processing fees", url: 'https://help.whatnot.com/hc/en-us/articles/4847069165965-Whatnot-s-Selling-and-Processing-Fees' },
+    { org: 'Tubefilter', title: 'Whatnot announces lower commission rates for growing sellers (September 2026)', url: 'https://www.tubefilter.com/2026/09/17/whatnot-new-commission-rates-lower-three-percent/' },
+    { org: 'TikTok Shop Seller Center', title: 'Seller Center and fee schedule (US)', url: 'https://seller-us.tiktok.com/' },
+    { org: 'Meta Business Help Center', title: 'Shops on Facebook and Instagram', url: 'https://www.facebook.com/business/help/shops' },
+  ],
+  queen: {
+    welcome: "I love Facebook, and our Page is home. But a smart business never keeps all her eggs in one basket. This course helps you pick ONE second platform that fits you, test it properly, and protect your time while you do it.",
+    signoff: "Pick one, give it 30 days, keep your stock in sync, and decide with numbers, not feelings. Facebook stays home base. Your second platform is how you grow beyond it.",
+  },
+  covers: [], updated: '2026-11-24',
+  slides: [
+    { chapter: 'Why a second platform', kind: 'learn', title: 'One basket is risky', nova: "Let's spread your wings, carefully. One new platform, not five!",
+      text: "Pew Research Center's surveys show Facebook is still one of the most widely used platforms among U.S. adults, especially adults 30 and older, while TikTok and Instagram skew younger. That's why Facebook is a great home base for our sellers, and why a second platform can reach buyers you'd never meet there.",
+      points: ['Protect yourself if Facebook changes how lives are shown', 'Reach younger buyers or collectors who shop elsewhere', 'Sell slow-moving stock to a new crowd', 'Get paid when a platform pays creators or runs promotions'],
+      tip: 'A second platform should add buyers, not just add work. That is the test for everything in this course.' },
+    { kind: 'learn', title: 'Meet the three', text: "Here's how the three most common second platforms compare for live sellers, as of November 2026. Fees and features change, so check each one before you start.",
+      table: { head: ['', 'TikTok Shop', 'Instagram', 'Whatnot'], rows: [
+        ['Buyers', 'Younger, discovery shoppers', 'Style-focused followers', 'Collectors and bargain lovers who come to shop live'],
+        ['Live shopping', 'Yes, with in-app checkout', 'Lives yes; shopping checkout moved to websites in 2025', 'Built for live auctions and buy-it-now'],
+        ['Fees on a sale', 'Referral fee, about 6% in most U.S. categories (2026)', 'No platform fee, but you need your own website checkout', '8% commission plus 2.9% + 30¢ processing; lower rates for high monthly sales'],
+        ['Shipping', 'Strict ship-by deadlines', 'Your own website rules', 'Platform labels; buyer usually pays'],
+        ['Best for', 'Video-loving sellers who post daily', 'Sellers with a strong look and a website', 'Sellers who love auctions and fast-paced lives'],
+      ] },
+      tip: 'Sources: Whatnot Help Center and Tubefilter (Sept 2026), TikTok Shop Seller Center, Meta. Always check the fee page before you list.' },
+    { kind: 'quiz', q: 'You want a platform where buyers already come specifically to shop live, and you love fast auctions. Which fits best?', options: ['Instagram', 'Whatnot', 'A website only', 'Pinterest'], answer: 1, why: "Whatnot is built for live shopping and auctions, and its buyers come ready to shop. TikTok also has live shopping; Instagram works better as a brand showcase pointing to your website." },
+
+    { chapter: 'The real cost', kind: 'learn', title: 'Fees change your price', text: "The same $30 piece earns different money on each platform. Work it out before you list.",
+      table: { head: ['$30 piece', 'Facebook live + invoice', 'TikTok Shop', 'Whatnot'], rows: [
+        ['Platform fee', '$0', '6% = $1.80', '8% = $2.40'],
+        ['Payment processing', '~3% = $0.90', 'Included', '2.9% + $0.30 = $1.17*'],
+        ['You keep before costs', '$29.10', '$28.20', '$26.43'],
+      ] },
+      example: "*Whatnot charges processing on the whole order total, including shipping and tax the buyer pays, so it can run a little higher than shown. Small differences add up over hundreds of sales." },
+    { kind: 'number', title: 'Whatnot take-home', q: 'You sell a $40 bag on Whatnot. Commission is 8% of the sale price. Processing is 2.9% plus 30¢ on a $47 order total (bag plus shipping). What do you keep from the bag, before your own costs? (Round to the cent.)', prefix: '$', answer: 35.17, tolerance: 0.02, hint: 'Commission: $40 × 8% = $3.20. Processing: $47 × 2.9% = $1.36, plus $0.30.', why: '$40 − $3.20 − $1.36 − $0.30 = $35.14 to $35.17 depending on rounding. Price with the fees in mind, and check the fee page for current rates.' },
+    { kind: 'learn', title: 'Time is a cost too', text: "Every platform needs listings, lives or videos, customer messages and shipping on its own schedule. If a second platform takes 6 hours a week, it needs to earn at least what those hours are worth to you.",
+      queen: "Give yourself a time budget before you start, like 4 hours a week. If the new platform needs more than that, it has to prove it's worth it." },
+
+    { chapter: 'Choose one', kind: 'learn', title: 'The second-platform scorecard', text: "Score each platform from 1 to 5 on what matters for YOUR shop. Highest total wins the 30-day test.",
+      table: { head: ['Score it on', 'Questions to ask'], rows: [
+        ['My buyers are there', 'Do people like my dream buyer shop here?'],
+        ['My stock fits', 'Does my kind of stock sell here at my prices?'],
+        ['My strengths fit', 'Am I better at videos, lives, auctions or photos?'],
+        ['Fees I can live with', 'Do I still profit after fees and shipping?'],
+        ['Time I can give', 'Can I keep up with its pace each week?'],
+      ] } },
+    { kind: 'scenario', title: 'Which one for Vanessa?', situation: "Vanessa sells vintage costume jewelry to women 45 to 70. Her lives are calm and chatty. She hates making short videos but loves the thrill of a bidding war.",
+      options: [
+        { text: 'TikTok Shop, because it\'s the biggest new thing', feedback: "TikTok rewards daily short videos, which Vanessa dislikes, and her buyers skew older than TikTok's core." },
+        { text: 'Whatnot, where collectors come to shop live and auctions are the norm', best: true, feedback: "Vintage jewelry has a strong collector crowd, and auctions play to what she loves. A great fit for a 30-day test." },
+        { text: 'All three at once to see what sticks', feedback: "That's how sellers burn out. One at a time, with a real test." },
+      ] },
+    { kind: 'reflect', title: 'Your scorecard', prompt: 'Score TikTok Shop, Instagram and Whatnot from 1 to 5 on the five questions. Which wins, and why?', placeholder: 'TikTok… Instagram… Whatnot… Winner and why…', example: 'TikTok 14, Instagram 12, Whatnot 21. Whatnot wins: my handbags sell at auction, I love live energy, and fees still leave me $20+ a bag.' },
+
+    { chapter: 'Run it right', kind: 'learn', title: 'Never sell the same piece twice', text: "The biggest second-platform disaster is a double sale: one bag, two buyers. Keep it simple.",
+      points: ['Give each platform its own set of pieces for each live, or mark pieces with a tag like "WN" in Inventory', 'Update your stock right after every live on every platform', 'One-of-a-kind pieces live on one platform at a time', 'If it happens, the buyer who paid first gets it; offer the other a similar piece or refund right away'],
+      queen: "Keep one notebook page or one Inventory tag per platform. The double sale only happens when you trust your memory." },
+    { kind: 'learn', title: 'Bring your people with you', text: "Your Facebook regulars are your best first buyers anywhere. Invite them warmly, without pulling them away from your Facebook lives.",
+      points: ['Announce the new platform on a live and in your group', 'Give them a reason to follow: a welcome giveaway or first-live special', 'Keep Facebook as home: same nights, same rituals', 'Use the new platform for new buyers first, regulars second'] },
+    { kind: 'script', title: 'Announce it', lines: [
+      '"Big news, ladies! I\'m opening a little shop on [platform] for [kind of pieces]."',
+      '"Don\'t worry, our [day] Facebook lives aren\'t going anywhere. This is extra."',
+      '"Follow me there at [handle]. First live is [date], and I\'m giving away a [prize] to say thank you."',
+    ] },
+    { kind: 'order', title: 'Your 30-day test', prompt: 'Put the steps of a fair 30-day platform test in order.', steps: ['Pick the winner from your scorecard', 'Set your time budget and goal (for example, 20 sales)', 'Set up the account and read the seller rules', 'Run the same number of lives or posts each week', 'Track sales, fees and hours in a simple note', 'On day 30, keep, change or stop based on the numbers'] },
+    { kind: 'number', title: 'Was the test worth it?', q: 'In 30 days on your second platform you made $640 in sales, paid $70 in fees, and the pieces cost you $220. You spent 16 hours. What did you earn per hour?', prefix: '$', answer: 21.88, tolerance: 0.02, hint: 'Profit: $640 − $70 − $220 = $350. Divide by 16 hours.', why: '$350 ÷ 16 = $21.88 an hour, and your first month is the slowest. That\'s a keeper for most sellers. Under your target? Tweak or stop.' },
+    { kind: 'checklist', title: 'Second platform plan', prompt: 'Tick what you\'ll do this month.', items: ['Fill out the scorecard for all three', 'Check current fees on the winner\'s official page', 'Set my weekly time budget', 'Decide how I\'ll mark which pieces are on which platform', 'Start the 30-day test with a clear goal', 'Tell my Facebook regulars where else to find me'] },
+  ],
+}
+export default lesson
