@@ -60,7 +60,7 @@ export function Crown({ size = 28 }: { size?: number }) {
   )
 }
 
-/** The full menu (opened from More / Menu), grouped by the same areas as the dock. */
+/** The full menu (opened from More / Menu), grouped by the same areas as the top bar and bottom tabs. */
 const STOCK = [
   { to: '/inventory', label: 'Inventory', icon: 'inventory' },
   { to: '/intake', label: 'Receive items', icon: 'receive' },
@@ -93,15 +93,26 @@ const MORE = [
   { to: '/settings/team', label: 'Team members', icon: 'users' },
 ]
 
-/** The always-visible dock: one button per area. Each area's pages sit in a small row at the top of the page. */
-const DOCK: { to: string; label: string; icon: string; area: ReturnType<typeof sectionOf> }[] = [
+/** Computers and iPads sideways get a top bar with room for more buttons than the phone's bottom tabs.
+ *  `fit` says from which screen width a button shows; narrower screens find it under More. */
+type TopItem = { to: string; label: string; icon: string; area: ReturnType<typeof sectionOf> | 'customers' | 'university' | 'settings'; fit?: 'wide' | 'wider' }
+const TOP: TopItem[] = [
   { to: '/', label: 'Home', icon: 'dashboard', area: 'home' },
   { to: '/inventory', label: 'Stock', icon: 'inventory', area: 'stock' },
   { to: '/scan', label: 'Scan', icon: 'scan', area: 'scan' },
   { to: '/planner', label: 'Lives', icon: 'sparkle', area: 'lives' },
   { to: '/orders', label: 'Orders', icon: 'pack', area: 'orders' },
+  { to: '/customers', label: 'Customers', icon: 'users', area: 'customers', fit: 'wide' },
   { to: '/reports', label: 'Money', icon: 'reports', area: 'money' },
+  { to: '/lessons', label: 'University', icon: 'lessons', area: 'university', fit: 'wider' },
 ]
+/** Which top-bar button lights up. Customers and University have their own buttons up top. */
+function topArea(path: string): TopItem['area'] {
+  if (path.startsWith('/customers')) return 'customers'
+  if (path.startsWith('/lessons')) return 'university'
+  if (path.startsWith('/settings')) return 'settings'
+  return sectionOf(path)
+}
 
 function ScrollTop() {
   const { pathname } = useLocation()
@@ -120,10 +131,12 @@ function StreamShell() {
   return (
     <div className="shell">
       <ScrollTop />
-      <aside className="dock no-print" aria-label="Main menu">
-        <NavLink to="/" className="dock-logo" aria-label="Home"><Crown size={26} /></NavLink>
-        {STREAM_NAV.map(n => <NavLink key={n.to} to={n.to} end={n.end} className="dock-link"><Icon name={n.icon} size={22} /><span>{n.label}</span></NavLink>)}
-      </aside>
+      <header className="topnav no-print" aria-label="Main menu">
+        <NavLink to="/" className="topnav-brand" aria-label="Home"><span className="dock-logo small"><Crown size={20} /></span><b>Dynamic Dazzle</b></NavLink>
+        <nav className="topnav-links">
+          {STREAM_NAV.map(n => <NavLink key={n.to} to={n.to} end={n.end} className="topnav-link"><Icon name={n.icon} size={20} /><span>{n.label}</span></NavLink>)}
+        </nav>
+      </header>
       <header className="mobile-top no-print">
         <NavLink to="/" className="brand"><span className="dock-logo small"><Crown size={20} /></span><span className="brand-text"><b>Dynamic Dazzle</b></span></NavLink>
         <NavLink to="/profile" className="btn ghost small">My profile</NavLink>
@@ -153,6 +166,7 @@ function Shell() {
   const recovering = useRecovering()
   useEffect(() => { setMenu(false) }, [pathname])
   const area = sectionOf(pathname)
+  const top = topArea(pathname)
   // The on-stream product card for Prism / OBS: public, no sign-in, nothing else on the page.
   if (pathname.startsWith('/overlay/')) return <Routes><Route path="/overlay/:token/:part?" element={<Overlay />} /></Routes>
   if (pathname === '/terms' || pathname === '/privacy') {
@@ -169,11 +183,20 @@ function Shell() {
   return (
     <div className="shell">
       <ScrollTop />
-      <aside className="dock no-print" aria-label="Main menu">
-        <NavLink to="/" className="dock-logo" aria-label="Home"><Crown size={26} /></NavLink>
-        {DOCK.map(n => <NavLink key={n.to} to={n.to} className={() => `dock-link${area === n.area ? ' active' : ''}`}><Icon name={n.icon} size={22} /><span>{n.label}</span></NavLink>)}
-        <button className={`dock-link${area === 'more' ? ' active' : ''}`} onClick={() => setMenu(true)}><Icon name="menu" size={22} /><span>More</span></button>
-      </aside>
+      <header className="topnav no-print" aria-label="Main menu">
+        <NavLink to="/" className="topnav-brand" aria-label="Home"><span className="dock-logo small"><Crown size={20} /></span><b>Dynamic Dazzle</b></NavLink>
+        <nav className="topnav-links">
+          {TOP.filter(n => !(isTeam && OWNER_ONLY.has(n.to))).map(n => (
+            <NavLink key={n.to} to={n.to} end={n.to === '/'} className={() => `topnav-link${n.fit ? ` fit-${n.fit}` : ''}${top === n.area ? ' active' : ''}`}>
+              <Icon name={n.icon} size={20} /><span>{n.label}</span>
+            </NavLink>
+          ))}
+        </nav>
+        <div className="topnav-end">
+          <NavLink to="/settings" className={() => `topnav-link icon-only${top === 'settings' ? ' active' : ''}`} aria-label="Settings" title="Settings"><Icon name="settings" size={20} /></NavLink>
+          <button className={`topnav-link topnav-more${area === 'more' && top !== 'settings' && top !== 'university' ? ' active' : ''}${top === 'university' ? ' holds-wider' : top === 'customers' ? ' holds-wide' : ''}`} onClick={() => setMenu(true)} aria-label="More: everything in the app"><Icon name="menu" size={20} /><span>More</span></button>
+        </div>
+      </header>
 
       <header className="mobile-top no-print">
         <NavLink to="/" className="brand"><span className="dock-logo small"><Crown size={20} /></span><span className="brand-text"><b>Dynamic Dazzle</b></span></NavLink>
