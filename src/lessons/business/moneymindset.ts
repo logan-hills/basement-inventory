@@ -13,7 +13,7 @@ const lesson: Lesson = {
   route: { to: '/reports', label: 'Open Reports' },
   sources: [
     { org: 'Federal Reserve Board', title: 'Economic Well-Being of U.S. Households (SHED report)', url: 'https://www.federalreserve.gov/consumerscommunities/shed.htm' },
-    { org: 'Journal of Financial Therapy (Klontz and colleagues)', title: 'Money beliefs and financial behaviors: development of the Klontz Money Script Inventory', url: 'https://newprairiepress.org/jft/vol2/iss1/1/' },
+    { org: 'Journal of Financial Therapy (Klontz and colleagues)', title: 'Money beliefs and financial behaviors: development of the Klontz Money Script Inventory', url: 'https://doi.org/10.4148/jft.v2i1.451' },
     { org: 'Consumer Financial Protection Bureau', title: 'Your Money, Your Goals toolkit', url: 'https://www.consumerfinance.gov/consumer-tools/educator-tools/your-money-your-goals/' },
     { org: 'FDIC', title: 'Money Smart for Small Business', url: 'https://www.fdic.gov/consumer-resource-center/money-smart-small-business' },
     { org: 'U.S. Small Business Administration', title: 'Manage your finances', url: 'https://www.sba.gov/business-guide/manage-your-business/manage-your-finances' },

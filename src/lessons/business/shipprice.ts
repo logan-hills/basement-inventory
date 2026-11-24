@@ -39,7 +39,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Why it matters more than it looks', text: "A $2 shipping gap doesn't sound like much. But it happens on every single order. Over a year it can wipe out the profit from a whole category.",
       example: "Brenda ships about 60 orders a week and undercharged by $1.75 each. That's $105 a week, or about $5,460 a year. It was her whole holiday profit, gone into boxes." },
 
-    { chapter: 'Pay less per label', queen: "Keep a small digital scale right at your packing station. Guessing weights is how money slips away.", kind: 'learn', title: 'Weight tiers: ounces are money', text: "USPS Ground Advantage is priced by weight tiers. Going one ounce over a tier can bump you into the next price. Under 1 pound, the common tiers are 4, 8, 12 and 15.99 ounces. Then it goes by the pound, and distance (zone) matters too.",
+    { chapter: 'Pay less per label', queen: "Keep a small digital scale right at your packing station. Guessing weights is how money slips away.", kind: 'learn', title: 'Weight tiers: ounces are money', text: "USPS Ground Advantage is priced by weight tiers. Going one ounce over a tier can bump you into the next price. Under 1 pound, label services like Pirate Ship price in ounce steps, often 4, 8, 12 and 15.99 ounces. Then it goes by the pound, and distance (zone) matters too.",
       table: { head: ['Package weighs', 'You pay the price for'], rows: [
         ['3.5 oz', 'Up to 4 oz'],
         ['8.2 oz', 'Up to 12 oz (just missed 8!)'],
@@ -89,7 +89,7 @@ const lesson: Lesson = {
       ] },
       tip: 'Set the minimum a little above your average order. It nudges buyers to add one more piece.' },
     { kind: 'number', title: 'Find your threshold', q: 'Your true shipping cost is about $8. Your pieces cost you 35% of the price on average, and fees are about 3%. You want at least $20 profit on any free-shipping order. What is the smallest order total that works? (Round up to the nearest dollar.)', prefix: '$', answer: 45, tolerance: 0.5, hint: 'You keep 62% of each dollar (100% − 35% − 3%). You need $20 + $8 = $28 from that 62%.', why: '$28 ÷ 0.62 = $45.16, so about $45 to $46. Most sellers would pick $50 to give themselves room.' },
-    { kind: 'learn', title: 'Plan for rate changes', text: "USPS usually changes prices more than once a year, and in recent years it has added a temporary holiday price increase from early October into January for packages like Ground Advantage. When rates change, your shipping charge should too.",
+    { kind: 'learn', title: 'Plan for rate changes', text: "USPS usually changes prices more than once a year, and in recent years it has added a temporary holiday price increase for packages. For 2026, USPS set holiday prices on Ground Advantage, Priority Mail and Priority Mail Express from October 4, 2026 to January 17, 2027. When rates change, your shipping charge should too.",
       points: ['Check Pirate Ship\'s rate-change notes when USPS announces new prices', 'Re-run your true-cost math twice a year', 'Raise your shipping charge before the holiday season, not after', 'Tell buyers early: "Holiday postage went up, so shipping is $8.49 through January"'] },
     { kind: 'scenario', title: 'Buyers push back', situation: 'After you raise shipping from $6.99 to $7.99, a regular comments: "Shipping is too high now!"',
       options: [
