@@ -16,7 +16,7 @@ const lesson: Lesson = {
   covers: ['src/pages/Reports.tsx', 'src/pages/Home.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'The big numbers', kind: 'learn', title: 'Why numbers, honestly', nova: 'Don\'t worry, no accounting degree needed. Just a few numbers that tell you the truth.',
-      text: 'A live can feel amazing and still lose money. Another can feel slow and be your most profitable night. Reports (Money in the dock) tells you which is which, so you decide with facts instead of feelings.' },
+      text: 'A live can feel amazing and still lose money. Another can feel slow and be your most profitable night. Reports (the Money button) tells you which is which, so you decide with facts instead of feelings.' },
     { kind: 'learn', title: 'Sales numbers', text: 'Pick a date range at the top (Last 30 days, Last 90 days, Last 12 months, All time). Big numbers shows how that time went, with the Sales by live and Stock age charts under it. Every other report has its own page: tap it in the More reports list, and ‹ Reports brings you back.',
       table: { head: ['Number', 'Plain words'], rows: [
         ['Sales', 'All the money buyers paid for pieces'],
