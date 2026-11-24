@@ -553,7 +553,7 @@ a.card:hover, a.stat:hover, .quick:hover, .cal-upcoming:hover, .box-row:hover { 
 a.stat, .quick, .box-row, .cal-upcoming { transition: transform .18s var(--ease), border-color .15s, background .15s; }
 
 /* Page entrance: children rise in one after another */
-.content > .stack > *, .content > div > .stack > * { animation: rise .45s var(--ease) both; }
+.content > .stack > *, .content > div > .stack > * { animation: rise .45s var(--ease) backwards; }
 .content > .stack > *:nth-child(2) { animation-delay: 40ms; }
 .content > .stack > *:nth-child(3) { animation-delay: 80ms; }
 .content > .stack > *:nth-child(4) { animation-delay: 120ms; }
@@ -2871,6 +2871,32 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .uni-feature-chips i { font-style: normal; font-weight: 700; font-size: .9rem; padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, .18); border: 1px solid rgba(255, 255, 255, .35); }
 .uni-feature-go { margin-top: 4px; font-weight: 800; font-size: 1.05rem; color: #FFE7A3; }
 
+/* Phones: leave room under every page for the bottom tabs, the iPhone home bar and Ask Nova,
+   so the last thing on each screen can always scroll fully into view. */
+@media (max-width: 899px) {
+  .content { padding-bottom: calc(184px + var(--safe-b)); }
+  .sheet-panel { max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px)); overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+}
+.sheet-panel { max-height: min(90vh, calc(100dvh - 32px)); }
+/* University pop-ups are drawn at the top of the page; this wrapper only carries the University colors. */
+.uni.uni-portal { display: contents; }
+/* Theme ideas that fit the live's date */
+.fit-bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: flex-end; padding: 16px 18px; border-radius: 18px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--border); }
+.fit-bar label { min-width: 200px; font-size: .95rem; color: var(--text); font-weight: 600; }
+.fit-bar p { flex: 1 1 260px; margin: 0; }
+.idea-why { color: #8FE0B0; font-weight: 600; font-size: .9rem; }
+.idea-why.off { color: var(--muted); font-weight: 500; }
+.idea-card.off-date { opacity: .82; }
+.upcoming-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px; }
+.upcoming { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--border-strong); background: var(--raised); color: var(--text); text-align: left; min-height: 64px; }
+.upcoming:hover { border-color: var(--gold); }
+.upcoming .grow { display: flex; flex-direction: column; gap: 2px; }
+.upcoming { flex-wrap: wrap; }
+.upcoming .grow { flex: 1 1 0; min-width: 0; }
+.upcoming .idea-cta { margin: 0 0 0 50px; flex-basis: 100%; }
+.upcoming-dot { width: 38px; height: 38px; border-radius: 12px; flex: none; }
+.roulette-date { flex-direction: row; align-items: center; gap: 10px; font-weight: 600; color: var(--text); }
+.roulette-date input { width: auto; }
 /* ===== Time with the Queen: luxurious topic picker and a send button that guides ===== */
 .consult-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .consult-steps li { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; border-radius: 999px; background: #fff; border: 1px solid var(--u-line); font-size: .95rem; font-weight: 700; color: var(--u-muted); }
