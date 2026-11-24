@@ -2878,29 +2878,49 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
   .sheet-panel { max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px)); overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
 }
 .sheet-panel { max-height: min(90vh, calc(100dvh - 32px)); }
-
-/* Time with the Queen: topic cards */
-.consult-topics { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
-.consult-topic { position: relative; display: flex; align-items: center; gap: 14px; min-height: 76px; padding: 14px 16px; border-radius: 6px 22px 6px 22px; border: 1px solid var(--u-line); background: linear-gradient(180deg, #fff, #FFF9EF); color: var(--u-ink); font: inherit; text-align: left; cursor: pointer; box-shadow: 0 6px 16px rgba(120, 40, 70, .06); transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s; }
-.consult-topic:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(120, 40, 70, .12); }
-.consult-topic:active { transform: scale(.98); }
-.consult-topic-glyph { flex: none; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.35rem; font-weight: 700; color: #6B4A0E; background: #FFF3D6; border: 1px solid #E8C56A; }
-.consult-topic-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.consult-topic-text b { font-size: 1.05rem; line-height: 1.25; }
-.consult-topic-text small { font-size: .92rem; line-height: 1.35; color: var(--u-muted); }
-.consult-topic-check { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; border: 2px solid var(--u-line); color: transparent; }
-.consult-topic.on { background: var(--u-foil); border-color: transparent; color: #3B2600; box-shadow: 0 12px 26px rgba(185, 134, 43, .35); }
-.consult-topic.on .consult-topic-glyph { background: #2A1A0C; color: #FFE7A3; border-color: #2A1A0C; }
-.consult-topic.on .consult-topic-text small { color: #5A3A0E; }
-.consult-topic.on .consult-topic-check { background: #2A1A0C; border-color: #2A1A0C; color: #FFE7A3; }
-.consult-picker { gap: 16px; }
-.consult-picker-sub { margin: 0; font-size: 1.05rem; line-height: 1.45; color: var(--u-ink-2); }
-.consult-picker-count { font-weight: 700; color: #6B4A0E; }
-.consult-picker-goal { display: flex; flex-direction: column; gap: 8px; }
-.consult-picker textarea { width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--u-line); background: #FFFCF7; color: var(--u-ink); font: inherit; font-size: 1.05rem; line-height: 1.5; }
-.consult-steps { display: flex; gap: 6px; }
-.consult-steps i { flex: 1; height: 5px; border-radius: 3px; background: var(--u-line); }
-.consult-steps i.on { background: var(--u-foil); }
-@media (max-width: 560px) { .consult-topics { grid-template-columns: 1fr; } }
 /* University pop-ups are drawn at the top of the page; this wrapper only carries the University colors. */
 .uni.uni-portal { display: contents; }
+/* Theme ideas that fit the live's date */
+.fit-bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: flex-end; padding: 16px 18px; border-radius: 18px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--border); }
+.fit-bar label { min-width: 200px; font-size: .95rem; color: var(--text); font-weight: 600; }
+.fit-bar p { flex: 1 1 260px; margin: 0; }
+.idea-why { color: #8FE0B0; font-weight: 600; font-size: .9rem; }
+.idea-why.off { color: var(--muted); font-weight: 500; }
+.idea-card.off-date { opacity: .82; }
+.upcoming-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px; }
+.upcoming { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--border-strong); background: var(--raised); color: var(--text); text-align: left; min-height: 64px; }
+.upcoming:hover { border-color: var(--gold); }
+.upcoming .grow { display: flex; flex-direction: column; gap: 2px; }
+.upcoming { flex-wrap: wrap; }
+.upcoming .grow { flex: 1 1 0; min-width: 0; }
+.upcoming .idea-cta { margin: 0 0 0 50px; flex-basis: 100%; }
+.upcoming-dot { width: 38px; height: 38px; border-radius: 12px; flex: none; }
+.roulette-date { flex-direction: row; align-items: center; gap: 10px; font-weight: 600; color: var(--text); }
+.roulette-date input { width: auto; }
+/* ===== Time with the Queen: luxurious topic picker and a send button that guides ===== */
+.consult-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.consult-steps li { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; border-radius: 999px; background: #fff; border: 1px solid var(--u-line); font-size: .95rem; font-weight: 700; color: var(--u-muted); }
+.consult-steps li span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #F4ECE2; color: var(--u-ink-2); font-size: .9rem; }
+.consult-steps li.done { color: #5A3A0E; border-color: #E8C56A; background: #FFF8E6; }
+.consult-steps li.done span { background: var(--u-foil); color: #3B2600; }
+.consult-step { border-radius: 22px; transition: box-shadow .3s var(--ease); }
+.consult-step.nudge { animation: consult-nudge 1.2s var(--ease) 2; }
+@keyframes consult-nudge { 0%, 100% { box-shadow: 0 0 0 0 rgba(201, 154, 46, 0); } 40% { box-shadow: 0 0 0 8px rgba(201, 154, 46, .35); } }
+.consult-step-head, .consult-form .consult-step legend { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.35rem; font-weight: 700; color: var(--u-ink); margin-bottom: 4px; }
+.consult-step legend small { font-family: Inter, system-ui, sans-serif; font-size: .9rem; font-weight: 600; color: var(--u-muted); }
+.consult-step-no { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 50%; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.05rem; color: #3B2600; background: var(--u-foil); box-shadow: 0 4px 10px rgba(185, 134, 43, .35); }
+.consult-step > .consult-ideas, .consult-step > label { margin-top: 12px; }
+.consult-topics { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+.consult-topic { position: relative; display: flex; align-items: center; gap: 12px; min-height: 76px; padding: 14px 44px 14px 14px; border-radius: 18px; border: 1px solid var(--u-line); background: linear-gradient(180deg, #fff, #FFFBF4); color: var(--u-ink); font: inherit; text-align: left; cursor: pointer; box-shadow: 0 4px 12px rgba(120, 40, 70, .05); transition: transform .18s var(--ease), box-shadow .18s var(--ease), border-color .18s; }
+.consult-topic:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(120, 40, 70, .1); }
+.consult-topic-ico { display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 14px; color: #A3005A; background: #FCEFF5; transition: background .18s, color .18s; }
+.consult-topic-txt { display: flex; flex-direction: column; gap: 2px; }
+.consult-topic-txt b { font-size: 1.05rem; line-height: 1.25; }
+.consult-topic-txt small { font-size: .92rem; line-height: 1.35; color: var(--u-muted); }
+.consult-topic-check { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--u-line); font-size: .85rem; font-weight: 800; color: #3B2600; }
+.consult-topic.on { border-color: #D9A53A; background: linear-gradient(180deg, #FFFDF6, #FFF4D8); box-shadow: 0 0 0 2px rgba(217, 165, 58, .45), 0 12px 26px rgba(185, 134, 43, .22); }
+.consult-topic.on .consult-topic-ico { color: #3B2600; background: var(--u-foil); }
+.consult-topic.on .consult-topic-check { border-color: transparent; background: var(--u-foil); }
+.consult .btn.uni-cta.consult-guide { color: #fff; border-color: transparent; background: linear-gradient(135deg, #A3005A, #E3007D 60%, #FF4FA3); box-shadow: 0 12px 26px rgba(163, 0, 90, .3); }
+.consult-optional { font-weight: 600; font-size: .85rem; color: var(--u-muted); margin-left: 6px; }
+@media (max-width: 560px) { .consult-topics { grid-template-columns: 1fr; } .consult-topic { min-height: 68px; } }
