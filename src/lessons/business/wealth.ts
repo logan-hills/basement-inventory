@@ -15,7 +15,7 @@ const lesson: Lesson = {
   sources: [
     { org: 'Federal Reserve Board', title: 'Survey of Consumer Finances', url: 'https://www.federalreserve.gov/econres/scfindex.htm' },
     { org: 'IRS', title: '401(k) limit increases to $24,500 for 2026, IRA limit increases to $7,500', url: 'https://www.irs.gov/node/152316' },
-    { org: 'IRS', title: 'SEP contribution limits', url: 'https://www.irs.gov/node/5958' },
+    { org: 'IRS', title: 'SEP contribution limits', url: 'https://www.irs.gov/retirement-plans/plan-participant-employee/sep-contribution-limits-including-grandfathered-sarseps' },
     { org: 'IRS', title: 'One-participant 401(k) plans', url: 'https://www.irs.gov/retirement-plans/one-participant-401k-plans' },
     { org: 'U.S. Securities and Exchange Commission, Investor.gov', title: 'Compound interest calculator', url: 'https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator' },
     { org: 'IRS', title: 'Family employees', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/family-employees' },
@@ -39,7 +39,7 @@ const lesson: Lesson = {
     { chapter: 'Pay future you', kind: 'learn', title: 'Retirement accounts for shop owners', text: "As a self-employed seller, nobody offers you a 401(k) at work, but you can open your own. These accounts can lower your taxes now and grow for years.",
       table: { head: ['Account', 'Good for', '2026 limits (from IRS)'], rows: [
         ['Roth or traditional IRA', 'Anyone with earned income; easy to start', 'Up to $7,500 ($8,600 if 50 or older)'],
-        ['SEP IRA', 'Owners who want simple, flexible savings', 'Up to 25% of compensation (about 20% of net self-employment profit), within the IRS yearly cap'],
+        ['SEP IRA', 'Owners who want simple, flexible savings', 'Up to 25% of compensation (about 20% of net self-employment profit), up to $72,000 for 2026'],
         ['Solo 401(k)', 'Owners with no employees except a spouse; can save more at lower profits', 'Up to $24,500 as "employee" ($32,500 if 50+, $35,750 if 60 to 63), plus a profit-sharing part'],
       ] },
       example: "Most big brokerages let you open these online in under an hour. Ask a tax pro which one fits your profit and goals." },

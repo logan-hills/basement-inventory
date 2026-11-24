@@ -13,9 +13,9 @@ const lesson: Lesson = {
   route: { to: '/calendar', label: 'Open the Calendar' },
   sources: [
     { org: 'World Health Organization', title: 'Burn-out an "occupational phenomenon": International Classification of Diseases', url: 'https://www.who.int/news/item/28-05-2019-burn-out-an-occupational-phenomenon-international-classification-of-diseases' },
-    { org: 'Qualitative Health Research (Cheryl Woods-Giscombé)', title: 'Superwoman schema: African American women\'s views on stress, strength, and health', url: 'https://pubmed.ncbi.nlm.nih.gov/20150434/' },
+    { org: 'Qualitative Health Research (Cheryl Woods-Giscombé)', title: 'Superwoman schema: African American women\'s views on stress, strength, and health', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3072704/' },
     { org: 'Centers for Disease Control and Prevention', title: 'About sleep', url: 'https://www.cdc.gov/sleep/about/index.html' },
-    { org: 'American Heart Association', title: 'Recommendations for physical activity in adults', url: 'https://www.heart.org/en/healthy-living/fitness/fitness-basics/aha-recs-for-physical-activity-in-adults' },
+    { org: 'American Heart Association', title: 'Recommendations for physical activity in adults', url: 'https://www.heart.org/en/healthy-living/exercise-and-physical-activity/fitness-basics/aha-recs-for-physical-activity-in-adults' },
     { org: '988 Suicide and Crisis Lifeline', title: 'Call or text 988, any time', url: 'https://988lifeline.org/' },
   ],
   queen: {

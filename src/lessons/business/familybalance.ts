@@ -14,7 +14,7 @@ const lesson: Lesson = {
   sources: [
     { org: 'Harvard Business Review (Ashley Whillans)', title: 'Time for happiness', url: 'https://hbr.org/2019/01/time-for-happiness' },
     { org: 'Harvard Business Review (Leslie Perlow and Jessica Porter)', title: 'Making time off predictable, and required', url: 'https://hbr.org/2009/10/making-time-off-predictable-and-required' },
-    { org: 'Wharton School (Nancy Rothbard)', title: 'Research on work-life boundary management', url: 'https://mgmt.wharton.upenn.edu/profile/nrothbar/' },
+    { org: 'Knowledge at Wharton (Nancy Rothbard)', title: 'Integrators and segmentors: managing work and home boundaries', url: 'https://knowledge.wharton.upenn.edu/article/integrators-segmentors-managing-remote-workers/' },
     { org: 'American Psychological Association', title: 'Stress in America survey', url: 'https://www.apa.org/news/press/releases/stress' },
     { org: 'IRS', title: 'Family employees', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/family-employees' },
   ],
