@@ -11,7 +11,11 @@ const lesson: Lesson = {
     'Handle returned, lost and damaged packages calmly',
   ],
   route: { to: '/shipping', label: 'Open Shipping' },
-  covers: ['src/pages/Shipping.tsx'], updated: '2026-11-23',
+  queen: {
+    welcome: "Shipping is the last impression of every order, so let's make it a good one. Pirate Ship saves you time and money. Here's how to do it all in one sitting.",
+    signoff: "Weigh accurately, buy your labels in one batch, and send tracking right away. Fast, honest shipping keeps buyers coming back.",
+  },
+  covers: ['src/pages/Shipping.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'One file, every label', kind: 'learn', title: 'Why Pirate Ship', nova: 'Shipping day used to take forever. Not anymore.',
       text: 'Pirate Ship is free to use and gives small sellers discounted USPS and UPS rates without a monthly fee. Better yet, it can import a whole spreadsheet of orders and buy every label in one go. The app makes that spreadsheet for you.' },
@@ -56,7 +60,7 @@ const lesson: Lesson = {
       ] },
     { kind: 'learn', title: 'Pickup or drop-off', text: 'Once labels are on, you don\'t have to wait in line. USPS will pick up packages at your door for free when you schedule a pickup online at usps.com for the next mail day (check there for which services qualify). Or drop them at the counter, or in a blue box if they\'re small enough.' },
 
-    { chapter: 'After it ships', kind: 'learn', title: 'Tracking stops the questions', text: 'Pasting tracking and tapping Shipped keeps your records right. Send it to the buyer too. When buyers can see where their box is, "where\'s my stuff?" messages drop way down.' },
+    { chapter: 'After it ships', queen: "Send tracking the same day you buy the label. Buyers who can see their package don't need to message you.", kind: 'learn', title: 'Tracking stops the questions', text: 'Pasting tracking and tapping Shipped keeps your records right. Send it to the buyer too. When buyers can see where their box is, "where\'s my stuff?" messages drop way down.' },
     { kind: 'quiz', q: 'You bought labels for 14 boxes. What\'s left to do in the app?', options: ['Nothing', 'Paste each tracking number and tap Shipped', 'Delete the orders'], answer: 1, why: 'Tracking + Shipped closes each order and updates the customer\'s history.' },
     { kind: 'scenario', title: 'Return to sender', situation: 'A box comes back marked "Return to sender: insufficient address." The buyer left out her apartment number.',
       options: [
@@ -64,7 +68,7 @@ const lesson: Lesson = {
         { text: 'Message her, get the full address, update it in Customers, and reship. Ask her to cover the new label, or cover it yourself for a regular.', best: true, feedback: 'Fair, friendly, and the address is fixed for every future order.' },
         { text: 'Reship to the same address and hope', feedback: 'It will just come back again.' },
       ] },
-    { kind: 'learn', title: 'Lost or damaged', text: 'Most "lost" packages are just slow. Give it a few business days past the expected date, then start a search with the carrier. If it\'s damaged, ask the buyer for photos.',
+    { queen: "Take care of your buyer first, then deal with the carrier. Your buyer shouldn't have to wait on the post office.", kind: 'learn', title: 'Lost or damaged', text: 'Most "lost" packages are just slow. Give it a few business days past the expected date, then start a search with the carrier. If it\'s damaged, ask the buyer for photos.',
       points: ['Check what insurance your label includes, and add more on big orders', 'Keep the tracking number and label receipt', 'File claims through Pirate Ship or the carrier with photos', 'Keep the buyer updated the whole time (see the Communication course)'] },
     { kind: 'reflect', title: 'Your shipping day', prompt: 'Which day(s) will you ship, how will you get packages to USPS, and which items still need a weight saved?', placeholder: 'I ship on…', example: 'Wednesday and Friday. I schedule a free pickup the night before. I still need weights for my bags and the big scarves.' },
     { kind: 'checklist', title: 'Shipping setup', prompt: 'Tick each one.', items: [

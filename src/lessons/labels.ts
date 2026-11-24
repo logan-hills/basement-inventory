@@ -14,6 +14,10 @@ const lesson: Lesson = {
     'Fix the usual printing problems in under a minute',
   ],
   route: { to: '/inventory', label: 'Open Stock' },
+  queen: {
+    welcome: "Every scan, every pick and every count starts with a clean tag. In this lesson I want you to master your labels, because a tidy tag is a tidy shop.",
+    signoff: "Preview before you print, tag the moment you print, and put the tag in the same place on every piece. Your future self will thank you.",
+  },
   covers: ['src/pages/Labels.tsx', 'src/components/CrispBarcode.tsx', 'src/components/LabelKit.tsx', 'src/pages/BinLabels.tsx', 'src/pages/ItemDetail.tsx', 'src/pages/Inventory.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Pick your labels', kind: 'learn', title: 'What\'s on a tag', nova: 'Small sticker, big job. Let\'s make every one count.',
@@ -51,7 +55,7 @@ const lesson: Lesson = {
       screen: { title: 'Print tags · 1. Pick your label', rows: ['Thermal label printer: 2 × 1 in roll · 2¼ × 1¼ in roll · 4 × 6 in, 12 tags', 'DYMO LabelWriter: DYMO 1 × 2⅛ in (30336) · DYMO 1⅛ × 3½ in (30252)'], buttons: ['DYMO 1 × 2⅛ in (30336)'], highlight: 'DYMO 1 × 2⅛ in (30336)' },
       tip: 'DYMO rolls are white, so on a DYMO sale tag the word SALE prints in a bold black box with the old price crossed out. It still pops on camera.' },
     { kind: 'tap', title: 'Practice: the Staples roll', prompt: 'You just bought DYMO 30336 labels at Staples for your LabelWriter. Which label do you tap?', screen: { title: 'Print tags · 1. Pick your label', buttons: ['2 × 1 in roll, one tag per label', 'DYMO 1 × 2⅛ in (30336)', 'Letter sheet, 30 per page'] }, answer: 'DYMO 1 × 2⅛ in (30336)', hint: 'The number on the box, 30336, is right in the name.' },
-    { kind: 'learn', title: 'Look before you print', text: 'Every print page shows a preview: Here\'s how they will look. It\'s sized to fit your screen, shows the first few labels, and Show all opens the rest. If a name is cut off or the price looks wrong, fix it on the item before you spend a label. When it looks right, go to 2. Looks good? Print.',
+    { queen: "Always preview. It takes five seconds and saves a sheet of labels.", kind: 'learn', title: 'Look before you print', text: 'Every print page shows a preview: Here\'s how they will look. It\'s sized to fit your screen, shows the first few labels, and Show all opens the rest. If a name is cut off or the price looks wrong, fix it on the item before you spend a label. When it looks right, go to 2. Looks good? Print.',
       points: ['Change the label size and the preview changes with it', 'DYMO and landscape labels show upright, with a note that they print turned', 'Everything prints, even the labels not shown in the preview'] },
     { kind: 'quiz', q: 'Your DYMO tag prints sideways and the barcode is cut off. What\'s the quickest fix?', options: ['Load the roll the other way round', 'Tick "Tag came out sideways or cut off?" and print again', 'Switch to letter sheets'], answer: 1, why: 'Some computers turn DYMO labels on their own, so the app\'s turn doubles up. The tick lets the printer do the turning. The app remembers it on that device.' },
 
@@ -101,7 +105,7 @@ const lesson: Lesson = {
         { text: 'On a hang tag looped through the strap ring', best: true, feedback: 'Easy to scan, comes off clean, and the bag stays perfect.' },
         { text: 'Skip the tag, you\'ll remember which bag it is', feedback: 'You might. Your helper won\'t, and the pick screen can\'t scan your memory.' },
       ] },
-    { kind: 'learn', title: 'Tag the moment you print', text: 'Tags sitting in a pile are how pieces get mixed up. Print by variation, tag those pieces, then move to the next. The tag codes run in order (4821-001, 4821-002…), so you can see right away if one is missing.' },
+    { queen: "Never let printed tags sit in a pile. Tags that wait get mixed up.", kind: 'learn', title: 'Tag the moment you print', text: 'Tags sitting in a pile are how pieces get mixed up. Print by variation, tag those pieces, then move to the next. The tag codes run in order (4821-001, 4821-002…), so you can see right away if one is missing.' },
 
     { chapter: 'Fix it fast', kind: 'learn', title: 'Troubleshooting', text: 'Most printing problems take under a minute to fix.',
       table: { head: ['Problem', 'Fix'], rows: [

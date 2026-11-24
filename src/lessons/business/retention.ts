@@ -18,7 +18,11 @@ const lesson: Lesson = {
     { org: 'MIT Sloan Management Review', title: 'Recovering and learning from service failure', url: 'https://sloanreview.mit.edu/article/recovering-and-learning-from-service-failure' },
     { org: 'MIT Sloan Management Review', title: 'What unhappy customers want', url: 'https://sloanreview.mit.edu/article/what-unhappy-customers-want' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Regulars are the heart of every live business. The research says keeping them pays far more than chasing new buyers. Let's build habits that keep them for life.",
+    signoff: "Know your best buyers, notice when they go quiet, and make complaints right fast. A loyal buyer is the best marketing you'll ever have.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Why regulars matter', kind: 'learn', title: 'The research on loyalty', nova: 'Your regulars aren\'t just buyers, boss. They\'re your hype team, your word of mouth and your steady paycheck.',
       text: 'Frederick Reichheld of Bain & Company, who created the Net Promoter Score, studied loyalty across industries. His widely cited finding: raising customer retention by just 5 percentage points raised profits by 25% to 95% in the businesses studied. Why so much? Loyal customers tend to buy more over time, cost less to serve, and send friends your way.',
@@ -44,7 +48,7 @@ const lesson: Lesson = {
       example: 'When a $384-a-year buyer has a $6 problem, the right move is obvious: fix it generously.' },
     { kind: 'number', title: 'Work out a regular', q: 'A regular\'s average order is $25, she buys 3 times a month, and your margin is 40%. What profit does she bring in a year?', prefix: '$', answer: 360, hint: '$25 × 3 × 12, then × 0.40.', why: '$25 × 3 × 12 = $900 in sales; 40% of that is $360 profit. Now picture losing her over a $4 shipping mix-up.' },
 
-    { chapter: 'Spot drifting buyers', kind: 'learn', title: 'The warning signs', text: 'Buyers rarely announce they\'re leaving. They just fade. The HBS work on reducing defections shows that acting early, while she\'s still reachable, works far better than trying to win her back later.',
+    { chapter: 'Spot drifting buyers', queen: "If a regular misses two lives in a row, reach out with a personal note. Don't wait for the third.", kind: 'learn', title: 'The warning signs', text: 'Buyers rarely announce they\'re leaving. They just fade. The HBS work on reducing defections shows that acting early, while she\'s still reachable, works far better than trying to win her back later.',
       points: ['She used to buy every week and hasn\'t in a month', 'She watches but stops commenting', 'She left one unhappy comment and went quiet', 'She stopped opening your messages or group posts', 'Her orders are getting smaller'],
       tip: 'The Customers page shows each buyer\'s last order date. Sort by it once a week and look at your regulars who haven\'t bought in 30 days.' },
     { kind: 'script', title: 'The "we miss you" message', text: 'Personal beats promotional. Send this to drifting regulars, by name, one at a time.', lines: [
@@ -66,7 +70,7 @@ const lesson: Lesson = {
         ['An easy process', 'One message from her, you handle the rest; no forms, no runaround'],
         ['Respect', 'A real apology, by name, without blaming her or the post office'],
       ] } },
-    { kind: 'order', title: 'The recovery routine', prompt: 'A buyer messages that her necklace arrived tangled and broken. Put your recovery steps in order.', steps: ['Reply fast and thank her for telling you', 'Apologize by name without making excuses', 'Offer a fair fix: replacement, refund or credit', 'Make it easy: no need to mail it back for a small piece', 'Follow through the same day', 'Check in after the fix arrives'] },
+    { queen: "When something goes wrong, fix it faster than they expect. A problem solved well can create a customer for life.", kind: 'order', title: 'The recovery routine', prompt: 'A buyer messages that her necklace arrived tangled and broken. Put your recovery steps in order.', steps: ['Reply fast and thank her for telling you', 'Apologize by name without making excuses', 'Offer a fair fix: replacement, refund or credit', 'Make it easy: no need to mail it back for a small piece', 'Follow through the same day', 'Check in after the fix arrives'] },
     { kind: 'learn', title: 'Learn from every complaint', text: 'The same MIT Sloan research stresses learning from failures, not just fixing them one by one. Keep a simple problem log. When the same problem shows up twice, fix the cause, using the "5 whys" from the lean course.',
       points: ['Write down every complaint: date, buyer, what happened', 'Once a month, look for patterns', 'Broken clasps twice? Wrap clasps in tissue or check them before packing', 'Late shipping twice? Change your ship-by promise or your pack day'] },
 

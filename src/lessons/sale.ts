@@ -11,6 +11,10 @@ const lesson: Lesson = {
     'Know when to stop discounting and let a piece go',
   ],
   route: { to: '/live', label: 'Get ready for live' },
+  queen: {
+    welcome: "Old stock is cash taking a nap on your shelf. Sales aren't a sign of failure; they're how smart shops stay fresh. Let's turn that stock back into money.",
+    signoff: "Set a markdown ladder, know your floor price, and let go of what won't move. Fresh shelves sell better than full ones.",
+  },
   covers: ['src/pages/LivePrep.tsx', 'src/pages/Home.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Why old stock hurts', kind: 'learn', title: 'Cash on a shelf', nova: 'Let\'s get that money moving, sis.',
@@ -31,7 +35,7 @@ const lesson: Lesson = {
     { kind: 'quiz', q: 'What starts the old-stock alert?', options: ['Items older than your days in Settings', 'Items with no photo', 'Damaged items'], answer: 0, why: 'You set the age in Settings → Goals, alerts and defaults.' },
     { kind: 'tap', title: 'Practice', prompt: 'Your to-do list on Home says 56 items are sitting 60+ days. You want to start a sale. Tap…', screen: { title: 'Home · Your to-do list', buttons: ['4 orders to pick', '56 items sitting 60+ days', '12 items to put away'] }, answer: '56 items sitting 60+ days', hint: 'That card opens Get ready for live in sale mode, oldest first.' },
 
-    { chapter: 'Price it right', kind: 'learn', title: 'A markdown ladder', text: 'Don\'t guess every time. Decide your steps once, then follow them. Here\'s a ladder many resellers use, counting from the day it arrived.',
+    { chapter: 'Price it right', queen: "Decide your markdown steps before you need them. Then it's a plan, not a panic.", kind: 'learn', title: 'A markdown ladder', text: 'Don\'t guess every time. Decide your steps once, then follow them. Here\'s a ladder many resellers use, counting from the day it arrived.',
       table: { head: ['Age', 'Price', 'Where'], rows: [
         ['0 to 30 days', 'Full price', 'Featured in regular lives'],
         ['30 to 60 days', '20 to 25% off', 'Mixed into regular lives'],
@@ -67,7 +71,7 @@ const lesson: Lesson = {
       'ON LIVE: "Family, these are pieces I love, I just need the room. Tonight\'s the lowest they\'ll ever be. Let\'s clear these shelves together!"',
     ], tip: 'Frame it as making room for new pieces, not as "stuff nobody wanted."' },
 
-    { chapter: 'Keep it healthy', kind: 'learn', title: 'Let it go', text: 'Some pieces just won\'t sell to your crowd, and that\'s okay. Past 120 days and below your floor? Donate it, give it away as a free bonus to regulars, or sell it in a bulk lot to another reseller. Then learn from it: what made you buy it, and will you buy that kind of piece again?' },
+    { chapter: 'Keep it healthy', queen: "Some pieces just weren't for your buyers. Bundle them, donate them, and buy smarter next time. That's growth.", kind: 'learn', title: 'Let it go', text: 'Some pieces just won\'t sell to your crowd, and that\'s okay. Past 120 days and below your floor? Donate it, give it away as a free bonus to regulars, or sell it in a bulk lot to another reseller. Then learn from it: what made you buy it, and will you buy that kind of piece again?' },
     { kind: 'quiz', q: 'Half your clearance pile is neon tops. What\'s the lesson for next time?', options: ['Buy more neon to try again', 'Your crowd doesn\'t go for neon, so buy less of it (or none) next haul', 'Lower prices on everything'], answer: 1, why: 'Old stock is feedback about buying. Reports → Best sellers and Oldest stock show you what to buy more of, and less of.' },
     { kind: 'quiz', q: 'When is a sale price too low?', options: ['When it\'s below your floor price', 'When it\'s under $10', 'Never, any sale is good'], answer: 0, why: 'Below the floor you lose money on the sale itself. Bundle or donate instead.' },
     { kind: 'reflect', title: 'Your markdown ladder', prompt: 'Write your own markdown steps: what discount at what age, and what you\'ll do with anything past 90 or 120 days.', placeholder: '30 days: … 60 days: … 90 days: …', example: '30 days: 20% off, mixed in. 60 days: 40% off in a clearance segment. 90 days: bundles and $2 rounds. 120 days: donate and write down why it didn\'t sell.' },

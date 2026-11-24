@@ -17,6 +17,10 @@ const lesson: Lesson = {
     { org: 'Harvard Business Review (Serena Chen)', title: 'Give yourself a break: the power of self-compassion', url: 'https://hbr.org/2018/09/give-yourself-a-break-the-power-of-self-compassion' },
     { org: 'American Psychological Association', title: 'Building your resilience', url: 'https://www.apa.org/topics/resilience/building-your-resilience' },
   ],
+  queen: {
+    welcome: "Before we talk about inventory or marketing, we have to talk about you. The way you speak to yourself after a slow live decides what happens next. I made this course first in the Mindset school because everything else grows from here.",
+    signoff: "Catch the thought, check it, change it. Do that every day this week, and watch how differently you show up on camera. The CEO of your shop starts in your own head.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Two mindsets', kind: 'learn', title: 'Fixed or growth?', nova: "Grab a cup of something warm, boss. This one is about the most important tool in your shop: your mind.",
@@ -42,14 +46,14 @@ const lesson: Lesson = {
       '"Nobody showed up" → "Eight people showed up for me. Let\'s give them a great show."',
       '"I\'m too old for tech" → "I learned harder things than this. One step at a time."',
     ] },
-    { kind: 'scenario', title: 'After a rough night', situation: 'You went live for an hour and sold 3 pieces. Last week you sold 19. You are tempted to post "Guess nobody wants my stuff anymore 😒" on your Page.',
+    { queen: "Never judge your business on the night of a bad live. Sleep on it, then look at the numbers in the morning light.", kind: 'scenario', title: 'After a rough night', situation: 'You went live for an hour and sold 3 pieces. Last week you sold 19. You are tempted to post "Guess nobody wants my stuff anymore 😒" on your Page.',
       options: [
         { text: 'Post it. People should know how you feel.', feedback: "Buyers want to shop with confident sellers. Venting on your Page can push away the people who did show up." },
         { text: 'Take a breath, thank your 3 buyers, then check Reports and the live time to see what was different', best: true, feedback: "You protect your brand, honor your buyers, and treat the slow night as information. That's the CEO move." },
         { text: 'Decide live selling is not for you and stop', feedback: "One night is one data point. Most sellers have slow nights, even very successful ones." },
       ] },
 
-    { chapter: 'The comparison trap', kind: 'learn', title: 'Her highlight reel vs your behind-the-scenes', text: "Scrolling past a seller with 900 viewers can flip you right into a fixed mindset. Remember what you are really comparing: her best moments, edited and posted, against your whole messy day. The only fair comparison is you against you, three months ago.",
+    { chapter: 'The comparison trap', queen: "Every seller you admire has a messy basement and a slow Tuesday too. Compare yourself to last month's you, nobody else.", kind: 'learn', title: 'Her highlight reel vs your behind-the-scenes', text: "Scrolling past a seller with 900 viewers can flip you right into a fixed mindset. Remember what you are really comparing: her best moments, edited and posted, against your whole messy day. The only fair comparison is you against you, three months ago.",
       table: { head: ['Compare this', 'Not this'], rows: [
         ['Your viewers now vs 3 months ago', 'Your viewers vs a seller with 5 years\' head start'],
         ['Your buy rate this month vs last', 'Her best night ever'],

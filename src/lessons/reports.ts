@@ -13,6 +13,10 @@ const lesson: Lesson = {
     'Run a 30-minute monthly money meeting with yourself',
   ],
   route: { to: '/reports', label: 'Open Reports' },
+  queen: {
+    welcome: "Numbers aren't scary when they're your own. Your reports tell you what to buy, what to clear and what's really paying you. Let's read them together, calmly.",
+    signoff: "Hold a money meeting with yourself once a month. Thirty minutes with your numbers will make you a smarter buyer than any trend report.",
+  },
   covers: ['src/pages/Reports.tsx', 'src/pages/Home.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'The big numbers', kind: 'learn', title: 'Why numbers, honestly', nova: 'Don\'t worry, no accounting degree needed. Just a few numbers that tell you the truth.',
@@ -39,7 +43,7 @@ const lesson: Lesson = {
     { kind: 'quiz', q: 'Sales were $2,000 and Gross profit was $1,200. What did the pieces cost you?', options: ['$800', '$1,200', '$3,200'], answer: 0, why: 'Gross profit is sales minus cost, so cost was $2,000 − $1,200 = $800.' },
 
     { kind: 'quiz', q: 'Retail value is $6,000 and Cost value is $2,200. What does that $2,200 tell you?', options: ['Your profit so far', 'The cash you have tied up on your shelves right now', 'This month\'s sales'], answer: 1, why: 'Cost value is what you paid for everything still on the shelf. Moving old stock turns it back into cash for fresh pieces.' },
-    { chapter: 'Do the math', kind: 'learn', title: 'Margin, in plain words', text: 'Margin is the share of the price that\'s profit. A $20 bag you paid $8 for has a $12 profit, and $12 ÷ $20 = 60% margin. Higher margin means more of every dollar stays with you.',
+    { chapter: 'Do the math', queen: "Sales make you feel good; margin pays your bills. Watch margin first.", kind: 'learn', title: 'Margin, in plain words', text: 'Margin is the share of the price that\'s profit. A $20 bag you paid $8 for has a $12 profit, and $12 ÷ $20 = 60% margin. Higher margin means more of every dollar stays with you.',
       table: { head: ['Piece', 'Price', 'Cost', 'Profit', 'Margin'], rows: [
         ['Emerald bag', '$20', '$8', '$12', '60%'],
         ['Gold hoops', '$12', '$3', '$9', '75%'],
@@ -84,7 +88,7 @@ const lesson: Lesson = {
         { text: 'Buy lots more sunglasses so the price per pair goes down', feedback: 'Cheaper sunglasses that still sit on the shelf are still cash stuck on a shelf.' },
       ] },
 
-    { chapter: 'Your monthly money meeting', kind: 'learn', title: '30 minutes, once a month', text: 'Put it on your calendar like a live: the first Saturday morning, with coffee. Set the range to Last 30 days and walk through this.',
+    { chapter: 'Your monthly money meeting', queen: "Put your money meeting on the calendar with a treat attached. Make it something you look forward to.", kind: 'learn', title: '30 minutes, once a month', text: 'Put it on your calendar like a live: the first Saturday morning, with coffee. Set the range to Last 30 days and walk through this.',
       table: { head: ['Minutes', 'Look at', 'Ask yourself'], rows: [
         ['5', 'Sales, Gross profit, Avg order', 'Did I hit my goal? Up or down from last month?'],
         ['5', 'Sales by live', 'Which nights and themes won? Do more of those.'],

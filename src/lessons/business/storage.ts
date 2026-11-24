@@ -17,7 +17,11 @@ const lesson: Lesson = {
     { org: 'Shopify', title: 'Warehouse slotting: strategies for faster picking', url: 'https://www.shopify.com/enterprise/blog/warehouse-slotting' },
     { org: 'Amazon', title: 'Inside Amazon\'s fulfillment centers', url: 'https://www.aboutamazon.com/amazon-fulfillment/our-fulfillment-centers/inside-amazons-fulfillment-centers-what-you-can-expect-to-see-on-a-warehouse-tour/' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Every minute spent searching is a minute you're not selling, packing or resting. Let's organize your stock like the big warehouses do, just sized for your home.",
+    signoff: "Give every piece a home, put your best sellers in the golden zone, and count a little every week. An organized shop is a calmer life.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Where the time goes', kind: 'learn', title: 'Searching is the silent thief', nova: 'Grab a coffee, boss. This course is going to give you hours back every single week.',
       text: 'Big warehouses obsess over one thing: how long it takes to put a hand on the right item. Researchers who study warehouses (like the Georgia Tech professors behind the free textbook Warehouse and Distribution Science) found that walking and searching eat up most of a picker\'s day, often more than the picking itself. The same thing happens in a basement, a spare bedroom or a storage unit.',
@@ -73,7 +77,7 @@ const lesson: Lesson = {
         { text: 'Leave them in the back, you\'ll walk', feedback: 'You\'ll walk dozens of extra trips this week. Re-slotting takes ten minutes once.' },
       ] },
 
-    { chapter: '5S your stock room', kind: 'learn', title: 'The five S\'s', nova: 'This one comes from Japanese factories, and it works in a basement just as well.',
+    { chapter: '5S your stock room', queen: "Do your 5S reset on the same day each month. Tidy spaces stay tidy when it's routine.", kind: 'learn', title: 'The five S\'s', nova: 'This one comes from Japanese factories, and it works in a basement just as well.',
       text: '5S is a method for keeping a workspace organized so problems show up right away. The American Society for Quality (ASQ) teaches it as five steps, each starting with S.',
       table: { head: ['Step', 'What you do', 'In your stock room'], rows: [
         ['Sort', 'Remove what doesn\'t belong', 'Pull empty boxes, broken hangers, personal stuff'],
@@ -87,7 +91,7 @@ const lesson: Lesson = {
       tip: 'Damaged pieces don\'t belong on the selling shelves at all. Mark them damaged in the app so they leave your counts, and keep them in one labeled box.' },
     { kind: 'checklist', title: 'Your 5S reset', prompt: 'Pick a day this week and tick these off as you go.', items: ['Sort: pull out everything that isn\'t stock or supplies', 'Red-tag anything you\'re unsure about', 'Set in order: give every shelf and bin an address label', 'Shine: wipe down shelves and check for damaged pieces', 'Standardize: write a 5-line reset routine and tape it to the rack', 'Sustain: put a 10-minute reset on your calendar after every pack day'] },
 
-    { chapter: 'Count without closing', kind: 'learn', title: 'Cycle counting', text: 'Big warehouses rarely shut down for one giant count. Instead they count a few bins every week, so every bin gets counted on a schedule. This is called cycle counting. The fast A items get counted most often, because that\'s where mistakes cost the most.',
+    { chapter: 'Count without closing', queen: "Count one shelf a week while your coffee cools. You'll never need a dreaded all-day count again.", kind: 'learn', title: 'Cycle counting', text: 'Big warehouses rarely shut down for one giant count. Instead they count a few bins every week, so every bin gets counted on a schedule. This is called cycle counting. The fast A items get counted most often, because that\'s where mistakes cost the most.',
       table: { head: ['Class', 'How often to count', 'Time it takes'], rows: [
         ['A items', 'Every week', '10 to 15 minutes'],
         ['B items', 'Every month', '15 to 20 minutes'],

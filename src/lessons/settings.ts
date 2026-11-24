@@ -11,13 +11,17 @@ const lesson: Lesson = {
     'Match your bot\'s CSV columns',
   ],
   route: { to: '/settings', label: 'Open Settings' },
+  queen: {
+    welcome: "Settings is where you make this app speak your language. Ten quiet minutes here saves you hours of typing later, so pour a cup of something nice and let's set it up together.",
+    signoff: "Your lists, goals and checklists are set. Revisit them every season, because your shop will grow and your settings should grow with it.",
+  },
   covers: ['src/pages/Settings.tsx', 'src/lib/settings.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'Your lists', kind: 'learn', title: 'Your lists, your words', nova: 'Ten minutes here saves you hours later. Promise.',
       text: 'Settings holds the lists the whole app uses. It opens as a short list; tap a row to open just that page, and ‹ Settings brings you back. Add, rename or remove anything.',
       points: ['Categories (Jewelry, Bags, Apparel…)', 'Item tags (Holiday, Plus size, New arrival…)', 'Live themes and hosts', 'Bot CSV columns', 'Team members (helpers with their own sign-in, see the Team members lesson)'],
       screen: { title: 'Settings', rows: ['Your shop', 'Team members', 'Categories and tags', 'Live themes and hosts', 'Live checklists', 'Goals, alerts and defaults', 'Bot CSV columns'], buttons: ['Categories and tags'], highlight: 'Categories and tags' } },
-    { kind: 'learn', title: 'Categories vs tags', text: 'Every piece gets ONE category: what kind of thing it is. It can have MANY tags: extra labels that help you find and plan. Mixing them up is the most common setup mistake.',
+    { queen: "Keep categories few and simple, like the signs over store aisles. Tags can be as many and as fun as you like.", kind: 'learn', title: 'Categories vs tags', text: 'Every piece gets ONE category: what kind of thing it is. It can have MANY tags: extra labels that help you find and plan. Mixing them up is the most common setup mistake.',
       table: { head: ['', 'Category', 'Tags'], rows: [
         ['Question it answers', 'What is it?', 'What else is true about it?'],
         ['How many per piece', 'Exactly one', 'As many as fit'],
@@ -52,7 +56,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'quiz', q: 'Stock starts showing in Run a sale when…', options: ['It passes your old-stock days in Settings', 'It has no photo', 'It is in the cart'], answer: 0, why: 'You choose the number of days in Settings → Goals, alerts and defaults.' },
 
-    { chapter: 'Checklists', kind: 'learn', title: 'Your live checklists', text: 'Open Settings → Live checklists and write the steps you do before, during and after every live. Each new live starts with this checklist in its Planner, and Home shows the next few steps.', tip: 'Add the things you tend to forget, like "charge the ring light".' },
+    { chapter: 'Checklists', queen: "Every time something goes wrong on a live, add one line to your checklist. That's how a checklist gets wise.", kind: 'learn', title: 'Your live checklists', text: 'Open Settings → Live checklists and write the steps you do before, during and after every live. Each new live starts with this checklist in its Planner, and Home shows the next few steps.', tip: 'Add the things you tend to forget, like "charge the ring light".' },
     { kind: 'learn', title: 'A starter checklist', text: 'Here\'s a tried-and-true set to start from. Change it to fit you.',
       table: { head: ['Before', 'During', 'After'], rows: [
         ['Post the poster 2 days ahead', 'Read the shop rules at the start', 'Make orders'],

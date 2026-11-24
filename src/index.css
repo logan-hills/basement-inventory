@@ -2994,3 +2994,4 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .queen-sign { font-family: 'Pinyon Script', 'Brush Script MT', cursive; font-size: 1.7rem; color: #FFE7A3; display: flex; flex-direction: column; line-height: 1.1; }
 .queen-sign small { font-family: Inter, system-ui, sans-serif; font-size: .78rem; letter-spacing: .6px; text-transform: uppercase; opacity: .8; }
 .lesson-finish .queen-note { max-width: 560px; margin: 4px auto; background: rgba(255, 211, 110, .08); }
+.uni-curated { margin-top: 8px; text-align: center; font-family: 'Pinyon Script', 'Brush Script MT', cursive; font-size: 1.35rem; color: #8A5A12; }

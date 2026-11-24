@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'U.S. Small Business Administration', title: 'Write your business plan', url: 'https://www.sba.gov/business-guide/plan-your-business/write-your-business-plan' },
     { org: 'IMD Business School', title: 'SWOT analysis: how to do it, with examples', url: 'https://www.imd.org/reflections/swot-analysis-how-to-do-it-4-examples/' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Strategy sounds like a big-company word, but it simply means choosing on purpose. This is how I want every seller to start planning: with an honest look at where you stand today.",
+    signoff: "Your SWOT is the mirror, and your top three issues are the map. Bring them into part 2, and we'll turn them into goals.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'What strategy is', kind: 'learn', title: 'Strategy is choosing', nova: 'This is the course that sets the bar, boss. Get comfy. We\'re going to think like a CEO.',
       text: 'A to-do list says what you\'ll do today. A strategy says where your shop is going and what you will (and won\'t) do to get there. SCORE, the SBA\'s free mentoring partner, describes a strategic plan as your road map: where you are, where you want to be, and how you\'ll close the gap.',
@@ -40,7 +44,7 @@ const lesson: Lesson = {
       example: 'In 3 years: two lives a week with 300 regular viewers, $8,000 profit a month, a 1,200 sq ft space with two part-time helpers, and our own label of signature handbags.' },
     { kind: 'reflect', title: 'Write yours', prompt: 'Write your mission in one sentence, then your 3-year vision with at least two numbers.', placeholder: 'Mission: … Vision: in 3 years…', example: 'Mission: we bring boutique style to everyday budgets. Vision: in 3 years, 250 regulars, $6,000 profit a month, and my sister running packing full time.' },
 
-    { chapter: 'SWOT', kind: 'learn', title: 'Four boxes, honest answers', text: 'SWOT is one of the most widely used strategy tools in business schools like IMD. Strengths and weaknesses are inside your shop (you control them). Opportunities and threats are outside (you respond to them).',
+    { chapter: 'SWOT', queen: "Write the weaknesses you'd rather not say out loud. Those are the ones holding you back.", kind: 'learn', title: 'Four boxes, honest answers', text: 'SWOT is one of the most widely used strategy tools in business schools like IMD. Strengths and weaknesses are inside your shop (you control them). Opportunities and threats are outside (you respond to them).',
       table: { head: ['', 'Helpful', 'Harmful'], rows: [
         ['Inside your shop', 'Strengths: what you do better than most', 'Weaknesses: what holds you back'],
         ['Outside your shop', 'Opportunities: openings you could grab', 'Threats: things that could hurt you'],
@@ -55,7 +59,7 @@ const lesson: Lesson = {
     { kind: 'tap', title: 'Sort it', prompt: '"Our lives keep starting 20 minutes late." Which SWOT box does that belong in?', screen: { title: 'SWOT', buttons: ['Strength', 'Weakness', 'Opportunity', 'Threat'] }, answer: 'Weakness', hint: 'It\'s inside your shop and it hurts you, so it\'s a weakness. The good news: you control it.' },
     { kind: 'tap', title: 'Sort it again', prompt: '"A big new seller in our area just started doing $1 lives." Which box?', screen: { title: 'SWOT', buttons: ['Strength', 'Weakness', 'Opportunity', 'Threat'] }, answer: 'Threat', hint: 'It comes from outside and could hurt you. You can\'t control it, only respond to it.' },
 
-    { chapter: 'Back it with numbers', kind: 'learn', title: 'Feelings vs facts', text: 'A SWOT built only on feelings can be wrong. Check every box against your numbers. The app already tracks most of them.',
+    { chapter: 'Back it with numbers', queen: "When your feelings and your Reports disagree, trust the Reports, then ask why you felt differently.", kind: 'learn', title: 'Feelings vs facts', text: 'A SWOT built only on feelings can be wrong. Check every box against your numbers. The app already tracks most of them.',
       table: { head: ['Question', 'Where to check'], rows: [
         ['What sells best? (strength)', 'Reports: top sellers and top categories with % breakdown'],
         ['What doesn\'t sell? (weakness)', 'Home: old stock; Inventory filtered by age'],

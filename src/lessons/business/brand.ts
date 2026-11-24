@@ -14,7 +14,11 @@ const lesson: Lesson = {
     { org: 'U.S. Small Business Administration', title: 'Marketing and sales', url: 'https://www.sba.gov/business-guide/manage-your-business/marketing-sales' },
     { org: 'U.S. Small Business Administration', title: 'Marketing plan example', url: 'https://www.sba.gov/document/support-marketing-plan-example' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "People forget a price, but they remember how you made them feel. Your brand is that feeling, on purpose. This course helps you put words, colors and rituals to the shop you already love.",
+    signoff: "Keep your promise everywhere: on camera, in the box and in the comments. A brand is built one consistent moment at a time.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'What a brand really is', kind: 'learn', title: 'A brand is a promise', nova: "Let's start with the heart of it. Your brand is not your logo, sis.",
       text: "Your brand is what people expect every single time they deal with you. The logo and colors only remind them of it. Big companies spend millions on this. You can build it with nothing but intention and consistency.",
@@ -33,7 +37,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'quiz', q: 'Which of these IS your brand?', options: ['Your logo', 'The feeling and promise people expect from you', 'Your price list'], answer: 1, why: 'The logo is a reminder. The promise, kept every time, is the brand.' },
 
-    { chapter: 'Find your dream buyer', kind: 'learn', title: "You can't be everybody's favorite", nova: "Be somebody's obsession instead.",
+    { chapter: 'Find your dream buyer', queen: "When you try to sell to everyone, you end up special to no one. Pick your dream buyer and love her out loud.", kind: 'learn', title: "You can't be everybody's favorite", nova: "Be somebody's obsession instead.",
       text: "When you try to sell to everyone, your posts get bland and nobody feels spoken to. When you picture one real person, your words get warmer, your picks get sharper, and the right people say \"she gets me.\"",
       points: ['Age and stage of life', 'Budget for a night of shopping', 'Style: classic, bold, church-ready, everyday', 'What a typical Tuesday night looks like for her', 'What makes her trust a seller, and what makes her leave'] },
     { kind: 'learn', title: 'A dream buyer, worked out', text: "Here's what a strong dream-buyer sketch looks like. Notice how specific it is. Specific is what makes it useful.",
@@ -85,7 +89,7 @@ const lesson: Lesson = {
         ['Shipping delay', '"Okay, real talk, I\'m a day behind, but I\'ve got you."', '"A quick note: your order ships tomorrow. Thank you for your patience."'],
       ] } },
 
-    { chapter: 'Signature moments', kind: 'learn', title: 'Rituals people come back for', text: "The best live sellers have moments buyers look forward to every single week. They become the brand. Pick two or three and repeat them every live until people say them with you.",
+    { chapter: 'Signature moments', queen: "Pick one ritual and do it every single live for a month. Consistency is what turns a habit into a signature.", kind: 'learn', title: 'Rituals people come back for', text: "The best live sellers have moments buyers look forward to every single week. They become the brand. Pick two or three and repeat them every live until people say them with you.",
       points: [
         'A signature opening line and a song-free countdown',
         'A name for your community ("Dazzle Fam", "the Basement Crew")',

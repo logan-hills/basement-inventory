@@ -184,6 +184,7 @@ export default function Lessons() {
             </div>
             <figure className="uni-portrait">
               <span className="uni-arch"><img src={novaLaverne} alt="Nova the handbag with LaVerne, Queen of $2 Tuesday" /></span>
+              <figcaption className="uni-curated">Every lesson hand-picked by the Queen</figcaption>
             </figure>
           </section>
 

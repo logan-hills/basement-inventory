@@ -14,7 +14,11 @@ const lesson: Lesson = {
   sources: [
     { org: 'Meta', title: 'Pages, Groups and Events Policies (Promotions)', url: 'https://www.facebook.com/policies_center/pages_groups_events' },
   ],
-  covers: ['src/pages/Giveaways.tsx', 'src/components/GiveawayStage.tsx', 'src/lib/giveaway.ts', 'src/pages/Overlay.tsx'], updated: '2026-11-23',
+  queen: {
+    welcome: "A giveaway is a thank-you to your community and a reason for new folks to stay. Done fairly and legally, it grows your live. Let's do it right.",
+    signoff: "Keep it fair, say the rules out loud, follow Facebook's rules, and never charge for a chance to win. Then have fun with it.",
+  },
+  covers: ['src/pages/Giveaways.tsx', 'src/components/GiveawayStage.tsx', 'src/lib/giveaway.ts', 'src/pages/Overlay.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Why giveaways work', kind: 'learn', title: 'The fun part of the live', nova: 'Ooh, this is my favorite part of the night. Let\'s make it sparkle!',
       text: 'Facebook shows a live to more people when viewers stay and comment. Nothing keeps people watching like a prize they could win at the end. A giveaway turns watchers into talkers, and talkers into buyers.',
@@ -44,7 +48,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'number', title: 'Work out the odds', q: 'There are 40 slots on the wheel. Monique bought 6. What is her chance to win, as a percent?', suffix: '%', answer: 15, tolerance: 0.1, hint: 'Her slots divided by all the slots, times 100.', why: '6 ÷ 40 = 0.15, so 15%. The app shows this next to her name.' },
     { kind: 'tap', title: 'Practice', prompt: 'Everyone is in and the prize is ready. Make the wheel go!', screen: { title: 'Giveaways · Spin the wheel', rows: ['9 people · 27 slots'], buttons: ['Full screen', '🎡 Spin the wheel', 'Paste a whole list at once'] }, answer: '🎡 Spin the wheel', hint: 'The big gold button under the wheel spins it. You can also tap SPIN in the middle of the wheel.' },
-    { kind: 'learn', title: 'Fair and square', text: 'When you spin, the winner is picked by your phone or computer\'s secure random number maker, weighted by slots. The wheel then turns and lands on that person. Nobody, not even you, can steer it.',
+    { queen: "Spin the wheel where everyone can see it. Transparency is what makes people trust your games.", kind: 'learn', title: 'Fair and square', text: 'When you spin, the winner is picked by your phone or computer\'s secure random number maker, weighted by slots. The wheel then turns and lands on that person. Nobody, not even you, can steer it.',
       points: ['The spin ticks past each name and plays a little fanfare at the end', 'A "We have a winner!" banner pops up with confetti', 'The winner is saved in Today\'s winners so you can message them later'] },
     { kind: 'learn', title: 'More than one prize', text: 'Giving away three prizes? After the first winner, tap "Take [her name] off and spin again". The winner comes off the wheel and it spins again for the next prize. Tap "Clear the winner" to just hide the banner.',
       tip: 'Announce the prizes in order before the first spin: "Third place first, then second, then the grand prize!" It keeps everyone watching to the end.' },
@@ -93,7 +97,7 @@ const lesson: Lesson = {
         'Say that Facebook isn\'t running or sponsoring the giveaway',
         'Commenting, liking or messaging the Page to enter is fine',
       ] },
-    { kind: 'learn', title: 'Paid slots and the law', text: 'A prize, picked by chance, that people paid to enter can count as a lottery, and private lotteries aren\'t allowed in most states. Rules are different in every state, so check yours. Many sellers make every slot a purchase: each slot comes with an item the buyer keeps, and the wheel picks who gets the bonus prize. Another common way is a free way to enter, like commenting, that counts the same as a slot.',
+    { queen: "Never make anyone pay for a chance to win. That turns a giveaway into a lottery, and that's not a risk worth taking.", kind: 'learn', title: 'Paid slots and the law', text: 'A prize, picked by chance, that people paid to enter can count as a lottery, and private lotteries aren\'t allowed in most states. Rules are different in every state, so check yours. Many sellers make every slot a purchase: each slot comes with an item the buyer keeps, and the wheel picks who gets the bonus prize. Another common way is a free way to enter, like commenting, that counts the same as a slot.',
       tip: 'This isn\'t legal advice. When you\'re growing, a short call with a local business lawyer is worth it.' },
     { kind: 'scenario', title: 'A viewer says it\'s rigged', situation: 'After the spin, a viewer comments: "Rigged! Tasha always wins."',
       options: [

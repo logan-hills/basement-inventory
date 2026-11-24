@@ -18,7 +18,11 @@ const lesson: Lesson = {
     { org: 'Meta', title: 'Our approach to labeling AI-generated content', url: 'https://about.fb.com/news/2024/04/metas-approach-to-labeling-ai-generated-content-and-manipulated-media/' },
     { org: 'Federal Trade Commission', title: 'Consumer Reviews and Testimonials Rule: questions and answers', url: 'https://www.ftc.gov/business-guidance/resources/consumer-reviews-testimonials-rule-questions-answers' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Marketing is the job most of us push to later, because it never ends. With a smart AI routine, one focused hour a week can cover it. Let me show you how, while keeping your voice and your honesty front and center.",
+    signoff: "Use your live as your content goldmine, let AI draft, and you decide. Never let AI pretend to be a customer. Your Sunday hour starts this week.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'The one-hour week', kind: 'learn', title: 'Why marketing falls off the list', nova: 'Marketing isn\'t hard, boss. It\'s just endless. Let\'s put a fence around it.',
       text: 'Most live sellers don\'t skip marketing because they don\'t know how. They skip it because it\'s never "done." The fix is a weekly block with a clear finish line. AI writes the first drafts, you add the heart, and then you stop.',
@@ -40,7 +44,7 @@ const lesson: Lesson = {
       tip: 'Meta Business Suite is free and schedules posts to both Facebook and Instagram at once.' },
     { kind: 'order', title: 'Put the hour in order', prompt: 'Put the Sunday marketing hour in order.', steps: ['Look back at last week', 'Plan this week\'s themes', 'Make the posters', 'Write captions and hooks', 'Cut Reels from the live', 'Schedule everything'] },
 
-    { chapter: 'One live, ten pieces', kind: 'learn', title: 'Your live is a content goldmine', text: 'You already made an hour of video. AI helps you slice it. Paste your live transcript (buyer names removed) and ask for the pieces below. You film nothing new.',
+    { chapter: 'One live, ten pieces', queen: "Save your live replay link every night. One live holds a week of clips, quotes and photos.", kind: 'learn', title: 'Your live is a content goldmine', text: 'You already made an hour of video. AI helps you slice it. Paste your live transcript (buyer names removed) and ask for the pieces below. You film nothing new.',
       table: { head: ['From one live', 'How AI helps'], rows: [
         ['3 Reels of your best moments', 'Finds the funniest, most exciting minutes in the transcript'],
         ['2 "story behind the piece" posts', 'Turns what you said about a bag into a short story'],
@@ -76,7 +80,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'quiz', q: 'Which number best tells you a post made people want to come back to it?', options: ['Likes', 'Saves', 'How long your caption was'], answer: 1, why: 'A save means "I want this later." That\'s strong interest, and it often turns into a buyer.' },
 
-    { chapter: 'AI research vs real buyers', kind: 'learn', title: 'Don\'t let AI pretend to be your customers', text: 'Harvard Business School researchers tested whether AI can stand in for customer surveys. Sometimes it came close. Other times it got the answer backwards, saying people would like more of something when real people wanted less. Their advice: use AI to brainstorm questions, then ask real people.',
+    { chapter: 'AI research vs real buyers', queen: "Never post AI-written reviews or testimonials. Real words from real buyers are the only ones that count.", kind: 'learn', title: 'Don\'t let AI pretend to be your customers', text: 'Harvard Business School researchers tested whether AI can stand in for customer surveys. Sometimes it came close. Other times it got the answer backwards, saying people would like more of something when real people wanted less. Their advice: use AI to brainstorm questions, then ask real people.',
       points: ['Use AI to write poll questions, not to answer them', 'Ask your buyers in a poll, a live, or a Messenger note', 'Watch what people actually buy, not just what they say', 'When AI and buyers disagree, trust your buyers'] },
     { kind: 'learn', title: 'AI advice helps the boss who checks it', text: 'A study by UC Berkeley and Harvard Business School gave small business owners in Kenya an AI business mentor. Owners who were already doing well grew about 20%. Owners who were struggling did about 10% worse. The difference was judgment: strong owners picked the advice that fit their shop; others followed generic tips that didn\'t.',
       example: 'Before you act on an AI marketing idea, ask: does this fit my buyers, my stock and my style? If not, skip it.' },

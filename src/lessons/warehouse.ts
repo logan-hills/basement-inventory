@@ -11,6 +11,10 @@ const lesson: Lesson = {
     'Keep it tidy with a few simple house rules',
   ],
   route: { to: '/locations', label: 'Open Warehouse' },
+  queen: {
+    welcome: "A home for every piece is the secret of every great warehouse, big or small. Whether you have a closet or a basement, let's give your stock an address.",
+    signoff: "Walk your space, label your bins, and keep your best sellers in the golden zone. Now anyone can find anything in seconds, even on your busiest night.",
+  },
   covers: ['src/pages/Warehouse.tsx', 'src/pages/BinDetail.tsx', 'src/pages/BinLabels.tsx', 'src/components/LabelKit.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'How bins are named', kind: 'learn', title: 'A home for every piece', nova: "Real warehouses don't search. They know. Let's get you there.",
@@ -36,7 +40,7 @@ const lesson: Lesson = {
         ['Total bins: 2 × 3 × 4 × 4', '96'],
       ] } },
     { kind: 'number', title: 'Count your bins', q: 'One aisle, 2 shelving units, 5 shelves each, 3 tubs per shelf. How many bins?', answer: 30, hint: 'Aisles × sections × levels × bins per level.', why: '1 × 2 × 5 × 3 = 30 bins, A1-S1-A-01 through A1-S2-E-03.' },
-    { kind: 'learn', title: 'The golden zone', text: 'Not all shelves are equal. The shelves between your waist and your shoulders are the fastest to reach, with no bending or stretching. Warehouses call this the golden zone. Put your best sellers there.',
+    { queen: "Your fastest sellers belong between your waist and your shoulders. Save the top and bottom shelves for slow movers and supplies.", kind: 'learn', title: 'The golden zone', text: 'Not all shelves are equal. The shelves between your waist and your shoulders are the fastest to reach, with no bending or stretching. Warehouses call this the golden zone. Put your best sellers there.',
       table: { head: ['Where', 'Put'], rows: [
         ['Waist to shoulder (golden zone)', 'Best sellers, this week\'s live pieces'],
         ['Bottom shelf', 'Heavy things, bulk backstock'],
@@ -72,7 +76,7 @@ const lesson: Lesson = {
       tip: 'Label the shelf spot, not just the tub. Tubs get moved. The shelf stays put.' },
     { kind: 'learn', title: 'Open a bin', text: 'Tap any bin on the map or list to see everything in it, how many units, and the retail value. Tap Put items here, then scan tags to shelve them. Swipe a tag left to take it out.' },
 
-    { chapter: 'Keep it tidy', kind: 'learn', title: 'House rules', text: 'A system only works if everyone follows it. Tape these up by the shelves.',
+    { chapter: 'Keep it tidy', queen: "Write your house rules on a card and tape it to the shelf. Rules that are posted get followed.", kind: 'learn', title: 'House rules', text: 'A system only works if everyone follows it. Tape these up by the shelves.',
       points: ['Every piece gets scanned into a bin. No "I\'ll do it later" piles.', 'One variation per bin when you can, so pickers grab the right one', 'If you move it, scan it into its new bin', 'Empty tub? Leave it labeled and ready for the next haul', 'Unsorted returns and new hauls go in ONE "inbox" spot near the door'] },
     { kind: 'quiz', q: 'Your helper moved 5 bags to a new shelf but didn\'t scan them. What happens on pick day?', options: ['Nothing, the app knows', 'The pick screen sends you to the old bin and you can\'t find them', 'The bags get deleted'], answer: 1, why: 'The app only knows what\'s scanned. Moved it? Scan the new bin, then scan the tags.' },
     { kind: 'quiz', q: 'Where should a bin label go?', options: ['On the shelf spot itself', 'Only on the lid of the tub', 'Anywhere nearby'], answer: 0, why: 'Tubs get moved and swapped. The shelf spot stays put, so label the shelf (and the tub too, if you like).' },

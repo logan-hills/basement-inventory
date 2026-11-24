@@ -17,6 +17,10 @@ const lesson: Lesson = {
     { org: 'GS1 US', title: 'Barcodes and identification', url: 'https://www.gs1us.org/upcs-barcodes-prefixes' },
     { org: 'Square', title: 'Set up a receipt printer', url: 'https://squareup.com/help/us/en/article/5115-set-up-a-receipt-printer' },
   ],
+  queen: {
+    welcome: "Good tools make hard work feel easy, but you don't need the most expensive tools to run a great shop. Here's the gear I'd pick for you, and how to set it up so it works the first time.",
+    signoff: "Start with what you need today, test everything before a big night, and upgrade when your sales tell you to. Now go make those happy beeps.",
+  },
   covers: ['src/pages/Gear.tsx', 'src/lib/gear.ts', 'src/lib/scanner.ts', 'src/lib/printImage.ts', 'src/pages/Receipt.tsx', 'src/lib/printNudge.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'Your starter kit', kind: 'learn', title: 'Three things run the whole warehouse', nova: 'Shopping for gear is the fun part. Let\'s spend smart so every dollar pays you back.',
@@ -24,7 +28,7 @@ const lesson: Lesson = {
       points: ['A scanner, so you never type a code again. Your phone or iPad camera is a free one.', 'One thermal printer for tags, bin labels, box labels and shipping labels (a DYMO you already own works for tags too)', 'Labels in four sizes, each with one job', 'Optional: a receipt printer if you sell at pop-ups and markets'],
       screen: { title: 'Recommended gear', rows: ['Scanners', 'Label printer', 'Labels', 'Selling in person'], buttons: ['View on Amazon', 'Test print'] },
       tip: 'Start with the free camera scanner and the printer. Add a handheld scanner and more rolls as you grow. You don\'t have to buy everything on day one.' },
-    { kind: 'learn', title: 'Your free scanner', text: 'The first scanner on Recommended gear costs nothing: the camera on your iPhone, iPad or Android phone. Tap Try it now, or open Scan or Pick and pack and tap Use camera. The first time, your phone asks to use the camera. Tap Allow, and that\'s the whole setup.',
+    { queen: "Your phone camera is a real scanner. Plenty of sellers run their first months on it, and there's no shame in free.", kind: 'learn', title: 'Your free scanner', text: 'The first scanner on Recommended gear costs nothing: the camera on your iPhone, iPad or Android phone. Tap Try it now, or open Scan or Pick and pack and tap Use camera. The first time, your phone asks to use the camera. Tap Allow, and that\'s the whole setup.',
       points: ['No pairing, no charging, nothing to buy', 'Works for item tags, bin labels and box labels', 'Tapped Don\'t Allow by mistake? iPhone or iPad: Settings, Safari (or Dazzle Warehouse), Camera, Allow. Android: tap the lock by the web address, Permissions, Camera.', 'Ready to go faster? A handheld scanner reads in a blink from farther away'],
       screen: { title: 'Recommended gear · Scanners', rows: ['Your phone or iPad camera · Free, nothing to buy'], buttons: ['Try it now'], highlight: 'Try it now' } },
     { kind: 'quiz', q: 'A new seller has no money for a scanner yet. What do you tell her?', options: ['She can\'t use the app until she buys one', 'Use her phone or iPad camera for free: tap Use camera and Allow', 'Type every code by hand'], answer: 1, why: 'The camera is a real scanner. She can buy a handheld one later, when sales pay for it.' },
@@ -69,7 +73,7 @@ const lesson: Lesson = {
       points: ['Small weeks: the MFLABEL roll is plenty', 'Big shipping days: fan-fold, so you never stop to reload', 'Same print settings for both: 4 x 6 in, 100%, margins None'] },
     { kind: 'number', title: 'Bin label math', q: 'Your warehouse has 3 aisles, each with 4 sections, 3 levels and 2 bins per level. How many 4×4 bin labels do you need?', answer: 72, hint: 'Multiply aisles × sections × levels × bins.', why: '3 × 4 × 3 × 2 = 72 labels. Grab a roll with a few extra for new shelves.' },
 
-    { chapter: 'Print it right', kind: 'learn', title: 'Test print before a big batch', text: 'On Recommended gear, Check it works has a Test print for every size: 2×1, 4×4, 4×6 and both receipt widths. The test label has a corner mark in each corner and a barcode. If you see all four corners and the barcode scans, you\'re lined up.',
+    { chapter: 'Print it right', queen: "Print one label before you print fifty. One wasted label is cheaper than a wasted roll.", kind: 'learn', title: 'Test print before a big batch', text: 'On Recommended gear, Check it works has a Test print for every size: 2×1, 4×4, 4×6 and both receipt widths. The test label has a corner mark in each corner and a barcode. If you see all four corners and the barcode scans, you\'re lined up.',
       screen: { title: 'Test print', buttons: ['2×1 item tag', '4×4 bin label', '4×6 shipping / box label', 'Print test label'], highlight: 'Print test label' },
       points: ['Corner cut off on one side? Tap Nudge it and move the print half a millimeter at a time', 'Corner cut off everywhere? Check paper size and margins None', 'Everything tiny? Scale must be 100% (Actual size)', 'Creeping down each label? Let the printer re-learn the label size'] },
     { kind: 'order', title: 'Practice: switch to bin labels', prompt: 'Put the steps in order.', steps: ['Swap in the 4×4 roll', 'Hold the feed button so the printer learns the size', 'Print a 4×4 test label', 'Scan the test barcode', 'Print your bin labels'] },

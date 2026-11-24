@@ -11,6 +11,10 @@ const lesson: Lesson = {
     'Use checklists so nothing gets forgotten',
   ],
   route: { to: '/planner', label: 'Open the Live Planner' },
+  queen: {
+    welcome: "A live with a plan feels like a party; a live without one feels like a scramble. Let's plan lives your buyers can't wait to attend.",
+    signoff: "Pick the theme, build the run of show, post your poster early, and walk in calm. Planned lives sell more, every single time.",
+  },
   covers: ['src/pages/Planner.tsx', 'src/pages/LivePlan.tsx', 'src/components/PosterMaker.tsx', 'src/lib/planner.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'Pick a theme', kind: 'learn', title: 'Why a theme works', nova: 'A theme turns "another live" into an event. Let\'s plan one!',
@@ -56,7 +60,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Pacing your pieces', text: 'Most lives have a curve: viewers build for the first 10 to 20 minutes, peak, then slowly drop. Plan your pieces to match.',
       points: ['Open with 2 or 3 crowd-pleasers, not your weakest stock', 'Save your best "wow" piece for the peak', 'Mix price points so everyone can buy something', 'A quick "flash $2 minute" whenever comments slow down', 'End with bundles and last calls, not leftovers'],
       tip: 'Reports → Sales by live shows which lives did best. Look at what you sold first on those nights.' },
-    { kind: 'script', title: 'Your Steal of the Night', text: 'A peak moment people wait for. Build it up, then go fast.',
+    { queen: "Save your best deal for the middle of the live and tease it from the start. It keeps people watching.", kind: 'script', title: 'Your Steal of the Night', text: 'A peak moment people wait for. Build it up, then go fast.',
       lines: [
         '"Okay family, it\'s TIME. Y\'all know what this is. Steal of the Night!"',
         '"I\'ve got ONE of these. [Show the piece slowly, close to the camera.] Look at this hardware. Look at the inside."',
@@ -89,7 +93,7 @@ const lesson: Lesson = {
       points: ['The Caption to paste with it box writes your post for you. Tap Copy, then paste it under the poster', 'Your design saves by itself as you go'],
       screen: { title: 'Your poster', rows: ['Post 4:5 · Square · Story 9:16 · Event cover'], buttons: ['Download poster', 'Share', 'All four sizes'], highlight: 'All four sizes' } },
     { kind: 'quiz', q: 'You\'re making a Facebook event for Friday\'s live. Which poster size fits the top of the event?', options: ['Event cover', 'Story 9:16', 'Square'], answer: 0, why: 'Event cover is the wide size made for the top of a Facebook event.' },
-    { kind: 'learn', title: 'When to post it', text: 'Post the poster two days ahead, a sneak peek the day before, a reminder the morning of, and a behind-the-scenes an hour before. The Market your brand course goes deep on this.' },
+    { queen: "Post your poster at least two days ahead, then again the morning of. People need reminders, and that's okay.", kind: 'learn', title: 'When to post it', text: 'Post the poster two days ahead, a sneak peek the day before, a reminder the morning of, and a behind-the-scenes an hour before. The Market your brand course goes deep on this.' },
     { kind: 'quiz', q: 'Why use a theme?', options: ['It gives buyers a reason to show up', 'The app requires it', 'It changes your prices'], answer: 0, why: 'A theme turns "another live" into an event people plan for.' },
 
     { chapter: 'Checklists', kind: 'learn', title: 'Checklists keep you calm', text: 'The Checklist tab has three lists: Before the live, During the live and After the live. On a computer they sit side by side, on a tablet two across, and on a phone they stack so each step reads full width. Tick each step as you go. Your progress ring fills up, and Home shows what\'s next. Add a step just for this live at the bottom of any list, or change the default steps in Settings.' },

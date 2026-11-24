@@ -16,6 +16,10 @@ const lesson: Lesson = {
     { org: 'Zebra Technologies', title: 'Direct thermal vs thermal transfer printing', url: 'https://www.zebra.com/us/en/resource-library/faq/printing/difference-between-direct-thermal-and-thermal-transfer-printing.html' },
     { org: 'Zebra Technologies', title: 'Direct thermal FAQ', url: 'https://www.zebra.com/us/en/resource-library/getting-started/direct-thermal-thermal-transfer/direct-thermal-faq.html' },
   ],
+  queen: {
+    welcome: "A thermal printer is one of the best friends a live seller can have: no ink, no fuss, once it's set up right. Let's set yours up so every tag comes out crisp the first time.",
+    signoff: "Load it straight, teach it the label size, and keep your yellow roll for sales. Now your printer works for you, not the other way around.",
+  },
   covers: ['src/pages/Labels.tsx', 'src/pages/BinLabels.tsx', 'src/components/SaveForPrinterApp.tsx', 'src/components/PrintNudge.tsx', 'src/components/LabelKit.tsx'], updated: '2026-11-24',
   slides: [
     { chapter: 'Know your printer', kind: 'learn', title: 'No ink, ever', nova: 'Let\'s get your printer purring. Once it\'s set up, it\'s set up for good.',
@@ -31,7 +35,7 @@ const lesson: Lesson = {
       ] },
       tip: 'Keep the yellow roll in a labeled bag by the printer. If it\'s loaded when it shouldn\'t be, every regular tag comes out looking like a sale.' },
 
-    { chapter: 'Load the roll', kind: 'learn', title: 'Load a 2×1 roll straight', text: 'Your printer is built for 4 inch wide labels, so a 2 inch roll needs the guides pulled in to hold it in the middle. If the roll can slide side to side, tags will print crooked or off the edge.',
+    { chapter: 'Load the roll', queen: "Take your time loading the roll. Nine out of ten printing troubles start with a crooked roll.", kind: 'learn', title: 'Load a 2×1 roll straight', text: 'Your printer is built for 4 inch wide labels, so a 2 inch roll needs the guides pulled in to hold it in the middle. If the roll can slide side to side, tags will print crooked or off the edge.',
       points: ['Open the cover and take out the 4×6 roll or stack', 'Drop the 2×1 roll onto the holder with labels coming off the top, coated side up toward the print head', 'Slide both paper guides in until they just touch the roll\'s edges', 'Feed the first label under the print head and close the cover until it clicks', 'Press the feed button once. One label should come out and stop at the tear bar.'],
       example: 'If a test tag comes out completely blank, the roll is in upside down. Flip it so the shiny coated side faces the print head.' },
     { kind: 'order', title: 'Practice: load it', prompt: 'Put the steps for swapping to a 2×1 roll in order.', steps: ['Open the cover and remove the 4×6 labels', 'Put the 2×1 roll on, coated side toward the print head', 'Slide the guides in to touch the roll', 'Close the cover until it clicks', 'Let the printer find the new label size', 'Print one test tag'] },
@@ -52,7 +56,7 @@ const lesson: Lesson = {
       screen: { title: 'Print tags', buttons: ['Print', 'Save for printer app (phones)'], highlight: 'Save for printer app (phones)' } },
     { kind: 'tap', title: 'Practice: print from your phone', prompt: 'You\'re at the packing table with just your iPhone and the Bluetooth printer. Which button gets your tags to the printer?', screen: { title: 'Print tags', buttons: ['Print', 'Save for printer app (phones)'] }, answer: 'Save for printer app (phones)', hint: 'Bluetooth label printers print from their own app on a phone.' },
     { kind: 'tap', title: 'Practice: pick the right label', prompt: 'You\'re printing tags for 12 new tops on your 2×1 white roll. Which label do you tap under 1. Pick your label?', screen: { title: 'Print tags · 1. Pick your label', buttons: ['Letter sheet, 30 per page', '4 × 6 in shipping label, 12 tags', '2 × 1 in roll, one tag per label'] }, answer: '2 × 1 in roll, one tag per label', hint: 'Your roll has one 2×1 label at a time, so pick the 2 × 1 in roll.' },
-    { kind: 'learn', title: 'Sale tags on the yellow roll', text: 'When pieces go on sale, swap in the yellow roll and switch Tag style to Sale (yellow roll). Then pick the sale price: Each item\'s own sale price, Percent off the regular price, or One price for all. In Inventory, you can select several pieces, tap More, then Print yellow sale tags to print them all at once.',
+    { queen: "Yellow sale tags are a signal to your buyers and your helpers. Keep that color for sales only so it always means 'deal.'", kind: 'learn', title: 'Sale tags on the yellow roll', text: 'When pieces go on sale, swap in the yellow roll and switch Tag style to Sale (yellow roll). Then pick the sale price: Each item\'s own sale price, Percent off the regular price, or One price for all. In Inventory, you can select several pieces, tap More, then Print yellow sale tags to print them all at once.',
       screen: { title: 'Inventory · 8 selected, More', buttons: ['Print yellow sale tags', 'Download as a spreadsheet', 'Damage out'], highlight: 'Print yellow sale tags' },
       example: 'Saturday is clearance day. Filter Inventory to pieces older than 90 days, select them, tap More, then Print yellow sale tags, and stick a bright yellow tag over each old one. Buyers on live can spot sale pieces instantly.' },
     { kind: 'tap', title: 'Practice: sale tags', prompt: 'You selected 8 pieces in Inventory for a sale live. Which button prints their yellow tags?', screen: { title: 'Inventory · 8 selected, More', buttons: ['Print yellow sale tags', 'Download as a spreadsheet', 'Damage out'] }, answer: 'Print yellow sale tags', hint: 'Sale tags prints in the sale style, made for the yellow roll.' },

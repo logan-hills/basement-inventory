@@ -15,7 +15,11 @@ const lesson: Lesson = {
     { org: 'U.S. Small Business Administration', title: 'Marketing plan example', url: 'https://www.sba.gov/document/support-marketing-plan-example' },
     { org: 'HubSpot Academy', title: 'Facebook marketing training (free)', url: 'https://academy.hubspot.com/courses/facebook-marketing-training' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Marketing is simply inviting people, over and over, with a smile. I'll show you a routine that fits into about an hour a week, so you can market without burning out.",
+    signoff: "Four touches before every live, five good hooks in your pocket, and one Sunday hour. That's a marketing plan you can actually keep.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'The invite mindset', kind: 'learn', title: 'Marketing is an invitation', nova: "Forget \"being salesy.\" You're throwing a party and inviting your people.",
       text: "Most sellers post \"going live later!\" and wonder why nobody comes. Every invitation needs to answer three questions before the reader even thinks to ask them.",
@@ -31,7 +35,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'quiz', q: 'Which post is most likely to fill your live?', options: ['"Going live later!"', '"Tuesday 7 PM ET: $2 jewelry + a free tote giveaway. Tap Get reminder!"', '"New stuff coming soon"'], answer: 1, why: 'It tells her what, when, and why to come, and gives her one easy thing to do.' },
 
-    { chapter: 'The 4-touch week', kind: 'learn', title: 'Four touches, about an hour total', nova: "Here's a rhythm you can keep even on your busiest week.",
+    { chapter: 'The 4-touch week', queen: "If you only have time for one post, make it the morning-of reminder. That's the one that fills the room.", kind: 'learn', title: 'Four touches, about an hour total', nova: "Here's a rhythm you can keep even on your busiest week.",
       text: "Four touches before every live keeps you top of mind without posting all day. Each one has a different job.",
       table: { head: ['When', 'Post', 'Its job'], rows: [
         ['2 days before', 'The poster and the theme', 'Put it on her calendar'],
@@ -66,7 +70,7 @@ const lesson: Lesson = {
       ] },
     { kind: 'reflect', title: 'Write two hooks', prompt: 'Write two hooks for your next live, using two different formulas from the table.', placeholder: '1. … 2. …', example: '1. "Every gold piece is $2 until the timer runs out." 2. "If you\'ve got a holiday party coming, stop scrolling."' },
 
-    { chapter: 'Let buyers sell for you', kind: 'learn', title: 'Word of mouth, on purpose', nova: "Your happiest buyer is your best ad. Give her something to talk about.",
+    { chapter: 'Let buyers sell for you', queen: "Ask your happiest buyers to share your live. Most people are glad to help when you simply ask.", kind: 'learn', title: 'Word of mouth, on purpose', nova: "Your happiest buyer is your best ad. Give her something to talk about.",
       text: "Word of mouth doesn't have to be luck. Make it easy and make it rewarding.",
       points: ['"Post your haul and tag the Page for a shout-out on the next live"', 'Share buyers\' photos (ask permission first, every time)', 'Bring-a-friend night: when a new buyer says who sent her, both get a small freebie in their box', 'Birthday month shout-outs and a tiny gift for regulars'] },
     { kind: 'learn', title: "Giveaways that don't get you in trouble", text: "Giveaways bring people in, but there are two rules sellers break all the time without knowing it.",

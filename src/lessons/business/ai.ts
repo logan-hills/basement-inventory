@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'Canva', title: 'Connect Canva to an AI assistant', url: 'https://www.canva.com/help/mcp-agent-setup/' },
     { org: 'Federal Trade Commission', title: 'Disclosures 101 for social media influencers', url: 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "An AI assistant can write captions, plan lives and draft emails in minutes. I want you to know which one to use and how to use it well, while keeping your voice your own.",
+    signoff: "Give AI a clear brief, check its facts, and teach it your voice. Then let it give you your evenings back.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'What AI is good for', kind: 'learn', title: 'Your always-on assistant', nova: 'Full honesty: I\'m a big fan of AI helpers. But they\'re assistants, not the boss. You are.',
       text: 'AI assistants like ChatGPT (from OpenAI) and Claude (from Anthropic) are chat tools that write, plan, explain and create with you. They\'re best at first drafts and ideas. You bring the taste, the facts and the final say.',
@@ -55,7 +59,7 @@ const lesson: Lesson = {
         { text: 'Skip AI, it\'s a fad', feedback: 'These tools save real hours on writing and planning. Used carefully, they\'re a big help.' },
       ] },
 
-    { chapter: 'Prompts that work', kind: 'learn', title: 'Give it a brief, not a word', text: 'The more context you give, the better the result. A good prompt has five parts.',
+    { chapter: 'Prompts that work', queen: "Tell the AI who your buyer is and how you talk. A good brief gets you a good draft the first time.", kind: 'learn', title: 'Give it a brief, not a word', text: 'The more context you give, the better the result. A good prompt has five parts.',
       table: { head: ['Part', 'Example'], rows: [
         ['Who you are', 'I run Dazzle Finds, a live boutique for women 35 to 65 who love church-to-brunch style'],
         ['The task', 'Write a 3-line caption for a live poster'],
@@ -88,7 +92,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Make it sound like you', text: "AI writing gets generic fast. The fix is to show it your voice. Paste three of your best captions and say \"write like this.\" Then edit what comes back out loud: if you wouldn't say it on live, change it.",
       points: ["Keep a short 'about me' paragraph: who you sell to, your tone, words you love and words you never use", "Paste 2 or 3 real captions as examples", "Ask for 3 options, not 1, then mix the best lines", "Read it out loud before you post", "Cut anything that sounds like an ad for a bank"],
       example: "About me: I'm LaVerne's kind of seller. Warm, a little funny, church-to-brunch style. I say 'baby' and 'y'all.' I never say 'elevate your wardrobe.'" },
-    { kind: 'scenario', title: 'The made-up fact', situation: "You ask an AI to write a post about why real leather lasts. It says a famous designer 'confirmed it in 2019.' You can't find that quote anywhere.",
+    { queen: "Always double-check numbers, laws and dates the AI gives you. It can sound sure and still be wrong.", kind: 'scenario', title: 'The made-up fact', situation: "You ask an AI to write a post about why real leather lasts. It says a famous designer 'confirmed it in 2019.' You can't find that quote anywhere.",
       options: [
         { text: "Post it, the AI must know", feedback: "AI tools can state things that sound real but aren't. A fake quote can embarrass you or worse." },
         { text: "Cut the quote, keep what you can check, and ask the AI for its source next time", best: true, feedback: "Right. Treat AI like a fast helper who sometimes guesses. You're the editor, and facts get checked." },

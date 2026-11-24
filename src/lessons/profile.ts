@@ -11,6 +11,10 @@ const lesson: Lesson = {
     'Get back into your account on your own if you forget your password',
   ],
   route: { to: '/profile', label: 'Open my profile' },
+  queen: {
+    welcome: "Your profile is your handshake with the other sellers on our Page. I want you to look professional, feel proud, and stay safe. This lesson shows you how to do all three.",
+    signoff: "Keep your bio fresh, keep your phone number private, and keep your password to yourself. Now go introduce yourself with confidence.",
+  },
   covers: ['src/pages/Profile.tsx', 'src/components/ProfileForm.tsx', 'src/pages/FinishSignup.tsx', 'src/pages/Login.tsx', 'src/pages/NewPassword.tsx', 'src/lib/recovery.ts', 'src/components/PhoneForReset.tsx', 'src/lib/profile.ts', 'src/lib/legal.ts'],
   updated: '2026-11-24',
   slides: [
@@ -33,7 +37,7 @@ const lesson: Lesson = {
     { chapter: 'A profile that sells', kind: 'learn', title: 'Your name on the calendar', text: 'Your calendar name is always shown so everyone knows whose hour it is. Make it the same name buyers see on Facebook, so they recognize you instantly.',
       points: ['Use your shop name, or "First name · Shop name"', 'Keep it short enough to read on a phone', 'Skip symbols and emoji that are hard to read'],
       example: '"Bee Boutique" or "Tasha · Bee Boutique" is easy to spot. "✨💎𝓑𝓮𝓮💎✨" is hard to read and hard to search.' },
-    { kind: 'learn', title: 'The bio formula', text: 'Other sellers, and the Page team, read your bio to learn who you are. Four short parts do the job.',
+    { queen: "Say who you serve before you say what you sell. 'Bargains for busy mamas' sticks better than 'clothes and shoes.'", kind: 'learn', title: 'The bio formula', text: 'Other sellers, and the Page team, read your bio to learn who you are. Four short parts do the job.',
       points: ['Who you are: "Mom of three from Memphis"', 'What you sell: "Statement jewelry and church-ready bags"', 'Your promise: "Most pieces under $20, shipped in 3 days"', 'When you\'re live: "Thursdays at 7 PM ET"'] },
     { kind: 'script', title: 'Bio templates', text: 'Pick the one that sounds most like you and fill in the brackets.',
       lines: [
@@ -55,7 +59,7 @@ const lesson: Lesson = {
       screen: { title: 'My profile', rows: ['Name on the live calendar', 'Email  ·  Hidden', 'Phone  ·  Hidden'], buttons: ['Shown', 'Hidden', 'Save profile'], highlight: 'Hidden' } },
     { kind: 'tap', title: 'Hide your phone number', prompt: 'You want other sellers to see your bio, but not your phone. On the Phone line, tap…', screen: { title: 'My profile', rows: ['Bio  ·  Shown', 'Phone  ·  Shown'], buttons: ['Shown', 'Hidden', 'Remove photo'] }, answer: 'Hidden', hint: 'Each detail has its own Shown / Hidden switch.' },
     { kind: 'learn', title: 'Your business stays yours', text: 'Inventory, prices, costs, customers and orders are never shown to other sellers, only to you and the staff you add to your shop.' },
-    { kind: 'learn', title: 'Keep your home safe', text: 'Selling online means a lot of strangers see your name and face. A few habits protect you and your family.',
+    { queen: "Never give out your home address for pickups. A public meeting spot or shipping keeps you and your family safe.", kind: 'learn', title: 'Keep your home safe', text: 'Selling online means a lot of strangers see your name and face. A few habits protect you and your family.',
       points: [
         'Don\'t show your house number, street sign or car plate on camera',
         'Use a business return address: a P.O. box or a mailbox at a shipping store',

@@ -11,9 +11,13 @@ const lesson: Lesson = {
     'Close out each live and keep your streak going',
   ],
   route: { to: '/calendar', label: 'Open the calendar' },
-  covers: ['src/pages/Calendar.tsx', 'src/components/LiveForm.tsx', 'src/pages/LiveDetail.tsx'], updated: '2026-11-23',
+  queen: {
+    welcome: "Consistency is the quiet secret of the sellers who last. When your buyers know when you'll be live, they plan their evening around you. Let's set a schedule you can keep.",
+    signoff: "Pick your nights, repeat them, and tell people when you're taking a week off. A schedule you keep builds trust faster than anything you say.",
+  },
+  covers: ['src/pages/Calendar.tsx', 'src/components/LiveForm.tsx', 'src/pages/LiveDetail.tsx'], updated: '2026-11-24',
   slides: [
-    { chapter: 'Pick your times', kind: 'learn', title: 'Same time, every week', nova: 'Consistency is a superpower. Let\'s set your show times.',
+    { chapter: 'Pick your times', queen: "Choose a schedule you can keep on your hardest week, not your best one.", kind: 'learn', title: 'Same time, every week', nova: 'Consistency is a superpower. Let\'s set your show times.',
       text: 'TV shows have time slots for a reason: people build their week around them. When buyers know "Tuesday 7, she\'s on," they stop needing a reminder. That habit is worth more than any single post.' },
     { kind: 'learn', title: 'When is your buyer free?', text: 'Picture your dream buyer\'s day. When is she home, fed, and scrolling?',
       table: { head: ['Time', 'Who\'s usually free'], rows: [
@@ -54,7 +58,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'reflect', title: 'Your schedule', prompt: 'Which days and times will you go live every week, and what themes will you use this month?', placeholder: 'I go live…', example: 'Tuesday and Thursday at 7 PM ET, 1 hour. Payday Bonanza on the 1st, $2 Tuesday every other week, clearance the last Thursday.' },
 
-    { kind: 'scenario', title: 'Taking a week off', situation: 'You\'re going to a family reunion and will miss next Tuesday\'s live.',
+    { queen: "Announce your breaks ahead of time. Buyers forgive a planned week off. They worry about a surprise one.", kind: 'scenario', title: 'Taking a week off', situation: 'You\'re going to a family reunion and will miss next Tuesday\'s live.',
       options: [
         { text: 'Just skip it, nobody will notice', feedback: 'Your regulars will show up to an empty Page and wonder if you\'re okay, or if you quit.' },
         { text: 'Cancel that one live on the calendar, tell buyers on the live before and in a post, and give them the date you\'re back', best: true, feedback: 'Your habit stays intact because they know exactly when to come back.' },

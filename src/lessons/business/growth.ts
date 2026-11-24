@@ -16,7 +16,11 @@ const lesson: Lesson = {
     { org: 'HubSpot Academy', title: 'Facebook marketing training (free)', url: 'https://academy.hubspot.com/courses/facebook-marketing-training' },
     { org: 'Harvard Business School Working Knowledge', title: 'The right way to manage churn for maximum profit', url: 'https://www.library.hbs.edu/working-knowledge/the-right-way-to-manage-churn-for-maximum-profit' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "Growth isn't magic. It's four numbers you can move: viewers, buyers, order size and regulars. I'll show you how to pull each lever without burning yourself out.",
+    signoff: "Pick one lever this month and work it hard. Then pick the next. Steady growth beats sudden growth every time.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'The sales equation', kind: 'learn', title: 'Four numbers make your sales', nova: 'Growing isn\'t luck, boss. It\'s four numbers, and you can move every one of them.',
       text: 'Every live\'s sales come from the same simple math. If you know your four numbers, you know exactly where to push.',
@@ -32,7 +36,7 @@ const lesson: Lesson = {
 
     { chapter: 'More viewers', kind: 'learn', title: 'Fill the room before you go live', text: 'Most viewers decide to show up before the live starts. The SBA\'s marketing advice applies here: know your customer, reach her where she already is, and repeat your message.',
       points: ['Same days, same time, every week. Habit is your best marketing.', 'Post a poster 2 days before and again 2 hours before', 'Post one Reel or short video of your best piece the day before', 'Ask regulars to tap "Share" in the first 5 minutes; tell them why it matters', 'Go live on time. Late starts train people to show up late, or not at all.'] },
-    { kind: 'learn', title: 'Borrow audiences', text: 'The fastest way to grow is to get in front of people who already trust someone else.',
+    { queen: "Co-host with a seller whose buyers would love you. Two communities in one room lifts everyone.", kind: 'learn', title: 'Borrow audiences', text: 'The fastest way to grow is to get in front of people who already trust someone else.',
       table: { head: ['Move', 'How it works', 'Effort'], rows: [
         ['Co-host swap', 'Two sellers with different products each guest on the other\'s live', 'Low'],
         ['Shared Page slots', 'Go live on the community Page with its built-in followers', 'Low'],
@@ -68,7 +72,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'number', title: 'Add-on math', q: 'You have 30 buyers in a live. If 1 in 3 adds a $6 add-on piece, how much extra do you make?', prefix: '$', answer: 60, hint: '30 ÷ 3 = 10 buyers × $6.', why: '10 × $6 = $60 a live. At two lives a week, that\'s over $6,000 a year from little $6 pieces.' },
 
-    { chapter: 'Keep them coming back', kind: 'learn', title: 'Regulars are your engine', text: 'Research summarized by Harvard Business School shows keeping customers usually costs less than finding new ones, and loyal buyers often spend more over time. In live selling, regulars also comment, share and bring friends.',
+    { chapter: 'Keep them coming back', queen: "Greet your regulars by name on every live. People come back to where they're seen.", kind: 'learn', title: 'Regulars are your engine', text: 'Research summarized by Harvard Business School shows keeping customers usually costs less than finding new ones, and loyal buyers often spend more over time. In live selling, regulars also comment, share and bring friends.',
       points: ['Say regulars\' names and remember what they love', 'Send a thank-you after a first order', 'Keep a VIP list in Customers and give them early looks', 'Fix problems fast and warmly (see Customer care courses)'] },
     { kind: 'learn', title: 'Use the comment bot to catch every sale', text: 'In a fast live, missed claims are lost sales and upset buyers. The comment bot reads claims like "SOLD 4821" as they come in, so you can keep selling instead of scrolling.',
       points: ['Open your live, tap Comment bot, and connect before you go live', 'Say the claim format often so the bot (and buyers) get it right', 'Glance at the bot\'s list between pieces to confirm sold-outs', 'After the live, turn the claims into orders in one step'],

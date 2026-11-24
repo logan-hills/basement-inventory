@@ -16,6 +16,10 @@ const lesson: Lesson = {
     { org: 'SCORE', title: 'How to craft a strategic plan for your small business', url: 'https://www.score.org/resource/blog-post/how-craft-a-strategic-plan-your-small-business' },
     { org: 'U.S. Small Business Administration', title: 'Write your business plan', url: 'https://www.sba.gov/business-guide/plan-your-business/write-your-business-plan' },
   ],
+  queen: {
+    welcome: "When you book time with me, I want you to walk away with a real plan. This lesson shows you how to come prepared so we can use every minute on what matters most to your business.",
+    signoff: "Bring your snapshot, bring your three sharpest questions, and bring your open mind. I'll bring the rest. I can't wait to work with you.",
+  },
   covers: ['src/pages/Consult.tsx', 'src/lessons/classes.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'What a consult is', kind: 'learn', title: 'Your business, her expertise, one hour', nova: 'Boss, this is the closest thing to having a CEO in your corner. Let\'s make every minute count.',
@@ -29,7 +33,7 @@ const lesson: Lesson = {
       ] } },
     { kind: 'quiz', q: 'Which topics can you bring to a consult with the Queen?', options: ['Only strategic planning', 'Any business topic: money, buying, marketing, lives, operations and more', 'Only problems with the app'], answer: 1, why: 'It\'s business consulting on whatever you need. App questions are best for the free live classes and 1:1 coaching.' },
 
-    { chapter: 'How pricing works', kind: 'learn', title: 'Use the full hour. It\'s worth it!', text: 'Sessions are $100 an hour. Your first full hour is 50% off, so it\'s $50. Time after that is prorated by the minute at $100 an hour. A session shorter than one hour doesn\'t get the discount: it\'s prorated at $100 an hour, so 30 minutes costs $50, the same as a full first hour.',
+    { chapter: 'How pricing works', queen: "The first full hour is the best value I offer, and it's the time we need to really dig in.", kind: 'learn', title: 'Use the full hour. It\'s worth it!', text: 'Sessions are $100 an hour. Your first full hour is 50% off, so it\'s $50. Time after that is prorated by the minute at $100 an hour. A session shorter than one hour doesn\'t get the discount: it\'s prorated at $100 an hour, so 30 minutes costs $50, the same as a full first hour.',
       table: { head: ['Session length', 'What you pay'], rows: [
         ['30 minutes', '$50 (no discount on partial hours)'],
         ['1 hour', '$50 (first hour 50% off)'],
@@ -64,7 +68,7 @@ const lesson: Lesson = {
         ['Your biggest challenge', 'I sell out of jewelry but not bags'],
       ] },
       tip: 'Pull your numbers from Reports the day before. Real numbers get real answers.' },
-    { kind: 'learn', title: 'Sharp questions get sharp answers', text: '"How do I make more money?" is hard to answer in an hour. A sharp question names the goal, the number and the thing you already tried.',
+    { queen: "Send me your questions ahead of time. The more I know before we meet, the more we get done together.", kind: 'learn', title: 'Sharp questions get sharp answers', text: '"How do I make more money?" is hard to answer in an hour. A sharp question names the goal, the number and the thing you already tried.',
       table: { head: ['Vague', 'Sharp'], rows: [
         ['How do I sell more?', 'My buy rate is 12%. What two changes would push it to 18%?'],
         ['Should I raise prices?', 'My average bag costs me $9. I sell at $25. Am I leaving money on the table?'],

@@ -14,7 +14,11 @@ const lesson: Lesson = {
     { org: 'TikTok Shop', title: 'Introducing TikTok Shop', url: 'https://business.tiktokshop.com/us/blog/detail/10020329' },
     { org: 'Federal Trade Commission', title: 'Disclosures 101 for social media influencers', url: 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers' },
   ],
-  covers: [], updated: '2026-11-23',
+  queen: {
+    welcome: "TikTok Shop puts your pieces in front of people who've never heard of you. It has its own rules and its own pace. Let's make sure you profit from it.",
+    signoff: "Price for the fees, ship fast, and keep your stock in sync with your lives. Treat it like a second store, because it is.",
+  },
+  covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Is it right for you?', kind: 'learn', title: 'A different kind of buyer', nova: "TikTok Shop is a whole new door. Let's walk through it together.",
       text: "Facebook Live is a room full of people who already know you. TikTok Shop is a busy mall full of strangers. That's a big opportunity, but it plays by different rules.",
@@ -33,7 +37,7 @@ const lesson: Lesson = {
       points: ['No counterfeits, and never "inspired" or "dupe" listings of designer brands', 'Some categories need approval before you can list', 'Photos and descriptions must match exactly what ships', 'Keep your return address and policies up to date'] },
     { kind: 'quiz', q: 'Can you list a bag described as "designer inspired"?', options: ['Yes, if it\'s cheap', 'No, it breaks the rules and risks your shop', 'Only on weekends'], answer: 1, why: 'Brand copies get listings pulled and shops penalized.' },
 
-    { chapter: 'Price it to profit', kind: 'learn', title: 'Work out your real take-home', text: "On TikTok Shop, a fee comes out of each sale, and you usually cover shipping or part of it. A price that works on your live can lose money here. Always do the math first. Here's a worked example using a made-up 8% fee. Check Seller Center for your real rate.",
+    { chapter: 'Price it to profit', queen: "Run the fee math on every price before you list. A piece that works on Facebook can lose money on TikTok.", kind: 'learn', title: 'Work out your real take-home', text: "On TikTok Shop, a fee comes out of each sale, and you usually cover shipping or part of it. A price that works on your live can lose money here. Always do the math first. Here's a worked example using a made-up 8% fee. Check Seller Center for your real rate.",
       table: { head: ['', 'Amount'], rows: [
         ['Price', '$24.00'],
         ['Fee (example 8%)', '− $1.92'],
@@ -70,7 +74,7 @@ const lesson: Lesson = {
       ] },
     { kind: 'quiz', q: 'An affiliate is…', options: ['A creator who promotes your products for a commission', 'A TikTok employee', 'A shipping company'], answer: 0, why: 'Affiliates bring their audience to your products and only get paid when something sells.' },
 
-    { chapter: 'Ship it right', kind: 'learn', title: 'Speed protects your shop', text: "TikTok tracks how fast you ship and how many orders arrive late or get canceled. Miss too often and your shop can be limited, or your products shown less. Know your ship-by deadline in Seller Center and beat it.",
+    { chapter: 'Ship it right', queen: "Ship TikTok orders first thing the next morning. Their shipping clock is strict.", kind: 'learn', title: 'Speed protects your shop', text: "TikTok tracks how fast you ship and how many orders arrive late or get canceled. Miss too often and your shop can be limited, or your products shown less. Know your ship-by deadline in Seller Center and beat it.",
       tip: 'Keep TikTok stock in step with this app, so a piece that sold on your Facebook live doesn\'t sell again on TikTok.' },
     { kind: 'scenario', title: 'Oops, it sold twice', situation: "Your last pearl set sold on Tuesday's Facebook live. Wednesday morning, a TikTok Shop order comes in for the same set.",
       options: [

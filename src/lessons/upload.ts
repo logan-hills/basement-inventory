@@ -11,7 +11,11 @@ const lesson: Lesson = {
     'Keep customer details clean so shipping just works',
   ],
   route: { to: '/orders/upload', label: 'Upload live sales' },
-  covers: ['src/pages/OrdersUpload.tsx', 'src/pages/Orders.tsx', 'src/lib/customers.ts'], updated: '2026-11-23',
+  queen: {
+    welcome: "The live is over, the excitement is high, and now the real business begins: turning claims into orders. Let's make this part smooth and accurate.",
+    signoff: "Export at the right time, check the names and addresses, and create your orders the same night. A clean upload makes every step after it easy.",
+  },
+  covers: ['src/pages/OrdersUpload.tsx', 'src/pages/Orders.tsx', 'src/lib/customers.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'Three ways in', kind: 'learn', title: 'Three ways in', nova: 'The live is over, the money is waiting. Let\'s turn claims into boxes.',
       text: 'Pick the one that matches how you sell.',
@@ -27,7 +31,7 @@ const lesson: Lesson = {
     { kind: 'quiz', q: 'Your Loyal Shops file shows Brenda as "2nd" on #123. What happens to that row?', options: ['It is left out, only the 1st (winner) gets packed', 'She gets a second box'], answer: 0, why: '2nd and 3rd+ are backups. If the winner passes, Loyal Shops moves the claim to them. Tick Also pack the backup claims only if you really sold extra.' },
     { kind: 'learn', title: 'New and missing customers', text: 'Before you create orders, each card shows New customer for buyers who aren\'t in Customers yet, and a red Missing tag when there is no address or email. Addresses, emails and phones in the file fill in their profile for you. After you create orders, tap Fill them in to finish anyone who is missing details.',
       screen: { title: 'Upload live sales', rows: ['Renee Walker · Ohio', 'New customer · Missing address, city, ZIP'], buttons: ['Create 3 orders'] } },
-    { kind: 'learn', title: 'When to export', text: 'Export after your payment deadline, not the second the live ends. That way the file shows who actually kept their pieces, and claims that moved to the next in line are already sorted out.',
+    { queen: "Wait until claims and payments are settled before you export. Exporting too early means fixing things twice.", kind: 'learn', title: 'When to export', text: 'Export after your payment deadline, not the second the live ends. That way the file shows who actually kept their pieces, and claims that moved to the next in line are already sorted out.',
       example: 'Tuesday live ends at 8 PM. Payment is due Wednesday 8 PM. At 8:15 Wednesday you export, upload, and print box labels. Packing starts Thursday morning with only paid orders.' },
 
     { chapter: 'The sales template', kind: 'learn', title: 'The sales template', text: 'On Upload live sales, tap Download the sales template. Fill in one row per piece sold, save as CSV and upload. Tap See a filled-in example to see one done right.',
@@ -56,7 +60,7 @@ const lesson: Lesson = {
     { chapter: 'Check and create', kind: 'learn', title: 'Check and create', text: 'Check the Column matches and the preview. If a column landed in the wrong place, use the dropdowns under Column matches to point it right. Red Live #s aren\'t in your inventory yet. When it looks right, tap Create orders (it says how many, like Create 14 orders) and every customer gets one order with its own ID, like DD-7K3P9Q.' },
     { kind: 'quiz', q: 'A Live # shows in red in the preview. What does that mean?', options: ['It isn\'t in your inventory', 'It already shipped', 'The price is wrong'], answer: 0, why: 'The line still imports, flagged so you can check it. Usually it\'s a typo in the Live # or a piece you never received in the app.' },
     { kind: 'quiz', q: 'Column matches put "Facebook name" under Customer name by mistake. What do you do?', options: ['Start over in a new spreadsheet', 'Use the dropdown under Column matches to point each field to the right column', 'Create orders and fix them later'], answer: 1, why: 'The dropdowns let you fix any column in seconds, right there in the preview.' },
-    { kind: 'learn', title: 'Clean addresses, happy labels', text: 'Bad addresses are the number one cause of returned packages. Catch them here, before you ever buy a label.',
+    { queen: "Fix a bad address before you buy the label. A returned package costs you twice.", kind: 'learn', title: 'Clean addresses, happy labels', text: 'Bad addresses are the number one cause of returned packages. Catch them here, before you ever buy a label.',
       points: ['Apartment or unit numbers go in Address 2', 'Use the 5-digit ZIP code', 'Two-letter state codes (GA, MI, TX) are safest', 'No address in file? Add it in Customers before you ship', 'If an address looks odd, message the buyer now, not after it bounces'] },
     { kind: 'quiz', q: 'Keisha lives at 410 Peach St, Apt 3B. Where does "Apt 3B" go?', options: ['At the end of Address', 'In Address 2', 'In Notes'], answer: 1, why: 'Address 2 is made for apartment and unit numbers, and label software reads it the right way.' },
     { kind: 'script', title: 'Missing address message', text: 'Send this the moment you see an order with no address. Most buyers answer within the hour.',

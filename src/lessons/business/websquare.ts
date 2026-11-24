@@ -17,6 +17,10 @@ const lesson: Lesson = {
     { org: 'All About Cookies', title: 'Square Online review 2026', url: 'https://allaboutcookies.org/square-online-review' },
     { org: 'Website Builder Expert', title: 'Square Online store pricing', url: 'https://www.websitebuilderexpert.com/ecommerce-website-builders/square-online-store-pricing/' },
   ],
+  queen: {
+    welcome: "If you already take payments with Square, Square Online can keep everything in one place. Let's walk through it step by step, including the settings that trip people up.",
+    signoff: "Test every order before you tell anyone, keep your stock in sync, and give it 30 days of attention after launch. You've got a real online store now.",
+  },
   covers: [], updated: '2026-11-24',
   slides: [
     { chapter: 'Why Square', kind: 'learn', title: 'One home for every sale', nova: 'If you already swipe cards with Square at pop-ups, this is the easy button, boss.',
@@ -53,7 +57,7 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Step 5: sales tax and policies', text: 'Turn on sales tax for the states where you must collect it, and write the pages that build trust. Your "Make it official" courses explain sales tax in depth.',
       points: ['Set tax rates in Square\'s settings for your state', 'Shipping and returns: how fast you ship, and what you accept back', 'Privacy statement: what you collect and why', 'Contact: an email buyers can reach you at'] },
 
-    { chapter: 'Keep it in step', kind: 'learn', title: 'Online, live and in person, without overselling', text: 'The risk with selling in three places is selling one bag twice. A few habits keep you safe.',
+    { chapter: 'Keep it in step', queen: "Update your website stock right after every live. The double sale only happens when stock waits.", kind: 'learn', title: 'Online, live and in person, without overselling', text: 'The risk with selling in three places is selling one bag twice. A few habits keep you safe.',
       table: { head: ['Situation', 'What to do'], rows: [
         ['A piece sells on your Facebook live', 'Mark it sold or set stock to 0 on your site that night'],
         ['A piece sells at a pop-up with your Square reader', 'Square takes it out of stock online automatically'],
@@ -91,7 +95,7 @@ const lesson: Lesson = {
         ['Week 2', 'Email or text your VIPs a thank-you code for their first web order'],
         ['Week 4', 'Look at what sold online and what didn\'t, and update photos on the slow ones'],
       ] } },
-    { chapter: 'Launch', kind: 'learn', title: 'Test before you tell anyone', text: 'Place a real order yourself with your own card, then refund it. Watch every step the way a buyer would.',
+    { chapter: 'Launch', queen: "Buy something from your own store before you announce it. You'll find the mistakes before your buyers do.", kind: 'learn', title: 'Test before you tell anyone', text: 'Place a real order yourself with your own card, then refund it. Watch every step the way a buyer would.',
       points: ['Did the photos load fast on your phone?', 'Was shipping the price you expected?', 'Did tax show up correctly?', 'Did the order confirmation email look right?', 'Did the order show in your Square dashboard?'] },
     { kind: 'order', title: 'Square launch, in order', prompt: 'Put these Square Online steps in order.', steps: ['Create or sign in to your Square account', 'Start a site under Online, Website', 'Pick a theme and add your brand', 'Add items in the Item Library', 'Set shipping, pickup and sales tax', 'Place a test order and refund it', 'Publish and share the link'] },
     { kind: 'checklist', title: 'Square Online launch list', prompt: 'Tick these off as you go.', items: ['Account verified and payments working', 'Theme, logo and colors set', 'First 20 to 30 pieces added with real photos', 'Shipping, pickup and sales tax set', 'Shipping and returns, privacy and contact pages written', 'Test order placed and refunded', 'Link added to my Facebook Page and bio', 'Decide when to move from Free to Plus'] },
