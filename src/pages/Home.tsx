@@ -8,17 +8,42 @@ import Icon from '../components/Icon'
 import { CountUp } from '../components/Charts'
 import { progress, savePlan, stepKey, steps, type Plan } from '../lib/planner'
 import { tap } from '../lib/feedback'
-import { NovaSays, burst, type NovaMood } from '../components/Nova'
+import { NovaSays, burst } from '../components/Nova'
 import { hasAcademy } from '../lib/plan'
+import Sheet from '../components/Sheet'
+import { DAILY_TIPS, tipIndexFor, type DailyTip } from '../lessons/tips'
+import { lessonById } from '../lessons'
 
-const HOME_TIPS: [NovaMood, string][] = [
-  ['wink', 'Post your poster two days before the live, then again an hour before. Two touches, more faces.'],
-  ['happy', 'Say your rules at the start AND end of every live: invoicing, when payment is due, and how to pay.'],
-  ['wow', 'A handwritten thank-you in the box costs pennies and brings her back next week.'],
-  ['think', 'Running behind on shipping? Message buyers before they ask. Speaking up early keeps them loyal.'],
-  ['cheer', 'Shout out your top buyers by name on live. People love to be seen.'],
-  ['happy', 'Film one Reel today: hook, close-up, styled on you, then your live day and time.'],
-]
+/** Nova's 5-minute tip in a pop-up: tiny steps to tick off, and the course that goes deeper. */
+function FiveMinuteTip({ tip, open, onClose, showCourse }: { tip: DailyTip; open: boolean; onClose: () => void; showCourse: boolean }) {
+  const key = `tip5:${new Date().toISOString().slice(0, 10)}:${tip.title}`
+  const [done, setDone] = useState<number[]>(() => { try { return JSON.parse(localStorage.getItem(key) ?? '[]') } catch { return [] } })
+  const course = lessonById(tip.course)
+  const toggle = (n: number) => {
+    tap()
+    const next = done.includes(n) ? done.filter(x => x !== n) : [...done, n]
+    setDone(next)
+    try { localStorage.setItem(key, JSON.stringify(next)) } catch { /* ignore */ }
+    if (next.length === tip.steps.length) burst()
+  }
+  return (
+    <Sheet open={open} onClose={onClose} title="Nova's 5-minute tip">
+      <div className="stack tip5">
+        <span className="eyebrow"><Icon name="clock" size={14} /> About 5 minutes</span>
+        <h3 className="tip5-title">{tip.title}</h3>
+        <ul className="action-list">
+          {tip.steps.map((st, n) => (
+            <li key={st}><button type="button" className={`action-item${done.includes(n) ? ' on' : ''}`} aria-pressed={done.includes(n)} onClick={() => toggle(n)}>
+              <span className="action-box">{done.includes(n) ? '✓' : ''}</span>{st}</button></li>
+          ))}
+        </ul>
+        {done.length === tip.steps.length && <p className="lesson-good">Done! Five minutes well spent. Your shop is better than it was this morning.</p>}
+        {showCourse && course && <Link to={`/lessons/${course.id}`} className="btn ghost self-start" onClick={onClose}><Icon name="lessons" size={16} />Go deeper: {course.title}</Link>}
+      </div>
+    </Sheet>
+  )
+}
+
 
 /** Next Tuesday 7 PM Eastern, the shop's regular "$2 Tuesday" live. */
 function nextTuesday() {
@@ -111,7 +136,8 @@ export default function Home() {
     }).catch(() => setNext(null))
   }, [settings.oldStockDays])
 
-  const [tip, setTip] = useState(() => new Date().getDate() % HOME_TIPS.length)
+  const [tip, setTip] = useState(() => tipIndexFor())
+  const [tipOpen, setTipOpen] = useState(false)
   useEffect(() => {
     if (!s || s.month < settings.monthlyGoal) return
     const k = `goalBurst:${new Date().toISOString().slice(0, 7)}`
@@ -138,13 +164,17 @@ export default function Home() {
         <Link to="/intake" className="btn gold"><Icon name="plus" size={18} />Add stock</Link>
       </div>
 
-      {/* Nova greets you at the top with today's tip. Tap her for another one. */}
-      <section className="nova-strip home-nova" aria-label="A tip from Nova">
-        <NovaSays mood={HOME_TIPS[tip][0]} key={tip} size={96} onNovaClick={() => setTip(t => (t + 1) % HOME_TIPS.length)}>
-          {HOME_TIPS[tip][1]}
+      {/* Nova greets you at the top with today's 5-minute tip. Tap her for another one, or open it to do it now. */}
+      <section className="nova-strip home-nova" aria-label="Nova's 5-minute tip">
+        <NovaSays mood={DAILY_TIPS[tip].mood} key={tip} size={96} onNovaClick={() => setTip(t => (t + 1) % DAILY_TIPS.length)}>
+          {DAILY_TIPS[tip].line}
         </NovaSays>
-        {hasAcademy(shop?.plan) && !isTeam && <Link to="/lessons" className="btn ghost small nova-strip-link"><Icon name="lessons" size={16} />Dazzle University</Link>}
+        <div className="nova-strip-actions">
+          <button type="button" className="btn gold small" onClick={() => { tap(); setTipOpen(true) }}><Icon name="clock" size={16} />Do it in 5 minutes</button>
+          {hasAcademy(shop?.plan) && !isTeam && <Link to="/lessons" className="btn ghost small nova-strip-link"><Icon name="lessons" size={16} />Dazzle University</Link>}
+        </div>
       </section>
+      <FiveMinuteTip key={tip} tip={DAILY_TIPS[tip]} open={tipOpen} onClose={() => setTipOpen(false)} showCourse={hasAcademy(shop?.plan) && !isTeam} />
 
       <div className="top-grid">
         {next ? (

@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { certCaption, shareCertificate, type ShareResult } from '../lib/shareCert'
 import { createPortal } from 'react-dom'
 import Icon from './Icon'
 import { seed, serial, type AwardStatus } from '../lessons/awards'
@@ -175,10 +176,30 @@ export function CertificateWindow({ a, shopName, shopId, onClose }: { a: AwardSt
     document.body.classList.add('cert-open')
     return () => { document.removeEventListener('keydown', k); document.body.classList.remove('cert-open') }
   }, [onClose])
+  const certRef = useRef<HTMLDivElement>(null)
+  const [busy, setBusy] = useState(false)
+  const [result, setResult] = useState<ShareResult | null>(null)
+  async function share() {
+    const el = certRef.current?.querySelector<HTMLElement>('.cert')
+    if (!el || busy) return
+    setBusy(true); setResult(null)
+    try { setResult(await shareCertificate(el, a.title)) } finally { setBusy(false) }
+  }
   return createPortal(
     <div className="cert-window" role="dialog" aria-modal="true" aria-label={`${a.title} certificate`} onClick={onClose}>
       <div className="cert-window-inner" onClick={e => e.stopPropagation()}>
-        <Certificate a={a} shopName={shopName} shopId={shopId} />
+        <div ref={certRef} className="cert-holder"><Certificate a={a} shopName={shopName} shopId={shopId} /></div>
+        {a.earned && (
+          <div className="cert-share no-print">
+            <button type="button" className="btn cert-fb" onClick={share} disabled={busy}>
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z" /></svg>
+              {busy ? 'Getting it ready…' : 'Share on Facebook'}
+            </button>
+            {result === 'shared' && <p className="cert-share-note">Shared! Look at you, showing the world what you've learned.</p>}
+            {result === 'downloaded' && <p className="cert-share-note">Your certificate picture is saved and the caption is copied. Facebook opened in a new tab: start a post, add the picture, and paste. <span className="cert-caption">{certCaption(a.title)}</span></p>}
+            {result === 'failed' && <p className="cert-share-note">That didn't work this time. Try Print or save as PDF, then share the file.</p>}
+          </div>
+        )}
         <div className="cert-window-actions">
           <button type="button" className="btn uni-cta" onClick={() => window.print()}><Icon name="print" size={20} /> Print or save as PDF</button>
           <button type="button" className="btn uni-ghost-dark" onClick={onClose}>Close</button>

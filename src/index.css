@@ -2545,7 +2545,14 @@ button.uni-step:hover, button.uni-step:focus-visible { transform: translateY(-2p
 /* The secondary window */
 .cert-window { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 16px; overflow-y: auto; background: rgba(20, 8, 14, .72); backdrop-filter: blur(6px); animation: cert-fade .25s ease; }
 .cert-window-inner { width: min(760px, 100%); display: flex; flex-direction: column; gap: 16px; animation: cert-pop .35s cubic-bezier(.2, 1.3, .4, 1); }
-.cert-window-inner > .cert-tag, .cert-window-inner > .cert-medal { align-self: center; width: min(440px, 100%); }
+.cert-holder { display: flex; flex-direction: column; }
+.cert-holder > .cert-tag, .cert-holder > .cert-medal { align-self: center; width: min(440px, 100%); }
+.cert-share { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.btn.cert-fb { background: #1877F2; color: #fff; border-color: #1877F2; font-weight: 700; padding: 12px 22px; font-size: 1.05rem; display: inline-flex; gap: 10px; align-items: center; }
+.btn.cert-fb:hover { background: #0F66DB; color: #fff; }
+.cert-share-note { margin: 0; max-width: 520px; color: #FFF3CF; font-size: 1rem; line-height: 1.5; }
+.cert-caption { display: block; margin-top: 8px; padding: 10px 12px; border-radius: 12px; background: rgba(255, 255, 255, .1); font-style: italic; user-select: all; }
+@media print { body.cert-open .cert-share { display: none !important; } }
 .cert-window-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 .cert-window-actions .btn.uni-ghost-dark { align-self: auto; color: #fff; background: transparent; border-color: rgba(255, 255, 255, .55); }
 @keyframes cert-fade { from { opacity: 0; } }
@@ -2996,3 +3003,10 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .queen-sign small { font-family: Inter, system-ui, sans-serif; font-size: .78rem; letter-spacing: .6px; text-transform: uppercase; opacity: .8; }
 .lesson-finish .queen-note { max-width: 560px; margin: 4px auto; background: rgba(255, 211, 110, .08); }
 .uni-curated { margin-top: 8px; text-align: center; font-family: 'Pinyon Script', 'Brush Script MT', cursive; font-size: 1.35rem; color: #8A5A12; }
+.nova-strip-actions { flex: none; display: flex; flex-direction: column; gap: 8px; align-items: stretch; margin-bottom: 6px; }
+.nova-strip-actions .nova-strip-link { margin-bottom: 0; }
+@media (max-width: 640px) { .nova-strip-actions { flex-direction: row; flex-wrap: wrap; justify-content: flex-end; } }
+.tip5-title { margin: 0; font-family: Fraunces, Georgia, serif; font-size: 1.4rem; }
+
+/* 5-minute tip sheet: long button labels wrap instead of overflowing */
+.tip5 .btn { white-space: normal; text-align: left; height: auto; line-height: 1.3; }
