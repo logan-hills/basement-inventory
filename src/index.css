@@ -2725,3 +2725,41 @@ body { line-height: 1.5; }
 @media (prefers-reduced-motion: reduce) { .nova-point { animation: none; } }
 .ask-nova-steps { margin: 10px 0 0; padding-left: 22px; line-height: 1.5; }
 .ask-nova-steps li + li { margin-top: 4px; }
+
+/* Live class sign-up */
+button.uni-live-time, button.uni-class-time { font: inherit; text-align: center; cursor: pointer; border: 0; }
+button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, var(--t1) 25%, transparent); }
+.uni-myseats { flex: 1 1 100%; display: flex; flex-direction: column; gap: 6px; }
+.uni-myseat { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 10px 12px; border-radius: 12px; background: #fff; border: 1px dashed color-mix(in srgb, var(--t1) 45%, transparent); }
+.uni-myseat b { font-size: 1rem; color: #0B6B4B; }
+.uni-myseat span { display: flex; gap: 14px; }
+.uni-myseat button { border: 0; background: none; padding: 4px 0; font: inherit; font-weight: 700; font-size: .95rem; color: #A3005A; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.uni-whos { padding: 18px; border-radius: 20px; background: #fff; border: 1px solid var(--u-line); display: flex; flex-direction: column; gap: 10px; }
+.uni-whos h3 { margin: 0; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.4rem; display: flex; align-items: baseline; gap: 10px; }
+.uni-whos h3 small { font-family: Inter, sans-serif; font-size: .75rem; letter-spacing: 1px; text-transform: uppercase; color: var(--u-muted); }
+.uni-whos p { margin: 0; color: var(--u-muted); }
+.uni-whos-group { border: 1px solid var(--u-line); border-radius: 14px; padding: 10px 14px; }
+.uni-whos-group summary { cursor: pointer; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 1.02rem; }
+.uni-whos-group summary span { color: var(--u-muted); }
+.uni-whos-group ul { list-style: none; margin: 10px 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.uni-whos-group li { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.uni-whos-group li span { color: var(--u-muted); }
+.class-form fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.class-form legend { font-weight: 700; margin-bottom: 8px; }
+.class-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.class-chip { flex: 1 1 120px; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 8px 10px; border-radius: 14px; border: 1px solid var(--border-strong); background: transparent; color: var(--text); font: inherit; cursor: pointer; }
+.class-chip b { font-size: 1.05rem; }
+.class-chip small { font-size: .78rem; opacity: .8; }
+.class-chip.on { background: var(--gold); border-color: var(--gold); color: #2A1A0C; }
+.class-ticket { display: flex; flex-direction: column; gap: 4px; padding: 18px; border-radius: 18px; color: #fff; text-align: center; background: linear-gradient(135deg, var(--t1, #C4006C), var(--t2, #F2751B)); box-shadow: 0 12px 28px rgba(0, 0, 0, .35); }
+.class-ticket.tone-violet { --t1: #6A2BD8; --t2: #B07BFF; } .class-ticket.tone-fuchsia { --t1: #E3007D; --t2: #FF4FA3; }
+.class-ticket small { font-size: .78rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; opacity: .9; }
+.class-ticket b { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.6rem; }
+.class-ticket span { font-size: 1.15rem; font-weight: 700; }
+.class-cal { display: flex; gap: 8px; flex-wrap: wrap; }
+.class-cal > * { flex: 1 1 160px; }
+.class-prep { display: flex; flex-direction: column; gap: 6px; }
+.class-prep small { color: var(--muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: .75rem; }
+.class-prep a { color: var(--gold); font-weight: 600; }
+.uni .sheet-panel, .uni .sheet-panel h2, .uni .sheet-panel legend, .uni .sheet-panel label { color: var(--text); }
+.uni .sheet-panel h2 { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.5rem; line-height: 1.15; }

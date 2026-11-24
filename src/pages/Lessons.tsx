@@ -12,6 +12,9 @@ import AcademyLocked from '../components/AcademyLocked'
 import CourseBag from '../components/CourseBag'
 import LessonTag from '../components/LessonTag'
 import { CertificateWindow, Medal } from '../components/Certificate'
+import ClassSignup from '../components/ClassSignup'
+import { downloadIcs, prettyDate, useClassSignups, type Signup } from '../lib/classSignups'
+import type { LiveClass } from '../lessons/classes'
 import { awardStatus, type AwardStatus } from '../lessons/awards'
 import { CLASS_TZ, LIVE_CLASSES, ONE_ON_ONE, QUEEN_SESSION } from '../lessons/classes'
 import { CONTACT } from '../lib/legal'
@@ -62,9 +65,6 @@ const TABS: { id: Tab; label: string; icon: string }[] = [
 /** First courses we suggest, in order, until each is finished. */
 const STARTER_COURSES = ['strategy1', 'liveplan', 'official', 'retention', 'growth', 'finance']
 
-/** A "save my seat" email for a live class, with the class, day and time filled in. */
-const seatLink = (title: string, day: string, label: string, time: string) =>
-  `mailto:${CONTACT}?subject=${encodeURIComponent(`Save my seat: ${title}, ${day} ${label.toLowerCase()} (${time})`)}`
 const hit = (l: Lesson, s: string) => JSON.stringify(l).toLowerCase().includes(s)
 const top = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
@@ -79,6 +79,8 @@ export default function Lessons() {
   const [tip, setTip] = useState(0)
   const [st, setSt] = useState('Pennsylvania')
   const [cert, setCert] = useState<AwardStatus | null>(null)
+  const signups = useClassSignups()
+  const [seat, setSeat] = useState<{ c: LiveClass; label: 'Daytime' | 'Evening' } | null>(null)
   const [showAllCerts, setShowAllCerts] = useState(false)
   const awards = useMemo(() => awardStatus(progress), [progress])
   const s = q.trim().toLowerCase()
@@ -200,9 +202,10 @@ export default function Lessons() {
                         <span className="uni-live-what"><small>{c.day}</small><b>{c.title}</b></span>
                         <span className="uni-live-times">
                           {c.sessions.map(x => (
-                            <a key={x.label} className="uni-live-time" href={seatLink(c.title, c.day, x.label, x.time)}><small>{x.label}</small><b>{x.time}</b><span>Save my seat ›</span></a>
+                            <button key={x.label} type="button" className="uni-live-time" onClick={() => setSeat({ c, label: x.label })}><small>{x.label}</small><b>{x.time}</b><span>Save my seat ›</span></button>
                           ))}
                         </span>
+                        <MySeats c={c} signups={signups} />
                       </span>
                     ))}
                   </span>
@@ -288,7 +291,7 @@ export default function Lessons() {
         </section>
       ) : tab === 'classes' ? (
         <section className="stack wide-gap">
-          <LiveClasses isDone={isDone} />
+          <LiveClasses isDone={isDone} signups={signups} onSeat={(c, label) => setSeat({ c, label })} />
         </section>
       ) : tab === 'business' ? (
         <section className="stack wide-gap">
@@ -424,13 +427,61 @@ export default function Lessons() {
           </div>
         </section>
       )}
+      {seat && <ClassSignup c={seat.c} label={seat.label} signups={signups} onClose={() => setSeat(null)} />}
       {cert && <CertificateWindow a={cert} shopName={shop?.name ?? ''} shopId={shop?.id} onClose={() => setCert(null)} />}
     </div>
   )
 }
 
 /** Weekly live classes, 1:1 coaching and time with the Queen. */
-function LiveClasses({ isDone }: { isDone: (l: Lesson) => boolean }) {
+/** "You're in" rows for the seats I've saved in one class, with add-to-calendar and cancel. */
+function MySeats({ c, signups }: { c: LiveClass; signups: ReturnType<typeof useClassSignups> }) {
+  const mine = signups.mine.filter(m => m.class_id === c.id)
+  if (!mine.length) return null
+  return (
+    <span className="uni-myseats">
+      {mine.map((m: Signup) => (
+        <span key={m.id} className="uni-myseat">
+          <b>✓ You're in: {prettyDate(m.class_date)} · {c.sessions.find(x => x.label === m.session_label)?.time}</b>
+          <span>
+            <button type="button" onClick={() => downloadIcs(m)}>Add to calendar</button>
+            <button type="button" onClick={() => { if (window.confirm('Cancel this seat?')) signups.cancel(m) }}>Cancel</button>
+          </span>
+        </span>
+      ))}
+    </span>
+  )
+}
+
+/** For hosts: who has saved a seat, by class and date. */
+function WhosComing({ signups }: { signups: ReturnType<typeof useClassSignups> }) {
+  if (!signups.isHost) return null
+  const groups = new Map<string, Signup[]>()
+  for (const r of signups.all) {
+    const k = `${r.class_date}|${r.class_id}|${r.session_label}`
+    groups.set(k, [...(groups.get(k) ?? []), r])
+  }
+  return (
+    <div className="uni-whos">
+      <h3>Who's coming <small>Hosts only</small></h3>
+      {groups.size === 0 && <p>No seats saved yet.</p>}
+      {[...groups.entries()].map(([k, rows]) => {
+        const [date, id, label] = k.split('|')
+        const c = LIVE_CLASSES.find(x => x.id === id)
+        const emails = rows.map(r => r.email).filter(Boolean).join(', ')
+        return (
+          <details key={k} className="uni-whos-group">
+            <summary><b>{prettyDate(date)} · {c?.title ?? id}</b><span>{label} {c?.sessions.find(x => x.label === label)?.time} · {rows.length} seat{rows.length === 1 ? '' : 's'}</span></summary>
+            <ul>{rows.map(r => <li key={r.id}><b>{r.name}</b>{r.email && <span>{r.email}</span>}{r.phone && <span>{r.phone}</span>}</li>)}</ul>
+            {emails && <button type="button" className="btn uni-ghost-dark" onClick={() => navigator.clipboard?.writeText(emails)}>Copy all emails</button>}
+          </details>
+        )
+      })}
+    </div>
+  )
+}
+
+function LiveClasses({ isDone, signups, onSeat }: { isDone: (l: Lesson) => boolean; signups: ReturnType<typeof useClassSignups>; onSeat: (c: LiveClass, label: 'Daytime' | 'Evening') => void }) {
   return (
     <div className="uni-classes" id="u-classes">
       <div className="uni-classes-head">
@@ -446,11 +497,12 @@ function LiveClasses({ isDone }: { isDone: (l: Lesson) => boolean }) {
             <ul className="uni-class-covers">{c.covers.map(x => <li key={x}>{x}</li>)}</ul>
             <div className="uni-class-times">
               {c.sessions.map(s => (
-                <a key={s.label} className="uni-class-time" href={seatLink(c.title, c.day, s.label, s.time)}>
+                <button key={s.label} type="button" className="uni-class-time" onClick={() => onSeat(c, s.label)}>
                   <small>{s.label}</small><b>{s.time}</b><span>Save my seat ›</span>
-                </a>
+                </button>
               ))}
             </div>
+            <MySeats c={c} signups={signups} />
             <div className="uni-class-prep">
               <small>Take these first</small>
               {c.prep.map(id => lessonById(id)).filter((l): l is Lesson => !!l).map(l => <Link key={l.id} to={`/lessons/${l.id}`}>{l.title}{isDone(l) ? ' ✓' : ''}</Link>)}
@@ -467,6 +519,7 @@ function LiveClasses({ isDone }: { isDone: (l: Lesson) => boolean }) {
           </div>
         </article>
       </div>
+      <WhosComing signups={signups} />
       <article className="uni-queen">
         <div className="uni-queen-copy">
           <span className="uni-class-day">{QUEEN_SESSION.tagline}</span>

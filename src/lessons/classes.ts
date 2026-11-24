@@ -13,20 +13,26 @@ export type LiveClass = {
   prep: string[]
   sessions: ClassSession[]
   tone: string
+  /** Day of the week, 0 = Sunday. Used to list the next class dates. */
+  weekday: number
+  /** How long the class runs, for calendar invites. */
+  minutes: number
 }
 
 export const CLASS_TZ = 'Eastern Time'
+/** The time zone the class times are in, for calendar invites. */
+export const CLASS_TZ_ID = 'America/New_York'
 
 export const LIVE_CLASSES: LiveClass[] = [
   {
-    id: 'implementation', day: 'Mondays', title: 'Implementation meeting', tone: 'violet',
+    id: 'implementation', day: 'Mondays', weekday: 1, minutes: 60, title: 'Implementation meeting', tone: 'violet',
     what: 'Set your shop up with us, step by step, and leave ready to receive and tag your first pieces.',
     covers: ['Your settings, profile and team', 'Receiving and tagging', 'Printing 2×1 tags and bin labels', 'Shelves, bins and scanning'],
     prep: ['launch', 'tour', 'settings'],
     sessions: [{ label: 'Daytime', time: '12:00 PM' }, { label: 'Evening', time: '7:00 PM' }],
   },
   {
-    id: 'golive', day: 'Wednesdays', title: 'How to go Live', tone: 'fuchsia',
+    id: 'golive', day: 'Wednesdays', weekday: 3, minutes: 60, title: 'How to go Live', tone: 'fuchsia',
     what: 'Plan a live, book your slot on the shared calendar, and run the comment bot so no sale gets missed.',
     covers: ['Planning a live in the app', 'Booking the shared calendar', 'Comment bot setup and claims', 'Turning claims into orders'],
     prep: ['planner', 'calendar', 'liveprep', 'bot'],
