@@ -65,7 +65,7 @@ const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: 'help', label: 'Help desk', icon: 'settings' },
 ]
 /** First courses we suggest, in order, until each is finished. */
-const STARTER_COURSES = ['strategy1', 'liveplan', 'official', 'retention', 'growth', 'finance']
+const STARTER_COURSES = ['launchbiz', 'mindset', 'strategy1', 'liveplan', 'official', 'retention', 'growth', 'finance']
 
 const hit = (l: Lesson, s: string) => JSON.stringify(l).toLowerCase().includes(s)
 const top = () => window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -320,12 +320,12 @@ export default function Lessons() {
                 <h2 className="uni-h2">Grow your business</h2>
                 <p className="uni-sub">{COURSES.length} courses, 15 to 20 minutes each, with a workbook and a certificate. Built on Wharton, Harvard Business School, MIT Sloan, McKinsey, Georgia Tech, the SBA, the IRS and the FTC.</p>
               </div>
-              <button type="button" className="uni-feature tone-sky" onClick={() => go('business', { school: 'sky' })}>
+              <button type="button" className="uni-feature tone-rose" onClick={() => go('business', { school: 'rose' })}>
                 <span className="uni-feature-tag">✦ New school</span>
-                <b>Launching your website</b>
-                <span>Open a shop that sells between lives. Pick the right builder, then launch step by step with Square, Shopify, GoDaddy or AI.</span>
-                <span className="uni-feature-chips">{['Square', 'Shopify', 'GoDaddy', 'AI builders'].map(x => <i key={x}>{x}</i>)}</span>
-                <span className="uni-feature-go">{COURSES.filter(l => l.school === 'Launching your website').length} courses · Start here ›</span>
+                <b>Mindset and motivation</b>
+                <span>Grow the business by growing you. Keep your passion for the long haul, push through slow seasons, and take your seat at the table.</span>
+                <span className="uni-feature-chips">{['Growth mindset', 'Passion that lasts', 'Persistence', 'Women in business'].map(x => <i key={x}>{x}</i>)}</span>
+                <span className="uni-feature-go">{COURSES.filter(l => l.school === 'Mindset and motivation').length} courses · Start here ›</span>
               </button>
               {starters.length > 0 && (
                 <div className="uni-start-with">
