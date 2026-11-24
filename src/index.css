@@ -2768,3 +2768,22 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .class-prep a { color: var(--gold); font-weight: 600; }
 .uni .sheet-panel, .uni .sheet-panel h2, .uni .sheet-panel legend, .uni .sheet-panel label { color: var(--text); }
 .uni .sheet-panel h2 { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.5rem; line-height: 1.15; }
+
+/* ===== Class schedule editor (hosts) ===== */
+.sched-class { display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 18px; border: 1px solid var(--border-strong); border-left: 6px solid var(--t1, var(--gold)); }
+.sched-class.tone-violet { --t1: #B07BFF; } .sched-class.tone-fuchsia { --t1: #FF4FA3; }
+.sched-class h3 { margin: 0; font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.35rem; }
+.sched-class fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.sched-class legend { font-weight: 700; margin-bottom: 8px; }
+.sched-days .class-chip { flex: 1 1 56px; min-height: 52px; }
+.sched-times { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sched-times label { display: flex; flex-direction: column; gap: 6px; font-weight: 700; }
+.sched-times input { min-height: 52px; font-size: 1.15rem; }
+.class-chip.sched-date { flex: 1 1 110px; }
+.class-chip.sched-date.off { border-style: dashed; opacity: .75; text-decoration: line-through; text-decoration-thickness: 1px; }
+.class-chip.sched-date.off small { text-decoration: none; }
+.sched-ok { margin: 0; padding: 12px 14px; border-radius: 12px; background: rgba(46, 160, 90, .15); color: var(--text); font-weight: 700; }
+.uni-classes-head .uni-edit-times { margin-top: 12px; align-self: flex-start; }
+.uni-classes-head .uni-edit-times small { opacity: .75; margin-left: 6px; }
+.uni-live-more.uni-edit-times { font-weight: 800; }
+@media (max-width: 420px) { .sched-times { grid-template-columns: 1fr; } }

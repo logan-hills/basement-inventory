@@ -1,5 +1,6 @@
 /* Dazzle University Orientation: live classes taught by the Dynamic Dazzle team.
-   Edit the days, times and topics here; the University page reads them as they are.
+   These are the default days and times. The Queen changes them in the app (Edit class times,
+   saved by src/lib/classSchedule.ts); topics and prep lessons are edited here.
    Times are Eastern, to match the shared calendar. */
 
 export type ClassSession = { label: 'Daytime' | 'Evening'; time: string }
@@ -17,6 +18,8 @@ export type LiveClass = {
   weekday: number
   /** How long the class runs, for calendar invites. */
   minutes: number
+  /** Dates (YYYY-MM-DD) with no class, set by the Queen. */
+  skip?: string[]
 }
 
 export const CLASS_TZ = 'Eastern Time'
