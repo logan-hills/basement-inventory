@@ -14,8 +14,10 @@ export type Screen = { title: string; rows?: string[]; buttons: string[]; highli
 /** A small table for worked numbers (prices, profit, timing). */
 export type Table = { head: string[]; rows: string[][] }
 
-/** Fields any slide can carry: a chapter heading and Nova's own line for this slide. */
-type Common = { chapter?: string; nova?: string }
+/** Fields any slide can carry: a chapter heading, Nova's own line for this slide, and a tip in the Queen's own voice.
+    QUEEN RULE: the Queen (our CEO) curates every lesson. Give each lesson a `queen` note and at least two slides a `queen` tip:
+    practical, warm advice in her voice, the kind she'd tell her own sellers. Never invent facts about her life. */
+type Common = { chapter?: string; nova?: string; queen?: string }
 
 export type Slide = Common & (
   /** Teach: a title, body text, optional bullet points, a worked table, a real-life example and a tip. */
@@ -85,6 +87,8 @@ export type Lesson = {
   sources?: Source[]
   /** Source files this lesson teaches. Used by lessons:check. */
   covers: string[]
+  /** The Queen's personal note: `welcome` opens the lesson on its cover, `signoff` sends the seller off on the finish page. */
+  queen?: { welcome: string; signoff: string }
   /** Date the lesson was last brought up to date (YYYY-MM-DD). */
   updated: string
   slides: Slide[]
