@@ -1,12 +1,22 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Sheet from '../components/Sheet'
 import { useSession } from '../lib/session'
 import { QUEEN_SESSION as Q, consultPrice, consultDeposit } from '../lessons/classes'
 
 /* Schedule time with the Queen: a paid 1:1 business consult. Sellers learn how pricing works,
    prepare, and send a request that arrives as an email with everything the Queen needs. */
 
-const TOPICS = ['Strategy and planning', 'Money and pricing', 'Sourcing and vendors', 'Marketing and social media', 'Lives and sales', 'Operations and packing', 'Making it official and taxes', 'Something else']
+const TOPICS: { name: string; glyph: string; blurb: string }[] = [
+  { name: 'Strategy and planning', glyph: '♛', blurb: 'Goals, a plan for the year, what to do first' },
+  { name: 'Money and pricing', glyph: '$', blurb: 'Pricing, profit, and where the money goes' },
+  { name: 'Sourcing and vendors', glyph: '◆', blurb: 'Where to buy, how much, and from whom' },
+  { name: 'Marketing and social media', glyph: '✦', blurb: 'Posts, reels, AI helpers, getting seen' },
+  { name: 'Lives and sales', glyph: '●', blurb: 'Running lives that sell, themes, flow' },
+  { name: 'Operations and packing', glyph: '▣', blurb: 'Stock, shipping, packing, saving time' },
+  { name: 'Making it official and taxes', glyph: '§', blurb: 'LLC, permits, records, sales tax basics' },
+  { name: 'Something else', glyph: '❖', blurb: 'Anything on your mind, big or small' },
+]
 const LENGTHS = [0.5, 1, 1.5, 2, 3]
 const PLAN = ['Yes, I\'ll bring it', 'It\'s in progress', 'Not yet']
 const fmt = (n: number) => `$${n % 1 ? n.toFixed(2) : n}`
@@ -25,6 +35,22 @@ export default function Consult() {
   const addIdea = (idea: string) => setGoal(g => (g.includes(idea) ? g : `${g.trim() ? `${g.trim()}\n` : ''}• ${idea}`))
   const toggle = (t: string) => setTopics(x => (x.includes(t) ? x.filter(y => y !== t) : [...x, t]))
   const ready = topics.length > 0 && goal.trim().length > 0
+  const [picker, setPicker] = useState<0 | 1 | null>(null)
+  const topicCards = (
+    <div className="consult-topics">{TOPICS.map(t => {
+      const on = topics.includes(t.name)
+      return (
+        <button key={t.name} type="button" aria-pressed={on} className={`consult-topic${on ? ' on' : ''}`} onClick={() => toggle(t.name)}>
+          <span className="consult-topic-glyph" aria-hidden="true">{t.glyph}</span>
+          <span className="consult-topic-text"><b>{t.name}</b><small>{t.blurb}</small></span>
+          <span className="consult-topic-check" aria-hidden="true">{on ? '✓' : ''}</span>
+        </button>
+      )
+    })}</div>
+  )
+  const ideaChips = (
+    <div className="consult-chips">{Q.ideas.map(i => <button key={i} type="button" className={`consult-chip idea${goal.includes(i) ? ' on' : ''}`} onClick={() => addIdea(i)}>{goal.includes(i) ? '✓ ' : '+ '}{i}</button>)}</div>
+  )
 
   const body = [
     `Shop: ${shop?.name ?? ''}`,
@@ -84,12 +110,12 @@ export default function Consult() {
         <div className="uni-section-head"><span className="uni-eyebrow">Request a session</span><h2 className="uni-h2">Tell the Queen what you need</h2></div>
 
         <fieldset><legend>What do you want to talk about? Pick any.</legend>
-          <div className="consult-chips">{TOPICS.map(t => <button key={t} type="button" aria-pressed={topics.includes(t)} className={`consult-chip${topics.includes(t) ? ' on' : ''}`} onClick={() => toggle(t)}>{t}</button>)}</div>
+          {topicCards}
         </fieldset>
 
         <div className="consult-ideas">
           <span>Need ideas? Tap any to add it.</span>
-          <div className="consult-chips">{Q.ideas.map(i => <button key={i} type="button" className={`consult-chip idea${goal.includes(i) ? ' on' : ''}`} onClick={() => addIdea(i)}>{goal.includes(i) ? '✓ ' : '+ '}{i}</button>)}</div>
+          {ideaChips}
         </div>
         <label>What do you want to work on?
           <textarea rows={4} value={goal} onChange={e => setGoal(e.target.value)} placeholder="My questions, and what I want to leave the session with…" />
@@ -120,9 +146,37 @@ export default function Consult() {
 
         {ready
           ? <a className="btn uni-cta consult-send" href={href}>♛ Send my request</a>
-          : <button type="button" className="btn uni-cta consult-send" disabled>♛ Pick a topic and tell us what you want to work on</button>}
+          : <button type="button" className="btn uni-cta consult-send" onClick={() => setPicker(topics.length ? 1 : 0)}>♛ {topics.length ? 'Tell us what you want to work on' : 'Pick your topics'}</button>}
         <p className="consult-small">Your request opens as an email to the Queen at {Q.email}. She'll reply to confirm a time and send how to pay your {fmt(deposit)} deposit. Your time is booked once the deposit is paid. Sessions are business consulting, not legal or tax advice.</p>
       </section>
+
+      <Sheet open={picker !== null} onClose={() => setPicker(null)} title={picker === 1 ? 'What do you want to leave with?' : 'What shall we talk about?'} wide>
+        <div className="stack consult-picker">
+          <div className="consult-steps" aria-label={`Step ${(picker ?? 0) + 1} of 2`}><i className="on" /><i className={picker === 1 ? 'on' : ''} /></div>
+          {picker === 1 ? (
+            <>
+              <p className="consult-picker-sub">Tap any idea to add it, or write your own. A sentence or two is plenty.</p>
+              {ideaChips}
+              <label className="consult-picker-goal">In your words
+                <textarea rows={4} value={goal} onChange={e => setGoal(e.target.value)} placeholder="My questions, and what I want to leave the session with…" />
+              </label>
+              <div className="row-between">
+                <button type="button" className="btn ghost" onClick={() => setPicker(0)}>‹ Topics</button>
+                <button type="button" className="btn gold" disabled={!goal.trim()} onClick={() => setPicker(null)}>{goal.trim() ? '♛ All set' : 'Add a line first'}</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="consult-picker-sub">Pick as many as you like. The Queen will shape your session around them.</p>
+              {topicCards}
+              <div className="row-between">
+                <span className="consult-picker-count">{topics.length ? `${topics.length} picked` : 'Nothing picked yet'}</span>
+                <button type="button" className="btn gold" disabled={!topics.length} onClick={() => setPicker(1)}>Next ›</button>
+              </div>
+            </>
+          )}
+        </div>
+      </Sheet>
     </div>
   )
 }
