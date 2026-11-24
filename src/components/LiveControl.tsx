@@ -48,7 +48,8 @@ export default function LiveControl({ slotId, liveId, active }: { slotId: string
 
   useEffect(() => {
     supabase.rpc('my_overlay_token').then(({ data }) => setToken((data as string) ?? null), () => null)
-    supabase.from('live_slots').select('featured').eq('id', slotId).maybeSingle().then(({ data }) => setCurrent((data as any)?.featured ?? null), () => null)
+    // The card lives in a private table only this seller can read (other sellers on the calendar can't peek).
+    supabase.from('live_slot_cards').select('featured').eq('slot_id', slotId).maybeSingle().then(({ data }) => setCurrent((data as any)?.featured ?? null), () => null)
   }, [slotId])
 
   // Quick picks: the items planned for this live.

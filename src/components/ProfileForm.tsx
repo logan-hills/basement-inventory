@@ -63,6 +63,7 @@ export default function ProfileForm({ userId, email: loginEmail, initial, mode, 
               <b>Full seller app</b><span>Inventory, labels, live prep, picking and shipping, plus streaming.</span>
             </button>
           </div>
+          <span className="muted small">Joining someone's shop as a team member? Pick Full seller app, then type your invite code on the next screen.</span>
         </div>
       )}
 

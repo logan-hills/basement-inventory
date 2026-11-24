@@ -12,10 +12,10 @@ const lesson: Lesson = {
   ],
   route: { to: '/profile', label: 'Open my profile' },
   covers: ['src/pages/Profile.tsx', 'src/components/ProfileForm.tsx', 'src/pages/FinishSignup.tsx', 'src/pages/Login.tsx', 'src/pages/NewPassword.tsx', 'src/lib/recovery.ts', 'src/components/PhoneForReset.tsx', 'src/lib/profile.ts', 'src/lib/legal.ts'],
-  updated: '2026-11-23',
+  updated: '2026-11-24',
   slides: [
     { chapter: 'Your account', kind: 'learn', title: 'Two kinds of accounts', nova: "Let's get you looking good and feeling safe.",
-      text: 'Just stream is free: book your hour on the shared Page and go live. The full seller app adds inventory, labels, live prep, picking and shipping. You can switch in My profile.',
+      text: 'Just stream is free: book your hour on the shared Page and go live. The full seller app adds inventory, labels, live prep, picking and shipping. You can switch in My profile. Joining someone else\'s shop as a team member? Pick Full seller app, then type the owner\'s invite code on the Name your shop screen.',
       table: { head: ['', 'Just stream (free)', 'Full seller app'], rows: [
         ['Book hours on the shared Page', 'Yes', 'Yes'],
         ['Go Live key, comments, on-stream card', 'Yes', 'Yes'],

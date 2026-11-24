@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { useSession } from '../lib/session'
 
 /** The app's main areas. Each one is a short row of sub-pages, so the main menu stays small. */
 export const SECTIONS = {
@@ -36,6 +37,7 @@ export function sectionOf(path: string): SectionKey | 'home' | 'scan' | 'money' 
 
 /** The sub-page row at the top of a main page. Shown only on the area's own pages, not on detail pages. */
 export default function SubNav({ path }: { path: string }) {
+  const { isTeam } = useSession()
   const key = sectionOf(path)
   if (!(key in SECTIONS)) return null
   const sec = SECTIONS[key as SectionKey]
@@ -44,7 +46,7 @@ export default function SubNav({ path }: { path: string }) {
     <nav className="subnav no-print" aria-label={`${sec.label} pages`}>
       <span className="subnav-area">{sec.label}</span>
       <div className="subnav-links">
-        {sec.links.map(l => <NavLink key={l.to} to={l.to} end className="subnav-link">{l.label}</NavLink>)}
+        {sec.links.filter(l => !(isTeam && l.to === '/shared-page')).map(l => <NavLink key={l.to} to={l.to} end className="subnav-link">{l.label}</NavLink>)}
       </div>
     </nav>
   )

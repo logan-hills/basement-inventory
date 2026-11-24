@@ -75,7 +75,7 @@ type Stats = {
 }
 
 export default function Home() {
-  const { settings, shop } = useSession()
+  const { settings, shop, isTeam } = useSession()
   const [s, setS] = useState<Stats | null>(null)
   const [next, setNext] = useState<(Live & { plan?: Plan }) | null | undefined>(undefined)
   const [work, setWork] = useState<{ pick: number; ship: number }>({ pick: 0, ship: 0 })
@@ -143,7 +143,7 @@ export default function Home() {
         <NovaSays mood={HOME_TIPS[tip][0]} key={tip} size={96} onNovaClick={() => setTip(t => (t + 1) % HOME_TIPS.length)}>
           {HOME_TIPS[tip][1]}
         </NovaSays>
-        {hasAcademy(shop?.plan) && <Link to="/lessons" className="btn ghost small nova-strip-link"><Icon name="lessons" size={16} />Dazzle University</Link>}
+        {hasAcademy(shop?.plan) && !isTeam && <Link to="/lessons" className="btn ghost small nova-strip-link"><Icon name="lessons" size={16} />Dazzle University</Link>}
       </section>
 
       <div className="top-grid">

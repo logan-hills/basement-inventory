@@ -11,12 +11,12 @@ const lesson: Lesson = {
     'Match your bot\'s CSV columns',
   ],
   route: { to: '/settings', label: 'Open Settings' },
-  covers: ['src/pages/Settings.tsx', 'src/lib/settings.ts'], updated: '2026-11-23',
+  covers: ['src/pages/Settings.tsx', 'src/lib/settings.ts'], updated: '2026-11-24',
   slides: [
     { chapter: 'Your lists', kind: 'learn', title: 'Your lists, your words', nova: 'Ten minutes here saves you hours later. Promise.',
       text: 'Settings holds the lists the whole app uses. It opens as a short list; tap a row to open just that page, and ‹ Settings brings you back. Add, rename or remove anything.',
-      points: ['Categories (Jewelry, Bags, Apparel…)', 'Item tags (Holiday, Plus size, New arrival…)', 'Live themes and hosts', 'Bot CSV columns'],
-      screen: { title: 'Settings', rows: ['Your shop', 'Categories and tags', 'Live themes and hosts', 'Live checklists', 'Goals, alerts and defaults', 'Bot CSV columns'], buttons: ['Categories and tags'], highlight: 'Categories and tags' } },
+      points: ['Categories (Jewelry, Bags, Apparel…)', 'Item tags (Holiday, Plus size, New arrival…)', 'Live themes and hosts', 'Bot CSV columns', 'Team members (helpers with their own sign-in, see the Team members lesson)'],
+      screen: { title: 'Settings', rows: ['Your shop', 'Team members', 'Categories and tags', 'Live themes and hosts', 'Live checklists', 'Goals, alerts and defaults', 'Bot CSV columns'], buttons: ['Categories and tags'], highlight: 'Categories and tags' } },
     { kind: 'learn', title: 'Categories vs tags', text: 'Every piece gets ONE category: what kind of thing it is. It can have MANY tags: extra labels that help you find and plan. Mixing them up is the most common setup mistake.',
       table: { head: ['', 'Category', 'Tags'], rows: [
         ['Question it answers', 'What is it?', 'What else is true about it?'],

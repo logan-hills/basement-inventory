@@ -2924,3 +2924,8 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .consult .btn.uni-cta.consult-guide { color: #fff; border-color: transparent; background: linear-gradient(135deg, #A3005A, #E3007D 60%, #FF4FA3); box-shadow: 0 12px 26px rgba(163, 0, 90, .3); }
 .consult-optional { font-weight: 600; font-size: .85rem; color: var(--u-muted); margin-left: 6px; }
 @media (max-width: 560px) { .consult-topics { grid-template-columns: 1fr; } .consult-topic { min-height: 68px; } }
+
+/* Settings → Team members */
+.team-row { gap: 12px; padding: 12px 0; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.team-row:first-child { border-top: 0; }
+.team-code { font-size: 1.8rem; letter-spacing: .12em; color: var(--gold-hi); }

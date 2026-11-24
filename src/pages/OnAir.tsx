@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import StreamSetup from '../components/StreamSetup'
 import LiveControl from '../components/LiveControl'
 import { supabase } from '../lib/supabase'
+import { useSession } from '../lib/session'
 import {
   loadSlot, loadSlotKey, loadMyStages, pokeTimer, chime, fmtCountdown, fmtTime, fmtDay, SLOT_FIELDS,
   type Slot, type Stage,
@@ -11,6 +12,7 @@ import {
 /** The seller's screen for one slot: stream key, countdown, wrap-up warning, hard stop. */
 export default function OnAir() {
   const { id = '' } = useParams()
+  const { session } = useSession()
   const [slot, setSlot] = useState<Slot | null | undefined>(undefined)
   const [stage, setStage] = useState<Stage | null>(null)
   const [key, setKey] = useState<string | null>(null)
@@ -118,7 +120,7 @@ export default function OnAir() {
         </div>
       )}
 
-      {!after && slot.status !== 'cancelled' && (
+      {!after && slot.status !== 'cancelled' && slot.user_id === session?.user.id && (
         <LiveControl slotId={slot.id} liveId={slot.live_id ?? null} active={keyOpen && !!slot.fb_live_video_id} />
       )}
 
