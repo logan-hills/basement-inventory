@@ -381,7 +381,7 @@ function Player({ id }: { id?: string }) {
           {score < 80 && <p className="muted">Take it again any time. Practice makes it second nature.</p>}
           <div className="row-gap center-row no-print">
             {lesson.route && <Link className="btn gold" to={lesson.route.to}>Try it for real: {lesson.route.label}</Link>}
-            {isCourse && courseCert && <button className="btn outline-gold" onClick={() => setCert(courseCert)}>Print certificate</button>}
+            {isCourse && courseCert && <button className="btn outline-gold" onClick={() => setCert(courseCert)}>Print or share certificate</button>}
             {nextLesson && nextLesson !== lesson && <Link className="btn ghost" to={`/lessons/${nextLesson.id}`}>Next: {nextLesson.title} →</Link>}
           </div>
           <div className="row-gap center-row no-print">
