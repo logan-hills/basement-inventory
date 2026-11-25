@@ -20,7 +20,24 @@ const lesson: Lesson = {
   slides: [
     { chapter: 'Why it matters', kind: 'learn', title: 'The piece you can\'t ship', nova: 'Nobody likes this part, but it saves you from a bad night.',
       text: 'If a broken piece stays "in stock," it shows up in Get ready for live, someone claims it, and you find out at the packing table. Now you\'re messaging a buyer to cancel, and she\'s disappointed. Damaging it out the moment you spot it prevents all of that.' },
-    { kind: 'learn', title: 'Shrink: the quiet profit leak', text: 'Stores call everything that disappears from stock without being sold "shrink": broken, stained, lost, or never arrived. Every shrunk piece is money you spent and will never get back. Most sellers have no idea how much they lose, because they never write it down.' },
+    { kind: 'learn', title: 'Shrink: the quiet profit leak', text: 'Stores call everything that disappears from stock without being sold "shrink": broken, stained, lost, or never arrived. Every shrunk piece is money you spent and will never get back. Most sellers have no idea how much they lose, because they never write it down.',
+      term: { word: 'Shrink', meaning: 'Stock that disappears without being sold: broken, stained, lost or never delivered. Shrink rate is the share of what you received that ended up this way.' },
+      visual: { type: 'flow', caption: 'What happens to a broken piece that stays "in stock".', steps: [
+        { label: 'Broken piece left in stock' },
+        { label: 'Shows in Get ready for live' },
+        { label: 'A buyer claims it' },
+        { label: 'Found at the packing table' },
+        { label: 'Cancel, apologize, refund' },
+      ] } },
+    { kind: 'howto', title: 'Damage out one piece, click by click', text: 'Here is the whole thing for one tarnished pair of hoops. It takes under a minute.',
+      steps: [
+        { title: 'Open the item', detail: 'Scan the tag or find the item in Stock and open its page. You\'ll see each tag listed under it.' },
+        { title: 'Pick the tag', detail: 'Swipe that tag left, or tick it and tap Damage out.', example: 'She ticks 4821-005, the pair with the tarnish spot.' },
+        { title: 'Choose a reason', detail: 'Damaged, Stained, Missing, Defective or Other. Choose the closest one; it powers your reports.' },
+        { title: 'Add a short note', detail: 'Note (optional), but worth it: what happened, in a few words.', example: '"Tarnish on left earring, found while prepping Tuesday live."' },
+        { title: 'Tap Remove 1 from stock', detail: 'The piece leaves stock right away, so it can\'t be claimed. Tapped the wrong one? Tap Undo on the pop-up.' },
+        { title: 'Put the piece in your flaw bin', detail: 'Physically move it to a labeled bin so it doesn\'t wander back onto a shelf. Decide later: claim, fix, flaw sale or donate.' },
+      ] },
 
     { chapter: 'Damage out', kind: 'learn', title: 'One, several, or a number', text: 'On an item page, swipe a tag left or tap Damage out. To do several at once, tick tags (or Select all) and Damage out, or say how many. On Stock you can also tap a piece and choose Some are damaged or missing in its pop-up, then say how many.',
       screen: { title: 'Gold hoop set', rows: ['☑ 4821-002', '☑ 4821-005'], buttons: ['Damage out 2'], highlight: 'Damage out 2' } },
@@ -56,9 +73,23 @@ const lesson: Lesson = {
         ['October', '500', '25', '5%'],
         ['What it tells you', '', '', 'Something changed in October'],
       ] },
+      visual: { type: 'bars', unit: '%', max: 6, caption: 'Shrink rate by month in the example. October needs a look at the reasons.', bars: [
+        { label: 'September', value: 2 },
+        { label: 'October', value: 5, hl: true, note: 'Something changed' },
+      ] },
       tip: 'Many small sellers aim to keep shrink to about 2% or less. If yours jumps, look at the reasons first.' },
     { kind: 'number', title: 'Work it out', q: 'You received 320 pieces this month and damaged out 16. What\'s your shrink rate?', answer: 5, tolerance: 0.1, suffix: '%', hint: 'Damaged out ÷ received, times 100.', why: '16 ÷ 320 = 0.05, so 5%. Time to look at the reasons and find out what\'s causing it.' },
 
+    { kind: 'howto', title: 'Your 15-minute monthly shrink check', text: 'Pick one day a month, like the first Saturday. This small habit is how you find money leaks early.',
+      steps: [
+        { title: 'Count what came in', detail: 'Add up the pieces you received this month, from your receiving records or supplier invoices.' },
+        { title: 'Count what went out damaged', detail: 'In Reports, choose Last 30 days and note the Damaged out count (it also shows the dollars lost).' },
+        { title: 'Work out your rate', detail: 'Damaged out ÷ received × 100.', example: '12 damaged ÷ 450 received = 2.7%.' },
+        { title: 'Read the reasons', detail: 'Open Damage by reason in Reports, or scan the Damaged page. Which reason is biggest this month?' },
+        { title: 'Pick one fix', detail: 'Use the fix-the-cause table on the next slides and choose one change for next month.', example: 'Most were Stained, so she adds anti-tarnish strips to every jewelry tub.' },
+        { title: 'Clear the flaw bin', detail: 'Send supplier claims, fix what you can, plan a flaw-sale segment, and donate the rest.' },
+      ],
+      queen: "Write your shrink rate on a calendar every month. When you see the number, you start to protect it." },
     { kind: 'quiz', q: 'Your shrink rate went from 2% to 6%. What should you look at first?', options: ['Your prices', 'The reasons on the Damaged page', 'Your live schedule'], answer: 1, why: 'The reasons tell you whether it\'s storage, try-ons, put-away habits or a supplier, and each has its own fix.' },
     { chapter: 'Prevent it', kind: 'learn', title: 'Fix the cause, not just the piece', text: 'Each reason has its own usual cause, and its own fix.',
       table: { head: ['If most are…', 'Look at', 'Try'], rows: [
@@ -82,11 +113,26 @@ const lesson: Lesson = {
         'Bundle it as a bonus with another piece',
         'Donate it, and keep a note for your records',
       ],
-      tip: 'Never sell a flawed piece without showing the flaw. Honesty is what makes a flaw sale work.' },
+      tip: 'Never sell a flawed piece without showing the flaw. Honesty is what makes a flaw sale work.',
+      visual: { type: 'flow', caption: 'Run every damaged piece down this list, in order.', steps: [
+        { label: 'Supplier claim?', note: 'Arrived broken' },
+        { label: 'Can I fix it?', note: 'Jump ring, stain stick' },
+        { label: 'Flaw sale?', note: 'Shown and named' },
+        { label: 'Bundle bonus?', note: 'With another piece' },
+        { label: 'Donate', note: 'Keep a note' },
+      ] } },
     { queen: "Take a photo the day the box arrives. Suppliers say yes to credit far more often when you have proof.", kind: 'script', title: 'Ask your supplier for credit', lines: [
       '"Hi [supplier], my order [order number] arrived on [date] and [number] pieces came damaged: [short description]. Photos are attached.',
       'Could you send a credit or replacement for those pieces? Thank you, I\'m looking forward to ordering again."',
     ], tip: 'Send it within a few days of delivery. Most suppliers have a short window for damage claims.' },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Damage a piece out the moment you find a problem, so nobody can claim it.',
+      'Do one, several, or many items at once with a quantity for each.',
+      'Always pick a reason. Reasons show you where money is leaking.',
+      'Check your shrink rate monthly; many small sellers aim for about 2% or less.',
+      'Fix the cause: storage, try-ons, put-away habits or suppliers.',
+      'Claim, fix, flaw-sell, bundle or donate before you toss anything.',
+    ] },
     { kind: 'reflect', title: 'Your damage plan', prompt: 'When will you check your shrink rate, and what will you do with damaged pieces from now on?', placeholder: 'I\'ll check…', example: 'First Saturday of each month. Supplier damage gets a claim the day it arrives, small flaws go in a $3 flaw bin on live.' },
     { kind: 'checklist', title: 'Damage habits', prompt: 'Tick the ones you\'ll start this week.', items: [
       'Inspect every haul the day it arrives',
