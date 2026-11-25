@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSession } from '../lib/session'
 import Icon from '../components/Icon'
 import { QUEEN_SESSION as Q, consultPrice, consultDeposit } from '../lessons/classes'
+import { JOIN_EARLY_MIN, downloadText, joinState, queenIcs, serviceName, sessionLink, startsIn, useIsHost, useNow, useQueenSessions, whenLabel } from '../lib/meetings'
 
 /* Schedule time with the Queen: a paid 1:1 business consult. Sellers learn how pricing works,
    prepare, and send a request that arrives as an email with everything the Queen needs. */
@@ -83,6 +84,8 @@ export default function Consult() {
           <span className="uni-queen-then">Then {fmt(Q.rate)} an hour, prorated</span>
         </div>
       </header>
+
+      <MySessions />
 
       <section className="stack">
         <div className="uni-section-head"><span className="uni-eyebrow">How pricing works</span><h2 className="uni-h2">Use the full hour. It's worth it!</h2></div>
@@ -168,8 +171,41 @@ export default function Consult() {
         {ready
           ? <a className="btn uni-cta consult-send" href={href}>♛ Send my request</a>
           : <button type="button" className="btn uni-cta consult-send consult-guide" onClick={guide}>♛ {topics.length ? 'Next: tell the Queen what you want to work on' : 'Start by picking your topics'} ›</button>}
-        <p className="consult-small">Your request opens as an email to the Queen at {Q.email}. She'll reply to confirm a time and send how to pay your {fmt(deposit)} deposit. Your time is booked once the deposit is paid. Sessions are business consulting, not legal or tax advice.</p>
+        <p className="consult-small">Your request opens as an email to the Queen at {Q.email}. She'll reply to confirm a time and send how to pay your {fmt(deposit)} deposit. Your time is booked once the deposit is paid, and your session then shows at the top of this page with a Join button. Sessions are business consulting, not legal or tax advice.</p>
       </section>
     </div>
+  )
+}
+
+/** Booked sessions under my email, with a Join button from 15 minutes before. The Queen sees a link to her Host desk. */
+function MySessions() {
+  const now = useNow()
+  const host = useIsHost()
+  const { mine } = useQueenSessions()
+  const upcoming = mine.filter(s => s.status === 'booked' && joinState(new Date(s.starts_at), s.minutes, now) !== 'over')
+  if (!upcoming.length && !host) return null
+  return (
+    <section className="stack">
+      <div className="uni-section-head"><span className="uni-eyebrow">{host ? 'For the Queen' : 'You\'re booked'}</span><h2 className="uni-h2">{host && !upcoming.length ? 'Your bookings live on your Host desk' : 'Your time with the Queen'}</h2></div>
+      {host && <p className="uni-sub">Book a client's session, email her the link, and start the call from your <Link to="/host">Host desk ›</Link></p>}
+      <div className="consult-sessions">
+        {upcoming.map(s => {
+          const start = new Date(s.starts_at)
+          const link = sessionLink(s)
+          const open = joinState(start, s.minutes, now) === 'open'
+          return (
+            <div key={s.id} className="consult-session">
+              <div><b>{whenLabel(start)}</b><span>{s.minutes} minutes{s.topic ? ` · ${s.topic}` : ''} · {startsIn(start, s.minutes, now)}</span></div>
+              <div className="row-gap">
+                {open && link
+                  ? <a className="uni-join" href={link} target="_blank" rel="noopener noreferrer"><Icon name="live" size={18} />Join now in {serviceName(link)}</a>
+                  : <span className="uni-join-wait">{link ? `Your Join button shows here ${JOIN_EARLY_MIN} minutes before.` : 'The Queen will send your join link.'}</span>}
+                <button type="button" className="btn uni-ghost-dark" onClick={() => downloadText(`time-with-the-queen-${s.starts_at.slice(0, 10)}.ics`, queenIcs(s))}>Add to calendar</button>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </section>
   )
 }

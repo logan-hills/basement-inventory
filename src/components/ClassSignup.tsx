@@ -46,7 +46,7 @@ export default function ClassSignup({ c, label, date: startDate, onClose, signup
           </div>
           {done.local
             ? <p className="muted">Your seat is saved on this phone. Tap below to email it to the team so they can send you the join link.</p>
-            : <p className="muted">The team will send your join link before class. You can see or cancel your seat on the University home.</p>}
+            : <p className="muted">On class day, a <b>Join class now</b> button shows on your seat on the University home (and on your Home screen) 15 minutes before the start. Tap it and you're in. You can also cancel your seat there.</p>}
           {done.local && <a className="btn gold big" href={seatEmail(done.seat)}><Icon name="upload" size={18} /> Email my seat to the team</a>}
           <div className="class-cal">
             <button type="button" className="btn outline-gold" onClick={() => downloadIcs(done.seat)}><Icon name="calendar" size={18} /> Add to calendar</button>
