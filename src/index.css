@@ -2882,7 +2882,7 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .uni .sheet-panel .icon-btn { background: #fff; color: var(--u-ink); border: 1px solid var(--u-line); }
 .uni .sheet-panel .muted, .uni .sheet-panel .small { color: var(--u-muted); }
 .uni .sheet-panel legend, .uni .sheet-panel label { font-size: 1.05rem; font-weight: 700; }
-.uni .sheet-panel input { background: #fff; color: var(--u-ink); border: 1px solid var(--u-line); border-radius: 14px; min-height: 52px; font-size: 1.1rem; color-scheme: light; }
+.uni .sheet-panel input, .uni .sheet-panel textarea { background: #fff; color: var(--u-ink); border: 1px solid var(--u-line); border-radius: 14px; min-height: 52px; font-size: 1.1rem; color-scheme: light; }
 .uni .sheet-panel input:focus { outline: 3px solid color-mix(in srgb, var(--t1, #C4006C) 35%, transparent); border-color: var(--t1, #C4006C); }
 .uni .sheet-panel .error { color: #B3261E; font-weight: 700; }
 .pop-banner { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; border-radius: 18px; color: #fff; background: radial-gradient(circle at 88% 15%, rgba(255, 255, 255, .35), transparent 40%), linear-gradient(135deg, var(--t1, #C4006C), var(--t2, #FF4FA3)); box-shadow: 0 12px 28px color-mix(in srgb, var(--t1, #C4006C) 35%, transparent); }
@@ -3313,3 +3313,12 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .consult-session b { font-size: 1.1rem; }
 .consult-session span { display: block; color: #4A3340; }
 .consult-session .row-gap button, .consult-session .row-gap a { min-height: 44px; }
+.host-badge { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: var(--coral); color: #fff; font-family: Inter, system-ui, sans-serif; font-size: .85rem; font-weight: 800; vertical-align: middle; }
+.host-req.new { border-color: var(--gold); }
+.host-req-kind { color: var(--gold); font-weight: 700; letter-spacing: .3px; }
+.host-req details summary { cursor: pointer; color: var(--gold); font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+.host-req-text { white-space: pre-wrap; margin: 6px 0; color: var(--text-2); line-height: 1.5; }
+.pop-banner.tone-emerald { --t1: #00956A; --t2: #2BD397; }
+.consult-sent { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border-radius: 18px; background: #E9F7EF; border: 1px solid #2BD397; color: #0B4A33; }
+.consult-sent b { font-size: 1.15rem; }
+.consult-err { color: #B3261E; font-weight: 700; }

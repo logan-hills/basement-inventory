@@ -10,13 +10,15 @@ import {
   serviceName, sessionLink, startsIn, useFreeAccess, useIsHost, useMeetingRooms, useNow, useQueenSessions, whenLabel, type QueenSession,
 } from '../lib/meetings'
 import { CLASS_TZ, QUEEN_SESSION, type LiveClass } from '../lessons/classes'
+import { KIND_LABEL, ago, useHostRequests, type HostRequest } from '../lib/requests'
 
 /* The Queen's Host desk: everything she runs, in one place.
    1. Up next: her classes and booked 1:1s with a big Start button that opens her meeting.
    2. Meeting rooms: paste a Zoom / Google Meet / Teams link once per class and once for her 1:1s.
    3. Time with the Queen: put a booked consult on the calendar so her client gets a Join button.
    4. Free for my team: give her team members' shops every feature, free.
-   Open to hosts of the community calendar (the Queen and anyone she makes a host). */
+   Founder accounts only (the Queen's shop and her team); the server checks this too (022 SQL).
+   Requests sellers send from in-app forms (1:1 coaching, Time with the Queen) land at the top. */
 
 type Event =
   | { kind: 'class'; key: string; c: LiveClass; label: 'Daytime' | 'Evening'; date: string; start: Date; minutes: number; link: string | null; seats: Signup[] }
@@ -30,7 +32,7 @@ export default function HostDesk() {
   if (host === null) return <div className="center-page"><p className="muted">Opening your Host desk…</p></div>
   if (!host) return (
     <div className="stack host-desk">
-      <div className="pop-banner foil"><small>♛ Host desk</small><b>This desk is for the Queen and her hosts</b>
+      <div className="pop-banner foil"><small>♛ Host desk</small><b>This desk is for Founder accounts</b>
         <span>It's where live classes and Time with the Queen sessions are started. Looking for your own class or session? Your Join button is on the Dazzle University home and on Time with the Queen.</span></div>
       <div className="row-gap"><Link className="btn gold" to="/lessons">Dazzle University</Link><Link className="btn ghost" to="/consult">Time with the Queen</Link></div>
     </div>
@@ -46,7 +48,8 @@ function Desk() {
   const queen = useQueenSessions()
   const roomsRef = useRef<HTMLElement>(null)
   const [who, setWho] = useState<Extract<Event, { kind: 'class' }> | null>(null)
-  const [booking, setBooking] = useState(false)
+  const [booking, setBooking] = useState<HostRequest | true | false>(false)
+  const requests = useHostRequests(true)
 
   const events = useMemo<Event[]>(() => {
     const out: Event[] = []
@@ -89,6 +92,8 @@ function Desk() {
           <p className="muted">Ask Logan to run <code>020_host_desk.sql</code> in Supabase. Then meeting links, bookings and free access all save here.</p></div>
       )}
 
+      <Requests r={requests} onBook={req => setBooking(req)} />
+
       {first ? <NextUp e={first} now={now} onWho={setWho} onNeedLink={goRooms} /> : (
         <div className="card"><b>Nothing on the calendar yet</b><p className="muted">Your classes show here once they have dates. Add a booked 1:1 below.</p></div>
       )}
@@ -126,7 +131,8 @@ function Desk() {
       <FreeTeam />
 
       {who && <WhoSheet e={who} onClose={() => setWho(null)} />}
-      {booking && <BookSheet onClose={() => setBooking(false)} add={queen.add} queenRoom={rooms[QUEEN_ROOM] ?? null} />}
+      {booking && <BookSheet from={booking === true ? undefined : booking} onClose={() => setBooking(false)} add={queen.add} queenRoom={rooms[QUEEN_ROOM] ?? null}
+        onBooked={req => { if (req) requests.setStatus(req.id, 'handled') }} />}
     </div>
   )
 }
@@ -261,14 +267,14 @@ function WhoSheet({ e, onClose }: { e: Extract<Event, { kind: 'class' }>; onClos
   )
 }
 
-function BookSheet({ onClose, add, queenRoom }: { onClose: () => void; add: ReturnType<typeof useQueenSessions>['add']; queenRoom: string | null }) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
+function BookSheet({ from, onClose, onBooked, add, queenRoom }: { from?: HostRequest; onClose: () => void; onBooked: (req?: HostRequest) => void; add: ReturnType<typeof useQueenSessions>['add']; queenRoom: string | null }) {
+  const [name, setName] = useState(from?.name ?? '')
+  const [email, setEmail] = useState(from?.email ?? '')
+  const [phone, setPhone] = useState(from?.phone ?? '')
   const [date, setDate] = useState(() => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date(Date.now() + 86400000)))
   const [time, setTime] = useState('11:00')
-  const [minutes, setMinutes] = useState(60)
-  const [topic, setTopic] = useState('')
+  const [minutes, setMinutes] = useState(() => (from?.hours ? Math.round(from.hours * 60) : 60))
+  const [topic, setTopic] = useState(from?.topics ?? '')
   const [link, setLink] = useState('')
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
@@ -283,7 +289,7 @@ function BookSheet({ onClose, add, queenRoom }: { onClose: () => void; add: Retu
     if (link.trim() && !own) { setBusy(false); setErr('That meeting link doesn\'t look right. Paste the whole link, or leave it empty to use your 1:1 room.'); return }
     const r = await add({ client_name: name.trim(), client_email: email.trim(), client_phone: phone.trim() || null, starts_at: start.toISOString(), minutes, topic: topic.trim() || null, join_url: own ?? queenRoom })  // Copy the 1:1 room onto the booking: the client can't see the private room itself.
     setBusy(false)
-    if (typeof r === 'string') setErr(r); else setDone(r)
+    if (typeof r === 'string') setErr(r); else { setDone(r); onBooked(from) }
   }
 
   return (
@@ -352,6 +358,42 @@ function FreeTeam() {
           </div>
           {msg && <p className={msg.ok ? 'sched-ok' : 'danger-text'}>{msg.text}</p>}
         </>
+      )}
+    </section>
+  )
+}
+
+/** New requests from sellers' in-app forms. Book a Queen session straight from one, or reach out and mark it handled. */
+function Requests({ r, onBook }: { r: ReturnType<typeof useHostRequests>; onBook: (req: HostRequest) => void }) {
+  const [showDone, setShowDone] = useState(false)
+  if (r.ready === false) return <div className="card host-setup"><b>Requests need one setup step</b><p className="muted">Ask Logan to run <code>022_founder_host_desk_and_requests.sql</code> in Supabase so 1:1 coaching and Time with the Queen requests land here.</p></div>
+  const shown = showDone ? r.list : r.fresh
+  return (
+    <section className="stack">
+      <div className="row-between"><h2 className="section-title">Requests {r.fresh.length > 0 && <span className="host-badge">{r.fresh.length} new</span>}</h2>
+        {r.list.length > r.fresh.length && <button type="button" className="link-btn" onClick={() => setShowDone(x => !x)}>{showDone ? 'Hide handled' : 'Show handled'}</button>}</div>
+      {shown.length === 0 ? <p className="muted">No new requests. When a seller asks for 1:1 coaching or time with you, it shows up here.</p> : (
+        <ul className="host-list">
+          {shown.map(q => (
+            <li key={q.id} className={`host-row host-req${q.status === 'new' ? ' new' : ''}`}>
+              <div className="host-row-text">
+                <small className="host-req-kind">{KIND_LABEL[q.kind]} · {ago(q.created_at)}{q.status === 'handled' ? ' · ✓ Handled' : ''}</small>
+                <b>{q.name}{q.shop_name ? ` · ${q.shop_name}` : ''}</b>
+                <span>{[q.best_time, q.hours ? `${q.hours} hr` : '', q.topics].filter(Boolean).join(' · ')}</span>
+                <details><summary>Read her request</summary><p className="host-req-text">{q.details}</p></details>
+                <small className="muted">{[q.email, q.phone].filter(Boolean).join(' · ')}</small>
+              </div>
+              <div className="host-row-actions">
+                {q.kind === 'queen' && q.status === 'new' && <button type="button" className="btn gold small" onClick={() => onBook(q)}>Book her session</button>}
+                {q.phone && <a className="btn ghost small" href={`tel:${q.phone}`}>Call</a>}
+                {q.email && <a className="btn ghost small" href={`mailto:${q.email}?subject=${encodeURIComponent(q.kind === 'queen' ? 'Your time with the Queen' : 'Your 1:1 coaching')}`}>Email her</a>}
+                {q.status === 'new'
+                  ? <button type="button" className="btn ghost small" onClick={() => r.setStatus(q.id, 'handled')}>✓ Handled</button>
+                  : <button type="button" className="link-btn" onClick={() => r.setStatus(q.id, 'new')}>Mark new</button>}
+              </div>
+            </li>
+          ))}
+        </ul>
       )}
     </section>
   )
