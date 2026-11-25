@@ -3078,3 +3078,9 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .roll-spot p { margin: 0; }
 .late-pad { display: flex; align-items: center; gap: 12px; }
 .late-pad .btn { min-width: 56px; font-size: 1.4rem; }
+
+/* Direct print (beta) */
+.direct-print { padding: 14px 16px; border-radius: 16px; border: 2px solid rgba(255, 211, 110, .55); background: linear-gradient(160deg, rgba(255, 211, 110, .12), var(--surface) 70%); }
+.direct-print ul { margin: 8px 0 8px 18px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.direct-on { color: #6FD19B; font-weight: 700; }
+.print-window-head { margin-top: 4px; font-weight: 700; }
