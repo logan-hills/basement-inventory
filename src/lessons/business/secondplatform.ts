@@ -55,6 +55,13 @@ const lesson: Lesson = {
       example: "*Whatnot charges processing on the whole order total, including shipping and tax the buyer pays, so it can run a little higher than shown. Small differences add up over hundreds of sales." },
     { kind: 'number', title: 'Whatnot take-home', q: 'You sell a $40 bag on Whatnot. Commission is 8% of the sale price. Processing is 2.9% plus 30¢ on a $47 order total (bag plus shipping). What do you keep from the bag, before your own costs? (Round to the cent.)', prefix: '$', answer: 35.14, tolerance: 0.02, hint: 'Commission: $40 × 8% = $3.20. Processing: $47 × 2.9% = $1.36, plus $0.30.', why: '$40 − $3.20 − $1.36 − $0.30 = $35.14. Price with the fees in mind, and check the fee page for current rates.' },
     { kind: 'learn', title: 'Time is a cost too', text: "Every platform needs listings, lives or videos, customer messages and shipping on its own schedule. If a second platform takes 6 hours a week, it needs to earn at least what those hours are worth to you.",
+      term: { word: 'Opportunity cost', meaning: 'What you give up by choosing one thing over another. Six hours on a new platform are six hours you are not spending on your Facebook lives, your family or your rest.' },
+      example: "Gloria's Whatnot test brought in $420 of profit after fees in a month, for 24 hours of work. That is $17.50 an hour. Her Facebook lives earn her about $35 an hour. So the second platform only made sense once she had a helper packing, which freed her own hours for the lives that paid more.",
+      visual: { type: 'bars', prefix: '$', unit: 'profit per hour of your time', bars: [
+        { label: 'Facebook lives', value: 35, hl: true },
+        { label: 'Whatnot test month', value: 17.5 },
+        { label: 'A helper\'s pay', value: 16 },
+      ], caption: 'Example numbers. Work out your own from your Reports and your own hours.' },
       queen: "Give yourself a time budget before you start, like 4 hours a week. If the new platform needs more than that, it has to prove it's worth it." },
 
     { chapter: 'Choose one', kind: 'learn', title: 'The second-platform scorecard', text: "Score each platform from 1 to 5 on what matters for YOUR shop. Highest total wins the 30-day test.",
@@ -75,7 +82,8 @@ const lesson: Lesson = {
 
     { chapter: 'Run it right', kind: 'learn', title: 'Never sell the same piece twice', text: "The biggest second-platform disaster is a double sale: one bag, two buyers. Keep it simple.",
       points: ['Give each platform its own set of pieces for each live, or mark pieces with a tag like "WN" in Inventory', 'Update your stock right after every live on every platform', 'One-of-a-kind pieces live on one platform at a time', 'If it happens, the buyer who paid first gets it; offer the other a similar piece or refund right away'],
-      queen: "Keep one notebook page or one Inventory tag per platform. The double sale only happens when you trust your memory." },
+      queen: "Keep one notebook page or one Inventory tag per platform. The double sale only happens when you trust your memory.",
+      visual: { type: 'compare', style: 'dodont', left: { title: 'Do', items: ['Give each live its own pieces', 'Tag pieces by platform in Inventory', 'Update stock right after every live', 'Refund fast if a double sale slips through'] }, right: { title: "Don't", items: ['List a one-of-a-kind piece in two places', 'Wait until morning to update stock', 'Trust your memory', 'Make the second buyer wait for an answer'] } } },
     { kind: 'howto', title: 'Ship two platforms without mix-ups', text: 'Each platform has its own orders, labels and deadlines. Mixing them up is the second most common problem after double sales. One routine keeps them apart.',
       steps: [
         { title: 'Know each ship-by deadline', detail: 'Write each platform\'s handling time on a card by your packing table. Some platforms, like TikTok Shop, are strict and can limit sellers who ship late.' },

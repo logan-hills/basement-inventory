@@ -83,7 +83,15 @@ const lesson: Lesson = {
         ['30', 'Fast fashion, trends, holiday pieces'],
         ['60', 'Most jewelry and bag sellers (a good start)'],
         ['90', 'Higher-priced or classic pieces that sell slowly but steadily'],
-      ] } },
+      ] },
+      term: { word: 'Aged stock', meaning: 'Pieces that have sat on your shelf longer than your old-stock days. The money you paid for them is tied up until they sell.' },
+      example: 'Marlene paid $3 each for 120 scarves. After 60 days, 45 were still on the shelf: $135 of her money sitting in a bin. Run a sale showed them to her, she put them in a $10 bundle live, and sold 38 in one night.',
+      visual: { type: 'bars', prefix: '$', unit: 'cost tied up', bars: [
+        { label: 'Under 30 days', value: 410 },
+        { label: '30 to 60 days', value: 260 },
+        { label: '60 to 90 days', value: 135, hl: true },
+        { label: 'Over 90 days', value: 90, hl: true },
+      ], caption: 'An example shop. Reports shows your own Stock age; the highlighted bars are what a 60-day setting would flag.' } },
     { kind: 'quiz', q: 'Stock starts showing in Run a sale when…', options: ['It passes your old-stock days in Settings', 'It has no photo', 'It is in the cart'], answer: 0, why: 'You choose the number of days in Settings → Goals, alerts and defaults.' },
 
     { chapter: 'Checklists', queen: "Every time something goes wrong on a live, add one line to your checklist. That's how a checklist gets wise.", kind: 'learn', title: 'Your live checklists', text: 'Open Settings → Live checklists and write the steps you do before, during and after every live. Each new live starts with this checklist in its Planner, and Home shows the next few steps.', tip: 'Add the things you tend to forget, like "charge the ring light".' },
@@ -118,6 +126,16 @@ const lesson: Lesson = {
       'Write my before, during and after checklists',
     ] },
     { chapter: 'Bot columns', kind: 'learn', title: 'Bot CSV columns', text: 'If you use a comment bot other than Loyal Shops or ours, it probably wants a file with certain column names. Bot CSV columns lets you name and order the columns to match. Preview shows exactly what the file will look like, and Reset to the basic 4 columns puts it back.' },
+    { kind: 'howto', title: 'Match your bot\'s file in five minutes', text: 'Have your bot\'s help page or a sample file open next to the app, so you can copy its column names exactly.',
+      steps: [
+        { title: 'Find what your bot expects', detail: 'Look for a sample import file or a list of columns in your bot\'s help pages. Write down each column name and its order.', example: 'Her bot\'s sample file has four columns: SKU, Title, Price, Quantity.' },
+        { title: 'Open Settings, Bot CSV columns', detail: 'Each row shows a number, the Dazzle field it pulls from, and the column header that goes in the file.' },
+        { title: 'Rename the headers to match', detail: 'Tap a header and type the exact name your bot uses, spelling and capitals included. It saves when you tap away.', example: 'She changes Live # to SKU and Name to Title.' },
+        { title: 'Add or remove columns', detail: 'Use Add a column to bring in another field, like a sale price. Tap × to remove one your bot does not want.' },
+        { title: 'Put them in order', detail: 'Use the ↑ and ↓ arrows until the order matches your bot\'s sample.' },
+        { title: 'Check the Preview', detail: 'The Preview shows the first lines of the real file. Compare it to your bot\'s sample line by line before your next live.' },
+      ],
+      tip: 'Do a small test import with three items before a real live. If your bot complains, it will tell you which column it did not like.' },
     { kind: 'quiz', q: 'Your bot wants a column called "SKU" instead of "Live #". What do you do?', options: ['Rename it in Settings → Bot CSV columns', 'Edit every item', 'Nothing can be done'], answer: 0, why: 'Bot CSV columns let you match whatever your bot expects.' },
   ],
 }

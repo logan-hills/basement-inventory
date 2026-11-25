@@ -35,7 +35,14 @@ const lesson: Lesson = {
         ['4. A lead', 'Somebody you trust runs a live night without you'],
         ['5. Managers', 'A lead for the warehouse, a lead for selling, you run the business'],
       ] },
-      tip: 'Climbing a rung rarely means hiring a stranger. It usually means giving the person you already have more work and more trust.' },
+      tip: 'Climbing a rung rarely means hiring a stranger. It usually means giving the person you already have more work and more trust.',
+      visual: { type: 'flow', steps: [
+        { label: 'Solo', note: 'You do it all' },
+        { label: 'A few hours', note: 'A packer, 4 to 8 hours' },
+        { label: 'Part-timer', note: 'Owns the back room' },
+        { label: 'A lead', note: 'Runs a live without you' },
+        { label: 'Managers', note: 'You run the business' },
+      ], caption: 'Most shops climb one rung at a time, and some stop happily at rung 2 or 3. The top is not the goal, the right rung is.' } },
     { kind: 'learn', title: 'What to hand off at each rung', text: "Hand off the repeatable work first and the judgment work last. Your buying eye, your face on camera and your buyer relationships go last, if they ever go.",
       table: { head: ['Rung', 'Hand off', 'The numbers that say you are ready'], rows: [
         ['2', 'Packing and label printing', '25+ orders a week, or you work past 10pm after a live'],
@@ -45,6 +52,23 @@ const lesson: Lesson = {
       ] },
       example: "Pat counted for two weeks: 31 orders, 44 of her own hours, three nights packing past midnight. That is rung 2, plainly." },
     { kind: 'number', title: 'Revenue per owner-hour', q: 'Last month you sold $6,000 and you worked 120 hours yourself. This month a helper took 20 hours of packing off you, you worked 100 hours, and you sold $6,500. What is your revenue per owner-hour this month?', prefix: '$', answer: 65, hint: 'Revenue divided by the hours YOU worked.', why: 'You went from $50 an hour ($6,000 ÷ 120) to $65 ($6,500 ÷ 100). Same woman, better use of her hours. Track this number monthly and you will always know if the ladder is working.' },
+    { kind: 'learn', title: 'Watch the number move', text: "Revenue per owner-hour is the simplest scoreboard for a growing shop. It answers one question: is each hour of your life producing more than it used to? When you hand off the right work, the number climbs, even if sales barely change, because your hours go down. When you hand off the wrong work, like your buying, sales drop and the number falls. Write it down every month next to your sales.",
+      term: { word: 'Revenue per owner-hour', meaning: 'Your sales for the month divided by the hours you personally worked. It shows whether help is freeing your time for work that makes money.' },
+      visual: { type: 'bars', prefix: '$', unit: 'per owner-hour', bars: [
+        { label: 'Month 1, solo, 120 hours', value: 50 },
+        { label: 'Month 2, packer 20 hrs, 100 hours', value: 65, hl: true },
+        { label: 'Goal in a year', value: 80 },
+      ], caption: 'From the number question above, plus a goal you set yourself.' } },
+    { kind: 'howto', title: 'Track your own hours for two weeks', text: "You cannot pick the right rung from a feeling. Two weeks of honest tracking tells you exactly which work to hand off first.",
+      steps: [
+        { title: 'Make five columns', detail: 'On paper or in a notes app: Buying, Receiving and tagging, Selling live, Picking and packing, Office and money.' },
+        { title: 'Write down every block', detail: 'Each time you stop a task, jot the minutes in its column. Round to 15 minutes. Do not fix anything yet, only write.', example: 'Tuesday: Receiving 90 min, Packing 120 min, Office 30 min. Thursday live: Selling 150 min, Packing 180 min.' },
+        { title: 'Total each column', detail: 'At the end of two weeks, add up each column and divide by two for a weekly number.' },
+        { title: 'Circle the repeatable work', detail: 'Receiving, tagging, picking and packing follow the same steps every time. Those are the jobs to hand off first.' },
+        { title: 'Pull your sales for the same weeks', detail: 'Open Reports, check your Sales, and divide by your hours for your revenue per owner-hour.' },
+        { title: 'Pick one job to hand off', detail: 'The biggest circled column is usually the answer. Write its role next.' },
+      ],
+      tip: 'Most sellers are surprised by packing. It often takes more hours than the live itself.' },
     { kind: 'learn', title: 'Price your own hour', text: "You cannot decide what help is worth until you know what your own hour is worth. Take last month's profit and divide it by the hours you worked. That is your hourly worth. Now compare it to what a helper costs.",
       table: { head: ['Your hour is worth', 'A helper at $16', 'What it means'], rows: [
         ['$18', 'Barely above her pay', 'Grow sales first, or get help for the hours that make you money'],
@@ -112,6 +136,16 @@ const lesson: Lesson = {
         ['Someone leaves', 'Remove her team sign-in the same day'],
       ] },
       tip: 'Tell your team why the guardrails exist. "This protects you too" is the truest thing you can say about a count.' },
+    { kind: 'howto', title: 'Give a helper her own sign-in in the app', text: "Every helper gets her own team sign-in, so every scan carries her name and you never share your password. Team spots depend on your plan: Gem includes 1, Crown 2 and Empire 5.",
+      steps: [
+        { title: 'Open Team members', detail: 'Go to Settings, then Team members. You will see how many of your team spots are used.' },
+        { title: 'Add her by name', detail: 'Tap Add a team member and type her name.' },
+        { title: 'Make her invite code', detail: 'Tap Make an invite code, then Copy invite to send, and text it to her. The code works once and lasts 7 days.', example: 'You text your niece the invite on Sunday. She joins Monday night. Her name shows as Waiting to join until she does.' },
+        { title: 'She joins from her own phone', detail: 'She creates her own account, and when it asks her to name a shop she taps I\'m joining a team, types the code and taps Join the team.' },
+        { title: 'Teach her the screens', detail: 'Helpers get the whole warehouse: receiving, scanning, bins, picking, shipping and getting ready for lives. Dazzle University stays with you, so take the lesson for her job, like Pick and pack, and walk her through it on her first shift.' },
+        { title: 'Remove her the day she leaves', detail: 'If she moves on, open Team members and tap Remove next to her name the same day. Her spot opens up for the next helper.' },
+      ],
+      tip: 'Need more spots than your plan includes? That is often the sign you are ready for the next plan, and the next rung.' },
 
     { chapter: 'Be worth working for', kind: 'learn', title: 'Paying well is a strategy', text: "Turnover is the most expensive thing a small shop does. Every time somebody leaves you pay again in training, mistakes and your own evenings. Paying above the going rate in your town is cheaper than replacing people twice a year.",
       points: [
@@ -138,6 +172,15 @@ const lesson: Lesson = {
         ['What has to be true', 'Five written process pages, payroll running', 'A lead who can run a live without me'],
       ] },
       example: "Fill in your own numbers even if you are guessing. A guess on paper beats a certainty you never checked." },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Grow one rung at a time, and usually by growing the person you already have.',
+      'Track your own hours, then hand off repeatable work first and judgment work last.',
+      'Watch revenue per owner-hour every month. It should climb as you hand off.',
+      'Write the role, the pay and the standard before you pick the person.',
+      'Make delegation safe with a written process, a checklist and a weekly 15-minute huddle.',
+      'Guardrails protect honest helpers. Give each one her own sign-in and remove it the day she leaves.',
+      'Pay well and lead well. Turnover is the most expensive thing a small shop does.',
+    ] },
     { kind: 'checklist', title: 'Your ladder plan', prompt: 'Tick each one as you do it.', items: [
       'Name the rung I am on and the rung that is next',
       'Work out my revenue per owner-hour this month',

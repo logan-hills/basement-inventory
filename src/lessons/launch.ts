@@ -113,14 +113,14 @@ const lesson: Lesson = {
         ['4', 'Pick and pack, grocery style · Ship with Pirate Ship · Know your customers · Read your money'],
       ] },
       tip: 'Then pick a business course a week. Start with Organize your stock like the big warehouses, it pays off fastest.' },
-    { kind: 'learn', title: 'Bringing on helpers', text: 'Each helper signs in as themselves, so their lesson progress and certificates are their own. Give each person one job to own and the lessons for that job.',
-      table: { head: ['Helper role', 'Their lessons'], rows: [
+    { kind: 'learn', title: 'Bringing on helpers', text: 'Each helper signs in as themselves, so every scan carries their name and nobody shares your password. Helpers get the whole warehouse, but Dazzle University stays on your sign-in. So give each person one job to own, take the lessons for that job yourself, then teach it to them side by side.',
+      table: { head: ['Helper role', 'Lessons you take, then teach'], rows: [
         ['Receiving', 'Receive an item, Bulk upload a delivery, Print 2×1 tags on your thermal printer'],
         ['Put-away and counts', 'Set up your shelves and bins, Scan to put away and look up, Damage out broken pieces'],
         ['Packing', 'Pick and pack grocery style, Ship with Pirate Ship, and the course Pick and pack like the pros'],
         ['Live co-host', 'Get ready for live, Let the comment bot take the orders, Run a sale on old stock'],
       ] } },
-    { kind: 'quiz', q: 'Your sister will pack orders on Wednesdays. What\'s the best way to train her?', options: ['Let her watch you once', 'Give her her own sign-in and the Pick and pack lesson, then pack one live together', 'Share your password so she sees everything'], answer: 1, why: 'Her own sign-in keeps her progress and actions separate, the lesson teaches the steps, and one live together locks it in. Never share your password.' },
+    { kind: 'quiz', q: 'Your sister will pack orders on Wednesdays. What\'s the best way to train her?', options: ['Let her watch you once', 'Give her her own sign-in, teach her the steps from the Pick and pack lesson, then pack one live together', 'Share your password so she sees everything'], answer: 1, why: 'Her own sign-in keeps her actions separate, the lesson gives you the steps to teach, and one live together locks it in. Never share your password.' },
 
     { chapter: 'Your first month', kind: 'learn', title: 'Goals you can see', text: 'A goal you can\'t measure is a wish. Pick three numbers for your first month. All three show up in the app, so you\'ll know where you stand every day.',
       table: { head: ['Goal', 'Where you\'ll see it', 'A good first target'], rows: [
