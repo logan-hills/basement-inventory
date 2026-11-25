@@ -20,7 +20,7 @@ const lesson: Lesson = {
     welcome: "Welcome to the family. I built Orientation so you don't have to figure out a live-selling business alone, the way so many of us once did. Take these 30 days one step at a time. You're not behind, you're right on time.",
     signoff: "You have a plan now, and a plan is what separates a hobby from a business. Pick your launch date, put it on the calendar, and come to a live class this week. I can't wait to see you on the Page.",
   },
-  covers: ['src/components/ClassSignup.tsx', 'src/lib/classSignups.ts', 'src/components/ClassScheduleEditor.tsx', 'src/lib/classSchedule.ts'], updated: '2026-11-24',
+  covers: ['src/components/ClassSignup.tsx', 'src/lib/classSignups.ts', 'src/components/ClassScheduleEditor.tsx', 'src/lib/classSchedule.ts'], updated: '2026-11-25',
   slides: [
     { chapter: 'Welcome to Dazzle', kind: 'learn', title: 'You\'re building a real business', nova: 'Welcome to the family, boss! I\'m Nova, and I\'ll walk with you every step of the way.',
       text: 'Dazzle Warehouse runs the whole trip for every piece you sell: receive it, tag it, shelve it, plan it, sell it live, pick it, pack it, ship it, and see the money. This orientation gets your gear, your space and your first month set up so the app has something solid to run on.',
