@@ -38,7 +38,7 @@ export default function DirectPrint({ w, h, turn, count, sizeName, prepare, gapM
     catch (e: any) {
       const m = String(e?.message ?? e)
       if (e?.name === 'NotFoundError' || /cancel/i.test(m)) setMsg(null)
-      else if (e?.name === 'SecurityError' || /access denied|claim/i.test(m)) setMsg({ ok: false, text: 'Your computer is holding on to that printer for its own print window, so the browser can\'t reach it by cable. Try Bluetooth instead, or unplug and replug the printer and connect again.' })
+      else if (e?.name === 'SecurityError' || /access denied|claim/i.test(m)) setMsg({ ok: false, text: 'Windows keeps the USB cable for its own printer driver, so the browser can\'t use it. That\'s normal. Turn the printer\'s Bluetooth on and tap Connect by Bluetooth instead. Keep the cable plugged in if you like; it\'s fine.' })
       else setMsg({ ok: false, text: `That didn't work: ${m}` })
     } finally { setBusy('') }
   }
@@ -58,9 +58,9 @@ export default function DirectPrint({ w, h, turn, count, sizeName, prepare, gapM
       <p className="small muted">Prints straight to your thermal label printer at exactly {sizeName}. No print window and no paper size to set.</p>
       {!c ? (
         <div className="row-gap">
-          {sup.usb && <button className="btn gold" disabled={!!busy} onClick={() => run('usb', connectUsb)}>Connect by USB cable</button>}
-          {sup.bluetooth && <button className="btn outline-gold" disabled={!!busy} onClick={() => run('bt', connectBluetooth)}>Connect by Bluetooth</button>}
-          {sup.serial && <button className="link-btn" disabled={!!busy} onClick={() => run('serial', connectSerial)}>Printer paired in Bluetooth settings? Pick it here</button>}
+          {sup.bluetooth && <button className="btn gold" disabled={!!busy} onClick={() => run('bt', connectBluetooth)}>Connect by Bluetooth</button>}
+          {sup.serial && <button className="btn outline-gold" disabled={!!busy} onClick={() => run('serial', connectSerial)}>Bluetooth printer not listed? Pick it here</button>}
+          {sup.usb && <button className="link-btn" disabled={!!busy} onClick={() => run('usb', connectUsb)}>Connect by USB cable (Mac)</button>}
         </div>
       ) : (
         <>
