@@ -108,8 +108,8 @@ const lesson: Lesson = {
         ['Sat', 'Check Reports, run a sale on old stock, rest'],
       ] } },
     { kind: 'learn', title: 'If you have helpers', text: 'The app is built so a helper can jump in without you standing over them. Each person signs in as themselves, and the tags, bins and pick screens tell them exactly what to do.',
-      points: ['Receiving helper: adds items and prints tags', 'Put-away helper: scans bins and tags', 'Packing helper: picks and scans into boxes', 'Everyone: takes the University lessons for their part'] },
-    { kind: 'quiz', q: 'Your niece is helping pack on Wednesday. What does she need from you?', options: ['Your password', 'Her own sign-in and the Pick and pack lesson', 'A printed list of every order'], answer: 1, why: 'Each person has their own sign-in, and the pick screen shows her where everything is and which box it goes in.' },
+      points: ['Receiving helper: adds items and prints tags', 'Put-away helper: scans bins and tags', 'Packing helper: picks and scans into boxes', 'You: take the University lessons for each part, then teach it. The University stays on your sign-in, not theirs'] },
+    { kind: 'quiz', q: 'Your niece is helping pack on Wednesday. What does she need from you?', options: ['Your password', 'Her own sign-in, and you walk her through her first few orders', 'A printed list of every order'], answer: 1, why: 'Each person has their own sign-in, and the pick screen shows her where everything is and which box it goes in. Take the Pick and pack lesson yourself first, so you can teach it.' },
     { queen: "Pick the same days for receiving, lives and shipping every week. A rhythm makes the work lighter, I promise.", kind: 'reflect', title: 'Your rhythm', prompt: 'Which days will you go live, and which days will you receive, pack and ship?', placeholder: 'I go live on…', example: 'I go live Tuesday 7 PM. I receive on Monday, pack and ship Wednesday, and check Reports on Saturday morning.' },
     { kind: 'checklist', title: 'Your first-week plan', prompt: 'Tick each day as you finish it.', items: [
       'Day 1: Profile and Settings',

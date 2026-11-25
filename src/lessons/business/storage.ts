@@ -21,7 +21,7 @@ const lesson: Lesson = {
     welcome: "Every minute spent searching is a minute you're not selling, packing or resting. Let's organize your stock like the big warehouses do, just sized for your home.",
     signoff: "Give every piece a home, put your best sellers in the golden zone, and count a little every week. An organized shop is a calmer life.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'Where the time goes', kind: 'learn', title: 'Searching is the silent thief', nova: 'Grab a coffee, boss. This course is going to give you hours back every single week.',
       text: 'Big warehouses obsess over one thing: how long it takes to put a hand on the right item. Researchers who study warehouses (like the Georgia Tech professors behind the free textbook Warehouse and Distribution Science) found that walking and searching eat up most of a picker\'s day, often more than the picking itself. The same thing happens in a basement, a spare bedroom or a storage unit.',
@@ -32,7 +32,12 @@ const lesson: Lesson = {
         ['Shelves, but no addresses', 'About 40 seconds', 'About 1 hour 45 minutes'],
         ['Bin addresses, list in bin order', 'About 15 seconds', 'About 40 minutes'],
       ] },
-      example: 'Going from tubs to addressed bins gives this seller back over 3 hours every week. That is a whole extra live, or a whole evening with her family.' },
+      example: 'Going from tubs to addressed bins gives this seller back over 3 hours every week. That is a whole extra live, or a whole evening with her family.',
+      visual: { type: 'bars', unit: 'minutes a week', bars: [
+        { label: 'Dig through tubs', value: 240 },
+        { label: 'Shelves, no addresses', value: 105 },
+        { label: 'Addressed bins, list in bin order', value: 40, hl: true },
+      ], caption: 'Same seller, same 160 pieces a week. Only the storage changed.' } },
     { kind: 'number', title: 'Your search time', q: 'You pull 60 pieces a week and it takes about 2 minutes to find each one. How many hours a week is that?', answer: 2, tolerance: 0.05, suffix: 'hours', hint: '60 pieces × 2 minutes = how many minutes? Divide by 60.', why: '60 × 2 = 120 minutes, which is 2 hours a week, or about 100 hours a year. That\'s two and a half full work weeks spent digging.' },
 
     { chapter: 'An address for everything', kind: 'learn', title: 'Think like the post office', nova: 'If the mail carrier can find your house, your helper can find a bracelet.',
@@ -61,6 +66,7 @@ const lesson: Lesson = {
 
     { chapter: 'Fast sellers up front', kind: 'learn', title: 'ABC: not every piece deserves the same spot', nova: 'This is the trick the big companies use that almost no small seller knows.',
       text: 'In most shops, a small share of items makes up most of the action. It\'s often close to the 80/20 rule: about 20% of your items cause about 80% of your picks. Warehouses sort items into A, B and C by how often they move, then give the best spots to the A items. This is called slotting.',
+      term: { word: 'Slotting', meaning: 'Deciding which spot each item lives in, based on how often it sells, how big it is and how heavy it is. Good slotting puts the busiest items closest to where you pack.' },
       table: { head: ['Class', 'What it is', 'Where it lives'], rows: [
         ['A', 'Your fastest movers and repeat items', 'Closest to your packing table, at waist-to-shoulder height'],
         ['B', 'Steady sellers', 'Next ring out'],
@@ -76,6 +82,16 @@ const lesson: Lesson = {
         { text: 'Put the boots at knee-to-waist height near the table and move a slow, light item up top', best: true, feedback: 'Exactly. Heavy goes low, fast goes close, and the slow item gives up its spot.' },
         { text: 'Leave them in the back, you\'ll walk', feedback: 'You\'ll walk dozens of extra trips this week. Re-slotting takes ten minutes once.' },
       ] },
+    { kind: 'howto', title: 'Re-slot your best sellers in one hour', text: 'Do this once a month, right after you look at your numbers. You need your phone or scanner, a few empty bins and a cart or laundry basket.',
+      steps: [
+        { title: 'Find your A items', detail: 'Open Reports, choose Last 90 days, and open Best sellers and Top categories under More reports. The top handful of categories and repeat items are your A items.', example: 'Rochelle\'s top three categories were earrings, crossbody bags and scarves. Together they were most of her picks.' },
+        { title: 'Pick the golden-zone bins', detail: 'Open Warehouse and look at the Map. Choose the bins on the rack nearest your packing table, between waist and shoulder height.' },
+        { title: 'Clear those bins of C items', detail: 'Move slow, light pieces from the golden zone up to a top shelf. For each one, tap Put items here on the new bin, then scan its tags, so the app follows the move.' },
+        { title: 'Move the A items in', detail: 'Bring your A items to the golden-zone bins. Scan the new bin label, then scan each tag. All the units with that Live # now live there.' },
+        { title: 'Put heavy pieces low', detail: 'Boots, heavy bags and anything glass go at knee-to-waist height, never overhead.' },
+        { title: 'Check the Map', detail: 'The Map shades bins by how full they are. The rack by your packing table should now look the busiest.' },
+      ],
+      tip: 'Reprint any faded bin labels while you are there. Select the bins in the List view and tap Reprint labels.' },
 
     { chapter: '5S your stock room', queen: "Do your 5S reset on the same day each month. Tidy spaces stay tidy when it's routine.", kind: 'learn', title: 'The five S\'s', nova: 'This one comes from Japanese factories, and it works in a basement just as well.',
       text: '5S is a method for keeping a workspace organized so problems show up right away. The American Society for Quality (ASQ) teaches it as five steps, each starting with S.',
@@ -101,10 +117,35 @@ const lesson: Lesson = {
     { kind: 'number', title: 'How accurate are you?', q: 'You count 50 bins and 47 match what the app says. What percent are accurate?', answer: 94, tolerance: 0.5, suffix: '%', hint: 'Divide 47 by 50, then multiply by 100.', why: '47 ÷ 50 = 0.94, so 94%. Good start! Large warehouses aim for well above 99%. Every bin you fix brings you closer, and fewer buyers hear "sorry, it\'s missing."' },
     { kind: 'learn', title: 'When a count is off', text: 'A count that doesn\'t match is a clue, not a crisis. Find the cause so it doesn\'t happen again.',
       points: ['Check the bins on either side first. Most "missing" pieces are next door.', 'Check the damaged box and your packing table', 'Look at the item\'s history: was it sold but never picked?', 'Fix the count in the app and jot down what caused it', 'If the same cause shows up twice, change the process, not just the number'] },
+    { kind: 'howto', title: 'Count one bin in two minutes', text: 'This is the whole weekly cycle count, one bin at a time. Most sellers can do eight to ten bins in fifteen minutes.',
+      steps: [
+        { title: 'Open the bin in the app', detail: 'In Warehouse, tap the bin on the Map or find it in the List. The bin page lists every item and how many units should be inside.', example: 'Bin A-02-3-C says 6 units: 3 gold hoops, 2 pearl studs, 1 charm bracelet.' },
+        { title: 'Count what is really there', detail: 'Take everything out and count it against the list. Do not trust a glance.' },
+        { title: 'Extra pieces? Scan them in', detail: 'Tap Put items here and scan the tag. The app moves that piece into this bin, wherever it thought it was before.' },
+        { title: 'Missing pieces? Look next door', detail: 'Check the bins on either side, the damaged box and the packing table before you decide it is gone.' },
+        { title: 'Truly gone? Record it', detail: 'Open the item and use Damage out with the reason Missing. It leaves your counts, and the Damage by reason report shows if losses keep happening.' },
+        { title: 'Write the cause', detail: 'One line in a notebook: the bin, what was off and why. Two of the same cause means a process needs fixing.' },
+      ],
+      tip: 'Count the same day you plan a live, before you pick items for it. You will catch problems while you can still fix them.' },
+    { kind: 'learn', title: 'What good looks like', text: 'Here is where a seller who starts cycle counting can expect to land. These are goals, not promises, and every shop is different, but the pattern is common: the first month finds a lot of problems, then the counts settle as the causes get fixed.',
+      visual: { type: 'stats', stats: [
+        { value: '94%', label: 'Bins accurate, first month' },
+        { value: '98%+', label: 'A good goal after three months' },
+        { value: '15 min', label: 'A week, for your A items' },
+        { value: '0', label: 'All-day counts needed' },
+      ], caption: 'Count a little, often. Fix the cause, not just the number.' } },
 
     { chapter: 'Room to grow', kind: 'learn', title: 'Forward pick and back stock', text: 'When stock outgrows your shelves, warehouses split storage in two. The forward pick area holds a few of each item close to packing. Back stock (reserve) holds the rest in bulk, further away, and refills the front when it runs low.',
       example: 'You have 24 of the same crossbody bag. Keep 4 in the golden zone by your packing table and 20 boxed in back stock. When the front gets down to 1, refill it before your next live.',
       tip: 'Give back stock its own zone letter (like Z) so a refill is a simple scan: scan the back bin, scan the front bin, done.' },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Searching is work nobody pays you for. Addressed bins cut it to minutes.',
+      'Give every spot an address read big to small: zone, rack, shelf, bin.',
+      'Use fixed homes for repeat items and open homes for hauls, and scan every move.',
+      'Slot your fastest sellers in the golden zone by the packing table. Heavy goes low.',
+      'Run a 5S reset monthly and a red-tag clearance for the pieces nobody needs.',
+      'Cycle count a few bins a week, A items most often, and fix the cause of every miss.',
+    ] },
     { kind: 'reflect', title: 'Your one big change', prompt: 'Walk through your stock area in your head. What is the one change from this course that would save you the most time? What day will you do it?', placeholder: 'The biggest change I\'ll make is…', example: 'Move jewelry, my top category, to the rack next to my packing table at chest height, and give every bin an address. Sunday afternoon.' },
     { kind: 'checklist', title: 'Your 30-day plan', prompt: 'Tick what you\'ll commit to this month.', items: ['Address every shelf and bin, and print bin labels', 'Pick fixed homes, open homes, or a mix, and write it down', 'Move my top sellers into the golden zone by my packing table', 'Run a 5S reset and a red-tag clearance live', 'Start cycle counting my A items every week', 'Check Reports monthly and re-slot my winners'] },
   ],
