@@ -15,7 +15,7 @@ const lesson: Lesson = {
     welcome: "Old stock is cash taking a nap on your shelf. Sales aren't a sign of failure; they're how smart shops stay fresh. Let's turn that stock back into money.",
     signoff: "Set a markdown ladder, know your floor price, and let go of what won't move. Fresh shelves sell better than full ones.",
   },
-  covers: ['src/pages/LivePrep.tsx', 'src/pages/Home.tsx'], updated: '2026-11-24',
+  covers: ['src/pages/LivePrep.tsx', 'src/pages/Home.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'Why old stock hurts', kind: 'learn', title: 'Cash on a shelf', nova: 'Let\'s get that money moving, sis.',
       text: 'Every piece on your shelf is money you already spent. While it sits, it can\'t buy the new pieces your buyers are asking for. The longer it sits, the less it\'s worth: trends move on, seasons pass, and it starts to look tired.',
@@ -27,11 +27,26 @@ const lesson: Lesson = {
         ['Cash still stuck on the shelf (at cost)', '$128', '$32'],
         ['What you can buy with it now', '$100 of new stock', '$240 of new stock'],
       ] },
+      visual: { type: 'bars', prefix: '$', caption: 'Money back in your hands this month from the same 20 bags. The sale brings in more than twice as much, even at a lower price.', bars: [
+        { label: 'Wait for $25', value: 100 },
+        { label: 'Sale at $15', value: 240, hl: true },
+      ] },
       tip: 'Fresh stock is what keeps buyers coming back. Moving old stock pays for it.' },
 
     { chapter: 'The alert', kind: 'learn', title: 'The alert', text: 'When pieces pass your old-stock age (set in Settings), Home puts it on Your to-do list, and Get ready for live shows a Run a sale banner at the top.',
       screen: { title: 'Home · Your to-do list', rows: ['56 items sitting 60+ days', 'Run a sale to turn them back into cash'], buttons: ['56 items sitting 60+ days →'], highlight: '56 items sitting 60+ days →' } },
     { kind: 'learn', title: 'Oldest first', text: 'Run a sale opens Sale mode: oldest stock first. Tap Add all to put them in your cart, or pick the ones you want, then set your sale prices at checkout as live prices.' },
+    { kind: 'howto', title: 'Run a sale in the app, start to finish', text: 'Here is the whole path, from the reminder on Home to a live full of marked-down pieces.',
+      steps: [
+        { title: 'Open sale mode', detail: 'Tap the old-stock card on Home\'s to-do list, or go to Get ready for live and tap Run a sale on the banner. Sale mode shows only pieces past your old-stock age, oldest first.' },
+        { title: 'Add the pieces', detail: 'Tap Add all to put every old piece in your cart at once, or add them one by one if you want to hold some back for a bundle.', example: 'Sale mode shows 56 pieces. She taps Add all 56, then removes 6 holiday sweaters she\'ll save for next December.' },
+        { title: 'Open the cart', detail: 'Tap Cart at the top right. Each line shows the live number, how many are on the shelf and the regular price.' },
+        { title: 'Type a live price on each line', detail: 'In the Live price box, type the sale price from your markdown ladder. Leave it empty to sell at the regular price. Check every price is above your floor.' },
+        { title: 'Check "If everything sells"', detail: 'The total at the bottom tells you what the sale could bring in. It\'s a good number to say out loud on the live: "I need to clear $600 of stock tonight!"' },
+        { title: 'Link the cart to a live', detail: 'Under Checkout, choose the live. If you have no live planned yet, schedule one on the calendar first; your cart waits for you.' },
+        { title: 'Print yellow sale tags if you want them', detail: 'In Stock, select the pieces and choose Print yellow sale tags, or open one item and tap Sale tags. Load the yellow roll first. Yellow tags show buyers it\'s a deal at a glance.' },
+      ],
+      queen: "Yellow tags work on camera. When the buyers see yellow, they know it's a deal before you say a word." },
     { kind: 'quiz', q: 'What starts the old-stock alert?', options: ['Items older than your days in Settings', 'Items with no photo', 'Damaged items'], answer: 0, why: 'You set the age in Settings → Goals, alerts and defaults.' },
     { kind: 'tap', title: 'Practice', prompt: 'Your to-do list on Home says 56 items are sitting 60+ days. You want to start a sale. Tap…', screen: { title: 'Home · Your to-do list', buttons: ['4 orders to pick', '56 items sitting 60+ days', '12 items to put away'] }, answer: '56 items sitting 60+ days', hint: 'That card opens Get ready for live in sale mode, oldest first.' },
 
@@ -41,6 +56,13 @@ const lesson: Lesson = {
         ['30 to 60 days', '20 to 25% off', 'Mixed into regular lives'],
         ['60 to 90 days', '40 to 50% off', 'Clearance segment or clearance live'],
         ['90+ days', 'Floor price, bundle, or let it go', '$2 rounds, bundles, donate'],
+      ] },
+      term: { word: 'Markdown', meaning: 'Lowering a price on purpose to sell a piece faster. A markdown ladder is your plan for how much, and when.' },
+      visual: { type: 'flow', caption: 'One $20 top walking down the ladder.', steps: [
+        { label: 'Day 1 to 30', note: '$20, full price' },
+        { label: 'Day 30 to 60', note: '$15 to $16, mixed into lives' },
+        { label: 'Day 60 to 90', note: '$10 to $12, clearance' },
+        { label: 'Day 90+', note: 'floor price, bundle or let it go' },
       ] } },
     { kind: 'learn', title: 'Your floor price', text: 'Your floor is the lowest price where you don\'t lose money on the sale itself: what you paid, plus the fee, plus packaging. Below the floor, you\'re paying the buyer to take it.',
       table: { head: ['', 'Example'], rows: [
@@ -49,7 +71,8 @@ const lesson: Lesson = {
         ['Fee (about 3% of a ~$7 price)', '$0.21'],
         ['Floor price', 'about $6.71, so $7'],
       ] },
-      tip: 'Anything you bought for pennies in a big lot (like $2 Tuesday stock) has a low floor, so $2 rounds still make money.' },
+      tip: 'Anything you bought for pennies in a big lot (like $2 Tuesday stock) has a low floor, so $2 rounds still make money.',
+      term: { word: 'Floor price', meaning: 'The lowest price that still covers what you paid, the fee and the packaging. Your sale prices never go under it.' } },
     { kind: 'number', title: 'Find the floor', q: 'You paid $9 for a bag. Packaging is $0.60. Ignore the fee for now. What\'s the lowest price that covers your costs?', prefix: '$', answer: 9.6, tolerance: 0.01, hint: 'Add what you paid and the packaging.', why: '$9 + $0.60 = $9.60. With a small fee on top, call it $10. Any sale price from $10 up is still money in your pocket.' },
     { kind: 'number', title: '40% off', q: 'A top is $20. It\'s 70 days old, so it moves to 40% off on your ladder. What\'s the sale price?', prefix: '$', answer: 12, hint: '40% of $20 is $8. Take that off.', why: '$20 − $8 = $12. Check it\'s above your floor, then it\'s good to go.' },
 
@@ -60,6 +83,15 @@ const lesson: Lesson = {
         ['Bundles', '"Fill the bag: any 3 for $15"', 'Small, low-priced pieces'],
         ['Flash $2 rounds', '2 minutes, $2 each, go!', 'Pieces at or near their floor'],
       ] } },
+    { kind: 'howto', title: 'Plan a one-hour clearance live', text: 'A clearance live works best with a shape. People stay when they know something good is coming next.',
+      steps: [
+        { title: 'Minutes 0 to 5: the welcome and the why', detail: 'Tell them what tonight is: "Making room for new arrivals, everything under $10." Say the total you want to clear.' },
+        { title: 'Minutes 5 to 25: the best old pieces first', detail: 'Lead with your nicest marked-down pieces, the ones at 40 to 50% off. They build excitement and early sales.' },
+        { title: 'Minutes 25 to 40: bundles', detail: 'Hold up a stack and say the deal: "Any 3 scarves for $8." Bundles move small pieces fast and raise each buyer\'s total.' },
+        { title: 'Minutes 40 to 50: flash $2 rounds', detail: 'Set a timer for 2 minutes and go piece by piece at $2. Energy goes way up. Only use pieces whose floor is at or under $2.' },
+        { title: 'Minutes 50 to 60: thank-you and a teaser', detail: 'Thank everyone, remind them to pay their invoices, and show one new arrival coming next week so they come back.' },
+      ],
+      tip: 'A seller might clear 41 of 56 old pieces in one hour this way. The 15 left over go into a donation bag, and she writes down what they had in common before her next buying trip.' },
     { kind: 'scenario', title: 'Twelve scarves won\'t move', situation: 'You have 12 scarves, 95 days old, that you paid $2 each for. You\'ve shown them on three lives at $10 with no takers.',
       options: [
         { text: 'Keep showing them at $10, someone will want them eventually', feedback: 'Three lives with no takers is your answer. Keeping the price is keeping your cash stuck.' },
@@ -69,11 +101,19 @@ const lesson: Lesson = {
     { kind: 'script', title: 'Announce a clearance live', lines: [
       'POST: "🚨 BASEMENT CLEARANCE 🚨 Thursday 7 PM ET. I\'m making room for new arrivals, so EVERYTHING is under $10, bags, jewelry, scarves. When it\'s gone, it\'s gone!"',
       'ON LIVE: "Family, these are pieces I love, I just need the room. Tonight\'s the lowest they\'ll ever be. Let\'s clear these shelves together!"',
-    ], tip: 'Frame it as making room for new pieces, not as "stuff nobody wanted."' },
+    ], tip: 'Frame it as making room for new pieces, not as "stuff nobody wanted." Post the announcement two days ahead, then a "tonight at 7" reminder the morning of, with a photo of the fullest, prettiest clearance rack you can make.' },
 
-    { chapter: 'Keep it healthy', queen: "Some pieces just weren't for your buyers. Bundle them, donate them, and buy smarter next time. That's growth.", kind: 'learn', title: 'Let it go', text: 'Some pieces just won\'t sell to your crowd, and that\'s okay. Past 120 days and below your floor? Donate it, give it away as a free bonus to regulars, or sell it in a bulk lot to another reseller. Then learn from it: what made you buy it, and will you buy that kind of piece again?' },
+    { chapter: 'Keep it healthy', queen: "Some pieces just weren't for your buyers. Bundle them, donate them, and buy smarter next time. That's growth.", kind: 'learn', title: 'Let it go', text: 'Some pieces just won\'t sell to your crowd, and that\'s okay. Past 120 days and below your floor? Donate it, give it away as a free bonus to regulars, or sell it in a bulk lot to another reseller. Then learn from it: what made you buy it, and will you buy that kind of piece again?',
+      example: 'Her 120-day leftovers: 9 neon tops, 4 pairs of heels in size 11, 3 pieces of home decor. She donates them, keeps the receipt for her records, and adds a line to her buying rules: "No neon, no home decor, check sizes against what my buyers order."' },
     { kind: 'quiz', q: 'Half your clearance pile is neon tops. What\'s the lesson for next time?', options: ['Buy more neon to try again', 'Your crowd doesn\'t go for neon, so buy less of it (or none) next haul', 'Lower prices on everything'], answer: 1, why: 'Old stock is feedback about buying. Reports → Best sellers and Oldest stock show you what to buy more of, and less of.' },
     { kind: 'quiz', q: 'When is a sale price too low?', options: ['When it\'s below your floor price', 'When it\'s under $10', 'Never, any sale is good'], answer: 0, why: 'Below the floor you lose money on the sale itself. Bundle or donate instead.' },
+    { kind: 'recap', title: 'Turn old stock into cash', points: [
+        'Old stock is cash on a shelf. Moving it pays for the fresh pieces your buyers want.',
+        'Run a sale opens sale mode, oldest first. Add all, type live prices in the cart, and link it to a live.',
+        'Follow a markdown ladder (30, 60, 90 days) and never go below your floor price.',
+        'Pick a format: mixed in, a clearance live, bundles or flash $2 rounds.',
+        'What doesn\'t sell is feedback for your next buying trip.',
+      ] },
     { kind: 'reflect', title: 'Your markdown ladder', prompt: 'Write your own markdown steps: what discount at what age, and what you\'ll do with anything past 90 or 120 days.', placeholder: '30 days: … 60 days: … 90 days: …', example: '30 days: 20% off, mixed in. 60 days: 40% off in a clearance segment. 90 days: bundles and $2 rounds. 120 days: donate and write down why it didn\'t sell.' },
     { kind: 'checklist', title: 'Run your first sale', prompt: 'Tick each step.', items: [
       'Check my old-stock days in Settings',
