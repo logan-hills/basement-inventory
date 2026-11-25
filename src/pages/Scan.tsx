@@ -6,7 +6,7 @@ import FreeCameraTip from '../components/FreeCameraTip'
 import DamageSheet from '../components/DamageSheet'
 import { findByLiveNumber, findUnit, money, type UnitInfo } from '../lib/data'
 import { feedbackBad, feedbackOk, setSound, soundEnabled } from '../lib/feedback'
-import { findBin, isBinCode, loadSiblings, moveUnit, moveUnitsTogether, type Bin, type Sibling } from '../lib/locations'
+import { createBinFromCode, findBin, isBinCode, loadSiblings, moveUnit, moveUnitsTogether, type Bin, type Sibling } from '../lib/locations'
 import { useSession } from '../lib/session'
 import { useToast } from '../lib/toast'
 import { isOrderCode, loadOrderByCode, orderUnits, STATUS_LABEL, type Order } from '../lib/orders'
@@ -74,7 +74,12 @@ export default function Scan() {
   useEffect(() => {
     const refocus = () => { if (!document.querySelector('.sheet-panel')) inputRef.current?.focus() }
     refocus()
-    const id = window.setInterval(() => { if (document.activeElement === document.body) refocus() }, 800)
+    // After tapping a button (Skip, Done…) focus sits on that button and a scanner's typing would go nowhere,
+    // so pull it back to the scan box unless they're typing in some other field.
+    const id = window.setInterval(() => {
+      const a = document.activeElement
+      if (!a || a === document.body || a.tagName === 'BUTTON' || a.tagName === 'A') refocus()
+    }, 500)
     return () => clearInterval(id)
   }, [])
 
@@ -86,7 +91,12 @@ export default function Scan() {
       const order = await loadOrderByCode(code)
       hit = order ? { kind: 'order', code, order } : { kind: 'miss', code }
     } else if (isBinCode(code)) {
-      const bin = await findBin(code)
+      let bin = await findBin(code)
+      // A label printed earlier for a bin that's no longer in the app: add the bin so the label just works.
+      if (!bin && shop) {
+        bin = await createBinFromCode(shop.id, code)
+        if (bin) toast(`New bin ${bin.code} added to your warehouse`)
+      }
       const waiting = pendingRef.current
       if (bin && waiting && shop) {
         // The bin answers the put-away prompt: link the waiting tag to it, then keep the bin open for more tags.
@@ -169,6 +179,10 @@ export default function Scan() {
         </div>
       </div>
 
+      {/* Camera first, so it's always in the same spot above everything else. */}
+      {!camera && <FreeCameraTip onUse={() => setCamera(true)} />}
+      {camera && <CameraScanner onCode={handle} />}
+
       {activeBin ? (
         <div className="putaway-banner">
           <div><span className="eyebrow light">Putting away into</span><b className="mono">{activeBin.code}</b><span>{activeBin.name}</span>{binCount > 0 && <span className="putaway-count">{binCount} put away here this round</span>}</div>
@@ -217,8 +231,6 @@ export default function Scan() {
         </div>
       )}
 
-      {!camera && <FreeCameraTip onUse={() => setCamera(true)} />}
-      {camera && <CameraScanner onCode={handle} />}
 
       <form onSubmit={submit} className="scan-input">
         <input ref={inputRef} value={manual} onChange={e => setManual(e.target.value)} onKeyDown={scanBoxKeyDown}

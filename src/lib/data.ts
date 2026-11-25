@@ -117,7 +117,9 @@ export const UNIT_SELECT = 'id, tag_code, status, removed_reason, variant:varian
 
 /** Finds a tag by its barcode (e.g. 4821-001). */
 export async function findUnit(code: string): Promise<UnitInfo | null> {
-  const { data } = await supabase.from('units').select(UNIT_SELECT).eq('tag_code', code.trim().toUpperCase()).maybeSingle()
+  // Scanners on a non-US keyboard setting can send 2447?001 or 2447 001 instead of 2447-001.
+  const clean = code.trim().toUpperCase().replace(/^(\d{4})[^0-9A-Z]+(\d{3})$/, '$1-$2')
+  const { data } = await supabase.from('units').select(UNIT_SELECT).eq('tag_code', clean).maybeSingle()
   return (data as any) ?? null
 }
 

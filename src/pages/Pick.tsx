@@ -8,7 +8,7 @@ import { findUnit, photoUrls, UNIT_SELECT, type UnitInfo } from '../lib/data'
 import JsBarcode from 'jsbarcode'
 import { feedbackBad, feedbackOk } from '../lib/feedback'
 import { isOrderCode, lineRemaining, loadOrders, orderRemaining, orderUnits, type Order, type OrderLine } from '../lib/orders'
-import { isBinCode } from '../lib/locations'
+import { isBinCode, normalizeBinCode } from '../lib/locations'
 import { useSession } from '../lib/session'
 import { useToast } from '../lib/toast'
 
@@ -116,7 +116,7 @@ export default function Pick() {
     const code = raw.trim().toUpperCase()
     if (!code) return
     if (isOrderCode(code)) return scanBox(code)
-    if (isBinCode(code)) return scanBin(code)
+    if (isBinCode(code)) return scanBin(normalizeBinCode(code)!)
     const unit = await findUnit(code)
     if (!unit) {
       // A product UPC or a Live # works too: grab any in-stock piece of that item.
