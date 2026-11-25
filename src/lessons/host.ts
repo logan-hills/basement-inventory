@@ -2,21 +2,21 @@ import type { Lesson } from './types'
 
 const lesson: Lesson = {
   id: 'host', title: 'Live classes and Queen sessions, start to finish', track: 'Start here', icon: 'live',
-  why: 'A live class only helps if you can get in the room. Learn exactly how to join a class or a 1:1 with the Queen, and how the Queen and her hosts run them from the Host desk.',
+  why: 'A live class only helps if you can get in the room. Learn exactly how to join a class or a 1:1 with the Queen, and how the Queen and her Founder team run them from the Host desk.',
   outcomes: [
     'Save a seat and join a live class with one tap, 15 minutes before the start',
     'Join a booked Time with the Queen session from the app or your calendar',
     'Know what Zoom, Google Meet and Microsoft Teams ask of you as a guest',
-    'For hosts: save a meeting link once and start every class from the Host desk',
-    'For hosts: book a paid consult so the client gets her own Join button',
-    'For hosts: give team members\' shops every feature free',
+    'For Founders: save a meeting link once and start every class from the Host desk',
+    'For Founders: book a paid consult so the client gets her own Join button',
+    'For Founders: give team members\' shops every feature free',
   ],
   route: { to: '/lessons', label: 'Open Dazzle University' },
   queen: {
     welcome: "I want every one of you in the room with me, not stuck looking for a link. This lesson shows you how to get into class with one tap, and how my team and I run it on our side.",
     signoff: "Save your seat, put it on your calendar, and come with your questions. When that Join button lights up, tap it. I'll be right there waiting for you.",
   },
-  covers: ['src/pages/HostDesk.tsx', 'src/lib/meetings.ts', 'src/components/JoinNow.tsx', 'supabase/020_host_desk.sql', 'supabase/021_founder_from_host_desk.sql'], updated: '2026-11-25',
+  covers: ['src/pages/HostDesk.tsx', 'src/lib/meetings.ts', 'src/components/JoinNow.tsx', 'supabase/020_host_desk.sql', 'supabase/021_founder_from_host_desk.sql', 'src/lib/requests.ts', 'src/components/CoachingRequest.tsx', 'supabase/022_founder_host_desk_and_requests.sql'], updated: '2026-11-25',
   slides: [
     /* ---------- Module 1: how it fits together ---------- */
     { chapter: 'Module 1 · How live classes work', kind: 'learn', title: 'One link, saved once, used every week', nova: 'Hey love! Ever had a class start while you were still digging through email for the link? Not here. Let me show you.',
@@ -79,7 +79,7 @@ const lesson: Lesson = {
     { kind: 'quiz', q: 'Your session doesn\'t show on the Time with the Queen page, but you got the confirmation email. What\'s the most likely reason?', options: ['The session was cancelled', 'It was booked under a different email than the one you sign in with', 'Sessions never show in the app'], answer: 1, why: 'Sessions are matched by email. Use the link in your confirmation email for today, and reply to the Queen with your sign-in email so she can fix the booking.' },
 
     /* ---------- Module 4: for the Queen and her hosts ---------- */
-    { chapter: 'Module 4 · For hosts: the Host desk', queen: "Keep it simple. One room for each class, one for your 1:1s, and use the same links every week. Your regulars will learn exactly where to find you.", kind: 'learn', title: 'Your stage, in one place', text: 'The Queen and anyone she makes a host of the community calendar get a Host desk. Open it from More, then ♛ Host desk, or from the University home under Join a live class. It has four parts: Up next, with a big Start button for your next class or session; Your meeting rooms, where you paste each link once; Time with the Queen, where you book paid sessions; and Free for you and your team, where you give team members\' shops every feature free.',
+    { chapter: 'Module 4 · For Founders: the Host desk', queen: "Keep it simple. One room for each class, one for your 1:1s, and use the same links every week. Your regulars will learn exactly where to find you.", kind: 'learn', title: 'Your stage, in one place', text: 'Only Founder accounts get a Host desk: the Queen\'s own shop, her team, and anyone she adds under Free for you and your team. Other sellers never see it, and the server checks this too. Open it from More, then ♛ Host desk, or from the University home under Join a live class. At the top sit Requests: every 1:1 coaching and Time with the Queen request sellers send from the forms in the app, newest first, with a coral count of new ones (your Home screen shows the count too). Below that are four parts: Up next, with a big Start button for your next class or session; Your meeting rooms, where you paste each link once; Time with the Queen, where you book paid sessions; and Free for you and your team, where you give team members\' shops every feature free.',
       screen: { title: 'Host desk', rows: ['Next up · Starts in 12 minutes', 'How to go Live · Wed, Dec 3 · 8:00 PM ET', '9 seats saved'], buttons: ['Start class in Zoom', 'Who\'s coming (9)', 'Your meeting rooms', 'Book a session'], highlight: 'Start class in Zoom' },
       points: ['The Start button glows gold from 15 minutes before', 'Before that it says Open early, so you can set up in peace', 'No link saved yet? It says Add your meeting link first and takes you there'] },
     { kind: 'learn', title: 'Pick a meeting service', text: 'Any service that gives you a link works. These are the three most people already know. Plans and limits change, so check the service\'s own page before you choose, but at the time of writing this is how they compare for a one-hour class.',
@@ -100,7 +100,7 @@ const lesson: Lesson = {
       { title: 'Open your Host desk, Your meeting rooms', detail: 'There\'s one box for each class and one for Time with the Queen (1:1).' },
       { title: 'Paste and tap Save link', detail: 'Pasted a whole invite by mistake? That\'s fine. The app pulls the link out of it.' },
       { title: 'Tap Test it', detail: 'Your room opens in a new tab. If it opens for you, it opens for your guests.' },
-    ], tip: 'Your 1:1 room stays private. Only hosts and the client on a booked session see it. Class links go to everyone with a seat.' },
+    ], tip: 'Your 1:1 room stays private. Only Founder accounts and the client on a booked session see it. Class links go to everyone with a seat.' },
     { kind: 'howto', title: 'Run a class from the Host desk', steps: [
       { title: '15 minutes before: check Who\'s coming', detail: 'Tap Who\'s coming to see every name. Tap Email everyone the join link for a last-minute reminder (it opens your email with everyone in BCC).' },
       { title: '10 minutes before: tap Start', detail: 'The gold Start button opens your room. Turn on your camera, check your light and sound.' },
@@ -116,6 +116,12 @@ const lesson: Lesson = {
       '"Let\'s get started!"',
     ] },
     { kind: 'order', title: 'Practice: class night, in order', prompt: 'Put the host\'s steps in order.', steps: ['Check Who\'s coming', 'Tap Start', 'Welcome people in', 'Teach the topics', 'Take questions', 'Share the next date and end the call'] },
+    { kind: 'howto', title: 'Answer a request', text: 'Sellers never open an email app to reach you. They fill in a short form in the app (Book 1:1 coaching on the Help desk and Live classes page, or Send my request on Time with the Queen) and it lands at the top of your Host desk.', steps: [
+      { title: 'Read the request', detail: 'Each card shows what she wants (1:1 coaching or Time with the Queen), when she sent it, her shop, her best time, and her topics. Tap Read her request for the full note.', example: 'Time with the Queen · 30 min ago · Tasha Green · Evening · 1 hr · Money and pricing' },
+      { title: 'Reach out', detail: 'Tap Call if she left a phone number, or Email her to reply from your own email. Offer a time and, for a paid session, how to pay the deposit.' },
+      { title: 'Book it when the deposit is in', detail: 'On a Time with the Queen request, tap Book her session. Her name, email, phone, length and topics are filled in for you. Pick the date and time and tap Book it. The request is marked handled for you.' },
+      { title: 'Mark coaching handled', detail: 'For 1:1 coaching, tap ✓ Handled once you\'ve set the time. Show handled brings old ones back if you need them.' },
+    ], tip: 'Answer new requests within a day. A quick "Got it, I\'ll have a time for you tomorrow" keeps a new seller excited.' },
     { kind: 'howto', title: 'Book a Time with the Queen session', text: 'Book it once the client\'s deposit is in. Then she sees it in her own app.', steps: [
       { title: 'Tap Book a session', detail: 'On the Host desk, under Time with the Queen.' },
       { title: 'Fill in her details', detail: 'Her name, the email she signs in with, phone if you have it, date and time (Eastern), length and topic.', example: 'Tasha Green · tasha@email.com · Tue, Dec 9 · 11:00 AM · 1 hr · Pricing for profit' },
@@ -131,8 +137,8 @@ const lesson: Lesson = {
       ] },
 
     /* ---------- Module 5: free for the Queen's team ---------- */
-    { chapter: 'Module 5 · For hosts: free for your team', queen: "The people who build this with me should never pay to use it. Add them, and let them focus on serving our sellers.", kind: 'learn', title: 'You built it, your team uses it free', text: 'Everyone else picks a plan. The Queen\'s own shop, and any shop she adds, gets every feature free: Dazzle University, team members, everything. There are two ways her team works free. Helpers she invites in Settings, Team members, work inside her shop, so they\'re already covered. A team member who runs her own separate shop gets added on the Host desk under Free for you and your team, by the email she signs in with.',
-      term: { word: 'Free access', meaning: 'A shop that uses every feature without a paid plan. Only the Queen and her hosts can give it or take it away.' },
+    { chapter: 'Module 5 · For Founders: free for your team', queen: "The people who build this with me should never pay to use it. Add them, and let them focus on serving our sellers.", kind: 'learn', title: 'You built it, your team uses it free', text: 'Everyone else picks a plan. The Queen\'s own shop, and any shop she adds, gets every feature free: Dazzle University, team members, everything. There are two ways her team works free. Helpers she invites in Settings, Team members, work inside her shop, so they\'re already covered. A team member who runs her own separate shop gets added on the Host desk under Free for you and your team, by the email she signs in with.',
+      term: { word: 'Free access', meaning: 'A shop that uses every feature without a paid plan. Only Founder accounts can give it or take it away. A shop with free access is on the Founder plan, so its owner gets the Host desk too.' },
       points: ['She must sign up and create her shop first, then you add her email', 'She may need to close and reopen the app to see everything', 'Remove takes her back to the free Stream plan. Your own shop can\'t be removed.'] },
     { kind: 'quiz', q: 'Dee helps in the Queen\'s shop and also runs her own shop. How does Dee get her own shop free?', options: ['Invite her as a team member again', 'Add her sign-in email under Free for you and your team on the Host desk', 'She can\'t; only the Queen\'s shop is free'], answer: 1, why: 'Team member invites cover work inside the Queen\'s shop. Her own shop needs free access, added by her sign-in email on the Host desk.' },
 
@@ -142,12 +148,11 @@ const lesson: Lesson = {
       'Join lights up 15 minutes before, on Home, the University home and Time with the Queen',
       'On a phone, the first join may ask you to install a free app. That\'s normal.',
       'Book 1:1s with your sign-in email so your session shows in the app',
-      'Hosts: save each meeting link once, then tap Start on the Host desk',
-      'Hosts: book paid sessions after the deposit, and email the client in one tap',
+      'Founders: save each meeting link once, then tap Start on the Host desk',
+      'Founders: book paid sessions after the deposit, and email the client in one tap',
       'The Queen\'s shop and any shop she adds use every feature free',
     ] },
-    { kind: 'checklist', title: 'Your next class', prompt: 'Tick these off before your next live class.', items: ['Save my seat for a class this week', 'Add it to my calendar', 'Charge my phone or laptop', 'Write down two questions', 'Tap Join as soon as it lights up'] },
-    { kind: 'reflect', title: 'What you\'ll bring', prompt: 'What\'s the one thing you most want to leave your next live class knowing how to do?', placeholder: 'By the end of class I want to…', example: 'Print my first sheet of 2×1 tags and label my first three bins.' },
+    { kind: 'checklist', title: 'Your next class', prompt: 'Tick these off before your next live class.', items: ['Save my seat for a class this week', 'Add it to my calendar', 'Charge my phone or laptop', 'Write down two questions', 'Tap Join as soon as it lights up', 'Stuck before then? Tap Book 1:1 coaching on the Help desk'] },
   ],
 }
 export default lesson

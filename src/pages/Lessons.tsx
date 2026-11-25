@@ -20,7 +20,7 @@ import { CLASS_TZ, ONE_ON_ONE, QUEEN_SESSION } from '../lessons/classes'
 import { useLiveClasses } from '../lib/classSchedule'
 import ClassScheduleEditor from '../components/ClassScheduleEditor'
 import { SeatJoin } from '../components/JoinNow'
-import { TEAM_CONTACT as CONTACT } from '../lib/legal'
+import CoachingRequest from '../components/CoachingRequest'
 import novaLaverne from '../assets/nova-laverne.webp'
 
 const NOVA_TIPS: [NovaMood, string][] = [
@@ -85,6 +85,7 @@ export default function Lessons() {
   const signups = useClassSignups()
   const { classes } = useLiveClasses()
   const [editTimes, setEditTimes] = useState(false)
+  const [coaching, setCoaching] = useState<'Daytime' | 'Evening' | null>(null)
   const [seat, setSeat] = useState<{ c: LiveClass; label: 'Daytime' | 'Evening'; date?: string } | null>(null)
   const [showAllCerts, setShowAllCerts] = useState(false)
   const awards = useMemo(() => awardStatus(progress), [progress])
@@ -301,7 +302,7 @@ export default function Lessons() {
         </section>
       ) : tab === 'classes' ? (
         <section className="stack wide-gap">
-          <LiveClasses classes={classes} isDone={isDone} signups={signups} onSeat={(c, label, date) => setSeat({ c, label, date })} onEditTimes={() => setEditTimes(true)} />
+          <LiveClasses classes={classes} isDone={isDone} signups={signups} onSeat={(c, label, date) => setSeat({ c, label, date })} onEditTimes={() => setEditTimes(true)} onCoaching={setCoaching} />
         </section>
       ) : tab === 'business' ? (
         <section className="stack wide-gap">
@@ -440,11 +441,12 @@ export default function Lessons() {
           <div className="uni-help-more">
             <b>Still stuck?</b>
             <span>Book free 1:1 coaching with the Dynamic Dazzle team, daytime or evening.</span>
-            <a className="btn uni-step-btn" href={`mailto:${CONTACT}?subject=${encodeURIComponent('Book a 1:1 coaching session')}`}>Book 1:1 coaching ›</a>
+            <button type="button" className="btn uni-step-btn" onClick={() => setCoaching('Daytime')}>Book 1:1 coaching ›</button>
           </div>
         </section>
       )}
       {editTimes && <ClassScheduleEditor onClose={() => setEditTimes(false)} />}
+      {coaching && <CoachingRequest when={coaching} onClose={() => setCoaching(null)} />}
       {seat && <ClassSignup c={seat.c} label={seat.label} date={seat.date} signups={signups} onClose={() => setSeat(null)} />}
       {cert && <CertificateWindow a={cert} shopName={shop?.name ?? ''} shopId={shop?.id} onClose={() => setCert(null)} />}
     </div>
@@ -515,7 +517,7 @@ function WhosComing({ signups, classes }: { signups: ReturnType<typeof useClassS
   )
 }
 
-function LiveClasses({ classes, isDone, signups, onSeat, onEditTimes }: { classes: LiveClass[]; isDone: (l: Lesson) => boolean; signups: ReturnType<typeof useClassSignups>; onSeat: (c: LiveClass, label: 'Daytime' | 'Evening', date?: string) => void; onEditTimes: () => void }) {
+function LiveClasses({ classes, isDone, signups, onSeat, onEditTimes, onCoaching }: { classes: LiveClass[]; isDone: (l: Lesson) => boolean; signups: ReturnType<typeof useClassSignups>; onSeat: (c: LiveClass, label: 'Daytime' | 'Evening', date?: string) => void; onEditTimes: () => void; onCoaching: (w: 'Daytime' | 'Evening') => void }) {
   return (
     <div className="uni-classes" id="u-classes">
       <div className="uni-classes-head">
@@ -551,8 +553,8 @@ function LiveClasses({ classes, isDone, signups, onSeat, onEditTimes }: { classe
           <h4>{ONE_ON_ONE.title}</h4>
           <p>{ONE_ON_ONE.what}</p>
           <div className="uni-class-times">
-            <a className="uni-class-time" href={`mailto:${CONTACT}?subject=${encodeURIComponent('Book a 1:1 coaching session (daytime)')}`}><small>Daytime</small><b>1:1</b><span>Book it ›</span></a>
-            <a className="uni-class-time" href={`mailto:${CONTACT}?subject=${encodeURIComponent('Book a 1:1 coaching session (evening)')}`}><small>Evening</small><b>1:1</b><span>Book it ›</span></a>
+            <button type="button" className="uni-class-time" onClick={() => onCoaching('Daytime')}><small>Daytime</small><b>1:1</b><span>Book it ›</span></button>
+            <button type="button" className="uni-class-time" onClick={() => onCoaching('Evening')}><small>Evening</small><b>1:1</b><span>Book it ›</span></button>
           </div>
         </article>
       </div>

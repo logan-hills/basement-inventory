@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, useSyncExternalStore } from 'react'
 import { supabase } from './supabase'
 import { useSession } from './session'
 import { CLASS_TZ_ID, QUEEN_SESSION } from '../lessons/classes'
+import { isFounder } from './plan'
 
 /* Where the Queen actually holds her live classes and 1:1 sessions.
    She saves a meeting link once (Zoom, Google Meet, Microsoft Teams, any link that opens a video call)
@@ -157,9 +158,11 @@ export function openMeeting(url: string) {
 /* ---------- Is this person one of the Queen's hosts? ---------- */
 
 let hostCache: { user: string; host: boolean } | null = null
-/** True for hosts of the community calendar: the Queen and the team members she made hosts. */
+/** True only for Founder accounts (the Queen's shop and her team). The server checks the same rule
+    (is_any_host in 022_founder_host_desk_and_requests.sql), so hiding the button is not the only lock. */
 export function useIsHost() {
-  const { session } = useSession()
+  const { session, shop } = useSession()
+  const founder = isFounder(shop?.plan)
   const uid = session?.user.id ?? ''
   // null while we check.
   const [host, setHost] = useState<boolean | null>(() => (hostCache?.user === uid ? hostCache.host : null))
@@ -169,7 +172,7 @@ export function useIsHost() {
     supabase.rpc('is_any_host').then(({ data }) => { const h = data === true; hostCache = { user: uid, host: h }; if (live) setHost(h) })
     return () => { live = false }
   }, [uid])
-  return host
+  return founder ? host : false
 }
 
 /* ---------- Time with the Queen: booked sessions ---------- */
