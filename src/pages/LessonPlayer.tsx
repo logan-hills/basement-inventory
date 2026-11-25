@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Icon from '../components/Icon'
 import { Nova, NovaSays, burst, pick, NOVA_CHEERS, NOVA_OOPS, type NovaMood } from '../components/Nova'
-import { LESSONS, COURSES, GRADED, INTERACTIVE, lessonById, lessonMinutes, lessonTone, type Lesson, type Screen, type Slide } from '../lessons'
+import { LESSONS, COURSES, GRADED, INTERACTIVE, lessonById, lessonMinutes, lessonTone, type Lesson, type Screen, type Slide, type Visual } from '../lessons'
 import { useLessonProgress } from '../lib/lessonProgress'
 import { useSession } from '../lib/session'
 import { hasAcademy } from '../lib/plan'
@@ -28,6 +28,8 @@ const REFLECT = ['Grab a thought and write it down. It\'s just for you.', 'Workb
 const SCENARIO = ['This happens to all of us. What would you do?', 'Real life, real shop. Pick your move.', 'Put yourself right there. What\'s the play?']
 const NUMBER = ['Grab your calculator, or do it in your head.', 'Money math! You\'ve got this.']
 const SCRIPT = ['Steal this. Change the words so it sounds like you.', 'Here are the exact words. Copy it, keep it.']
+const HOWTO = ['Here\'s exactly how, one step at a time.', 'Follow along. Take it slow, it\'s worth it.']
+const RECAP = ['Let\'s lock it in. Here\'s what to remember.', 'If you remember nothing else, remember these.']
 const CHECK = ['Let\'s make it real. Tick what you\'ll do.', 'Your action plan. Small steps, big results.']
 
 function MockScreen({ s, onTap, picked, answer }: { s: Screen; onTap?: (b: string) => void; picked?: string | null; answer?: string }) {
@@ -208,6 +210,82 @@ function ScriptCard({ slide }: { slide: Extract<Slide, { kind: 'script' }> }) {
   )
 }
 
+/** A picture drawn from the lesson's own numbers and steps, like the diagrams in a work training. */
+function VisualFig({ v }: { v: Visual }) {
+  let body: ReactNode = null
+  if (v.type === 'flow') body = (
+    <ol className="vis-flow">{v.steps.map((x, n) => <li key={n}><b className="vis-num">{n + 1}</b><span><b>{x.label}</b>{x.note && <small>{x.note}</small>}</span></li>)}</ol>
+  )
+  else if (v.type === 'compare') {
+    const st = v.style ?? 'dodont'
+    const mark = (side: 'l' | 'r') => st === 'plain' ? '•' : side === 'l' ? (st === 'dodont' ? '✕' : '○') : '✓'
+    body = (
+      <div className={`vis-compare ${st}`}>
+        {(['l', 'r'] as const).map(side => { const c = side === 'l' ? v.left : v.right; return (
+          <div key={side} className={`vis-col ${side}`}><b>{c.title}</b><ul>{c.items.map(it => <li key={it}><i aria-hidden="true">{mark(side)}</i>{it}</li>)}</ul></div>
+        ) })}
+      </div>
+    )
+  }
+  else if (v.type === 'bars') {
+    const max = v.max ?? (v.unit === '%' ? 100 : Math.max(...v.bars.map(b => b.value), 1))
+    body = (
+      <div className="vis-bars">{v.bars.map(b => (
+        <div key={b.label} className={`vis-bar${b.hl ? ' hl' : ''}`}>
+          <span className="vis-bar-label">{b.label}</span>
+          <span className="vis-bar-track"><i style={{ width: `${Math.max(3, (b.value / max) * 100)}%` }} /></span>
+          <span className="vis-bar-val">{v.prefix ?? ''}{b.value.toLocaleString()}{v.unit ?? ''}{b.note && <small>{b.note}</small>}</span>
+        </div>
+      ))}</div>
+    )
+  }
+  else if (v.type === 'stats') body = (
+    <div className="vis-stats">{v.stats.map(x => <div key={x.label}><b>{x.value}</b><span>{x.label}</span></div>)}</div>
+  )
+  else if (v.type === 'split') {
+    const sum = v.parts.reduce((a, p) => a + p.value, 0) || 1
+    body = (
+      <div className="vis-split">
+        {v.total && <b className="vis-split-total">{v.total}</b>}
+        <div className="vis-split-bar">{v.parts.map((p, n) => <i key={p.label} className={`c${n % 6}`} style={{ flexGrow: p.value }} title={p.label} />)}</div>
+        <ul>{v.parts.map((p, n) => <li key={p.label}><i className={`c${n % 6}`} /><b>{Math.round((p.value / sum) * 100)}%</b> {p.label}{p.note && <small> · {p.note}</small>}</li>)}</ul>
+      </div>
+    )
+  }
+  return (
+    <figure className="vis">
+      {body}
+      {v.caption && <figcaption>{v.caption}</figcaption>}
+    </figure>
+  )
+}
+
+function HowtoCard({ slide }: { slide: Extract<Slide, { kind: 'howto' }> }) {
+  return (
+    <div className="stack">
+      <span className="eyebrow">Step by step</span>
+      <h2>{slide.title}</h2>
+      {slide.text && <p>{slide.text}</p>}
+      <ol className="howto">
+        {slide.steps.map((x, n) => (
+          <li key={n}><b className="vis-num">{n + 1}</b><div><b>{x.title}</b><p>{x.detail}</p>{x.example && <p className="howto-ex"><span>For example:</span> {x.example}</p>}</div></li>
+        ))}
+      </ol>
+      {slide.tip && <p className="lesson-tip"><Icon name="sparkle" size={15} /> {slide.tip}</p>}
+    </div>
+  )
+}
+
+function RecapCard({ slide }: { slide: Extract<Slide, { kind: 'recap' }> }) {
+  return (
+    <div className="stack recap">
+      <span className="eyebrow">Key takeaways</span>
+      <h2>{slide.title}</h2>
+      <ul className="recap-list">{slide.points.map(p => <li key={p}><i aria-hidden="true">✓</i>{p}</li>)}</ul>
+    </div>
+  )
+}
+
 function LearnCard({ slide }: { slide: Extract<Slide, { kind: 'learn' }> }) {
   return (
     <div className={slide.screen ? 'learn-split' : 'stack'}>
@@ -223,6 +301,8 @@ function LearnCard({ slide }: { slide: Extract<Slide, { kind: 'learn' }> }) {
             </table>
           </div>
         )}
+        {slide.visual && <VisualFig v={slide.visual} />}
+        {slide.term && <div className="lesson-term"><span className="eyebrow">Word to know</span><p><b>{slide.term.word}:</b> {slide.term.meaning}</p></div>}
         {slide.example && <div className="lesson-example"><span className="eyebrow">Real-life example</span><p>{slide.example}</p></div>}
         {slide.tip && <p className="lesson-tip"><Icon name="sparkle" size={15} /> {slide.tip}</p>}
       </div>
@@ -328,7 +408,7 @@ function Player({ id }: { id?: string }) {
   const chapters = lesson.slides.filter(s => s.chapter).map(s => s.chapter!)
 
   const seedLine = (arr: string[]) => arr[(lesson.id.length + i) % arr.length]
-  const lines: Record<Slide['kind'], string[]> = { learn: INTROS, script: SCRIPT, tap: PRACTICE, order: PRACTICE, quiz: QUIZ, scenario: SCENARIO, number: NUMBER, reflect: REFLECT, checklist: CHECK }
+  const lines: Record<Slide['kind'], string[]> = { learn: INTROS, howto: HOWTO, recap: RECAP, script: SCRIPT, tap: PRACTICE, order: PRACTICE, quiz: QUIZ, scenario: SCENARIO, number: NUMBER, reflect: REFLECT, checklist: CHECK }
   const novaLine = react?.line ?? slide.nova ?? (slide.kind === 'learn' && i === 0 ? `Hey love, I'm Nova. ${lesson.why}` : seedLine(lines[slide.kind]))
   const novaMood: NovaMood = react?.mood ?? (['quiz', 'reflect', 'scenario', 'number'].includes(slide.kind) ? 'think' : slide.kind === 'learn' ? (i === 0 ? 'wink' : 'happy') : 'wow')
 
@@ -401,7 +481,7 @@ function Player({ id }: { id?: string }) {
     <div className={`lesson-player stack wide-gap${isCourse ? ' is-course' : ''}`}>
       <div className="row-between">
         <button className="link-btn" onClick={() => nav('/lessons')}>← Dazzle University</button>
-        <span className="muted small">{isCourse ? 'Business course' : lesson.track} · about {minutes} min · step {i + 1} of {lesson.slides.length}</span>
+        <span className="muted small">{isCourse ? 'Business course' : lesson.track} · about {minutes} min · {chapters.length > 1 && chapter ? `module ${chapters.indexOf(chapter) + 1} of ${chapters.length} · ` : ''}step {i + 1} of {lesson.slides.length}</span>
       </div>
       {i === 0 && (
         <div className={`uni-cover tone-${lessonTone(lesson)}`}>
@@ -421,8 +501,8 @@ function Player({ id }: { id?: string }) {
       <NovaSays mood={novaMood} key={`${i}-${react?.line ?? ''}`}>{novaLine}</NovaSays>
 
       <div className="lesson-slide card" key={`${lesson.id}-${i}`}>
-        {chapter && <span className="chapter-tag">{chapter}</span>}
-        {slide.kind === 'learn' ? <LearnCard slide={slide} /> : slide.kind === 'script' ? <ScriptCard slide={slide} /> : (
+        {chapter && <span className="chapter-tag">{chapters.length > 1 ? `Module ${chapters.indexOf(chapter) + 1} · ` : ''}{chapter}</span>}
+        {slide.kind === 'learn' ? <LearnCard slide={slide} /> : slide.kind === 'script' ? <ScriptCard slide={slide} /> : slide.kind === 'howto' ? <HowtoCard slide={slide} /> : slide.kind === 'recap' ? <RecapCard slide={slide} /> : (
           <div className="stack">
             <span className="eyebrow">{{ quiz: 'Quick check', reflect: 'Workbook', checklist: 'Action plan', scenario: 'Real-life scenario', number: 'Do the math' }[slide.kind as string] ?? 'Practice'}</span>
             {'title' in slide && <h2>{slide.title.replace(/^Practice:?\s*/, '') || 'Your turn'}</h2>}

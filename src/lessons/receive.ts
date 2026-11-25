@@ -15,7 +15,7 @@ const lesson: Lesson = {
     welcome: "Receiving is where good habits start. When every piece gets its tag, photo and price the day it arrives, your whole shop runs smoother. Let's make this your calmest job of the week.",
     signoff: "Tag it, photo it, price it, shelve it, the same day. Do that every time, and you'll never dig through a box looking for a piece again.",
   },
-  covers: ['src/pages/Intake.tsx', 'src/pages/ItemDetail.tsx', 'src/pages/Inventory.tsx'], updated: '2026-11-24',
+  covers: ['src/pages/Intake.tsx', 'src/pages/ItemDetail.tsx', 'src/pages/Inventory.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'Items, variations, tags', kind: 'learn', title: 'Three words to know', nova: 'Get this part right and everything else in the app just works.',
       text: 'An item is the product (a gold hoop set). A variation is a size or color, and gets a 4-digit Live Number buyers type in comments. Every single piece gets its own tag, like 4821-003.',
@@ -62,6 +62,8 @@ const lesson: Lesson = {
     { chapter: 'Photos and details', kind: 'learn', title: 'Photos help your whole team', text: 'Anyone who scans or looks up a piece sees its photo, so helpers grab the right one fast. Three quick shots are plenty.',
       points: ['The whole piece, on a plain background', 'A close-up of the best detail (stitching, stones, hardware)', 'Any flaw, so nobody is surprised'],
       tip: 'Set up one "photo corner" by a window with a white poster board. Same spot, same light, every time.' },
+    { kind: 'learn', title: 'Found more of the same piece?', text: 'Don\'t receive it as a new item, or it gets a new Live #. Instead, on Stock tap the piece (or scan one of its tags), and under Got more of these? tap + until it shows how many you found, then Add. The new pieces join the same Live # with the next tag numbers, and a Print the new tags button prints only those. The item page has the same + and − box on each variation.',
+      example: 'You find 3 more emerald crossbody bags (#2447, tags 001 to 004). Add 3 and you get 2447-005, 2447-006 and 2447-007, ready to print.' },
     { kind: 'learn', title: 'More details, only if you want them', text: 'Under More details you can add condition, department, color, material, season, supplier and the date you bought it. All optional. Fill in the ones you\'ll actually search by, and Inventory\'s Sort and filter can then show, say, every emerald piece or everything from one supplier.',
       screen: { title: 'Receive items', rows: ['+ More details', 'Condition: New with tags', 'Color: Emerald', 'Supplier: Atlanta market'], buttons: ['Save and print 3 tags'] },
       tip: 'Supplier is the one most sellers wish they had started on day one. It tells you which haul actually made money.' },
