@@ -45,7 +45,7 @@ const lesson: Lesson = {
 
     { chapter: 'Self-employment, honestly', kind: 'learn', title: 'How to write the shop on a resume', text: "Write it exactly the way you would write a job, because it is one. Give the business a name, give yourself the title you really hold, and give honest dates.",
       table: { head: ['Instead of', 'Write'], rows: [
-        ['"Self-employed"', 'Owner, Dynamic Dazzle (2019 to present)'],
+        ['"Self-employed"', 'Owner, Renee\'s Closet (2019 to present)'],
         ['"Sold stuff online"', 'Own and operate an online resale boutique'],
         ['"Facebook"', 'Sell live on Facebook to about 2,400 followers'],
         ['A gap with nothing in it', 'The shop years, with what you did'],
@@ -67,6 +67,30 @@ const lesson: Lesson = {
       ] },
       example: "Angela did not think she had accomplishments until she opened her reports. She had 1,100 orders, 310 repeat buyers and 38% growth. That is three strong lines right there.",
       queen: "Go look at your own numbers before you decide you have nothing to say. I have never met a seller whose record was as small as she thought." },
+    { kind: 'learn', title: 'The shape of a strong line', text: "Career coaches often teach accomplishment lines with a simple three-part shape: the situation or problem, the action you took, and the result you got. You may hear it called CAR or PAR. The letters do not matter. What matters is that every line ends in a result a stranger can picture, and that the result is a number from your own records. Start each line with a strong past-tense verb like grew, built, cut, launched, trained or shipped. Leave out \"responsible for\", because it says you had the job, not that you did it well.",
+      term: { word: 'Accomplishment line', meaning: 'One sentence on a resume that shows what you did and what changed because of it, ideally with a number. It is the opposite of a duty, which only says what your job was.' },
+      visual: { type: 'flow', steps: [
+        { label: 'Problem', note: 'Sales were flat on one live night' },
+        { label: 'Action', note: 'Added a second live night' },
+        { label: 'Result', note: 'Sales grew $11,500 to $18,400' },
+      ], caption: 'Put all three in one sentence: "Grew yearly sales from $11,500 to $18,400 by adding a second live night."' },
+      example: "Before: \"Responsible for customer service.\" After: \"Answered every customer message within a day and kept 310 of 1,100 buyers coming back for a second order.\" Same job, but the second one proves it." },
+    { kind: 'learn', title: "Angela's numbers, at a glance", text: "Here is what Angela found when she finally looked. None of it was new. It had been sitting in her reports the whole time. Each of these numbers became one line on her resume and one line on her capability sheet, and the repeat-buyer number became the sentence she now leads with when she talks to boutiques, because it proves women like what she sells enough to come back.",
+      visual: { type: 'stats', stats: [
+        { value: '1,100', label: 'Orders shipped' },
+        { value: '310', label: 'Repeat buyers' },
+        { value: '38%', label: 'Growth in a year' },
+        { value: '2', label: 'Live nights a week' },
+      ], caption: 'Four numbers, four accomplishment lines. Yours are waiting in Reports.' } },
+    { kind: 'howto', title: 'Pull your numbers out of the app', text: "Set aside 30 minutes with a notepad. Everything a resume, bio or capability sheet needs is already in Dazzle.",
+      steps: [
+        { title: 'Open Reports and pick a range', detail: 'Choose Last 12 months for a yearly number, or All time for your whole story. Write down Sales, Orders, Avg order and Buyers from the big numbers at the top.', example: 'Last 12 months: Sales $18,400, Orders 900, Avg order $20.44, Buyers 410.' },
+        { title: 'Find your repeat buyers', detail: 'Open Top customers under More reports, or open Customers and sort by Most orders. Count the buyers with two or more orders.', example: '310 buyers have ordered more than once. That is a loyalty line.' },
+        { title: 'Note your best sellers', detail: 'Open Best sellers and Top categories. Your strongest category is what goes in the "what you sell" line of your capability sheet.' },
+        { title: 'Get last year to compare', detail: 'For a growth line you need two years. If the app does not go back that far, use your tax return or bank statements for the older year.' },
+        { title: 'Write it plainly next to each number', detail: 'One number, one sentence. Do not polish yet. You will shape them into accomplishment lines next.' },
+      ],
+      tip: 'Print reports or Download CSV and keep the copy in your papers folder. If a lender asks where a number came from, you can show her.' },
     { kind: 'script', title: 'Fill in the blanks', text: "Say these out loud with your own numbers in them. These are your accomplishment lines and your bios.",
       lines: [
         'Growth: "Grew [sales or orders] from [number] to [number] in [time] by [what you changed]."',
@@ -92,6 +116,19 @@ const lesson: Lesson = {
       ] },
       nova: "One page, plain font, lots of air. Pretty is not the point here, easy to read is." },
     { kind: 'order', title: 'Build it in order', prompt: 'Put the steps of writing your resume in order.', steps: ['Open your reports and write down your real numbers', 'Turn each number into one accomplishment line', 'Write a 2 or 3 line summary at the top', 'Add earlier jobs, training and licenses', 'Cut it down to one page', 'Have one person you trust read it out loud', 'Save it as a PDF named with your name and the year'] },
+    { kind: 'learn', title: 'The summary, before and after', text: "The two or three lines at the top get read first, and often they are the only lines that get read. A busy coordinator reads the summary, glances at the first two accomplishment lines, and decides. So the summary has to carry your biggest result, not your hopes. Compare these two openings from the same seller.",
+      visual: { type: 'compare', style: 'beforeafter', left: { title: 'Before', items: ['Hard-working and passionate self-starter', 'Looking for new opportunities', 'Great people skills', 'Loves fashion'] }, right: { title: 'After', items: ['Owner of a resale boutique since 2019', 'Grew sales 60% in two years', '900 orders a year, shipped in 2 days', 'Known for plus-size workwear'] } },
+      tip: "If a line could be written by anyone, cut it. If only you could write it, keep it." },
+    { kind: 'howto', title: 'Lay out your resume in a word processor', text: "Word, Google Docs or Pages all work. Fancy templates with columns and graphics often scramble when an online form reads them, so keep it plain.",
+      steps: [
+        { title: 'Start from a blank page', detail: 'Margins about 0.75 to 1 inch. One plain font, like Calibri or Arial, at 11 or 12 points for the body.' },
+        { title: 'Put your name big at the top', detail: 'Your name in 18 to 20 points, then one line with city, business phone, business email and your shop link.' },
+        { title: 'Use bold headings', detail: 'Summary, Business experience, Earlier work, Skills, Training and licenses. Same size and style for every heading.' },
+        { title: 'Use bullets for accomplishments', detail: 'Four or five bullets under your owner role. Start each with a verb and keep each to one or two lines.', example: '• Grew yearly sales 60% in two years by adding a second live night.' },
+        { title: 'Squeeze to one page', detail: 'If it runs over, cut the oldest jobs to one line, then trim words. Do not shrink the font below 10.' },
+        { title: 'Save as a PDF', detail: 'Use Save as or Export, choose PDF, and name it Last-First-Resume-Year. A PDF looks the same on every screen.' },
+      ],
+      tip: 'The Word course in the University shows each of these buttons step by step if you have not used Word much.' },
     { kind: 'learn', title: 'Your bio in three lengths', text: "Write three and you will never be caught out. Almost every ask is one of these.",
       table: { head: ['Length', 'Used for'], rows: [
         ['One line, about 25 words', 'Vendor forms, event programs, your social bio'],
@@ -104,7 +141,7 @@ const lesson: Lesson = {
         'Put one human detail in the long one, so people remember you',
         'Keep a current headshot in the same folder, it gets asked for every time',
       ] },
-    { kind: 'reflect', title: 'Your one-line bio', prompt: 'Write your one-line bio, in the third person, with your name, what you sell, who you serve and the year you started.', placeholder: '[Name] is the owner of…', example: 'Renee Hall is the owner of Dynamic Dazzle, a plus-size resale boutique in Memphis serving working women since 2019.' },
+    { kind: 'reflect', title: 'Your one-line bio', prompt: 'Write your one-line bio, in the third person, with your name, what you sell, who you serve and the year you started.', placeholder: '[Name] is the owner of…', example: 'Renee Hall is the owner of Renee\'s Closet, a plus-size resale boutique in Memphis serving working women since 2019.' },
 
     { chapter: 'Profiles and one-pagers', kind: 'learn', title: 'A profile people can look up', text: "A LinkedIn-style profile is just your resume in public, where a vendor or a reporter can find it. You do not have to post on it. You do want it to exist and to match your papers.",
       points: [
@@ -146,12 +183,20 @@ const lesson: Lesson = {
       table: { head: ['In the folder', 'Named like'], rows: [
         ['Resume, PDF', 'Hall-Renee-Resume-2026.pdf'],
         ['Bios, one file with all three lengths', 'Hall-Bios.doc'],
-        ['Capability sheet, PDF', 'DynamicDazzle-Capability-2026.pdf'],
+        ['Capability sheet, PDF', 'ReneesCloset-Capability-2026.pdf'],
         ['Headshot and logo files', 'Hall-Headshot.jpg'],
-        ['Photos: table, packaging, best pieces', 'DynamicDazzle-Photos'],
-        ['License, EIN letter, seller permit', 'DynamicDazzle-Documents'],
+        ['Photos: table, packaging, best pieces', 'ReneesCloset-Photos'],
+        ['License, EIN letter, seller permit', 'ReneesCloset-Documents'],
       ] },
       example: "Put a reminder in your phone for January and July: update your numbers, swap in a newer photo, done in twenty minutes." },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Running a shop is work experience. Write it like a job, with a real title and honest dates.',
+      'Strong lines show a problem, an action and a result, with a number from your own reports.',
+      'Your summary carries your biggest result. Cut any line anyone could have written.',
+      'Keep a one-page resume, a bio in three lengths, and a capability sheet for business buyers.',
+      'Line up two or three references and ask them first.',
+      'Keep it all in one cloud folder and refresh it every January and July.',
+    ] },
     { kind: 'checklist', title: 'Get your papers ready', prompt: 'Tick what you will write this month.', items: ['Pull my real numbers out of my reports', 'Write five accomplishment lines with numbers in them', 'Write my one-page resume and save it as a PDF', 'Write my bio in all three lengths', 'Get a clean headshot', 'Build my one-page capability sheet', 'Ask two or three people to be references', 'Put everything in one cloud folder and set a reminder for January'] },
   ],
 }

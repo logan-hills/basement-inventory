@@ -33,6 +33,7 @@ const lesson: Lesson = {
         ['Dries up when the app changes', 'Follows you to any platform'],
       ] },
       example: "Tasha messaged boutiques for three months with no reply. Then she vended one market, met two owners face to face, and both were buying her overstock within a month.",
+      term: { word: 'Warm contact', meaning: 'Someone who already knows your name and has a good feeling about you, because you met, talked or helped each other. A cold contact is a stranger. Networking is turning cold into warm.' },
       tip: "You do not have to be loud to be remembered. You have to be warm, clear and easy to find again." },
     { kind: 'learn', title: 'Where your people actually are', text: "You do not need a fancy conference. Most of these cost little or nothing.",
       points: [
@@ -51,7 +52,8 @@ const lesson: Lesson = {
 
     { chapter: 'Your warm introduction', kind: 'learn', title: 'One sentence, said warmly', text: "People remember what you sell and who you sell it to. That is all your introduction has to carry: your name, what you sell, and one small hook that makes somebody ask a question.",
       points: ['Name first, slowly, so they catch it', 'What you sell in plain words, not "I am in retail"', 'One hook: who you serve, where you sell, or your best seller'],
-      example: "\"I'm Renee, and I sell plus-size dresses on Facebook Live every Thursday night. My ladies call me the dress whisperer.\"" },
+      example: "\"I'm Renee, and I sell plus-size dresses on Facebook Live every Thursday night. My ladies call me the dress whisperer.\"",
+      visual: { type: 'compare', style: 'beforeafter', left: { title: 'Forgettable', items: ['"I\'m in retail."', '"I sell a little bit of everything."', '"Here\'s my card." (and walks away)'] }, right: { title: 'Remembered', items: ['"I\'m Renee, I sell plus-size dresses on Facebook Live."', '"Thursday nights, my ladies call me the dress whisperer."', '"Is this your first year at this market?"'] } } },
     { kind: 'script', title: 'Introductions and openers you can copy', text: "Say these out loud a few times so they come out easy. Swap in your own words.",
       lines: [
         'At a market: "Hey, I\'m [name]. I sell [what] online and at markets like this one. Is this your first year here?"',
@@ -78,6 +80,13 @@ const lesson: Lesson = {
         ['2 to 4 weeks', 'Send something useful: a tip, a customer, an article'],
         ['Month 2 or 3', 'Now you can ask: a collaboration or a referral'],
       ] },
+      visual: { type: 'flow', caption: 'From a handshake to a partner, one small step at a time.', steps: [
+        { label: 'Meet', note: 'Card and one note' },
+        { label: 'Same night', note: 'Into your contact list' },
+        { label: '48 hours', note: 'Short, personal message' },
+        { label: '2 to 4 weeks', note: 'Give something useful' },
+        { label: 'Month 2 or 3', note: 'Now you can ask' },
+      ] },
       queen: "Write the follow-up note on the back of her card before you leave the parking lot. Two days later you will not remember which one was the candle lady." },
     { kind: 'script', title: 'Follow-up messages', lines: [
       'Day after a market: "Hi [name], it was so good meeting you at [market] Saturday. Your [thing you remember] was beautiful. I\'m [name] from [shop], and I hope our paths cross at the next one."',
@@ -91,6 +100,16 @@ const lesson: Lesson = {
         { text: 'Ask how she buys now and what sizes she runs out of, trade cards, then follow up in two days with three pieces that fit what she said', best: true, feedback: "Perfect. You listened, you learned exactly what she needs, and your follow-up answers her problem instead of pushing your pile." },
         { text: 'Take her card and wait for her to reach out to you', feedback: "She will not. She met twelve people that morning. The follow-up is your job." },
       ] },
+    { kind: 'howto', title: 'Your 48-hour follow-up routine', text: 'Fifteen minutes the night after an event turns a stack of cards into real relationships. Here is the routine, start to finish.',
+      steps: [
+        { title: 'Empty your pockets the same night', detail: 'Lay out every card and scrap of paper. For each, write one note on the back if you have not already: what she sells, one thing you talked about, what she needs.', example: 'Back of card: "Candles, soy, wants a fall pop-up partner."' },
+        { title: 'Add each one to your contact list', detail: 'Fill in name and shop, how to reach her, where and when you met, the one thing you remember, what she needs, and today\'s date as last contact.', example: 'Jasmine, Glow Candle Co., @glowcandleco, Sat market Nov 21, soy candles, wants a pop-up partner.' },
+        { title: 'Follow her page', detail: 'Follow or like her page from your business account. Leave one kind comment on a recent post, not a sales pitch.', example: '"So good meeting you Saturday! That fig candle is still on my mind."' },
+        { title: 'Send the 48-hour message', detail: 'Use the day-after script: where you met, one thing you remember, no ask. Send it within two days while she still remembers your face.', example: '"Hi Jasmine, so good meeting you at the market. Your fig candle was beautiful. Hope we\'re neighbors again next month!"' },
+        { title: 'Set a reminder for the useful thing', detail: 'Put a reminder two to four weeks out to send her something useful: a customer, a tip or an event she would like.', example: 'Dec 15: tell Jasmine about the holiday market sign-up.' },
+      ],
+      tip: 'Keep these contacts out of your buyer list. A business contact gets a different kind of message than a buyer.',
+      queen: "The follow-up is where most people quit and where you win. Two days, every time, no excuses." },
     { kind: 'number', title: 'What following up is worth', q: 'You vend one market a month. You meet 12 people and bring home 5 cards. Following up turns 2 of them into business each month: a shared live that brings about $180 in sales, and a boutique that buys about $120 of your overstock. Over 6 months, how much business did following up bring?', prefix: '$', answer: 1800, hint: 'Add the two monthly amounts, then multiply by 6.', why: '$180 + $120 = $300 a month, and $300 × 6 = $1,800, for ten minutes of messages.' },
 
     { chapter: 'Give before you ask', kind: 'learn', title: 'Be useful first', text: "The sellers everybody wants to work with are the ones who gave something before they needed anything. It costs almost nothing and it comes back for years.",
@@ -108,11 +127,21 @@ const lesson: Lesson = {
         ['Vendor split', 'Two sellers split a booth fee and a table', 'Fee split, table space, who covers which hours'],
         ['Shout-out swap', 'You each promote the other for a week', 'What gets said, and when'],
       ] },
+      term: { word: 'Collaboration', meaning: 'Two businesses working together on one thing, like a shared live or a giveaway, so both reach new buyers. Each keeps her own customers, suppliers and money unless you agree otherwise in writing.' },
       points: [
         'Share audiences and costs, never your vendor list or your buy prices',
         'If a same-town seller asks where you buy, say warmly that sourcing is the one thing you keep private, then offer something else useful',
         'Put the simple terms in writing, even just in a message thread',
       ] },
+    { kind: 'howto', title: 'Plan your first shared live with another seller', text: 'A shared live is the most common first collaboration for live sellers. Here is how to set one up so it is fun and fair for both of you.',
+      steps: [
+        { title: 'Pick a seller who sells something different', detail: 'Look for someone whose buyers are like yours but whose stock is not. Bags and shoes, jewelry and scarves, candles and home decor.', example: 'You sell bags; Jasmine sells candles. Same buyers, no overlap.' },
+        { title: 'Agree on the basics in writing', detail: 'In a message thread, agree on the date, time, theme, how the hour splits and whose page it goes live on.', example: 'Thursday Dec 10, 7 to 8:30 PM ET, "Cozy Gifts," 45 minutes each, on your page with Jasmine as guest.' },
+        { title: 'Keep the money and buyers separate', detail: 'Each of you claims, invoices and ships your own pieces. Your claim rules stay the same; say on the live whose pieces are whose.', example: 'Bags: SOLD and the Live #. Candles: SOLD CANDLE and the number, Jasmine invoices her own.' },
+        { title: 'Promote it together', detail: 'Make one poster with both shop names and post it on both pages two days and two hours ahead.', example: 'Poster: "Cozy Gifts Night with Dynamic Dazzle and Glow Candle Co."' },
+        { title: 'Debrief and thank her', detail: 'The next day, share your numbers with each other if you are both comfortable, and thank her publicly. Decide whether to do it again.', example: '"We did $640 together and both got new followers. Same time in March?"' },
+      ],
+      queen: "Pick a partner whose values match yours: on time, honest about flaws, kind to buyers. You are lending her your reputation for an hour." },
     { kind: 'quiz', q: 'You come home from a market with five business cards. What matters most?', options: ['Putting them in a pretty box', 'Messaging each one within 48 hours with something you remember about her', 'Adding them all to a mass promo list', 'Waiting to see which ones contact you'], answer: 1, why: "Follow-up is where networking turns into business. A quick, personal message while she still remembers your face does more than any amount of collecting." },
 
     { chapter: 'Make it a habit', kind: 'learn', title: 'A monthly habit you can keep', text: "You do not need to network every week. You need a rhythm you will actually keep when the season gets busy.",
@@ -123,7 +152,13 @@ const lesson: Lesson = {
         ['One collaboration talked about', '20 minutes'],
         ['Contact list tidied up', '10 minutes'],
       ] },
-      example: "Deborah blocks the first Saturday of every month for one event and the Monday after for follow-ups. In a year she picked up three boutique accounts." },
+      example: "Deborah blocks the first Saturday of every month for one event and the Monday after for follow-ups. In a year she picked up three boutique accounts.",
+      visual: { type: 'bars', unit: ' min', caption: 'A monthly networking habit, not counting the event itself.', bars: [
+        { label: 'Follow-up messages', value: 15 },
+        { label: 'One useful thing given', value: 10 },
+        { label: 'One collaboration chat', value: 20 },
+        { label: 'Contact list tidy-up', value: 10 },
+      ] } },
     { kind: 'learn', title: 'A simple contact list', text: "Your contact list is your real asset. It does not need an app. A notebook, a notes file or a sheet with a few columns will do, and it goes with you if a platform disappears.",
       table: { head: ['Column', 'Why'], rows: [
         ['Name and shop', 'So you can say it right next time'],
@@ -134,6 +169,15 @@ const lesson: Lesson = {
         ['Last time you talked', 'Tells you who is due a hello'],
       ] },
       tip: "Keep buyers in Customers and business contacts in their own list. They need different kinds of care." },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Networking is letting good people know you exist, and helping them first.',
+      'Start in rooms you are already in, then add a market, a mixer or a seller group.',
+      'Introduce yourself in one warm sentence and end with a question.',
+      'Follow up within 48 hours with one thing you remember and no ask.',
+      'Give before you ask, and wait a month or two before asking for a collaboration.',
+      'Collaborate on audiences and costs, never your suppliers or buy prices, and put terms in writing.',
+      'Keep a simple contact list and a monthly habit you can hold in a busy season.',
+    ] },
     { kind: 'checklist', title: 'Your networking plan', prompt: 'Tick what you will set up this month.', items: ['Write and practice my one-sentence introduction', 'Pick three rooms to show up in', 'Look up my local chamber and nearest Women\'s Business Center', 'Start a contact list with six columns', 'Put one event on the calendar every month', 'Send follow-ups within 48 hours, every time', 'Give one useful thing away this month', 'Talk with one seller about a small collaboration'] },
   ],
 }

@@ -21,7 +21,8 @@ const lesson: Lesson = {
   slides: [
     { chapter: 'Your team', kind: 'learn', title: 'Your shop, more hands', nova: 'Every empire needs a crew. Let\'s build yours the safe way!',
       text: 'When lives get busy, one person can\'t receive, tag, pick, pack and ship it all. Team members are helpers you invite into YOUR shop. Each one gets their own sign-in, so you never share your password, and you can take them off in one tap.',
-      points: ['They sign up with their own email', 'They join with a one-time code you make', 'They see only your shop, never another seller\'s', 'You can remove them any time, and it works right away'] },
+      points: ['They sign up with their own email', 'They join with a one-time code you make', 'They see only your shop, never another seller\'s', 'You can remove them any time, and it works right away'],
+      term: { word: 'Team member', meaning: 'A helper with their own sign-in who works inside your shop in the app. They do the daily work, like scanning, picking and packing, but they never get your password or your owner-only pages.' } },
     { kind: 'learn', title: 'How many helpers your plan includes', text: 'The number of team spots depends on your plan. The shop owner (you) never counts as a spot. An invite that hasn\'t been used yet holds a spot until it\'s used, canceled, or runs out after 7 days.',
       table: { head: ['Plan', 'Team members'], rows: [
         ['Stream (free)', 'None'],
@@ -49,7 +50,14 @@ const lesson: Lesson = {
 
     { chapter: 'Inviting', kind: 'learn', title: 'Invite someone in four steps', text: 'Go to More → Settings → Team members. Type their name (just so you remember who the code is for), tap Make an invite code, then tap Copy invite and send it in a text.',
       screen: { title: 'Team members', rows: ['1 of 2 team spots used on the Crown plan', 'Tasha · Team member', 'Add a team member'], buttons: ['Make an invite code', 'Copy invite to send', 'Remove'], highlight: 'Make an invite code' },
-      example: 'The code looks like K7QM-3PZD. It works once and runs out in 7 days.' },
+      example: 'The code looks like K7QM-3PZD. It works once and runs out in 7 days.',
+      visual: { type: 'flow', caption: 'From invite to first scan.', steps: [
+        { label: 'Add a team member', note: 'Type their name' },
+        { label: 'Make an invite code', note: 'Works once, 7 days' },
+        { label: 'Copy invite to send', note: 'Text it to them' },
+        { label: 'They sign up', note: 'Own email, Full seller app' },
+        { label: "I'm joining a team", note: 'Type the code, join' },
+      ] } },
     { kind: 'learn', title: 'What your helper does', text: 'Your helper downloads the app (or opens the website), taps Create account with their own email, and fills in their profile. When it asks how they\'ll use the app, they pick Full seller app. On the Name your shop screen, they tap "I\'m joining a team" and type your code. That\'s it: they land in your shop.',
       tip: 'If the code says it has expired, make a new one. Old codes can\'t be reused, which keeps a forwarded text from letting a stranger in.' },
     { kind: 'order', title: 'Put the invite in order', prompt: 'Tap the steps in the order they happen.', steps: [
@@ -69,7 +77,8 @@ const lesson: Lesson = {
         ['You can see who did what', 'No', 'Yes, scans and moves are saved under each person'],
         ['Take away access', 'Change your password everywhere', 'One tap'],
         ['Safe if they leave on bad terms', 'No', 'Yes'],
-      ] } },
+      ] },
+      example: 'Gail shared her password with a helper "just for packing." Months later the helper accidentally canceled a Shared Page booking from her phone. With a team member sign-in, that could not have happened: booking stays with the owner.' },
     { kind: 'scenario', title: 'The helper who left', situation: 'Your cousin helped pack for three months, then took a full-time job. You haven\'t talked about the app since.',
       options: [
         { text: 'Leave her on the team in case she comes back', feedback: 'An old sign-in is an open door. If her phone is lost or shared, someone can see your customers\' addresses.' },
@@ -103,7 +112,22 @@ const lesson: Lesson = {
         ['4', 'Pick and pack on their own; you spot-check 5 boxes'],
         ['5', 'Get ready for live: pull pieces from the Get ready list in order'],
       ] },
+      visual: { type: 'bars', unit: '%', max: 100, caption: 'How much you check as the week goes on.', bars: [
+        { label: 'Days 1 to 2', value: 100, note: 'Side by side' },
+        { label: 'Day 3', value: 100, note: 'Every piece scanned together' },
+        { label: 'Day 4', value: 20, note: 'Spot-check 5 boxes' },
+        { label: 'Week 2 on', value: 10, hl: true, note: 'A few boxes a live' },
+      ] },
       tip: 'Write your packing rules on a card taped to the table: how to wrap jewelry, which box for which size, thank-you note in every order.' },
+    { kind: 'howto', title: 'Hand your helper a live night', text: 'Once your helper is trained, here is how to split a live night so you sell and they keep the orders moving. Walk through it together once before the real night.',
+      steps: [
+        { title: 'Before the live: pull and prep', detail: 'Your helper opens Get ready for live for tonight\'s live and pulls the pieces in order onto the rack, then preps mailers and prints box labels once sales are uploaded.', example: '45 pieces pulled, 40 mailers folded, tape gun loaded.' },
+        { title: 'During the live: watch claims', detail: 'You host. Your helper keeps the comment bot or claims screen open on a second device and quietly flags missed claims or questions.', example: 'Helper texts you: "#4830 was claimed by Monique, you missed it."' },
+        { title: 'Right after: upload and pick', detail: 'Your helper uploads the live sales in Pick and pack, ticks the paid orders and taps Pick these orders.', example: '18 paid orders in the first wave.' },
+        { title: 'Scan piece, then box', detail: 'For each piece: scan the tag, then the customer\'s box label. Green check means right box. The app saves who picked what.', example: 'Wave of 18 packed in about 40 minutes.' },
+        { title: 'Ship and hand back', detail: 'Next morning, your helper downloads for Pirate Ship, buys labels, pastes tracking and taps Shipped. You spot-check a few boxes before they go.', example: 'Labels bought by 9 AM. You open three boxes, all perfect.' },
+      ],
+      queen: "When you hand off a job, really hand it off. Check kindly, but don't take it back the first time something slips." },
     { kind: 'learn', title: 'Checks that keep everyone honest', text: 'Most shrink (missing stock) is mistakes, not theft. A few simple habits catch both, and protect good helpers from being blamed.',
       points: [
         'Scan every piece into the box. The app remembers who picked what.',
@@ -111,9 +135,19 @@ const lesson: Lesson = {
         'Mark damaged items with Damaged and a reason, never just toss them.',
         'Have one person pack and another tape and label when orders are big.',
       ],
-      example: 'LaVerne\'s rule: if it isn\'t scanned, it didn\'t happen.' },
+      example: 'A good house rule: if it isn\'t scanned, it didn\'t happen.',
+      term: { word: 'Shrink', meaning: 'Stock you paid for that goes missing or can\'t be sold: lost, damaged, mispicked or stolen. Retailers track it as a share of sales. Most small-shop shrink is honest mistakes.' } },
     { kind: 'number', title: 'Is a helper worth it?', q: 'Packing takes you 6 hours after every live, and you go live twice a week. A packer at $15 an hour would save you all of it. How much does that cost each week?', prefix: '$', answer: 180, hint: 'Hours per live × lives per week × hourly pay.', why: '6 × 2 × $15 = $180 a week. If those 12 freed-up hours let you run one more live that sells $400, the helper pays for herself and then some.' },
     { kind: 'reflect', title: 'Your first helper', prompt: 'Who could help you, which jobs would you hand them first, and how many hours a week?', placeholder: 'Who: … Jobs: … Hours: …', example: 'Who: my daughter Kiara. Jobs: tagging new stock and packing Tuesday orders. Hours: about 6 a week, paid every Friday.' },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Team members get their own sign-in and see only your shop. Never share your password.',
+      'Your plan sets your team spots: Gem 1, Crown 2, Empire 5. Unused invites hold a spot for up to 7 days.',
+      'Invite from Settings, Team members: Add a team member, Make an invite code, Copy invite to send.',
+      'Helpers do the daily work; Dazzle University, Time with the Queen, booking and team changes stay with you.',
+      'Remove helpers the day they stop working with you. A new code takes seconds later.',
+      'If you set the hours, place and method, your helper is usually an employee. Ask your tax pro.',
+      'Train for a week, scan everything, count a bin weekly and mark damage with a reason.',
+    ] },
     { kind: 'checklist', title: 'Set up your team', prompt: 'Tick each one as you do it.', items: [
       'Decide if my helper is an employee, contractor or family, and ask my tax pro',
       'Make an invite code in Settings → Team members and text it',
