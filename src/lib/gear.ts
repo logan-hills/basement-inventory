@@ -123,7 +123,7 @@ export const GEAR: Gear[] = [
     id: 'dymo-30336', group: 'Labels', name: 'DYMO 30336 multi-purpose labels, 1 × 2⅛ in', badge: 'Item tags on a DYMO', store: 'Staples',
     why: 'The DYMO roll for item tags: Live #, price and barcode on every piece. Fits every LabelWriter.',
     facts: ['1 × 2⅛ in', 'Staples UPC 09704330336', 'White, direct thermal'],
-    setup: ['In Print tags, choose "DYMO 1 × 2⅛ in (30336)". The preview shows your tag.', 'In the print window: your DYMO, paper size 30336, layout Portrait, scale 100%, margins None.'],
+    setup: ['On a DYMO LabelWriter: in Print tags, choose "DYMO 1 × 2⅛ in (30336)". In the print window: your DYMO, paper size 30336, layout Portrait, scale 100%, margins None.', 'In a 4 in thermal printer (Core Innovations, Nelko): choose "DYMO 1 × 2⅛ in (30336) in a 4 in thermal printer". Set the label size in the printer\'s app to 25 × 54 mm, type Gap, guides snug, then hold feed so it finds the holes.'],
     useIn: [{ to: '/labels', label: 'Print tags' }, { to: '/bin-labels', label: 'Bin labels' }],
   },
   {

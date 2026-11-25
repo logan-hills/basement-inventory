@@ -7,7 +7,20 @@ import { toBlob } from 'html-to-image'
 
 const DPI = 203
 
-export async function saveLabelsAsImages(name: string, selector = '.print-area .sheet') {
+/** Gives a picture a quarter turn clockwise, the same way the page turns when it prints. */
+async function turnQuarter(blob: Blob): Promise<Blob> {
+  const img = await createImageBitmap(blob)
+  const c = document.createElement('canvas')
+  c.width = img.height; c.height = img.width
+  const ctx = c.getContext('2d')!
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height)
+  ctx.translate(c.width, 0); ctx.rotate(Math.PI / 2); ctx.drawImage(img, 0, 0)
+  return await new Promise<Blob>((ok, bad) => c.toBlob(b => (b ? ok(b) : bad(new Error('turn'))), 'image/png'))
+}
+
+/** `turn`: the label feeds the long way (DYMO rolls, landscape 4×6). Printer apps print a picture along the
+    feed exactly as it is, so the picture gets the same quarter turn as the printed page. */
+export async function saveLabelsAsImages(name: string, selector = '.print-area .sheet', turn = false) {
   const sheets = [...document.querySelectorAll<HTMLElement>(selector)]
   if (!sheets.length) return 0
   const files: File[] = []
@@ -17,7 +30,8 @@ export async function saveLabelsAsImages(name: string, selector = '.print-area .
   try {
     for (let i = 0; i < sheets.length; i++) {
       const el = sheets[i]
-      const blob = await toBlob(el, { pixelRatio: DPI / 96, backgroundColor: '#ffffff', style: { boxShadow: 'none', zoom: '1' } })
+      let blob = await toBlob(el, { pixelRatio: DPI / 96, backgroundColor: '#ffffff', style: { boxShadow: 'none', zoom: '1' } })
+      if (blob && turn) blob = await turnQuarter(blob)
       if (blob) files.push(new File([blob], `${name}-${String(i + 1).padStart(3, '0')}.png`, { type: 'image/png' }))
     }
   } finally {

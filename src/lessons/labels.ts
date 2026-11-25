@@ -18,7 +18,7 @@ const lesson: Lesson = {
     welcome: "Every scan, every pick and every count starts with a clean tag. In this lesson I want you to master your labels, because a tidy tag is a tidy shop.",
     signoff: "Preview before you print, tag the moment you print, and put the tag in the same place on every piece. Your future self will thank you.",
   },
-  covers: ['src/pages/Labels.tsx', 'src/components/CrispBarcode.tsx', 'src/components/LabelKit.tsx', 'src/pages/BinLabels.tsx', 'src/pages/ItemDetail.tsx', 'src/pages/Inventory.tsx'], updated: '2026-11-24',
+  covers: ['src/pages/Labels.tsx', 'src/components/CrispBarcode.tsx', 'src/components/LabelKit.tsx', 'src/pages/BinLabels.tsx', 'src/pages/ItemDetail.tsx', 'src/pages/Inventory.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'Pick your labels', kind: 'learn', title: 'What\'s on a tag', nova: 'Small sticker, big job. Let\'s make every one count.',
       text: 'Each tag has a barcode for scanning, the tag code under it (like 4821-003) in case you need to type it, plus the item name, variation, Live Number and price. One tag per piece, always.' },
@@ -54,7 +54,12 @@ const lesson: Lesson = {
       points: ['Pick DYMO 1 × 2⅛ in (30336), or DYMO 1⅛ × 3½ in (30252) for a roomier tag', 'In the print window: your DYMO, paper size 30336, layout Portrait, scale 100%, margins None', 'Tag came out sideways or cut off? Some computers turn it for you. Tick "Tag came out sideways or cut off?" once, and print again. The app remembers.', 'DYMO 550 models only take genuine DYMO labels'],
       screen: { title: 'Print tags · 1. Pick your label', rows: ['Thermal label printer: 2 × 1 in roll · 2¼ × 1¼ in roll · 4 × 6 in, 12 tags', 'DYMO LabelWriter: DYMO 1 × 2⅛ in (30336) · DYMO 1⅛ × 3½ in (30252)'], buttons: ['DYMO 1 × 2⅛ in (30336)'], highlight: 'DYMO 1 × 2⅛ in (30336)' },
       tip: 'DYMO rolls are white, so on a DYMO sale tag the word SALE prints in a bold black box with the old price crossed out. It still pops on camera.' },
-    { kind: 'tap', title: 'Practice: the Staples roll', prompt: 'You just bought DYMO 30336 labels at Staples for your LabelWriter. Which label do you tap?', screen: { title: 'Print tags · 1. Pick your label', buttons: ['2 × 1 in roll, one tag per label', 'DYMO 1 × 2⅛ in (30336)', 'Letter sheet, 30 per page'] }, answer: 'DYMO 1 × 2⅛ in (30336)', hint: 'The number on the box, 30336, is right in the name.' },
+    { kind: 'learn', title: 'DYMO labels in your shipping printer', nova: 'Same labels, different printer. One little setting makes all the difference.',
+      text: 'You can load DYMO 30336 labels in a 4 inch thermal shipping printer like the Core Innovations too. Pick "DYMO 1 × 2⅛ in (30336) in a 4 in thermal printer" under Thermal label printer. The labels come out one after another, the long way, so the app turns each tag to run along its label. If the printer thinks the label is a different size, one tag gets stretched across two labels, so set the size once.',
+      points: ['Slide the roll guides in snug so the labels feed straight', 'In the printer\'s app: label size 25 × 54 mm (1 in wide, 2⅛ in long), type Gap', 'Hold the feed button so it finds the holes between labels', 'Phone: Save for printer app, print at 100%. The picture is already turned the right way.'],
+      screen: { title: 'Print tags · Thermal label printer', buttons: ['2 × 1 in roll, one tag per label', 'DYMO 1 × 2⅛ in (30336) in a 4 in thermal printer'], highlight: 'DYMO 1 × 2⅛ in (30336) in a 4 in thermal printer' } },
+    { kind: 'quiz', q: 'Your DYMO labels are in the Core Innovations printer, and one tag prints across two labels. What fixes it?', options: ['Buy a DYMO printer', 'Pick the "in a 4 in thermal printer" DYMO option and set the label size to 25 × 54 mm, Gap', 'Print the tags twice'], answer: 1, why: 'The printer needs to know each label is 1 in wide and 2⅛ in long, and the app needs to turn the tag to run along it. Then every tag fits on one label.' },
+    { kind: 'tap', title: 'Practice: the Staples roll', prompt: 'You just bought DYMO 30336 labels at Staples for your DYMO LabelWriter. Which label do you tap?', screen: { title: 'Print tags · 1. Pick your label', buttons: ['2 × 1 in roll, one tag per label', 'DYMO 1 × 2⅛ in (30336)', 'Letter sheet, 30 per page'] }, answer: 'DYMO 1 × 2⅛ in (30336)', hint: 'The number on the box, 30336, is right in the name.' },
     { queen: "Always preview. It takes five seconds and saves a sheet of labels.", kind: 'learn', title: 'Look before you print', text: 'Every print page shows a preview: Here\'s how they will look. It\'s sized to fit your screen, shows the first few labels, and Show all opens the rest. If a name is cut off or the price looks wrong, fix it on the item before you spend a label. When it looks right, go to 2. Looks good? Print.',
       points: ['Change the label size and the preview changes with it', 'DYMO and landscape labels show upright, with a note that they print turned', 'Everything prints, even the labels not shown in the preview'] },
     { kind: 'quiz', q: 'Your DYMO tag prints sideways and the barcode is cut off. What\'s the quickest fix?', options: ['Load the roll the other way round', 'Tick "Tag came out sideways or cut off?" and print again', 'Switch to letter sheets'], answer: 1, why: 'Some computers turn DYMO labels on their own, so the app\'s turn doubles up. The tick lets the printer do the turning. The app remembers it on that device.' },
@@ -74,12 +79,6 @@ const lesson: Lesson = {
         ['Small thermal roll', '1 to 2 cents', 'The printer itself, once'],
       ] },
       example: 'At 300 tags a month, sheets cost around $9 plus ink. A small thermal printer costs more up front but no ink ever, and no cutting.' },
-    { kind: 'scenario', title: 'Should you buy a printer?', situation: 'You print about 40 tags a week on letter sheets and you\'re happy with it. A friend says you NEED a thermal printer.',
-      options: [
-        { text: 'Buy the most expensive one right away', feedback: 'At 40 a week, sheets are working fine. Spend that money on stock that sells.' },
-        { text: 'Stay with sheets for now. Revisit when you\'re printing a few hundred tags a week, or the cutting and ink start eating your time.', best: true, feedback: 'Upgrade when the numbers say so, not when someone else does.' },
-        { text: 'Stop tagging small pieces to save labels', feedback: 'Untagged pieces can\'t be scanned, picked or counted. Tags are the cheapest part of the system.' },
-      ] },
     { chapter: 'Print', kind: 'learn', title: 'Three ways to print', text: 'Pick the one that fits.', points: ['One variation: open the item, tap Print tags', 'A few tags: tick them on the item page, tap Reprint', 'Many items: tick rows in Stock, tap Print tags for selected'] },
     { kind: 'tap', title: 'Practice', prompt: 'Two tags on one item got smudged. You ticked them. Now tap…', screen: { title: 'Gold hoop set', rows: ['☑ 4821-002', '☑ 4821-005', '☐ 4821-006'], buttons: ['Print tags', 'Reprint 2', 'Damage out'] }, answer: 'Reprint 2', hint: 'Reprint only prints the tags you ticked.' },
     { kind: 'learn', title: 'Line them up', text: 'Labels landing in the wrong spot is almost always the print window, not the app. Check these three every time on a new computer or printer.',
@@ -88,7 +87,6 @@ const lesson: Lesson = {
     { kind: 'quiz', q: 'Labels print shifted down the page. What do you check first?', options: ['Scale 100% and Margins None', 'Buy a new printer', 'Re-enter the item'], answer: 0, why: 'Browser scaling and margins are the usual culprit.' },
     { kind: 'learn', title: 'Use half-used sheets', text: 'Printed 7 tags yesterday and have 23 labels left on the sheet? Enter how many labels to skip and printing starts on the first empty one.',
       example: 'Yesterday you used the first 2 rows of 3 (6 labels) and one more on row 3. Skip 7, and today\'s tags start right where you left off.' },
-    { kind: 'number', title: 'How many to skip?', q: 'Your sheet has 30 labels in 10 rows of 3. You already used the first 4 full rows. How many labels do you skip?', answer: 12, hint: 'Rows used × labels per row.', why: '4 rows × 3 labels = 12. Enter 12 and today\'s tags start on row 5.' },
 
     { chapter: 'Tag it right', kind: 'learn', title: 'Where to put the tag', text: 'A tag that falls off or won\'t scan is as bad as no tag. Put it where it stays flat, stays on, and doesn\'t touch the finish.',
       table: { head: ['Piece', 'Where the tag goes'], rows: [
@@ -116,7 +114,6 @@ const lesson: Lesson = {
         ['A tag fell off and is lost', 'Open the item, tick that tag, Reprint'],
       ] } },
     { kind: 'quiz', q: 'Your thermal printer feeds labels but they come out completely blank. Most likely?', options: ['It\'s out of ink', 'The roll is in upside down', 'The tags were deleted'], answer: 1, why: 'Thermal printers don\'t use ink. They only print on one side of the label, so flip the roll.' },
-    { kind: 'quiz', q: 'A buyer\'s tag fell off a bag somewhere in the bin. Fastest fix?', options: ['Receive the bag again as a new item', 'Open the item, tick that one tag, and Reprint', 'Sell it without a tag'], answer: 1, why: 'Reprint gives you the exact same tag code, so the bag keeps its history.' },
     { kind: 'reflect', title: 'Your label setup', prompt: 'Which label type will you use, and where will tags go on your three most common kinds of pieces?', placeholder: 'I\'ll use…', example: 'Letter sheets for now. Earrings in zip bags with the tag on the bag, necklaces tagged on the clasp, bags on a hang tag.' },
     { kind: 'checklist', title: 'Tagging supplies', prompt: 'Tick what you already have.', items: [
       'Labels for my printer',
