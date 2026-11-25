@@ -50,7 +50,7 @@ export const DEFAULT_SETTINGS: Settings = {
   liveThemes: ['$2 Tuesday', 'Jewelry Night', 'Bag Bonanza', 'Clearance Blowout', 'Holiday Special'],
   hosts: ['LaVerne'],
   oldStockDays: 60,
-  liveDurationMin: 120,
+  liveDurationMin: 90,
   botColumns: [
     { key: 'live_number', header: 'Item Number' },
     { key: 'title', header: 'Item Name' },

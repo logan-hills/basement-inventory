@@ -15,7 +15,7 @@ const lesson: Lesson = {
     welcome: "The best lives are won before you press Go Live. When you choose your lineup ahead of time, you sell calmer and smarter. Let's get you ready.",
     signoff: "Build a lineup with something for everyone, set prices that still pay you, and lay out your table in order. Ready sellers are confident sellers.",
   },
-  covers: ['src/pages/LivePrep.tsx', 'src/lib/cart.ts', 'src/pages/LiveDetail.tsx'], updated: '2026-11-24',
+  covers: ['src/pages/LivePrep.tsx', 'src/lib/cart.ts', 'src/pages/LiveDetail.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'Shop your shelves', kind: 'learn', title: 'Shop your own shelves', nova: 'This is where a great live is really made: before you ever hit Go.',
       text: 'Get ready for live works like an online store. Tap a category tile (Jewelry, Bags…) to browse it, filter by tag, and sort. Each card shows how many are on your shelf.' },
@@ -39,7 +39,7 @@ const lesson: Lesson = {
     { kind: 'number', title: 'How many of each?', q: 'You\'re planning 50 pieces. About how many should be core pieces at 50%?', answer: 25, suffix: 'pieces', hint: 'Half of 50.', why: '25 core pieces, about 15 door-openers, 7 or 8 showstoppers and 2 or 3 bundles. Adjust to your crowd, but always have something for every wallet.' },
     { kind: 'learn', title: 'Mix in old stock', text: 'Every live is a chance to move pieces that have been sitting. Sort by Oldest first and add a handful to every lineup. Mixed in between fresh pieces, old stock sells better than in a separate "clearance" pile.',
       tip: 'Home tells you when stock passes your old-stock age. The Run a sale lesson goes deeper.' },
-    { kind: 'scenario', title: 'Tonight\'s lineup', situation: 'Your Tuesday crowd mostly spends $10 to $20. You have 60 minutes. What do you pull?',
+    { kind: 'scenario', title: 'Tonight\'s lineup', situation: 'Your Tuesday crowd mostly spends $10 to $20. You have 90 minutes. What do you pull?',
       options: [
         { text: '15 of your best $40 bags', feedback: 'Gorgeous, but most of your crowd can\'t play. Comments go quiet fast.' },
         { text: 'About 50 pieces: some $5 door-openers to start, mostly $10 to $20 core pieces, a few showstoppers, a couple of bundles for the end', best: true, feedback: 'Something for every wallet, paced across the hour. That\'s a lineup that sells.' },

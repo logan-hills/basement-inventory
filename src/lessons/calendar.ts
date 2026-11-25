@@ -15,7 +15,7 @@ const lesson: Lesson = {
     welcome: "Consistency is the quiet secret of the sellers who last. When your buyers know when you'll be live, they plan their evening around you. Let's set a schedule you can keep.",
     signoff: "Pick your nights, repeat them, and tell people when you're taking a week off. A schedule you keep builds trust faster than anything you say.",
   },
-  covers: ['src/pages/Calendar.tsx', 'src/components/LiveForm.tsx', 'src/pages/LiveDetail.tsx'], updated: '2026-11-24',
+  covers: ['src/pages/Calendar.tsx', 'src/components/LiveForm.tsx', 'src/pages/LiveDetail.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'Pick your times', queen: "Choose a schedule you can keep on your hardest week, not your best one.", kind: 'learn', title: 'Same time, every week', nova: 'Consistency is a superpower. Let\'s set your show times.',
       text: 'TV shows have time slots for a reason: people build their week around them. When buyers know "Tuesday 7, she\'s on," they stop needing a reminder. That habit is worth more than any single post.' },
@@ -44,8 +44,9 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'How long should a live be?', text: 'Longer isn\'t always better. Viewers drop off as the night goes on, and so does your energy.',
       table: { head: ['Length', 'Good for'], rows: [
         ['30 to 45 min', 'Flash sales, lunch lives, your first few lives'],
-        ['60 min', 'Most regular shows. The shared Page books in 1-hour blocks.'],
-        ['90 min to 2 hr', 'Big hauls and holiday shows, with a co-host to share the talking'],
+        ['60 min', 'Short regular shows once you have a following'],
+        ['90 min', 'Our standard show. The shared Page books 1.5-hour slots.'],
+        ['2 hr or more', 'Big hauls and holiday shows, with a co-host to share the talking'],
       ] } },
 
     { kind: 'quiz', q: 'You\'re brand new and nervous on camera. What length should your first few lives be?', options: ['3 hours, to sell everything', '30 to 45 minutes', 'However long until people leave'], answer: 1, why: 'Short lives keep your energy high and leave buyers wanting more. Grow the length as you grow your crowd.' },
@@ -56,7 +57,7 @@ const lesson: Lesson = {
         ['3 (payday week)', 'Gold Rush', 'Customer Picks'],
         ['4', '$2 Tuesday', 'Clearance: Run a sale on old stock'],
       ] } },
-    { kind: 'reflect', title: 'Your schedule', prompt: 'Which days and times will you go live every week, and what themes will you use this month?', placeholder: 'I go live…', example: 'Tuesday and Thursday at 7 PM ET, 1 hour. Payday Bonanza on the 1st, $2 Tuesday every other week, clearance the last Thursday.' },
+    { kind: 'reflect', title: 'Your schedule', prompt: 'Which days and times will you go live every week, and what themes will you use this month?', placeholder: 'I go live…', example: 'Tuesday and Thursday at 7 PM ET, 1.5 hours. Payday Bonanza on the 1st, $2 Tuesday every other week, clearance the last Thursday.' },
 
     { queen: "Announce your breaks ahead of time. Buyers forgive a planned week off. They worry about a surprise one.", kind: 'scenario', title: 'Taking a week off', situation: 'You\'re going to a family reunion and will miss next Tuesday\'s live.',
       options: [
@@ -73,14 +74,14 @@ const lesson: Lesson = {
       example: 'Thursday shows Projected sales $640 and Projected profit $390. Last Thursday you sold about 60% of what you planned. So expect around $384 in sales, and plan a few more strong pieces if that\'s below your goal.' },
     { kind: 'number', title: 'What to expect', q: 'A live shows Projected sales of $800. Usually you sell about 55% of what you plan. About how much should you expect to sell?', prefix: '$', answer: 440, hint: 'Multiply the projected sales by 0.55.', why: '$800 × 0.55 = $440. Track your own percent live to live. It\'s the most honest forecast you\'ll ever have.' },
     { kind: 'learn', title: 'Mark it done', text: 'After the show, open the live, tap More, then Mark live as done. Your streak on Home grows with every live. Can\'t make one? Tap More, then Cancel live, so your calendar stays honest. Edit the details and Delete this live are in the same More list.' },
-    { kind: 'learn', title: 'Going live on the shared Page?', text: 'Your own calendar is for planning. To claim an hour on the shared Facebook Page, tap Shared Page in the Lives row at the top of the screen and book your hour there. Book your Page hour first, then schedule the matching live on your calendar.' },
-    { kind: 'tap', title: 'Practice', prompt: 'You want to book Thursday 7 PM on the shared Facebook Page. On the calendar, tap…', screen: { title: 'Lives', buttons: ['Planner', 'Calendar', 'Get ready', 'Giveaways', 'Shared Page'] }, answer: 'Shared Page', hint: 'Shared Page, in the row at the top, takes you to the shared calendar where you book your hour.' },
+    { kind: 'learn', title: 'Going live on the shared Page?', text: 'Your own calendar is for planning. To claim a 1.5-hour slot on the shared Facebook Page, tap Shared Page in the Lives row at the top of the screen and book your slot there. Book your Page slot first, then schedule the matching live on your calendar.' },
+    { kind: 'tap', title: 'Practice', prompt: 'You want to book Thursday 7 PM on the shared Facebook Page. On the calendar, tap…', screen: { title: 'Lives', buttons: ['Planner', 'Calendar', 'Get ready', 'Giveaways', 'Shared Page'] }, answer: 'Shared Page', hint: 'Shared Page, in the row at the top, takes you to the shared calendar where you book your slot.' },
     { kind: 'checklist', title: 'Set up your calendar', prompt: 'Tick each one as you do it.', items: [
       'Ask my regulars which nights work best',
       'Pick my weekly days, times and length',
       'Schedule my weekly show to repeat for 13 weeks',
       'Plan this month\'s themes',
-      'Book my shared Page hours (if I use the Page)',
+      'Book my shared Page slots (if I use the Page)',
       'Put my live days and times on my Page cover photo',
     ] },
   ],

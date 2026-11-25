@@ -71,7 +71,8 @@ export function pokeTimer() {
 }
 
 export function friendlySlotError(msg: string) {
-  if (msg.includes('live_slots_check')) return 'Book whole hours that start on the hour.'
+  if (msg.includes('live_slots_90_min')) return 'Shared Page lives are 1.5 hours. Please pick a 1.5-hour slot.'
+  if (msg.includes('live_slots_half_hour') || msg.includes('live_slots_check')) return 'Slots start on the hour or the half hour, like 7:00 or 7:30.'
   if (msg.includes('live_slots_no_overlap')) return 'Someone already has that time. Pick a time that does not overlap.'
   if (msg.includes('stage') && (msg.includes('does not exist') || msg.includes('schema cache'))) return 'Shared Page needs a quick database update first (supabase/010_shared_page_slots.sql).'
   return msg
