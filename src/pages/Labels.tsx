@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { Link, useSearchParams } from 'react-router-dom'
 import JsBarcode from 'jsbarcode'
 import { supabase } from '../lib/supabase'
@@ -174,6 +175,11 @@ export default function Labels() {
   const slots: (Tag | null)[] = [...Array(single ? 0 : Math.min(skip, perPage - 1)).fill(null), ...tags]
   const pages: (Tag | null)[][] = []
   for (let i = 0; i < slots.length; i += perPage) pages.push(slots.slice(i, i + perPage))
+  // "Print 1 test tag": prints only the first tag, so a new printer setting costs one label, not a whole batch.
+  const [testOne, setTestOne] = useState(false)
+  useEffect(() => { const off = () => setTestOne(false); window.addEventListener('afterprint', off); return () => window.removeEventListener('afterprint', off) }, [])
+  const printTest = () => { flushSync(() => setTestOne(true)); window.print(); setTimeout(() => setTestOne(false), 1500) }
+  const shownPages = testOne ? pages.slice(0, 1) : pages
 
 
   const tagFor = (t: Tag) => (single
@@ -195,8 +201,8 @@ export default function Labels() {
               <div className="stack tight-gap">
                 <span className="label-text">Tag style</span>
                 <div className="seg" role="group" aria-label="Tag style">
-                  <button className={style === 'regular' ? 'on' : ''} aria-pressed={style === 'regular'} onClick={() => setStyle('regular')}>{dymo ? 'Regular tag' : 'Regular (white roll)'}</button>
-                  <button className={style === 'sale' ? 'on sale-on' : ''} aria-pressed={style === 'sale'} onClick={() => setStyle('sale')}>{dymo ? 'Sale tag' : 'Sale (yellow roll)'}</button>
+                  <button className={style === 'regular' ? 'on' : ''} aria-pressed={style === 'regular'} onClick={() => setStyle('regular')}>{dymo || format === 'dymoThermal' ? 'Regular tag' : 'Regular (white roll)'}</button>
+                  <button className={style === 'sale' ? 'on sale-on' : ''} aria-pressed={style === 'sale'} onClick={() => setStyle('sale')}>{dymo || format === 'dymoThermal' ? 'Sale tag' : 'Sale (yellow roll)'}</button>
                 </div>
               </div>
               {style === 'sale' && (
@@ -216,7 +222,7 @@ export default function Labels() {
                     )}
                   </div>
                   {noSale > 0 && <p className="small warn-text">{noSale} tag{noSale === 1 ? ' has' : 's have'} no sale price yet, so {noSale === 1 ? 'it shows' : 'they show'} the regular price. Set one on the item page, use Edit in Inventory, or pick Percent off.</p>}
-                  <p className="muted small">{dymo
+                  <p className="muted small">{dymo || format === 'dymoThermal'
                     ? <>DYMO rolls are white, so the tag says <b>SALE</b> in a bold black box with the old price crossed out. Want color? DYMO sells colored labels too.</>
                     : <>Load the <b>yellow</b> roll before you print. The tag says SALE with the old price crossed out.</>}</p>
                 </div>
@@ -230,7 +236,7 @@ export default function Labels() {
           </div>
 
           <LabelPreview f={f} turned={turned} pages={pages.length} labels={tags.length}>
-            {pages.map((p, pi) => (
+            {shownPages.map((p, pi) => (
               <LabelSheet key={pi} f={f} turned={turned}>
                 {p.map((t, i) => <div key={i} className="slot">{t && tagFor(t)}</div>)}
               </LabelSheet>
@@ -252,15 +258,22 @@ export default function Labels() {
               </div>
             )}
             {format === 'dymoThermal' && (
-              <div className="printer-tip small">
-                <b>DYMO labels in your thermal printer (one time)</b>
+              <div className="printer-tip small dymo-thermal-tip">
+                <b>DYMO labels in your thermal printer: one-time setup</b>
+                <p>Your printer feeds these labels the long way: <b>1 inch across, 2⅛ inches long</b>. The print window has to know that size, or one tag gets stretched over two labels.</p>
                 <ol>
-                  <li>Load the DYMO roll so the labels come out <b>one after another, the long way</b>, with the holes between labels lined up in the middle. Slide the roll guides in snug against the backing so it can't wander.</li>
-                  <li>Set the label size to <b>1 x 2.125 in</b> (25 x 54 mm): <b>1 in wide, 2⅛ in long</b>. In the printer's phone app that's width 25 mm, height 54 mm, label type <b>Gap</b> (sometimes called Label with gaps). On a computer, add a custom paper size of 1 x 2.125 in, Portrait.</li>
-                  <li>Hold the feed button until a label or two feeds out, so the printer finds the holes between labels.</li>
-                  <li>Phone: tap <b>Save for printer app</b> and print the picture at 100%, no fit to page. Computer: tap Print, scale <b>100%</b>, margins <b>None</b>.</li>
+                  <li>Load the DYMO roll so the labels come out one after another, the long way. Slide the roll guides in snug so it can't wander. Hold the feed button until a label feeds out, so the printer finds the gaps.</li>
+                  <li>Tap <b>Print 1 test tag</b> below. In the print window, pick your <b>Core Innovations</b> printer (or other shipping printer).</li>
+                  <li>Set <b>Paper size</b> to <b>1 x 2.125 in</b> (25 x 54 mm). Not there yet? Add it once:
+                    <ul>
+                      <li><b>Windows:</b> under More settings, click <i>Print using system dialog</i>, then Preferences. On the Page Setup or Paper tab, click New (or Custom), and make a size 1.00 in wide by 2.13 in tall (25 by 54 mm). Save it and pick it.</li>
+                      <li><b>Mac:</b> Paper Size, then Manage Custom Sizes, then +. Width 1 in, height 2.125 in, all margins 0. Pick your printer under Non-Printable Area, click OK and pick the new size.</li>
+                    </ul>
+                  </li>
+                  <li>Layout <b>Portrait</b>, margins <b>None</b>, scale <b>100</b> (never Fit to page), headers and footers off.</li>
+                  <li>One whole tag on one label? You're set. The computer remembers the paper size, so after this just tap Print.</li>
                 </ol>
-                <span className="muted">The app turns each tag to run along the label, so one whole tag lands on each label. Still sitting off to one side? Use <b>Nudge it</b> below.</span>
+                <span className="muted">On a phone, tap <b>Save for printer app</b> and print the picture in the printer's app at 25 x 54 mm. Still a little off to one side? Use <b>Nudge it</b> below.</span>
               </div>
             )}
             {dymo && (
@@ -277,6 +290,7 @@ export default function Labels() {
               </div>
             )}
             {!single && <p className="muted small">In the print window, set scale to 100% (or "Actual size") and margins to None.</p>}
+            {single && tags.length > 1 && <button className="btn ghost big" onClick={printTest}>Print 1 test tag</button>}
             <button className={`btn big ${style === 'sale' ? 'sale-btn' : 'primary'}`} onClick={() => window.print()}>Print {tags.length} tag{tags.length === 1 ? '' : 's'}</button>
             <SaveForPrinterApp name={style === 'sale' ? 'sale-tags' : 'tags'} turn={turned && f.group === 'thermal'} />
             <PrintNudge w={printed.w} h={printed.h} label={dymo ? `DYMO ${format === 'dymo30336' ? '30336' : '30252'} labels` : format === 'dymoThermal' ? 'DYMO labels in your thermal printer' : undefined} />
