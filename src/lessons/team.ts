@@ -16,7 +16,7 @@ const lesson: Lesson = {
     welcome: "There comes a day when you can't do it all yourself, and that's a good sign. This lesson shows you how to bring in help the right way, so your shop grows and your business stays private.",
     signoff: "Give each helper their own sign-in, train them for a week, and check their work kindly. Good help, well trained, is how small shops get big.",
   },
-  covers: ['src/components/TeamSettings.tsx', 'src/lib/team.ts', 'src/pages/CreateShop.tsx', 'src/components/OwnerOnly.tsx', 'src/lib/session.tsx', 'supabase/018_private_shops_and_teams.sql', 'supabase/020_founder_plan.sql', 'src/lib/plan.ts'],
+  covers: ['src/components/TeamSettings.tsx', 'src/lib/team.ts', 'src/pages/CreateShop.tsx', 'src/components/OwnerOnly.tsx', 'src/lib/session.tsx', 'supabase/018_private_shops_and_teams.sql', 'supabase/020_founder_plan.sql', 'supabase/021_founder_from_host_desk.sql', 'src/lib/plan.ts'],
   updated: '2026-11-25',
   slides: [
     { chapter: 'Your team', kind: 'learn', title: 'Your shop, more hands', nova: 'Every empire needs a crew. Let\'s build yours the safe way!',
@@ -31,7 +31,7 @@ const lesson: Lesson = {
         ['Founder (Dynamic Dazzle\'s own shop)', '10'],
       ] },
       tip: 'Hiring for the holidays? Cancel an old invite you never used to free up its spot.' },
-    { kind: 'learn', title: 'The founder shop: free for the Queen\'s team', text: 'Dynamic Dazzle is the shop that started it all, so the Queen\'s own shop is on the Founder plan. It has every feature, Dazzle University included, it is free forever, and it includes 10 team members. Every team member who joins the Dynamic Dazzle shop with an invite code is covered too: nobody on the Queen\'s team pays. Only the platform owner can put a shop on the Founder plan. It can\'t be bought, picked in the app, or changed by a billing mix-up.',
+    { kind: 'learn', title: 'The founder shop: free for the Queen\'s team', text: 'Dynamic Dazzle is the shop that started it all, so the Queen\'s own shop is on the Founder plan. It has every feature, Dazzle University included, it is free forever, and it includes 10 team members. Every team member who joins the Dynamic Dazzle shop with an invite code is covered too: nobody on the Queen\'s team pays. Only the Queen (on her Host desk) and the platform owner can put a shop on the Founder plan. It can\'t be bought, picked by a seller, or changed by a billing mix-up.',
       example: 'A new packer joins the Dynamic Dazzle shop with a code from the Queen. She scans, picks and packs at no cost, because the shop she works in is a founder shop.' },
     { kind: 'learn', title: 'What team members can do', text: 'Team members get the daily work of your shop, so they can keep things moving while you rest, shop for stock or get camera-ready.',
       table: { head: ['', 'You (owner)', 'Team member'], rows: [
