@@ -40,7 +40,7 @@ const lesson: Lesson = {
       queen: "Pick your colors and stick with them for at least a year. You'll get bored of them long before your buyers even notice them." },
     { kind: 'quiz', q: 'According to brand research, what makes a logo or color work as a brand asset?', options: ['Being trendy this season', 'Being seen consistently, over and over, with your brand', 'Being very detailed', 'Changing it often to stay fresh'], answer: 1, why: "Repetition builds recognition. A simple logo used everywhere for years beats a clever one you keep changing." },
 
-    { chapter: 'Logo and colors', kind: 'learn', title: 'A logo that works tiny and big', text: "Your logo has to work on a 2-inch label, a phone screen and a banner. Simple wins.",
+    { chapter: 'Logo and colors', kind: 'learn', title: 'A logo that works tiny and big', example: 'Test your logo the easy way: shrink it to the size of a 2×1 price tag and print one. If you can still read the name from arm\'s length, it works tiny. Then look at it on a poster. If it still looks sharp, it works big.', text: "Your logo has to work on a 2-inch label, a phone screen and a banner. Simple wins.",
       points: ['Test it at the size of a postage stamp: can you still read it?', 'Make sure it works in one color (black on white, white on dark)', 'Have two versions: the full logo and a simple icon or initials', 'Avoid thin script fonts for the main word; they disappear when small', 'Get the files as PNG with a clear background, and SVG if you can'],
       tip: 'Canva and AI tools can draft logo ideas. Use them for ideas, then make sure the final design is simple, original and not copied from another brand.',
       visual: { type: 'compare', style: 'dodont', caption: 'Shrink your logo to the size of a 2-inch label before you fall in love with it.',
@@ -55,7 +55,7 @@ const lesson: Lesson = {
         { title: 'Ask for the right files', detail: 'Full logo and simple icon, each as a PNG with a clear background and, if possible, an SVG. Ask in writing that you own the final design.' },
         { title: 'Test before you pay the final bill', detail: 'Print it on a real tag and look at it on your phone from across the room.' },
       ] },
-    { kind: 'learn', title: 'Colors with a job', text: "Give each color a job, so your designs always look balanced.",
+    { kind: 'learn', title: 'Colors with a job', term: { word: 'Hex code', meaning: 'A six-character code, like #C8963E, that names one exact color. Save your hex codes in your brand kit so every flyer, post and label shows the same gold, not a close cousin of it.' }, text: "Give each color a job, so your designs always look balanced.",
       table: { head: ['Job', 'How much', 'Example'], rows: [
         ['Main color', 'About 60% (backgrounds, big areas)', 'Cream'],
         ['Second color', 'About 30% (headings, frames)', 'Deep plum'],

@@ -109,7 +109,7 @@ const lesson: Lesson = {
         ['Bags', 'Width × height × depth, strap drop'],
       ] },
       example: "Carla adds 'Pit to pit: 21 in. / Length: 27 in.' to every top and says it on camera. Her 'it doesn't fit' messages fell from several a week to a couple a month." },
-    { kind: 'learn', title: 'Refund, exchange or credit?', text: "Decide ahead of time, so you treat everyone the same. MIT Sloan research on unhappy customers found that people want to be heard and treated fairly as much as they want money back. A quick, warm answer goes a long way.",
+    { kind: 'learn', title: 'Refund, exchange or credit?', term: { word: 'Store credit', meaning: 'Money a buyer can spend in your shop later instead of getting cash back. It keeps the sale in your shop, but offer it as a choice, never force it when the mistake was yours.' }, example: 'Monique ordered a blouse in a 2X that fit like an XL. The listing had no measurements, so it was the seller\'s miss. The seller apologized, refunded her right away, and added chest and length measurements to every top from then on. Monique bought three pieces the next week.', text: "Decide ahead of time, so you treat everyone the same. MIT Sloan research on unhappy customers found that people want to be heard and treated fairly as much as they want money back. A quick, warm answer goes a long way.",
       table: { head: ['Situation', 'Fair answer'], rows: [
         ['Your mistake (wrong item, damage in shipping)', 'Full refund or replacement, plus your apology'],
         ['Not as described (a flaw you missed)', 'Refund or partial refund; it\'s on you'],

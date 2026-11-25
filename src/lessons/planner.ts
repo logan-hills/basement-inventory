@@ -15,7 +15,7 @@ const lesson: Lesson = {
     welcome: "A live with a plan feels like a party; a live without one feels like a scramble. Let's plan lives your buyers can't wait to attend.",
     signoff: "Pick the theme, build the run of show, post your poster early, and walk in calm. Planned lives sell more, every single time.",
   },
-  covers: ['src/pages/Planner.tsx', 'src/pages/LivePlan.tsx', 'src/components/PosterMaker.tsx', 'src/lib/planner.ts'], updated: '2026-11-24',
+  covers: ['src/pages/Planner.tsx', 'src/pages/LivePlan.tsx', 'src/components/PosterMaker.tsx', 'src/lib/planner.ts'], updated: '2026-11-25',
   slides: [
     { chapter: 'Pick a theme', kind: 'learn', title: 'Why a theme works', nova: 'A theme turns "another live" into an event. Let\'s plan one!',
       text: 'A theme gives buyers a reason to come tonight instead of "sometime." It also makes your job easier: it tells you which pieces to pull, what to wear, what colors to use on the poster, and what to say.',
@@ -57,7 +57,7 @@ const lesson: Lesson = {
         ['7:55', 'Last call, rules again, thank-yous, next live', 'Finish strong'],
       ] } },
     { kind: 'order', title: 'Build the run of show', prompt: 'Put the segments in order.', steps: ['Welcome and shout-outs', 'Shop rules', 'Best pieces first', 'Steal of the Night', 'Bundle deals', 'Giveaway winner', 'Last call and next live'] },
-    { kind: 'learn', title: 'Pacing your pieces', text: 'Most lives have a curve: viewers build for the first 10 to 20 minutes, peak, then slowly drop. Plan your pieces to match.',
+    { kind: 'learn', title: 'Pacing your pieces', term: { word: 'Energy curve', meaning: 'How the number of viewers and the excitement rise and fall during a live. Plan your best pieces for the peak and save a strong one for the end.' }, text: 'Most lives have a curve: viewers build for the first 10 to 20 minutes, peak, then slowly drop. Plan your pieces to match.',
       points: ['Open with 2 or 3 crowd-pleasers, not your weakest stock', 'Save your best "wow" piece for the peak', 'Mix price points so everyone can buy something', 'A quick "flash $2 minute" whenever comments slow down', 'End with bundles and last calls, not leftovers'],
       tip: 'Reports → Sales by live shows which lives did best. Look at what you sold first on those nights.' },
     { queen: "Save your best deal for the middle of the live and tease it from the start. It keeps people watching.", kind: 'script', title: 'Your Steal of the Night', text: 'A peak moment people wait for. Build it up, then go fast.',

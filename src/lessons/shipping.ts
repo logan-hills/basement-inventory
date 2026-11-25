@@ -19,7 +19,7 @@ const lesson: Lesson = {
   slides: [
     { chapter: 'One file, every label', kind: 'learn', title: 'Why Pirate Ship', nova: 'Shipping day used to take forever. Not anymore.',
       text: 'Pirate Ship is free to use and gives small sellers discounted USPS and UPS rates without a monthly fee. Better yet, it can import a whole spreadsheet of orders and buy every label in one go. The app makes that spreadsheet for you.' },
-    { kind: 'learn', title: 'One file, every label', text: 'When every item in an order is picked into its box, it shows up under Ready to ship. Tap Download for Pirate Ship to get a file with every packed box, address and weight. At Pirate Ship, choose Ship → Import Spreadsheet and upload it.',
+    { kind: 'learn', title: 'One file, every label', term: { word: 'CSV file', meaning: 'A plain spreadsheet file, with commas between the columns. Pirate Ship and many other sites can read one, so you never type an address by hand.' }, text: 'When every item in an order is picked into its box, it shows up under Ready to ship. Tap Download for Pirate Ship to get a file with every packed box, address and weight. At Pirate Ship, choose Ship → Import Spreadsheet and upload it.',
       screen: { title: 'Shipping', rows: ['Ready to ship · 14', 'Shipped'], buttons: ['Download for Pirate Ship', 'Shipped'], highlight: 'Download for Pirate Ship' } },
     { kind: 'howto', title: 'Your first Pirate Ship import, click by click', text: 'The first import takes about 20 minutes because Pirate Ship learns your file. After that, a stack of 30 labels takes about 10.',
       steps: [

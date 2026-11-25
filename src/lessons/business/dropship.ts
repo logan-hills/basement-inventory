@@ -74,7 +74,13 @@ const lesson: Lesson = {
 
     { chapter: 'Protect your name', kind: 'learn', title: 'Vet suppliers', text: 'Your customer doesn\'t know the supplier exists. If the order is late or cheap, it\'s your name on it.',
       points: ['Order samples of everything you plan to list, to your own address', 'Time how long the sample takes to arrive', 'Check reviews, return policy and how fast they answer messages', 'Prefer suppliers with warehouses in the US for faster shipping', 'Never list branded or designer goods from unknown suppliers (counterfeit risk)'],
-      example: 'A seller orders samples of the same jewelry organizer from three suppliers. One arrives in 6 days, well packed. One takes 19 days with a cracked lid. One arrives in 9 days with another store\'s price sticker inside. She lists only the first, and saves the other two names on a "don\'t use" list.' },
+      example: 'A seller orders samples of the same jewelry organizer from three suppliers. One arrives in 6 days, well packed. One takes 19 days with a cracked lid. One arrives in 9 days with another store\'s price sticker inside. She lists only the first, and saves the other two names on a "don\'t use" list.',
+      visual: { type: 'bars', unit: 'days to arrive', bars: [
+        { label: 'Supplier A, well packed', value: 6, hl: true },
+        { label: 'Supplier C, wrong price sticker', value: 9 },
+        { label: 'Supplier B, cracked lid', value: 19 },
+      ], caption: 'Same organizer, three suppliers. Speed is only one score: packing and honesty count just as much.' },
+      term: { word: 'Sample order', meaning: 'An order you place to your own address before you list a product, so you can see the quality and time the delivery yourself. It is your proof for the shipping time you promise.' } },
     { kind: 'learn', title: 'Shipping time is the law', text: 'The FTC\'s Mail, Internet, or Telephone Order Merchandise Rule applies to online stores. You must have a reasonable basis to ship within the time you state, or within 30 days if you state no time. If you can\'t, you must tell the customer and offer to cancel with a refund.',
       tip: 'Show realistic delivery times on every product page. "Ships in 7 to 12 business days" beats a broken promise.' },
     { kind: 'scenario', title: 'The slow supplier', situation: 'Your store says "Ships in 3 to 5 days." Your supplier is now taking 15 days, and 20 orders are waiting.',
