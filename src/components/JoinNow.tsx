@@ -4,6 +4,7 @@ import { getLiveClasses, useLiveClasses } from '../lib/classSchedule'
 import { timeToMinutes, useClassSignups, type Signup } from '../lib/classSignups'
 import { JOIN_EARLY_MIN, easternToDate, joinState, sessionLink, serviceName, startsIn, useIsHost, useMeetingRooms, useNow, useQueenSessions, whenLabel } from '../lib/meetings'
 import type { LiveClass } from '../lessons/classes'
+import { useHostRequests } from '../lib/requests'
 
 /* Join buttons. Everyone with a class seat or a booked 1:1 gets one, from 15 minutes before the start
    until the end, so nobody has to dig through email for a link. */
@@ -37,6 +38,7 @@ export function JoinNowBanner() {
   const signups = useClassSignups()
   const { rooms } = useMeetingRooms()
   const queen = useQueenSessions()
+  const requests = useHostRequests(host === true)
 
   // The Queen and her hosts: any class or booked 1:1 that's on now.
   if (host) {
@@ -50,6 +52,12 @@ export function JoinNowBanner() {
       <section className="join-now" aria-live="polite">
         <div><b>♛ You're on: {on.title}</b><span>{whenLabel(on.start)} · {startsIn(on.start, on.minutes, now)}</span></div>
         <Link to="/host" className="btn gold"><Icon name="live" size={18} />Open my Host desk</Link>
+      </section>
+    )
+    if (requests.fresh.length) return (
+      <section className="join-now" aria-live="polite">
+        <div><b>♛ {requests.fresh.length} new request{requests.fresh.length === 1 ? '' : 's'}</b><span>{requests.fresh.slice(0, 2).map(r => `${r.name}: ${r.kind === 'queen' ? 'Time with the Queen' : '1:1 coaching'}`).join(' · ')}</span></div>
+        <Link to="/host" className="btn gold">See requests</Link>
       </section>
     )
   }

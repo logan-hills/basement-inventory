@@ -5,6 +5,7 @@ import { TEAM_CONTACT as CONTACT } from './legal'
 import { CLASS_TZ_ID, type LiveClass } from '../lessons/classes'
 import { getLiveClasses } from './classSchedule'
 import { getRoom } from './meetings'
+import { isFounder } from './plan'
 
 /* Live class sign-ups. Saved to Supabase (016_class_signups.sql) so hosts can see who's coming.
    Until that table exists, a seat is kept on this device and the seller is offered an email
@@ -166,5 +167,5 @@ export function useClassSignups() {
   }, [load])
 
   const upcomingMine = mine.filter(x => x.class_date >= today).sort((a, b) => a.class_date.localeCompare(b.class_date))
-  return { mine: upcomingMine, all, online, isHost, signUp, cancel, reload: load }
+  return { mine: upcomingMine, all, online, isHost: isHost && isFounder(shop?.plan), signUp, cancel, reload: load }
 }

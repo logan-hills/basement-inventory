@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSession } from '../lib/session'
 import Icon from '../components/Icon'
 import { QUEEN_SESSION as Q, consultPrice, consultDeposit } from '../lessons/classes'
+import { ago, useMyRequests, useSendRequest } from '../lib/requests'
 import { JOIN_EARLY_MIN, downloadText, joinState, queenIcs, serviceName, sessionLink, startsIn, useIsHost, useNow, useQueenSessions, whenLabel } from '../lib/meetings'
 
 /* Schedule time with the Queen: a paid 1:1 business consult. Sellers learn how pricing works,
@@ -24,7 +25,12 @@ const fmt = (n: number) => `$${n % 1 ? n.toFixed(2) : n}`
 const len = (h: number) => (h < 1 ? `${h * 60} minutes` : `${h} hour${h === 1 ? '' : 's'}`)
 
 export default function Consult() {
-  const { shop } = useSession()
+  const { shop, profile, session } = useSession()
+  const send = useSendRequest()
+  const mine = useMyRequests('queen')
+  const [sending, setSending] = useState(false)
+  const [sendErr, setSendErr] = useState('')
+  const [sent, setSent] = useState(false)
   const [topics, setTopics] = useState<string[]>([])
   const [goal, setGoal] = useState('')
   const [now, setNow] = useState('')
@@ -68,7 +74,15 @@ export default function Consult() {
     'What I\'m doing now:',
     now.trim() || '(not filled in)',
   ].join('\n')
-  const href = `mailto:${Q.email}?subject=${encodeURIComponent(`Schedule time with the Queen: ${shop?.name ?? 'my shop'}`)}&body=${encodeURIComponent(body)}`
+  /** Send the request straight to the Queen's Host desk. No email app opens. */
+  async function sendRequest() {
+    setSending(true); setSendErr('')
+    const e = await send({ kind: 'queen', name: profile?.display_name || shop?.name || 'A seller', email: profile?.email || session?.user.email || null, phone: profile?.phone || null,
+      best_time: when, hours, topics: topics.join(', '), details: body })
+    setSending(false)
+    if (e) { setSendErr(e); return }
+    setSent(true); mine.reload()
+  }
 
   return (
     <div className="uni stack wide-gap consult">
@@ -168,10 +182,14 @@ export default function Consult() {
           {hours >= 1 && <small>Includes {Math.round(Q.firstHourOff * 100)}% off your first hour. Follow-up research, if you want it, is about {fmt(Q.researchRate)} an hour and quoted first.</small>}
         </div>
 
-        {ready
-          ? <a className="btn uni-cta consult-send" href={href}>♛ Send my request</a>
+        {sent ? (
+          <div className="consult-sent" role="status"><b>♛ Request sent to the Queen!</b><span>It's on her Host desk now. She'll reply with a time and how to pay your {fmt(deposit)} deposit. Once it's paid, your session shows at the top of this page with a Join button.</span></div>
+        ) : ready
+          ? <button type="button" className="btn uni-cta consult-send" disabled={sending} onClick={sendRequest}>♛ {sending ? 'Sending…' : 'Send my request'}</button>
           : <button type="button" className="btn uni-cta consult-send consult-guide" onClick={guide}>♛ {topics.length ? 'Next: tell the Queen what you want to work on' : 'Start by picking your topics'} ›</button>}
-        <p className="consult-small">Your request opens as an email to the Queen at {Q.email}. She'll reply to confirm a time and send how to pay your {fmt(deposit)} deposit. Your time is booked once the deposit is paid, and your session then shows at the top of this page with a Join button. Sessions are business consulting, not legal or tax advice.</p>
+        {sendErr && <p className="consult-err">{sendErr}</p>}
+        {!sent && mine.list[0] && <p className="consult-small">✓ You sent a request {ago(mine.list[0].created_at).toLowerCase()}{mine.list[0].status === 'handled' ? ' and the Queen has picked it up' : ''}.</p>}
+        <p className="consult-small">Your request goes straight to the Queen in the app. She'll reply to confirm a time and send how to pay your {fmt(deposit)} deposit. Your time is booked once the deposit is paid, and your session then shows at the top of this page with a Join button. Sessions are business consulting, not legal or tax advice.</p>
       </section>
     </div>
   )
