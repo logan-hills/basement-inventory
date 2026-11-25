@@ -21,7 +21,7 @@ const lesson: Lesson = {
     welcome: "Before we talk about inventory or marketing, we have to talk about you. The way you speak to yourself after a slow live decides what happens next. I made this course first in the Mindset school because everything else grows from here.",
     signoff: "Catch the thought, check it, change it. Do that every day this week, and watch how differently you show up on camera. The CEO of your shop starts in your own head.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'Two mindsets', kind: 'learn', title: 'Fixed or growth?', nova: "Grab a cup of something warm, boss. This one is about the most important tool in your shop: your mind.",
       text: "Stanford psychologist Carol Dweck spent decades studying why some people grow after setbacks while others stall. She found two broad beliefs. With a fixed mindset, you believe your talent is set: you either have it or you don't. With a growth mindset, you believe skills grow with effort, good strategies and help from others.",
@@ -30,7 +30,8 @@ const lesson: Lesson = {
         ['Another seller is booming', '"She\'s a natural. I\'ll never be that."', '"What is she doing that I can learn?"'],
         ['Tech is confusing', '"I\'m too old for this."', '"I don\'t know it YET. Let me take the lesson."'],
         ['Mean comment', '"They\'re right about me."', '"Is there anything useful here? If not, delete and keep going."'],
-      ] } },
+      ] },
+      term: { word: 'Growth mindset', meaning: 'Carol Dweck\'s name for believing your abilities can grow through effort, good strategies and help from others. Its opposite, a fixed mindset, believes talent is set and can\'t change.' } },
     { kind: 'learn', title: 'What growth mindset is NOT', text: "In Harvard Business Review, Dweck warned about a \"false growth mindset.\" It isn't just being positive, praising effort that isn't working, or saying \"I have a growth mindset\" and changing nothing. Effort only counts when it is paired with new strategies and asking for help.",
       points: ['Not: "Just try harder" with the same plan', 'Not: pretending a bad live was great', 'Yes: "That didn\'t work. Here\'s what I\'ll try instead, and who I\'ll ask."'],
       tip: 'Everyone is a mix of both mindsets. The goal is to notice your fixed-mindset triggers, not to feel bad about having them.' },
@@ -38,7 +39,21 @@ const lesson: Lesson = {
     { kind: 'tap', title: 'Spot it again', prompt: '"Live selling works for younger women. People like me just aren\'t built for it." Which mindset?', screen: { title: 'Which one?', buttons: ['Fixed mindset', 'Growth mindset'] }, answer: 'Fixed mindset', hint: 'It treats ability as fixed by age or type. Plenty of sellers in their 50s, 60s and 70s are thriving on live.' },
 
     { chapter: 'Flip the script', kind: 'learn', title: 'Catch it, check it, change it', text: "The American Psychological Association's resilience advice includes learning to notice unhelpful thoughts and replace them with more balanced ones. Here's a three-step way to do it in the moment.",
+      visual: { type: 'flow', caption: 'Three steps you can do in the time it takes to sip your coffee.', steps: [
+        { label: 'Catch it', note: 'Notice the thought' },
+        { label: 'Check it', note: 'Fact or feeling?' },
+        { label: 'Change it', note: 'A truer, useful thought' },
+      ] },
       points: ['CATCH it: notice the thought ("I\'m a failure at this")', 'CHECK it: is it a fact, or a feeling? What would I tell a friend?', 'CHANGE it: say a truer, more useful thought ("That live was slow. My last three averaged 12 sales. I\'ll try an earlier poster.")'] },
+    { kind: 'howto', title: 'Catch, check, change: a worked example', text: 'Here is one real moment from start to finish. Practice it on paper a few times and it starts to happen in your head on its own.',
+      steps: [
+        { title: 'The moment', detail: 'Ten minutes into Tuesday\'s live, there are 6 viewers. Last Tuesday there were 30.' },
+        { title: 'Catch the thought', detail: 'Notice it and name it, without arguing yet.', example: '"I\'m thinking: nobody wants my stuff anymore."' },
+        { title: 'Check: fact or feeling?', detail: 'Ask what the evidence says and what you would tell a friend.', example: 'Fact: 6 viewers right now. Fact: my last four Tuesdays averaged 24. Fact: it\'s a holiday week. Feeling: "nobody wants my stuff."' },
+        { title: 'Change it', detail: 'Write a thought that is true and useful.', example: '"It\'s a holiday week and people are still arriving. Six people came for me. Let\'s give them a great show, and the replay will reach the rest."' },
+        { title: 'Act on the new thought', detail: 'Do one thing the new thought suggests.', example: 'She shares the live to her story, greets all six by name and starts her best piece.' },
+        { title: 'Look back the next morning', detail: 'Check Reports. Most of the time, the night was better than it felt in the moment.' },
+      ] },
     { kind: 'script', title: 'Flip lines to keep handy', text: 'Write your favorites on a sticky note by your live setup.', lines: [
       '"I can\'t do this" → "I can\'t do this YET."',
       '"That was a disaster" → "That was a lesson. What did it teach me?"',
@@ -59,7 +74,12 @@ const lesson: Lesson = {
         ['Your buy rate this month vs last', 'Her best night ever'],
         ['Skills you have now that you didn\'t last year', 'Her team of four helpers'],
       ] },
-      tip: 'If someone\'s posts make you feel small every time, mute them for a while. Follow sellers who teach, not just show off.' },
+      tip: 'If someone\'s posts make you feel small every time, mute them for a while. Follow sellers who teach, not just show off.',
+      visual: { type: 'bars', caption: 'Example: one seller\'s average viewers per live, compared with her own past, not anyone else\'s.', bars: [
+        { label: '6 months ago', value: 14 },
+        { label: '3 months ago', value: 27 },
+        { label: 'This month', value: 41, hl: true, note: 'Nearly 3 times more' },
+      ] } },
     { kind: 'scenario', title: 'The app update', situation: "You're 63. The app you use for invoices changed overnight, and nothing is where it used to be. Your live starts in two hours.",
       options: [
         { text: 'Decide technology has passed you by and cancel the live', feedback: "That's the fixed-mindset voice talking. Change is confusing for everyone, at every age." },
@@ -69,6 +89,8 @@ const lesson: Lesson = {
     { kind: 'reflect', title: 'Your triggers', prompt: 'What usually sets off your fixed-mindset voice? (A slow live, tech, another seller, a comment, money?) Write your top two and the flip line you will use for each.', placeholder: 'Trigger 1… Flip line… Trigger 2… Flip line…', example: 'Trigger: a quiet first 10 minutes. Flip: "People are still arriving. Bring the energy." Trigger: big sellers on my feed. Flip: "She\'s further along. What can I learn?"' },
 
     { chapter: 'Coach, not critic', kind: 'learn', title: 'Self-compassion is a business skill', text: "Psychologist Serena Chen, writing in Harvard Business Review, summarized research showing that people who treat their own mistakes with kindness (not excuses, kindness) are more likely to take responsibility, learn and try again. Harsh self-talk makes people hide mistakes; kind self-talk helps them fix them.",
+      term: { word: 'Self-compassion', meaning: 'Treating yourself with the same kindness you\'d give a friend who made a mistake: owning it, not excusing it, and not beating yourself up. Research shows it helps people take responsibility and improve.' },
+      visual: { type: 'compare', style: 'dodont', caption: 'Same mistake, two ways to talk to yourself.', left: { title: 'Coach', items: ['"I made a mistake. It happens."', '"Here\'s how I\'ll fix it today."', '"Here\'s what I\'ll do differently."'] }, right: { title: 'Critic', items: ['"I\'m so careless."', '"I always mess things up."', '"Maybe I should just quit."'] } },
       points: ['Talk to yourself the way you would talk to your best friend', 'Remember everyone in business makes mistakes; you are not alone', 'Name the feeling ("I\'m disappointed") without being swallowed by it', 'Then ask: what is one thing I can do better next time?'] },
     { kind: 'quiz', q: 'You shipped a buyer the wrong necklace. Which response is self-compassion, not excuse-making?', options: ['"It\'s not my fault, my labels are confusing."', '"I\'m so careless. I always mess things up."', '"I made a mistake, and that happens. I\'ll fix it today and scan every item before packing from now on."', '"She should have checked her order sooner."'], answer: 2, why: 'Self-compassion owns the mistake kindly and moves straight to a fix. No blame, no beating yourself up.' },
 
@@ -86,6 +108,14 @@ const lesson: Lesson = {
     { chapter: 'A daily habit', kind: 'learn', title: 'Five minutes a morning', text: "Mindset is like a muscle. A small daily habit beats a big burst once a month.",
       points: ['1 minute: one thing I am grateful for in my business', '1 minute: one thing I am learning right now', '1 minute: my one most important task today', '2 minutes: read one win from my "proof file" (kind messages, first sale, best live)'],
       tip: 'Start a proof file today: screenshots of kind comments and great nights. Read it before a hard live.' },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Skills grow with effort, new strategies and help. Add YET to every "I can\'t".',
+      'Growth mindset is not just positivity; it pairs effort with a new plan.',
+      'Catch the thought, check if it\'s fact or feeling, change it to something true and useful.',
+      'Compare yourself to you three months ago, not someone else\'s highlight reel.',
+      'Coach yourself kindly; it helps you own mistakes and fix them.',
+      'A 10-minute after-live review and a 5-minute morning habit build the CEO mindset.',
+    ] },
     { kind: 'checklist', title: 'Your mindset plan', prompt: 'Tick what you will do this week.', items: ['Put my flip lines on a sticky note by my setup', 'Add YET to one "I can\'t" sentence', 'Do the 10-minute review after my next live', 'Start a proof file of wins and kind words', 'Try the 5-minute morning habit for 7 days'] },
   ],
 }
