@@ -20,11 +20,21 @@ const lesson: Lesson = {
     welcome: "Polished graphics make a small shop look like a boutique. Canva makes it possible without hiring a designer. Let's set up your brand once and design in minutes.",
     signoff: "Set up your brand kit, keep it simple and roomy, and reuse your best templates. Luxury looks calm, not crowded.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'Set up once', kind: 'learn', title: 'Your brand in one place', nova: 'Ten minutes of setup and every design after looks on-brand. Let\'s do it.',
       text: 'Canva lets you save your colors, fonts and logo so every design starts on-brand. On the free plan, keep them in a "Brand" design you copy from. On Canva Pro, the Brand Kit applies them with one click.',
-      points: ['Colors: your 60/30/10 palette from the brand course, with exact hex codes', 'Fonts: one headline font, one body font. That\'s it.', 'Logo: a version for light backgrounds and one for dark', 'Photos: a folder of your best styled shots'] },
+      points: ['Colors: your 60/30/10 palette from the brand course, with exact hex codes', 'Fonts: one headline font, one body font. That\'s it.', 'Logo: a version for light backgrounds and one for dark', 'Photos: a folder of your best styled shots'],
+      term: { word: 'Hex code', meaning: 'A color\'s exact address: a # and six letters or numbers, like #0F6B4F for emerald. Type it in and you get the very same color every time.' } },
+    { kind: 'howto', title: 'Set up your brand in Canva, click by click', text: 'Do this once, at a computer if you can, with your logo file and color codes in front of you. Canva updates its menus now and then, so a button may be named slightly differently.',
+      steps: [
+        { title: 'Make a "Brand board" design', detail: 'On the Canva home page, choose Create a design, then Custom size, 1080 by 1080. Name it "Brand board" at the top.' },
+        { title: 'Add your colors as squares', detail: 'Add a square from Elements. Click the color swatch at the top, then the plus sign, and type your hex code. Make one square for each brand color and write its code under it.', example: 'Three squares: emerald #0F6B4F, gold #D9A53A, cream #FFF8EF.' },
+        { title: 'Add your two fonts', detail: 'Add a heading and set it to your headline font. Add a line of small text in your body font. Now you never have to remember them.' },
+        { title: 'Upload your logo', detail: 'Open Uploads on the left, then Upload files, and pick your logo (a PNG with a see-through background is best). Drag it onto the board.' },
+        { title: 'On Canva Pro, fill in the Brand Kit', detail: 'Open Brand on the left side. Add your colors, fonts and logos there, and they appear in every design with one click.' },
+        { title: 'Copy from it every time (free plan)', detail: 'Starting a new design? Open your Brand board in another tab and copy the colors and fonts across. It still saves lots of guessing.' },
+      ] },
     { kind: 'learn', title: 'Free or Pro?', text: 'Canva Free is plenty to start. Pro adds time-savers that matter once you post a lot. Prices change, so check canva.com/pricing.',
       table: { head: ['Feature', 'Free', 'Pro'], rows: [
         ['Templates and basic editing', 'Yes, lots', 'More templates and elements'],
@@ -42,7 +52,10 @@ const lesson: Lesson = {
         ['Color', 'Your 2 or 3 brand colors', 'Rainbow everything'],
         ['Photo first', 'One big, sharp product photo', 'Ten tiny photos'],
         ['Line up', 'Align everything to the same edges', 'Text floating at random'],
-      ] } },
+      ] },
+      visual: { type: 'compare', style: 'dodont', caption: 'The same live, two posters. Only one gets read in the two seconds a scroller gives it.',
+        left: { title: 'The busy poster', items: ['12 small product photos', '4 fonts, one of them curly', '3 starbursts shouting SALE', 'Date in tiny print at the bottom'] },
+        right: { title: 'The boutique poster', items: ['1 big, bright hero photo', '2 fonts: elegant headline, clean text', 'Your 3 brand colors only', 'Day and time are the biggest words'] } } },
     { kind: 'scenario', title: 'The busy poster', situation: 'Your live poster has 12 product photos, 4 fonts, 3 starbursts that say "SALE!" and the date in small print at the bottom.',
       options: [
         { text: 'Add more sparkle so it stands out', feedback: 'More is what made it hard to read. The date, the most important part, is the smallest.' },
@@ -53,6 +66,16 @@ const lesson: Lesson = {
 
     { chapter: 'Make it fast', kind: 'learn', title: 'Templates without looking generic', text: 'Thousands of sellers use the same popular templates. Make one yours in three moves.',
       points: ['Swap in your brand colors and fonts first', 'Replace every stock photo with your own product photos', 'Move or remove one element so the layout is yours', 'Save it as your own template to reuse every week'] },
+    { kind: 'howto', title: 'Build your live poster template', text: 'Make it once, carefully. After that, each week\'s poster is a 5-minute copy and swap.',
+      steps: [
+        { title: 'Start at the right size', detail: 'Create a design and search for Instagram Post (Portrait), which is 1080 by 1350. It also fits Facebook feeds nicely.' },
+        { title: 'Pick a calm template', detail: 'Search Templates for "event" or "boutique". Choose one with one big photo spot and lots of empty space.' },
+        { title: 'Brand it', detail: 'Change every color to your brand colors and every font to your two fonts. Delete anything that is only decoration.' },
+        { title: 'Drop in a hero photo', detail: 'Upload your best product photo and drag it onto the template\'s photo frame. It snaps into place.' },
+        { title: 'Make the when the biggest thing', detail: 'Day and time in your headline font, largest on the page. Theme name second. Your shop name and logo small at the bottom.', example: 'THURSDAY 7 PM, then "Emerald City Live" under it, then your logo.' },
+        { title: 'Save it as your template', detail: 'Name it "Live poster TEMPLATE". Each week, use File, then Make a copy, and change only the photo, theme and date. Download as PNG and post.' },
+      ],
+      queen: "Keep the template's layout the same week after week. When your buyers recognize your poster before they read it, that's a brand." },
     { kind: 'order', title: 'A poster in 5 minutes', prompt: 'Put the steps in order.', steps: ['Open your saved poster template', 'Drop in the hero product photo', 'Change the theme name', 'Update the day and time', 'Download and post'] },
     { kind: 'learn', title: 'Must-have designs for live sellers', text: 'Build each of these once as a template, then reuse them.',
       table: { head: ['Design', 'Size', 'Use'], rows: [
@@ -65,6 +88,7 @@ const lesson: Lesson = {
       tip: 'The Planner\'s poster maker in this app builds a themed live poster for you. Use Canva for everything else, or to customize further.' },
 
     { chapter: 'Canva plus AI', kind: 'learn', title: 'Design with an AI assistant', text: 'Canva has its own AI tools inside the editor. Canva can also connect to AI assistants such as Claude and ChatGPT, so you can ask the assistant to draft a design in Canva using your brand. Always review the result before posting.',
+      points: ['Magic Write (Canva\'s writing helper) can draft a caption or a headline right on the design', 'Background remover (Pro) cuts a piece out of a messy photo', 'Magic Resize (Pro) turns your poster into a Story and a Facebook cover in one click', 'Whatever the AI makes, you check the date, the price and the spelling yourself'],
       example: 'You ask your assistant: "Make a portrait Instagram poster in Canva for my Thursday 7 PM \'Emerald City\' live, using my brand kit." It creates a draft in your Canva account, and you swap in your real product photo.' },
     { kind: 'reflect', title: 'Your template set', prompt: 'Which three designs will you build as templates first?', placeholder: '1… 2… 3…', example: '1. Live poster. 2. Reel cover with "LIVE TONIGHT." 3. Thank-you card with my logo and a coupon code.' },
     { kind: 'learn', title: 'Case study: before and after', text: 'One seller rebuilt her poster with the five rules.',
@@ -77,6 +101,14 @@ const lesson: Lesson = {
       ] } },
     { kind: 'learn', title: 'Photos that look expensive', text: 'The best template in the world can\'t save a dark, blurry photo.',
       points: ['Shoot by a window in daylight, or with a ring light in front', 'Use a plain backdrop: a white sheet, a neutral wall', 'Shoot from slightly above for bags, straight on for jewelry', 'Fill the frame with the piece', 'Use Canva\'s adjust tools lightly: a touch of brightness and warmth'] },
+    { kind: 'howto', title: 'Shoot a hero photo at home', text: 'A hero photo is the one big picture a poster is built around. You need a phone, a window and ten minutes.',
+      steps: [
+        { title: 'Find your window', detail: 'Daylight from the side, not straight behind the piece. Late morning or early afternoon on a bright day is easiest. Turn off overhead lights so the colors stay true.' },
+        { title: 'Set a plain backdrop', detail: 'A white sheet or a sheet of poster board curved from the table up the wall, so there is no line behind the piece.' },
+        { title: 'Style one piece, not five', detail: 'Stuff the bag with tissue so it holds its shape. Lay the necklace in a soft curve. Wipe off dust and fingerprints.' },
+        { title: 'Tap to focus and lock it', detail: 'On your phone, tap the piece on the screen and hold until the focus locks. Slide brightness down a touch if the white looks gray-blue or blown out.' },
+        { title: 'Take ten, keep one', detail: 'Move a little between shots: higher, lower, closer. Pick the sharpest, brightest one as your hero.', example: 'For a handbag, a slightly-above angle at about arm\'s length, filling two thirds of the frame, usually wins.' },
+      ] },
     { queen: "Get inspired by other sellers, never copy them. Your own look is the one buyers will remember.", kind: 'scenario', title: 'The copycat temptation', situation: 'You love a big brand\'s Instagram post and want your poster to look exactly like it, logo placement and all.',
       options: [
         { text: 'Recreate it exactly with your products', feedback: 'Copying a brand\'s design closely can confuse buyers and cause trouble. Get inspired, don\'t clone.' },
@@ -85,6 +117,13 @@ const lesson: Lesson = {
       ] },
     { kind: 'reflect', title: 'Your brand basics', prompt: 'Write your brand colors (names or hex codes) and the two fonts you\'ll use.', placeholder: 'Colors… Fonts…', example: 'Emerald #0F6B4F, gold #D9A53A, cream #FFF8EF. Fonts: Playfair Display for headlines, Inter for text.' },
     { kind: 'quiz', q: "Your poster has 4 fonts, 6 colors and 3 prices. What's the fastest way to make it look more high end?", options: ["Add a gold glitter frame", "Cut to 2 fonts, your 3 brand colors and one clear price", "Make everything bigger"], answer: 1, why: "Luxury brands use fewer elements and lots of breathing room. Less on the page reads as more confident." },
+    { kind: 'recap', title: 'Design like a pro', points: [
+        'Set up your colors (hex codes), two fonts and logo once: a Brand board on Free, the Brand Kit on Pro.',
+        'Five rules: space, two fonts, brand colors, one hero photo, everything lined up.',
+        'On a live poster, the day and time are the biggest words.',
+        'Make templates yours: your colors, your photos, one layout change. Then copy and swap each week.',
+        'Take inspiration from big brands, never their designs or photos.',
+      ] },
     { kind: 'checklist', title: 'Canva setup', prompt: 'Tick what you\'ll do this week.', items: ['Save my brand colors (hex codes), fonts and logo', 'Make and save a live poster template', 'Make a Reel cover template', 'Make a thank-you card for my boxes', 'Apply the five luxury rules to my next poster', 'Decide if Pro is worth it after a month'] },
   ],
 }
