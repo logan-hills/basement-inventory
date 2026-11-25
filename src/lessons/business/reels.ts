@@ -20,7 +20,7 @@ const lesson: Lesson = {
     welcome: "One great Reel can bring more new faces to your live than a week of posts. You don't need fancy gear, just a phone, good light and a strong first two seconds. Let's make some.",
     signoff: "Hook them fast, keep it short, and turn your lives into clips. Post consistently and watch what works. Your next viewer is scrolling right now.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'Why short video', kind: 'learn', title: 'Your 24-hour billboard', nova: 'Lights, camera, Nova! Short videos are your storefront window, and they work while you sleep.',
       text: 'Feeds now favor short vertical video, and Reels are shown to people who don\'t follow you yet. That makes them the cheapest way to reach new buyers. On Facebook, eligible creators can also earn from views through Meta\'s content monetization program.',
@@ -34,7 +34,11 @@ const lesson: Lesson = {
         ['Secret', '"The one accessory that makes a $20 dress look expensive"'],
         ['Countdown', '"3 pieces you\'ll see first on Thursday\'s live"'],
       ] },
-      tip: 'Put the hook in big text on screen too. Many people watch with the sound off.' },
+      tip: 'Put the hook in big text on screen too. Many people watch with the sound off.',
+      term: { word: 'Hook', meaning: 'The first second or two of a video, picture and words together, that makes someone stop scrolling.' },
+      visual: { type: 'compare', style: 'dodont', caption: 'The first two seconds decide whether anyone sees the rest.',
+        left: { title: 'Weak openings', items: ['"Hey y\'all, so today…"', 'Adjusting the camera', 'Your logo for five seconds', 'A dark, far-away shot'] },
+        right: { title: 'Strong openings', items: ['The piece already moving, close up', 'Big text: "$180 bag, $35 Tuesday"', 'A question: "Church or brunch?"', 'The best moment first, the story after'] } } },
     { kind: 'quiz', q: 'Which opening is the strongest hook?', options: ['"Hi y\'all, so um, today I wanted to show…"', '"This $12 bracelet looks like $200. Watch."', 'Five seconds of your logo'], answer: 1, why: 'It starts with a surprising promise in the first second. Greetings and logos make people scroll.' },
 
     { chapter: 'Five formats', kind: 'learn', title: 'Formats that fit live sellers', text: 'Rotate these so your feed stays fresh.',
@@ -48,6 +52,16 @@ const lesson: Lesson = {
     { queen: "Clip your best 20 seconds from every live the next morning. You already did the hard part on camera.", kind: 'learn', title: 'Live to Reels', text: 'Your lives are full of Reels. After each live, save the replay and cut 2 or 3 short highlights. One live becomes a week of content.',
       example: 'Tuesday live ends. Wednesday morning you clip the moment the gold set sold out in 30 seconds, add "SOLD OUT in 30 seconds. Thursday 7 PM, more coming," and post it.' },
 
+    { kind: 'howto', title: 'Clip a highlight from your live', text: 'The morning after a live, give yourself 15 minutes to turn the best moment into a Reel.',
+      steps: [
+        { title: 'Get the replay', detail: 'Your Facebook live is saved as a video on your Page. Open it, use the three-dot menu to download it if your account offers that, or screen-record the part you want while it plays.' },
+        { title: 'Find the 20 best seconds', detail: 'A sellout, a big laugh, a gasp-worthy reveal, a regular\'s happy comment. Note the minute mark during the live so you don\'t have to hunt.' },
+        { title: 'Trim it in your editor', detail: 'In CapCut or the Reels editor, cut it to 15 to 30 seconds and crop it to vertical, with the piece in the middle.' },
+        { title: 'Add the hook as text', detail: 'Big words in the first second: "SOLD OUT in 30 seconds."' },
+        { title: 'End with the next live', detail: 'Last frame or caption: day, time and where. "Thursday 7 PM ET, more coming."' },
+        { title: 'Post the same morning', detail: 'While the live is still fresh for the people who were there, and so new people see it before your next live.' },
+      ],
+      queen: "Keep a sticky note by your live setup. Every time something great happens, jot the minute. That's tomorrow's Reel." },
     { chapter: 'Filming', kind: 'learn', title: 'Look premium on a phone', text: 'Luxury brands shoot simply: good light, clean background, steady camera.',
       points: ['Light: face a window, or a ring light at eye level. Never a window behind you.', 'Background: plain wall or a tidy rack. Remove clutter.', 'Steady: phone on a stand or tripod, vertical (9:16)', 'Close-ups: hardware, stitching, logos and texture sell luxury', 'Sound: quiet room; a $20 clip-on mic helps a lot', 'Wipe the lens before you shoot'] },
     { kind: 'scenario', title: 'The dark video', situation: 'You filmed a gorgeous emerald bag at night in your basement under one ceiling light. On the video it looks dark and muddy.',
@@ -60,6 +74,14 @@ const lesson: Lesson = {
     { chapter: 'Editing', kind: 'learn', title: 'Edit in 10 minutes', text: 'Free apps like CapCut, or the editors built into Instagram, Facebook and TikTok, do everything you need.',
       points: ['Trim dead air: cut every pause and "um"', 'Add captions (auto-captions, then fix spelling)', 'Add the hook as big text in the first second', 'Use trending audio low under your voice, or music only for silent clips', 'End with a clear call to action: day, time, where', 'Save your own template so the next one is faster'],
       tip: 'If a brand gave you the product or paid you, say so clearly in the video and caption, like "#ad" or "Gifted by…" (FTC Disclosures 101).' },
+    { kind: 'howto', title: 'A sneak-peek Reel in 15 minutes', text: 'This is the Reel to post the day before every live. Same recipe every time, new pieces each week.',
+      steps: [
+        { title: 'Pick three pieces', detail: 'Your showstopper, a crowd favorite and one surprise. Lay them by your window or ring light.' },
+        { title: 'Film three 4-second clips', detail: 'Phone on a stand, vertical. For each piece, a slow move: lift the bag, turn the bracelet in the light, open the clutch.' },
+        { title: 'Film one line to camera', detail: '"These three are on my live tomorrow at 7 Eastern. The first one goes fast." Five seconds, smiling.' },
+        { title: 'Put it together', detail: 'Hook text on clip one ("First look at Thursday\'s live"), then the three pieces, then you with the day and time.' },
+        { title: 'Caption and post', detail: 'Hook, one line about the pieces, the day and time with time zone, and 3 to 5 hashtags your buyers search.', example: '"First look 👀 Croc tote, pearl set and a surprise. LIVE Thursday 7 PM ET / 4 PT. #livesale #handbags #pearls"' },
+      ] },
     { kind: 'order', title: 'Build a Reel', prompt: 'Put the Reel in order.', steps: ['Hook in the first 2 seconds', 'Show the piece close up', 'Show it styled on you', 'Say the price or the deal', 'Call to action: live day, time and where'] },
 
     { chapter: 'Read the numbers', kind: 'learn', title: 'What to watch', text: 'Open your Reel insights 2 days after posting.',
@@ -78,6 +100,13 @@ const lesson: Lesson = {
         ['Thu', 'Style one bag 3 ways', '3,100 views, many saves'],
         ['Fri', 'Packing an order', '1,900 views'],
       ] },
+      visual: { type: 'bars', caption: 'Views for each Reel that week. The proof-that-people-buy clip traveled furthest.', bars: [
+        { label: 'Haul unboxing', value: 1200 },
+        { label: 'Sneak peek', value: 2400 },
+        { label: 'Sold out in 30 seconds', value: 6800, hl: true },
+        { label: 'Style it 3 ways', value: 3100 },
+        { label: 'Packing an order', value: 1900 },
+      ] },
       example: 'The "sold out" highlight did best: it showed proof that people buy, and made viewers want in next time.' },
     { kind: 'scenario', title: 'The Reel that flopped', situation: 'Your Reel got 180 views. The first 4 seconds are you saying hello and adjusting the camera.',
       options: [
@@ -89,6 +118,13 @@ const lesson: Lesson = {
     { kind: 'quiz', q: "Your Reel had 2,000 views but almost everyone left in the first 2 seconds. What should you change first?", options: ["The music", "The opening shot and first words", "The hashtags"], answer: 1, why: "Early drop-off means the hook didn't land. Open on the most beautiful moment, with a line that makes her want to see the rest." },
     { kind: 'learn', title: 'Rights and rules', text: "Use music from the app's own library, which is cleared for use on that app. Music you download elsewhere can get your video muted or taken down. If a brand sends you free product, say so clearly in the caption, as the FTC's endorsement guides ask.",
       points: ["Pick music inside Reels or TikTok, not from your own files", "Tag free or gifted pieces: '#gifted' or 'Sent to me by…'", "Only film buyers who said yes"] },
+    { kind: 'recap', title: 'Reels that fill your lives', points: [
+        'Reels reach people who don\'t follow you yet. They are your cheapest way to find new buyers.',
+        'Win the first two seconds: the piece moving, a big text hook, no hellos or logos.',
+        'Rotate five formats: sneak peek, style it 3 ways, unboxing, packing and live highlights.',
+        'Good light, plain background, steady phone, captions, and end with your next live\'s day and time.',
+        'Check watch time and shares after two days; fix the hook first when a Reel flops.',
+      ] },
     { kind: 'checklist', title: 'Your Reel week', prompt: 'Tick what you\'ll do this week.', items: ['Write 5 hooks for my next live\'s best pieces', 'Set up a filming spot with good light', 'Film one sneak peek and one style-it-3-ways', 'Edit with captions and a call to action', 'Clip 2 highlights from my next live replay', 'Check insights after 2 days and write one lesson learned'] },
   ],
 }
