@@ -160,7 +160,12 @@ export default function Labels() {
   const f: LabelFormat = FORMATS[format]
   const dymo = f.group === 'dymo'
   const turned = !!f.turn && !(dymo && noTurn)
-  const printed = printedPage(f, turned)
+  // DYMO rolls are 1 in wide. In a 4 in printer that sits the roll in the middle, a 1 in page prints on the left edge of the
+  // print head, off the roll (a blank label). "Middle" mode prints a 4 in wide page with the tag in the middle, under the roll.
+  const [rollMiddle, setRollMiddle] = useState(() => { try { return localStorage.getItem('dymoRollMiddle') === '1' } catch { return false } })
+  useEffect(() => { try { localStorage.setItem('dymoRollMiddle', rollMiddle ? '1' : '0') } catch { /* ignore */ } }, [rollMiddle])
+  const head4 = format === 'dymoThermal' && rollMiddle
+  const printed = head4 ? { w: 4, h: 2.125 } : printedPage(f, turned)
   const perPage = f.cols * f.rows
   const single = perPage === 1
   const n = Number(saleVal.replace(/[$,%\s]/g, ''))
@@ -188,7 +193,7 @@ export default function Labels() {
 
   return (
     <div className="labels-page stack">
-      <style>{pageCss(f, turned)}</style>
+      <style>{head4 ? '@page { size: 4in 2.125in; margin: 0; }' : pageCss(f, turned)}</style>
       <h1 className="no-print">{style === 'sale' ? 'Sale tags' : tagsParam ? 'Reprint tags' : 'Print tags'}{title ? `: ${title}` : ''}</h1>
       {loading ? <p className="muted">Loading…</p> : tags.length === 0 ? (
         <p className="muted">No tags to print. <Link to="/inventory" className="link-text">Back to inventory</Link></p>
@@ -235,7 +240,7 @@ export default function Labels() {
             </section>
           </div>
 
-          <LabelPreview f={f} turned={turned} pages={pages.length} labels={tags.length}>
+          <LabelPreview f={f} turned={turned} pages={pages.length} labels={tags.length} areaClass={head4 ? 'head4' : ''}>
             {shownPages.map((p, pi) => (
               <LabelSheet key={pi} f={f} turned={turned}>
                 {p.map((t, i) => <div key={i} className="slot">{t && tagFor(t)}</div>)}
@@ -264,15 +269,23 @@ export default function Labels() {
                 <ol>
                   <li>Load the DYMO roll so the labels come out one after another, the long way. Slide the roll guides in snug so it can't wander. Hold the feed button until a label feeds out, so the printer finds the gaps.</li>
                   <li>Tap <b>Print 1 test tag</b> below. In the print window, pick your <b>Core Innovations</b> printer (or other shipping printer).</li>
-                  <li>Set <b>Paper size</b> to <b>1 x 2.125 in</b> (25 x 54 mm). Not there yet? Add it once:
+                  <li>Set <b>Paper size</b> to <b>{rollMiddle ? '4 x 2.125 in' : '1 x 2.125 in'}</b> ({rollMiddle ? '101.6' : '25'} x 54 mm). Not there yet? Add it once:
                     <ul>
-                      <li><b>Windows:</b> under More settings, click <i>Print using system dialog</i>, then Preferences. On the Page Setup or Paper tab, click New (or Custom), and make a size 1.00 in wide by 2.13 in tall (25 by 54 mm). Save it and pick it.</li>
-                      <li><b>Mac:</b> Paper Size, then Manage Custom Sizes, then +. Width 1 in, height 2.125 in, all margins 0. Pick your printer under Non-Printable Area, click OK and pick the new size.</li>
+                      <li><b>Windows:</b> under More settings, click <i>Print using system dialog</i>, then Preferences. On the Page Setup or Paper tab, click New (or Custom), and make a size {rollMiddle ? '4.00' : '1.00'} in wide by 2.13 in tall ({rollMiddle ? '101.6' : '25'} by 54 mm). Save it and pick it.</li>
+                      <li><b>Mac:</b> Paper Size, then Manage Custom Sizes, then +. Width {rollMiddle ? '4' : '1'} in, height 2.125 in, all margins 0. Pick your printer under Non-Printable Area, click OK and pick the new size.</li>
                     </ul>
                   </li>
                   <li>Layout <b>Portrait</b>, margins <b>None</b>, scale <b>100</b> (never Fit to page), headers and footers off.</li>
                   <li>One whole tag on one label? You're set. The computer remembers the paper size, so after this just tap Print.</li>
                 </ol>
+                <div className="roll-spot">
+                  <b>Test tag came out blank?</b> Your printer probably holds the roll in the <b>middle</b>, so the tag printed off to the side of it. Pick where your roll sits, then print 1 test tag again:
+                  <div className="seg" role="group" aria-label="Where the roll sits">
+                    <button className={!rollMiddle ? 'on' : ''} aria-pressed={!rollMiddle} onClick={() => setRollMiddle(false)}>Roll against the left side</button>
+                    <button className={rollMiddle ? 'on' : ''} aria-pressed={rollMiddle} onClick={() => setRollMiddle(true)}>Roll in the middle</button>
+                  </div>
+                  {rollMiddle && <p>With the roll in the middle, set Paper size to <b>4 x 2.125 in</b> (101.6 x 54 mm) instead, Portrait. Add it once the same way as above. The app puts the tag right in the middle, under your roll.</p>}
+                </div>
                 <span className="muted">On a phone, tap <b>Save for printer app</b> and print the picture in the printer's app at 25 x 54 mm. Still a little off to one side? Use <b>Nudge it</b> below.</span>
               </div>
             )}

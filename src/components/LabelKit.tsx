@@ -95,7 +95,7 @@ export function LabelSheet({ f, turned, children }: { f: LabelFormat; turned: bo
 const SHOW = 4
 
 /** Fit-to-screen preview of the pages that will print. Every page still prints; only the first few show until you tap Show all. */
-export function LabelPreview({ f, turned, pages, labels, children }: { f: LabelFormat; turned: boolean; pages: number; labels: number; children: ReactNode }) {
+export function LabelPreview({ f, turned, pages, labels, children, areaClass = '' }: { f: LabelFormat; turned: boolean; pages: number; labels: number; children: ReactNode; areaClass?: string }) {
   const box = useRef<HTMLDivElement>(null)
   const [fit, setFit] = useState(1)
   const [all, setAll] = useState(false)
@@ -118,7 +118,7 @@ export function LabelPreview({ f, turned, pages, labels, children }: { f: LabelF
         <span className="chip-mini">{sizeText(f.label.w, f.label.h)}</span>
       </div>
       {turned && <p className="no-print muted small preview-turn">↻ This printer feeds labels the long way, so the app turns {per > 1 ? 'the page' : 'each label'} sideways when it prints ({sizeText(p.w, p.h)} page). Once it's stuck on, it reads just like this.</p>}
-      <div ref={box} className={`print-area preview-area ${all ? 'show-all' : ''}`} style={{ '--fit': fit } as CSSProperties}>
+      <div ref={box} className={`print-area preview-area ${all ? 'show-all' : ''} ${areaClass}`} style={{ '--fit': fit } as CSSProperties}>
         {children}
       </div>
       {pages > SHOW && (
