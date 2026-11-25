@@ -64,7 +64,7 @@ const lesson: Lesson = {
       tip: 'Put a strip of clear packing tape over bin labels on shelves you touch a lot. It keeps them from smudging and they still scan fine.' },
 
     { kind: 'learn', title: 'Direct print (beta)', text: 'On a computer, Chrome and Edge can print straight to your thermal printer. On Print tags or Bin labels, tap Connect by Bluetooth in the Direct print box and pick your printer once (on a Mac, the USB cable works too). The app sends the exact label size with every label, so you skip the print window and its paper size settings.',
-      points: ['Pick where the roll sits: In the middle or Against the left side', 'Print 1 test label first', 'Labels skip? Tap Let the printer learn the label', 'Nothing happens? Your printer may speak a different language. Use Print instead and tell us its name.'],
+      points: ['Pick where the roll sits: In the middle or Against the left side', 'Print 1 test label first', 'Labels skip? Tap Let the printer learn the label', 'Edge cut off? Tap ▼ or ▲ under Not quite right to nudge the print', 'Nothing happens? Your printer may speak a different language. Use Print instead and tell us its name.'],
       screen: { title: 'Bin labels · Direct print (beta)', buttons: ['Connect by Bluetooth', 'Bluetooth printer not listed? Pick it here'], highlight: 'Connect by Bluetooth' } },
     { chapter: 'Fix it fast', kind: 'learn', title: 'Troubleshooting', text: 'Almost every printing problem is one of these, and each takes about a minute to fix.',
       table: { head: ['What you see', 'Most likely cause', 'Fix'], rows: [

@@ -5,12 +5,14 @@ import { canDirectPrint, connectBluetooth, connectSerial, connectUsb, connected,
 
 /** Direct print (beta): print straight to a thermal label printer from Chrome or Edge, with the exact label size
     sent along with every label. No print window, no paper size to set. */
-export default function DirectPrint({ w, h, turn, count, sizeName, prepare, gapMm }: {
+export default function DirectPrint({ w, h, turn, count, sizeName, prepare, gapMm, defaultShiftMm = 0 }: {
   /** Label as the printer feeds it, inches: across the head, then along the feed. */
   w: number; h: number; turn: boolean; count: number; sizeName: string
   /** Runs right before printing, to put the page in its plain direct-print shape. */
   prepare?: () => void
   gapMm?: number
+  /** Starting sideways shift in mm, from real test prints for this label in this kind of printer. */
+  defaultShiftMm?: number
 }) {
   const [, bump] = useState(0)
   useEffect(() => onConnChange(() => bump(v => v + 1)), [])
@@ -19,6 +21,10 @@ export default function DirectPrint({ w, h, turn, count, sizeName, prepare, gapM
   const [middle, setMiddleState] = useState(() => { try { const v = localStorage.getItem(key); return v == null ? w < 3.5 : v === '1' } catch { return w < 3.5 } })
   useEffect(() => { try { const v = localStorage.getItem(key); setMiddleState(v == null ? w < 3.5 : v === '1') } catch { /* ignore */ } }, [key, w])
   const setMiddle = (v: boolean) => { setMiddleState(v); try { localStorage.setItem(key, v ? '1' : '0') } catch { /* ignore */ } }
+  const shiftKey = `directShift:${w}x${h}`
+  const readShift = () => { try { const v = localStorage.getItem(shiftKey); return v == null ? defaultShiftMm : Number(v) || 0 } catch { return defaultShiftMm } }
+  const [shift, setShiftState] = useState(readShift)
+  const setShift = (v: number) => { const n = Math.max(-15, Math.min(15, v)); setShiftState(n); try { localStorage.setItem(shiftKey, String(n)) } catch { /* ignore */ } }
   const [flip, setFlip] = useState(() => { try { return localStorage.getItem('directFlip') === '1' } catch { return false } })
   const [busy, setBusy] = useState('')
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null)
@@ -46,7 +52,7 @@ export default function DirectPrint({ w, h, turn, count, sizeName, prepare, gapM
   async function print(only?: number) {
     await run('print', async () => {
       if (prepare) flushSync(prepare)
-      const n = await printDirect({ w, h, turn, middle, flip, gapMm, selector: only === 1 ? '.print-area .sheet:first-child' : undefined },
+      const n = await printDirect({ w, h, turn, middle, flip, gapMm, shiftMm: shift, selector: only === 1 ? '.print-area .sheet:first-child' : undefined },
         (d, t) => setBusy(`print ${d}/${t}`))
       setMsg({ ok: true, text: `Sent ${n} label${n === 1 ? '' : 's'} to your printer. One per label, no settings needed.` })
     })
@@ -80,6 +86,13 @@ export default function DirectPrint({ w, h, turn, count, sizeName, prepare, gapM
             <ul>
               <li>Blank labels: switch where the roll sits, then print 1 test label.</li>
               <li>Labels skip or the print lands across two labels: <button className="link-btn" disabled={!!busy} onClick={() => run('learn', () => learnLabel({ w, h, middle, gapMm }), 'Your printer fed a label to learn the size. Print 1 test label now.')}>Let the printer learn the label</button>, then print 1 test label.</li>
+              <li>Print cut off along one edge of the label:
+                <div className="late-pad" role="group" aria-label="Move the print">
+                  <button className="btn ghost" onClick={() => setShift(shift - 1)} aria-label="Move away from the top">▼</button>
+                  <b>{shift === 0 ? 'Centered' : `${Math.abs(shift)} mm ${shift > 0 ? 'toward the top' : 'toward the bottom'}`}</b>
+                  <button className="btn ghost" onClick={() => setShift(shift + 1)} aria-label="Move toward the top">▲</button>
+                </div>
+                Top of the tag cut off? Tap ▼. Bottom cut off? Tap ▲. Then print 1 test label.</li>
               <li>Printing upside down: <label className="check-line"><input type="checkbox" checked={flip} onChange={e => { setFlip(e.target.checked); try { localStorage.setItem('directFlip', e.target.checked ? '1' : '0') } catch { /* ignore */ } }} />Turn it end for end</label></li>
               <li>Nothing happens at all: your printer may use a different printer language. Use Print below instead, and tell us the printer's name.</li>
             </ul>
