@@ -8,6 +8,7 @@ import { findUnit, photoUrls, UNIT_SELECT, type UnitInfo } from '../lib/data'
 import JsBarcode from 'jsbarcode'
 import { feedbackBad, feedbackOk } from '../lib/feedback'
 import { isOrderCode, lineRemaining, loadOrders, orderRemaining, orderUnits, type Order, type OrderLine } from '../lib/orders'
+import { isBinCode } from '../lib/locations'
 import { useSession } from '../lib/session'
 import { useToast } from '../lib/toast'
 
@@ -42,7 +43,7 @@ export default function Pick() {
   const [orders, setOrders] = useState<Order[] | null>(null)
   const [stock, setStock] = useState<Record<string, { code: string; n: number }[]>>({})
   const [held, setHeld] = useState<Held | null>(null)
-  const [msg, setMsg] = useState<Msg>({ kind: 'info', text: 'Scan the tag or the product barcode, or tap "Picked it".' })
+  const [msg, setMsg] = useState<Msg>({ kind: 'info', text: 'Go to the bin shown. Scan the bin label to check it, then scan the tag (or tap "Picked it").' })
   const [manual, setManual] = useState('')
   const [camera, setCamera] = useState(() => { try { return localStorage.getItem('scanCamera') === 'on' } catch { return false } })
   const [done, setDone] = useState<string[]>([])
@@ -115,6 +116,7 @@ export default function Pick() {
     const code = raw.trim().toUpperCase()
     if (!code) return
     if (isOrderCode(code)) return scanBox(code)
+    if (isBinCode(code)) return scanBin(code)
     const unit = await findUnit(code)
     if (!unit) {
       // A product UPC or a Live # works too: grab any in-stock piece of that item.
@@ -145,6 +147,22 @@ export default function Pick() {
     if (need.length === 1) return packInto(h, need[0].order, need[0].line)
     feedbackOk(); setHeld(h)
     setMsg({ kind: 'info', text: 'Which box does it go in? Scan the box or tap it below.' })
+  }
+
+  /** Warehouse style: scan the bin you're standing at to confirm it's the right one before you grab. */
+  function scanBin(code: string) {
+    if (heldRef.current) { feedbackBad(); setMsg({ kind: 'bad', text: `That's a bin label. Scan the customer's box for #${heldRef.current.unit.variant.live_number}, or tap Put back.` }); return }
+    const idx = tasks.list.findIndex(t => t.bins.some(b => b.code === code))
+    if (idx >= 0) {
+      const t = tasks.list[idx]
+      setFocus(idx)
+      feedbackOk()
+      setMsg({ kind: 'ok', text: `Right bin! Grab ${t.need > 1 ? `${t.need} of ` : ''}#${t.line.variant?.live_number ?? t.line.live_number} from ${code}, then scan ${t.need > 1 ? 'each tag' : 'its tag'}.` })
+      return
+    }
+    const next = tasks.list[Math.min(focus, tasks.list.length - 1)]
+    feedbackBad()
+    setMsg({ kind: 'bad', text: next?.bins[0] ? `Wrong bin. Nothing in this pick is in ${code}. Next up is #${next.line.variant?.live_number ?? next.line.live_number} in ${next.bins[0].code}.` : `Nothing in this pick is in ${code}.` })
   }
 
   async function scanBox(code: string) {
@@ -263,7 +281,7 @@ export default function Pick() {
 
       <div className={`pick-step ${held ? 'box' : 'item'}`}>
         <div className="pick-steps">
-          <span className={!held ? 'on' : 'done'}>1 · Scan item</span>
+          <span className={!held ? 'on' : 'done'}>1 · Scan bin, then item</span>
           <span className={held ? 'on' : ''}>2 · Scan customer box</span>
         </div>
         {held && (
@@ -285,7 +303,7 @@ export default function Pick() {
       {!camera && <FreeCameraTip onUse={() => setCamera(true)} />}
       {camera && <CameraScanner onCode={handle} repeatDelay={1500} />}
       <form onSubmit={submit} className="scan-input">
-        <input ref={inputRef} value={manual} onChange={e => setManual(e.target.value)} onKeyDown={scanBoxKeyDown} placeholder={held ? 'Scan the box label (DD-…)' : 'Scan an item tag'} autoComplete="off" autoCapitalize="characters" enterKeyHint="go" aria-label="Scan" />
+        <input ref={inputRef} value={manual} onChange={e => setManual(e.target.value)} onKeyDown={scanBoxKeyDown} placeholder={held ? 'Scan the box label (DD-…)' : 'Scan the bin, then the item tag'} autoComplete="off" autoCapitalize="characters" enterKeyHint="go" aria-label="Scan" />
         <button className="btn primary">Enter</button>
       </form>
 

@@ -6,7 +6,7 @@ import FreeCameraTip from '../components/FreeCameraTip'
 import DamageSheet from '../components/DamageSheet'
 import { findByLiveNumber, findUnit, money, type UnitInfo } from '../lib/data'
 import { feedbackBad, feedbackOk, setSound, soundEnabled } from '../lib/feedback'
-import { findBin, isBinCode, moveUnit, type Bin } from '../lib/locations'
+import { findBin, isBinCode, loadSiblings, moveUnit, moveUnitsTogether, type Bin, type Sibling } from '../lib/locations'
 import { useSession } from '../lib/session'
 import { useToast } from '../lib/toast'
 import { isOrderCode, loadOrderByCode, orderUnits, STATUS_LABEL, type Order } from '../lib/orders'
@@ -37,6 +37,28 @@ export default function Scan() {
   const [pending, setPending] = useState<UnitInfo | null>(null)
   const pendingRef = useRef<UnitInfo | null>(null)
   pendingRef.current = pending
+  // Big green "Stowed" confirmation after each put-away, plus a count for the open bin.
+  const [stow, setStow] = useState<{ big: string; detail: string } | null>(null)
+  const [binCount, setBinCount] = useState(0)
+  useEffect(() => { setBinCount(0) }, [activeBin?.id])
+  async function confirmStow(variantId: string, live: string, name: string, bin: Bin, moved: number) {
+    const list = await loadSiblings(variantId)
+    const here = list.filter(u => u.location_id === bin.id).length
+    setStow({ big: `${here} of ${list.length}`, detail: `of #${live} ${name} are in ${bin.code}` })
+    setBinCount(c => c + moved)
+  }
+  // The other tags of the same Live # (2447-001, -002, …). By default they all go in the bin together.
+  const [group, setGroup] = useState<Sibling[]>([])
+  const [justOne, setJustOne] = useState(false)
+  const groupRef = useRef<{ list: Sibling[]; justOne: boolean }>({ list: [], justOne: false })
+  groupRef.current = { list: group, justOne }
+  useEffect(() => {
+    setGroup([]); setJustOne(false)
+    if (!pending) return
+    let live = true
+    loadSiblings(pending.variant.id).then(list => { if (live) setGroup(list) })
+    return () => { live = false }
+  }, [pending])
 
   // "Try it now" on Recommended gear opens Scan with the camera on.
   useEffect(() => { if (params.get('camera') === 'on') setCamera(true) }, [params])
@@ -69,12 +91,22 @@ export default function Scan() {
       if (bin && waiting && shop) {
         // The bin answers the put-away prompt: link the waiting tag to it, then keep the bin open for more tags.
         try {
-          const from = await moveUnit(shop.id, waiting.id, bin.id)
-          toast(`${waiting.tag_code} is put away in ${bin.code}`, { undo: async () => { await moveUnit(shop.id, waiting.id, from) } })
-          const placed = { ...waiting, location: { code: bin.code, name: bin.name } }
-          setHits(h => h.map(x => (x.kind === 'unit' && x.unit.id === waiting.id ? { ...x, unit: placed } : x)))
+          const g = groupRef.current
+          const all = !g.justOne && g.list.length > 1
+          if (all) {
+            const undo = await moveUnitsTogether(shop.id, g.list, bin.id)
+            toast(`All ${g.list.length} tags for #${waiting.variant.live_number} are put away in ${bin.code}`, { undo })
+          } else {
+            const from = await moveUnit(shop.id, waiting.id, bin.id)
+            toast(`${waiting.tag_code} is put away in ${bin.code}`, { undo: async () => { await moveUnit(shop.id, waiting.id, from) } })
+          }
+          const movedIds = new Set(all ? g.list.map(u => u.id) : [waiting.id])
+          const loc = { code: bin.code, name: bin.name }
+          setHits(h => h.map(x => (x.kind === 'unit' && movedIds.has(x.unit.id) ? { ...x, unit: { ...x.unit, location: loc } } : x)))
           setPending(null)
           setActiveBin(bin)
+          await confirmStow(waiting.variant.id, waiting.variant.live_number, waiting.variant.item.name, bin, movedIds.size)
+          setBinCount(movedIds.size)
           hit = { kind: 'bin', code, bin }
         } catch {
           toast('That didn\'t save. Check your internet and scan the bin again.')
@@ -93,12 +125,17 @@ export default function Scan() {
           const from = await moveUnit(shop.id, unit.id, bin.id)
           const u = unit
           toast(`${u.tag_code} → ${bin.code}`, { undo: async () => { await moveUnit(shop.id, u.id, from) } })
+          await confirmStow(u.variant.id, u.variant.live_number, u.variant.item.name, bin, 1)
+        } else {
+          setStow({ big: 'Already here', detail: `${unit.tag_code} is already in ${bin.code}` })
         }
         unit = { ...unit, location: { code: bin.code, name: bin.name } }
       }
       hit = unit ? { kind: 'unit', code, unit } : { kind: 'miss', code }
       // No bin open and this tag has no home yet: ask for a bin (they can skip and just look).
-      setPending(unit && !bin && unit.status === 'in_stock' && !unit.location ? unit : null)
+      const ask = unit && !bin && unit.status === 'in_stock' && !unit.location ? unit : null
+      setPending(ask)
+      if (ask || !bin) setStow(null)
     }
     if (hit.kind === 'order' || hit.kind === 'variant') setPending(null)
     if (hit.kind === 'miss') feedbackBad()
@@ -134,11 +171,18 @@ export default function Scan() {
 
       {activeBin ? (
         <div className="putaway-banner">
-          <div><span className="eyebrow light">Putting away into</span><b className="mono">{activeBin.code}</b><span>{activeBin.name}</span></div>
-          <button className="btn gold" onClick={() => setActiveBin(null)}>Done</button>
+          <div><span className="eyebrow light">Putting away into</span><b className="mono">{activeBin.code}</b><span>{activeBin.name}</span>{binCount > 0 && <span className="putaway-count">{binCount} put away here this round</span>}</div>
+          <button className="btn gold" onClick={() => { setActiveBin(null); setStow(null) }}>Done</button>
         </div>
       ) : (
         <p className="muted small">Scan a bin label first to put items away into it. Scan an item tag on its own to look it up. If the tag has no bin yet, we'll ask you to scan one.</p>
+      )}
+
+      {stow && activeBin && (
+        <div className="stow-confirm" role="status">
+          <span className="stow-check" aria-hidden>✓</span>
+          <div><span className="eyebrow light">Stowed</span><b>{stow.big}</b><span>{stow.detail}</span></div>
+        </div>
       )}
 
       {pending && (
@@ -151,8 +195,21 @@ export default function Scan() {
               <span className="muted">{pending.variant.label} · tag <span className="mono">{pending.tag_code}</span></span>
             </div>
           </div>
-          <h2 className="putaway-ask-title">Scan a bin to put this away</h2>
-          <p className="muted">Scan the bin label where this piece will live, and they're linked. Just looking? Skip it.</p>
+          <h2 className="putaway-ask-title">Scan a bin to put {group.length > 1 && !justOne ? `all ${group.length} away` : 'this away'}</h2>
+          {group.length > 1 ? (
+            <div className="putaway-ask-group">
+              <p>{justOne
+                ? <>Only tag <b className="mono">{pending.tag_code}</b> goes in the bin you scan.</>
+                : <>All <b>{group.length} tags</b> for #{pending.variant.live_number} ({group[0].tag_code} to {group[group.length - 1].tag_code}) go in the bin you scan, whatever the last number.</>}</p>
+              {!justOne && group.some(u => u.location_id) && (
+                <p className="muted small">{group.filter(u => u.location_id).map(u => `${u.tag_code} is in ${u.location?.code ?? 'a bin'}`).join(' · ')}. It moves too.</p>
+              )}
+              <button className="btn ghost" onClick={() => setJustOne(j => !j)}>{justOne ? `Put all ${group.length} tags here instead` : 'Just this one tag'}</button>
+            </div>
+          ) : (
+            <p className="muted">Scan the bin label where this piece will live, and they're linked.</p>
+          )}
+          <p className="muted">Just looking? Skip it.</p>
           <div className="putaway-ask-actions">
             <button className="btn ghost big" onClick={() => setPending(null)}>Skip</button>
             <Link className="btn outline-gold big" to={`/item/${pending.variant.item.id}`}>Review product</Link>

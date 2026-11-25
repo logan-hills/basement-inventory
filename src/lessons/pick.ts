@@ -15,7 +15,7 @@ const lesson: Lesson = {
     welcome: "Picking is where the promise of your live becomes a real box at someone's door. The grocery-store way keeps it fast and accurate. Let's get every piece in the right box.",
     signoff: "Label the boxes first, scan every piece into its box, and pack like it's a gift. Accurate boxes are how you keep your regulars.",
   },
-  covers: ['src/pages/Pick.tsx', 'src/pages/Orders.tsx', 'src/pages/BoxLabels.tsx', 'src/pages/OrderDetail.tsx', 'src/pages/Receipt.tsx', 'src/components/FreeCameraTip.tsx'], updated: '2026-11-24',
+  covers: ['src/pages/Pick.tsx', 'src/pages/Orders.tsx', 'src/pages/BoxLabels.tsx', 'src/pages/OrderDetail.tsx', 'src/pages/Receipt.tsx', 'src/components/FreeCameraTip.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'Why scan twice', kind: 'learn', title: 'The grocery store way', nova: 'This is the part that makes buyers trust you. Let\'s make it foolproof.',
       text: 'At the grocery store, every item gets scanned at the register, so you pay for exactly what\'s in your cart. Pick and pack works the same way: scan the piece, then scan the buyer\'s box. The two scans together prove the right piece went to the right person.' },
@@ -41,6 +41,9 @@ const lesson: Lesson = {
       example: 'A 30-order live used to take one seller three trips around the basement per order. Picking in bin order, it\'s one walk of about 15 minutes, then 30 minutes at the boxes.' },
     { kind: 'quiz', q: 'Four buyers each bought the gold hoops. What\'s the fastest way to pick them?', options: ['Four separate trips, one per order', 'Grab all four pairs in one stop at the bin, then drop each pair in its box', 'Pick them last'], answer: 1, why: 'The pick list is sorted by bin, so one stop covers every buyer who needs that piece.' },
     { kind: 'order', title: 'Practice', prompt: 'Put the steps in order.', steps: ['Print box labels', 'Stick a label on each box and line them up', 'Tap Pick', 'Walk the list in bin order and scan each piece', 'Scan its box and drop it in'] },
+    { kind: 'learn', title: 'Scan the bin to check you\'re in the right spot', text: 'Big warehouses have pickers scan the bin before they grab. You can too. Standing at a bin? Scan its label. Right bin: a green "Right bin! Grab 2 of #4821" and a happy beep. Wrong bin: a buzz and the bin you should be at. It\'s optional, but it catches mix-ups before a piece leaves the shelf.',
+      screen: { title: 'Picking', rows: ['1 · Scan bin, then item', 'Right bin! Grab 2 of #4821 from A1-S2-B-03'], buttons: ['Picked it'] } },
+    { kind: 'quiz', q: 'You scan the bin label at A1-S1-A-02 and the app buzzes "Wrong bin". What now?', options: ['Grab the piece anyway', 'Go to the bin it names, then scan that one', 'Mark it short'], answer: 1, why: 'The buzz means the piece you need lives somewhere else. Walk to the bin it shows you.' },
     { kind: 'learn', title: 'Wrong box? It tells you', text: 'Scan the wrong box and the app buzzes and shows the right one. Scan a piece nobody in this pick needs and it tells you to put it back. If a piece isn\'t in a bin yet, it says to check the "No bin" pile.' },
     { kind: 'quiz', q: 'Why scan the box after the piece?', options: ['To prove it went in the right box', 'To print a label', 'To mark it damaged'], answer: 0, why: 'The two scans together match the piece to the buyer.' },
 
