@@ -79,12 +79,6 @@ const lesson: Lesson = {
         ['Small thermal roll', '1 to 2 cents', 'The printer itself, once'],
       ] },
       example: 'At 300 tags a month, sheets cost around $9 plus ink. A small thermal printer costs more up front but no ink ever, and no cutting.' },
-    { kind: 'scenario', title: 'Should you buy a printer?', situation: 'You print about 40 tags a week on letter sheets and you\'re happy with it. A friend says you NEED a thermal printer.',
-      options: [
-        { text: 'Buy the most expensive one right away', feedback: 'At 40 a week, sheets are working fine. Spend that money on stock that sells.' },
-        { text: 'Stay with sheets for now. Revisit when you\'re printing a few hundred tags a week, or the cutting and ink start eating your time.', best: true, feedback: 'Upgrade when the numbers say so, not when someone else does.' },
-        { text: 'Stop tagging small pieces to save labels', feedback: 'Untagged pieces can\'t be scanned, picked or counted. Tags are the cheapest part of the system.' },
-      ] },
     { chapter: 'Print', kind: 'learn', title: 'Three ways to print', text: 'Pick the one that fits.', points: ['One variation: open the item, tap Print tags', 'A few tags: tick them on the item page, tap Reprint', 'Many items: tick rows in Stock, tap Print tags for selected'] },
     { kind: 'tap', title: 'Practice', prompt: 'Two tags on one item got smudged. You ticked them. Now tap…', screen: { title: 'Gold hoop set', rows: ['☑ 4821-002', '☑ 4821-005', '☐ 4821-006'], buttons: ['Print tags', 'Reprint 2', 'Damage out'] }, answer: 'Reprint 2', hint: 'Reprint only prints the tags you ticked.' },
     { kind: 'learn', title: 'Line them up', text: 'Labels landing in the wrong spot is almost always the print window, not the app. Check these three every time on a new computer or printer.',
@@ -93,7 +87,6 @@ const lesson: Lesson = {
     { kind: 'quiz', q: 'Labels print shifted down the page. What do you check first?', options: ['Scale 100% and Margins None', 'Buy a new printer', 'Re-enter the item'], answer: 0, why: 'Browser scaling and margins are the usual culprit.' },
     { kind: 'learn', title: 'Use half-used sheets', text: 'Printed 7 tags yesterday and have 23 labels left on the sheet? Enter how many labels to skip and printing starts on the first empty one.',
       example: 'Yesterday you used the first 2 rows of 3 (6 labels) and one more on row 3. Skip 7, and today\'s tags start right where you left off.' },
-    { kind: 'number', title: 'How many to skip?', q: 'Your sheet has 30 labels in 10 rows of 3. You already used the first 4 full rows. How many labels do you skip?', answer: 12, hint: 'Rows used × labels per row.', why: '4 rows × 3 labels = 12. Enter 12 and today\'s tags start on row 5.' },
 
     { chapter: 'Tag it right', kind: 'learn', title: 'Where to put the tag', text: 'A tag that falls off or won\'t scan is as bad as no tag. Put it where it stays flat, stays on, and doesn\'t touch the finish.',
       table: { head: ['Piece', 'Where the tag goes'], rows: [
@@ -121,7 +114,6 @@ const lesson: Lesson = {
         ['A tag fell off and is lost', 'Open the item, tick that tag, Reprint'],
       ] } },
     { kind: 'quiz', q: 'Your thermal printer feeds labels but they come out completely blank. Most likely?', options: ['It\'s out of ink', 'The roll is in upside down', 'The tags were deleted'], answer: 1, why: 'Thermal printers don\'t use ink. They only print on one side of the label, so flip the roll.' },
-    { kind: 'quiz', q: 'A buyer\'s tag fell off a bag somewhere in the bin. Fastest fix?', options: ['Receive the bag again as a new item', 'Open the item, tick that one tag, and Reprint', 'Sell it without a tag'], answer: 1, why: 'Reprint gives you the exact same tag code, so the bag keeps its history.' },
     { kind: 'reflect', title: 'Your label setup', prompt: 'Which label type will you use, and where will tags go on your three most common kinds of pieces?', placeholder: 'I\'ll use…', example: 'Letter sheets for now. Earrings in zip bags with the tag on the bag, necklaces tagged on the clasp, bags on a hang tag.' },
     { kind: 'checklist', title: 'Tagging supplies', prompt: 'Tick what you already have.', items: [
       'Labels for my printer',
