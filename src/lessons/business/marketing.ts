@@ -19,7 +19,7 @@ const lesson: Lesson = {
     welcome: "Marketing is simply inviting people, over and over, with a smile. I'll show you a routine that fits into about an hour a week, so you can market without burning out.",
     signoff: "Four touches before every live, five good hooks in your pocket, and one Sunday hour. That's a marketing plan you can actually keep.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'The invite mindset', kind: 'learn', title: 'Marketing is an invitation', nova: "Forget \"being salesy.\" You're throwing a party and inviting your people.",
       text: "Most sellers post \"going live later!\" and wonder why nobody comes. Every invitation needs to answer three questions before the reader even thinks to ask them.",
@@ -32,7 +32,11 @@ const lesson: Lesson = {
         ['Show up', 'She joins the live', 'The 4-touch week (coming up next)'],
         ['Buy', 'She comments SOLD', 'Clear rules, good pieces, good energy'],
         ['Come back', 'She shops again', 'Fast shipping, thank-yous, shout-outs'],
-      ] } },
+      ] },
+      visual: { type: 'flow', caption: 'Find the step where people fall off, and fix that one.', steps: [
+        { label: 'See' }, { label: 'Follow' }, { label: 'Remember' }, { label: 'Show up' }, { label: 'Buy' }, { label: 'Come back' },
+      ] },
+      term: { word: 'Marketing funnel', meaning: 'The path from first seeing you to buying again, drawn wide at the top (many people see you) and narrow at the bottom (fewer buy). Each step loses some people; good marketing loses fewer.' } },
     { kind: 'quiz', q: 'Which post is most likely to fill your live?', options: ['"Going live later!"', '"Tuesday 7 PM ET: $2 jewelry + a free tote giveaway. Tap Get reminder!"', '"New stuff coming soon"'], answer: 1, why: 'It tells her what, when, and why to come, and gives her one easy thing to do.' },
 
     { chapter: 'The 4-touch week', queen: "If you only have time for one post, make it the morning-of reminder. That's the one that fills the room.", kind: 'learn', title: 'Four touches, about an hour total', nova: "Here's a rhythm you can keep even on your busiest week.",
@@ -43,7 +47,21 @@ const lesson: Lesson = {
         ['Morning of', '"Tonight!" reminder with the time', 'Turn intent into a plan'],
         ['1 hour before', '"We\'re setting up" behind the scenes', 'The last nudge, and it feels personal'],
       ] },
-      tip: 'Schedule your live on Facebook ahead of time when you can. People who tap Get reminder get notified when you start.' },
+      tip: 'Schedule your live on Facebook ahead of time when you can. People who tap Get reminder get notified when you start.',
+      visual: { type: 'bars', caption: 'Example: peak viewers on one seller\'s lives with different amounts of marketing.', bars: [
+        { label: 'One "going live!" post', value: 21 },
+        { label: 'Two touches', value: 35 },
+        { label: 'All four touches', value: 62, hl: true },
+      ] } },
+    { kind: 'howto', title: 'Run your first 4-touch week', text: 'Here is the whole week for a Thursday 7 PM live called Holiday Glam. Each touch takes 10 to 20 minutes.',
+      steps: [
+        { title: 'Sunday: plan and make the poster', detail: 'Book the live in the app calendar with its theme, then make the poster in the Live planner or Canva with day, time, time zone and one reason to come.' },
+        { title: 'Tuesday: post the poster', detail: 'Post it two days ahead with the 2-day caption. If you can, schedule the live on Facebook too so people can tap Get reminder.', example: '"Holiday Glam is THIS Thursday at 7 PM ET! 💎 Every sequin piece $10 + a free clutch giveaway. Tap Get reminder!"' },
+        { title: 'Wednesday: film the sneak peek', detail: 'Show three pieces in 15 to 20 seconds and ask "1, 2 or 3?" to get comments. Answer every comment.' },
+        { title: 'Thursday morning: the reminder', detail: 'A short "TONIGHT" post with the time and one line about why. If you only do one touch, do this one.' },
+        { title: 'Thursday 6 PM: behind the scenes', detail: 'A quick photo or clip of the table being set up. It feels personal and reminds people one last time.' },
+        { title: 'Friday: fill in your scorecard', detail: 'Write the posts you did, peak viewers, buyers and sales. Next week, compare.' },
+      ] },
     { kind: 'script', title: 'Copy-ready 4-touch posts', text: 'Change the words in brackets and these are ready to post.',
       lines: [
         '2 DAYS: "[Theme] is THIS [day] at [time] ET! 💎 [Price hook, like \'Everything gold is $2\'] + a free [giveaway]. Tap Get reminder so you don\'t miss it."',
@@ -68,6 +86,9 @@ const lesson: Lesson = {
         { text: '"This emerald bag looks like $120. Tomorrow night it\'s $12."', best: true, feedback: 'Shocking price plus a clear visual in the first second. That stops thumbs.' },
         { text: '"New inventory update!"', feedback: "It's true, but there's nothing in it to make anyone stop." },
       ] },
+    { kind: 'learn', title: 'Test your hooks like a pro', text: 'You won\'t know which hook formula works best for your buyers until you try them. Use the same kind of piece and change only the first line. After two weeks, the numbers tell you which formula your people love.',
+      visual: { type: 'compare', style: 'plain', caption: 'A two-week hook test: same bag, same time of day, different first line.', left: { title: 'Week 1: shocking price', items: ['"This bag is $12. Yes, twelve."', '2,100 views', '38 comments'] }, right: { title: 'Week 2: the call-out', items: ['"Wedding this spring? Stop scrolling."', '3,400 views', '71 comments'] } },
+      example: 'Renee\'s buyers are mostly grandmothers who attend a lot of family events. The call-out hook won by a mile, so she now opens most sneak peeks with an occasion: "Graduation coming up?" "Church anniversary this month?"' },
     { kind: 'reflect', title: 'Write two hooks', prompt: 'Write two hooks for your next live, using two different formulas from the table.', placeholder: '1. … 2. …', example: '1. "Every gold piece is $2 until the timer runs out." 2. "If you\'ve got a holiday party coming, stop scrolling."' },
 
     { chapter: 'Let buyers sell for you', queen: "Ask your happiest buyers to share your live. Most people are glad to help when you simply ask.", kind: 'learn', title: 'Word of mouth, on purpose', nova: "Your happiest buyer is your best ad. Give her something to talk about.",
@@ -99,7 +120,21 @@ const lesson: Lesson = {
 
     { chapter: 'Without burning out', kind: 'learn', title: 'The one-hour Sunday', text: "Burnout comes from deciding what to post every single day. Decide once a week instead.",
       points: ['10 min: pick the theme for each live this week in the Live Planner', '20 min: make the posters', '20 min: film 3 or 4 short clips in one go (same outfit, same light)', '10 min: write the captions and schedule what you can'],
-      tip: 'Done and consistent beats perfect and once a month.' },
+      tip: 'Done and consistent beats perfect and once a month.',
+      visual: { type: 'split', total: '60 minutes on Sunday', caption: 'The whole week\'s marketing, decided once.', parts: [
+        { label: 'Pick themes', value: 10 },
+        { label: 'Make posters', value: 20 },
+        { label: 'Film clips', value: 20 },
+        { label: 'Captions and scheduling', value: 10 },
+      ] } },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Every invitation answers What, When (with time zone) and Why.',
+      'Find the step where people fall off the path, and fix that step.',
+      'Four touches before every live: poster, sneak peek, morning reminder, behind the scenes.',
+      'Open with your most exciting line, never "Hey guys, so…".',
+      'Giveaways: free to enter, no share-to-enter, winner picked on camera.',
+      'Keep a one-minute scorecard, and plan the week in one Sunday hour.',
+    ] },
     { kind: 'checklist', title: 'Your marketing plan for this week', prompt: "Tick what you'll do before your next live.", items: [
       'Pick the theme and make the poster',
       'Post the poster 2 days before',
