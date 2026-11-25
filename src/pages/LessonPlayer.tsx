@@ -238,7 +238,7 @@ function VisualFig({ v }: { v: Visual }) {
         <div key={b.label} className={`vis-bar${b.hl ? ' hl' : ''}`}>
           <span className="vis-bar-label">{b.label}</span>
           <span className="vis-bar-track"><i style={{ width: `${Math.max(3, (b.value / max) * 100)}%` }} /></span>
-          <span className="vis-bar-val">{v.prefix ?? ''}{b.value.toLocaleString()}{v.unit ?? ''}{b.note && <small>{b.note}</small>}</span>
+          <span className="vis-bar-val">{b.value < 0 ? '−' : ''}{v.prefix ?? ''}{Math.abs(b.value).toLocaleString()}{v.unit ?? ''}{b.note && <small>{b.note}</small>}</span>
         </div>
       ))}</div>
     )

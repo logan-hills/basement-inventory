@@ -10,6 +10,7 @@ const lesson: Lesson = {
     'Turn a vague worry into sharp questions that get useful answers',
     'Know the 50% deposit that books your time: $25 for a full first hour',
     'Send a request from Time with the Queen and follow up after',
+    'Find your booked session in the app and join it with one tap',
   ],
   route: { to: '/consult', label: 'Open Time with the Queen' },
   sources: [
@@ -20,7 +21,7 @@ const lesson: Lesson = {
     welcome: "When you book time with me, I want you to walk away with a real plan. This lesson shows you how to come prepared so we can use every minute on what matters most to your business.",
     signoff: "Bring your snapshot, bring your three sharpest questions, and bring your open mind. I'll bring the rest. I can't wait to work with you.",
   },
-  covers: ['src/pages/Consult.tsx', 'src/lessons/classes.ts'], updated: '2026-11-25',
+  covers: ['src/pages/Consult.tsx', 'src/lessons/classes.ts', 'src/lib/meetings.ts'], updated: '2026-11-25',
   slides: [
     { chapter: 'What a consult is', kind: 'learn', title: 'Your business, her expertise, one hour', nova: 'Boss, this is the closest thing to having a CEO in your corner. Let\'s make every minute count.',
       text: 'Time with the Queen is a private 1:1 business consult. She holds an MBA in business project planning from Capella University, and she works through your challenges with you on any business topic, then gives you tools to tackle them. When a question needs more digging, she can follow up with research and written solutions.',
@@ -86,6 +87,11 @@ const lesson: Lesson = {
 
     { chapter: 'Book it', kind: 'learn', title: 'Send your request in the app', text: 'Open More, then Time with the Queen. Follow the three numbered steps. 1: tap the topic cards you want (a gold check shows each pick). 2: tap any topic ideas that fit (they drop right into your request) and write what you want to work on and what you\'re doing now, say whether you have a business plan, pick daytime or evening, and choose a length. 3: pick a time and length. The checklist at the top shows what\'s left, and if something is missing, the button at the bottom takes you right to it. The page shows your price and your 50% deposit. Tap Send my request and it opens as an email to the Queen with everything filled in. She replies with a time and how to pay the deposit, and your time is booked once it\'s paid.',
       screen: { title: 'Time with the Queen', buttons: ['Strategy and planning', 'Money and pricing', '+ Price my pieces so I make a real profit', '1 hour · $50 · $25 to book', 'Send my request'], highlight: 'Send my request' } },
+    { chapter: 'Join your session', kind: 'learn', title: 'Your session, right in the app', text: 'Once your deposit is paid, the Queen books your session in the app under the email you sign in with. Open Time with the Queen and your session sits at the very top: the date and time in Eastern Time, the length, your topic and how long until you start. Tap Add to calendar to put it on your phone with a 30-minute reminder and the join link inside. Fifteen minutes before the start, a green Join now button lights up. Tap it and the Queen\'s video call opens, in Zoom, Google Meet or Teams, whichever she uses. You\'ll also see a gold Join banner on your Home screen at the same time, and the Queen emails you the link, so you have it in three places.',
+      visual: { type: 'flow', steps: [{ label: 'Deposit paid' }, { label: 'Booked under your email' }, { label: 'Shows on Time with the Queen' }, { label: 'Add to calendar' }, { label: 'Join now, 15 minutes before' }] },
+      points: ['Sign in with the same email you booked with, or your session won\'t find you', 'On a phone, the first call may ask you to install the free Zoom, Meet or Teams app', 'Join a few minutes early to check your sound and camera'],
+      tip: 'Don\'t see your session? Use the link in the Queen\'s email for today, and reply with the email you sign in with so she can fix it.' },
+    { kind: 'tap', title: 'Practice: join your 1:1', prompt: 'It\'s 10:50 AM and your session with the Queen starts at 11:00. You\'re on Time with the Queen. Which button gets you in?', screen: { title: 'Your time with the Queen · Tue, Dec 9 · 11:00 AM ET', buttons: ['Add to calendar', 'Join now in Google Meet', 'Send my request', 'Start by picking your topics'] }, answer: 'Join now in Google Meet', hint: 'You\'re already booked. You want to walk into the call.' },
     { kind: 'tap', title: 'Practice: pick the best value', prompt: 'You want the most time for the best price on your first consult. Which length do you pick?', screen: { title: 'How long?', buttons: ['30 minutes · $50', '1 hour · $50', '1.5 hours · $100', '2 hours · $150'] }, answer: '1 hour · $50', hint: 'Partial hours don\'t get the discount. The first full hour does.' },
     { kind: 'learn', title: 'After the session', text: 'The consult is the start, not the finish. What you do in the next seven days decides what it was worth.',
       points: ['Write your top three action steps that night', 'Put each one on your calendar this week', 'If she offered follow-up research, decide yes or no within a day (about $25 an hour, estimated first)', 'Try the steps for two to four weeks, track your numbers, then book a check-in', 'Add what worked to your pre-live checklist or pack card'] },

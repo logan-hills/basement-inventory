@@ -17,7 +17,7 @@ const lesson: Lesson = {
     welcome: "Numbers aren't scary when they're your own. Your reports tell you what to buy, what to clear and what's really paying you. Let's read them together, calmly.",
     signoff: "Hold a money meeting with yourself once a month. Thirty minutes with your numbers will make you a smarter buyer than any trend report.",
   },
-  covers: ['src/pages/Reports.tsx', 'src/pages/Home.tsx'], updated: '2026-11-24',
+  covers: ['src/pages/Reports.tsx', 'src/pages/Home.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'The big numbers', kind: 'learn', title: 'Why numbers, honestly', nova: 'Don\'t worry, no accounting degree needed. Just a few numbers that tell you the truth.',
       text: 'A live can feel amazing and still lose money. Another can feel slow and be your most profitable night. Reports (the Money button) tells you which is which, so you decide with facts instead of feelings.' },

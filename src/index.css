@@ -3267,3 +3267,49 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .recap-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .recap-list li { display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: rgba(34, 176, 116, .1); border: 1px solid rgba(34, 176, 116, .3); line-height: 1.45; font-size: 1.05rem; }
 .recap-list li i { flex: none; font-style: normal; font-weight: 700; color: #6FD19B; }
+
+/* ===== HOST DESK: the Queen starts her classes and 1:1 sessions here ===== */
+:root { --u-foil: linear-gradient(100deg, #B8862B, #FFE7A3 35%, #D9A53A 55%, #FFF4CF 75%, #C29435); }
+.host-desk { max-width: 980px; }
+.host-desk .page-head p { max-width: 62ch; font-size: 1.05rem; line-height: 1.5; }
+.host-next { display: flex; flex-direction: column; gap: 10px; padding: 24px; border-radius: var(--radius); background: radial-gradient(80% 120% at 100% 0%, rgba(255, 211, 110, .16), transparent 60%), var(--surface); border: 1px solid var(--border-strong); }
+.host-next.on { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255, 211, 110, .25), 0 18px 40px rgba(0, 0, 0, .35); }
+.host-next h2 { font-family: Fraunces, Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.1; margin: 0; }
+.host-next .eyebrow { color: var(--gold); font-weight: 800; }
+.host-next.on .eyebrow { color: #7CE0A8; }
+.host-when { font-size: 1.2rem; font-weight: 700; margin: 0; }
+.host-next p { margin: 0; }
+.host-next .btn.big { max-width: 520px; }
+.host-start-on { animation: host-glow 1.6s ease-in-out infinite; }
+@keyframes host-glow { 50% { box-shadow: 0 0 0 6px rgba(255, 211, 110, .25); } }
+@media (prefers-reduced-motion: reduce) { .host-start-on { animation: none; } }
+.host-tip { color: var(--text-2); }
+.host-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.host-row { display: flex; justify-content: space-between; align-items: center; gap: 12px 16px; flex-wrap: wrap; padding: 14px 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); }
+.host-row-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1 1 260px; }
+.host-row-text b { font-size: 1.08rem; }
+.host-row-text small { overflow-wrap: anywhere; }
+.host-row-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.host-rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; }
+.host-room { display: flex; flex-direction: column; gap: 8px; }
+.host-room input { min-height: 52px; font-size: 1rem; }
+.host-help summary { cursor: pointer; min-height: 40px; display: flex; align-items: center; }
+.host-help ol { margin: 6px 0; padding-left: 22px; line-height: 1.6; }
+.host-who { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.host-who li { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border-strong); overflow-wrap: anywhere; }
+.host-free-add { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+.host-free-add label { flex: 1 1 260px; display: flex; flex-direction: column; gap: 6px; font-weight: 700; }
+.host-free-add input { min-height: 52px; }
+.host-setup { border-color: var(--gold); }
+
+/* Join buttons for sellers: a class seat or a booked 1:1, from 15 minutes before */
+.join-now { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 16px 18px; border-radius: 18px; border: 1px solid var(--gold); background: radial-gradient(80% 140% at 100% 0%, rgba(255, 211, 110, .2), transparent 60%), var(--surface); }
+.join-now b { font-size: 1.1rem; }
+.join-now span { display: block; color: var(--text-2); }
+.uni-join { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 999px; border: 0; background: #0B6B4B; color: #fff !important; font: inherit; font-weight: 800; font-size: 1.02rem; cursor: pointer; text-decoration: none !important; }
+.uni-join-wait { font-size: .92rem; color: #6E5664; }
+.consult-sessions { display: flex; flex-direction: column; gap: 10px; }
+.consult-session { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 16px 18px; border-radius: 18px; background: #fff; border: 1px solid #EADBCB; color: #2A1420; }
+.consult-session b { font-size: 1.1rem; }
+.consult-session span { display: block; color: #4A3340; }
+.consult-session .row-gap button, .consult-session .row-gap a { min-height: 44px; }

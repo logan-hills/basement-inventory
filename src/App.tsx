@@ -38,6 +38,8 @@ import Shipping from './pages/Shipping'
 import Reports from './pages/Reports'
 import Lessons from './pages/Lessons'
 import Consult from './pages/Consult'
+import HostDesk from './pages/HostDesk'
+import { useIsHost } from './lib/meetings'
 import LessonPlayer from './pages/LessonPlayer'
 import Planner from './pages/Planner'
 import LivePlan from './pages/LivePlan'
@@ -165,6 +167,7 @@ function StreamShell() {
 
 function Shell() {
   const { session, shop, loading, profile, isTeam } = useSession()
+  const host = useIsHost()
   const [menu, setMenu] = useState(false)
   const { pathname } = useLocation()
   const recovering = useRecovering()
@@ -213,7 +216,10 @@ function Shell() {
           {[['Stock', STOCK], ['Lives', LIVES], ['Orders', ORDERS], ['You and your shop', MORE]].map(([name, list]) => (
             <div key={name as string} className="stack tight-gap">
               <span className="nav-group">{name as string}</span>
-              <div className="menu-links">{(list as typeof STOCK).filter(n => !(isTeam && (OWNER_ONLY.has(n.to) || n.to === '/settings/team'))).map(n => <NavLink key={n.to} to={n.to} className="menu-link"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}</div>
+              <div className="menu-links">
+                {name === 'You and your shop' && host && <NavLink to="/host" className="menu-link"><Icon name="live" size={18} />♛ Host desk</NavLink>}
+                {(list as typeof STOCK).filter(n => !(isTeam && (OWNER_ONLY.has(n.to) || n.to === '/settings/team'))).map(n => <NavLink key={n.to} to={n.to} className="menu-link"><Icon name={n.icon} size={18} />{n.label}</NavLink>)}
+              </div>
             </div>
           ))}
           <div className="row-between"><span className="muted small">{session.user.email}</span><button className="link-btn" onClick={() => supabase.auth.signOut()}>Sign out</button></div>
@@ -253,6 +259,7 @@ function Shell() {
           <Route path="/reports" element={<Reports />} />
           <Route path="/reports/:view" element={<Reports />} />
           <Route path="/lessons" element={isTeam ? <OwnerOnly what="Dazzle University" /> : <Lessons />} />
+          <Route path="/host" element={<HostDesk />} />
           <Route path="/consult" element={isTeam ? <OwnerOnly what="Time with the Queen" /> : <Consult />} />
           <Route path="/lessons/:id" element={isTeam ? <OwnerOnly what="Dazzle University" /> : <LessonPlayer />} />
           <Route path="/orders" element={<Orders />} />
