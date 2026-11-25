@@ -16,7 +16,7 @@ const lesson: Lesson = {
     welcome: "I want every one of you in the room with me, not stuck looking for a link. This lesson shows you how to get into class with one tap, and how my team and I run it on our side.",
     signoff: "Save your seat, put it on your calendar, and come with your questions. When that Join button lights up, tap it. I'll be right there waiting for you.",
   },
-  covers: ['src/pages/HostDesk.tsx', 'src/lib/meetings.ts', 'src/components/JoinNow.tsx', 'supabase/020_host_desk.sql'], updated: '2026-11-25',
+  covers: ['src/pages/HostDesk.tsx', 'src/lib/meetings.ts', 'src/components/JoinNow.tsx', 'supabase/020_host_desk.sql', 'supabase/021_founder_from_host_desk.sql'], updated: '2026-11-25',
   slides: [
     /* ---------- Module 1: how it fits together ---------- */
     { chapter: 'Module 1 · How live classes work', kind: 'learn', title: 'One link, saved once, used every week', nova: 'Hey love! Ever had a class start while you were still digging through email for the link? Not here. Let me show you.',

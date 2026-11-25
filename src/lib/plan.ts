@@ -1,6 +1,6 @@
 /* Subscription plans (see the pricing doc). shops.plan holds the shop's plan.
    'founder' = Dynamic Dazzle's own shop (LaVerne, the creator) and her team: every feature, free forever.
-   Only the platform owner can set it, in Supabase (supabase/020). null = a shop from before plans
+   Only the platform owner (Supabase SQL editor) or the Queen's hosts (Host desk) can set it: supabase/020_founder_plan + 021. null = a shop from before plans
    existed, which 020 turns into founder; until that update runs we treat it the same way. */
 export type Plan = 'stream' | 'gem' | 'crown' | 'empire' | 'founder'
 export const PLAN_NAMES: Record<Plan, string> = { stream: 'Stream (free)', gem: 'Gem', crown: 'Crown', empire: 'Empire', founder: 'Founder (free forever)' }
