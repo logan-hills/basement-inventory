@@ -21,7 +21,7 @@ const lesson: Lesson = {
     welcome: "If your domain already lives at GoDaddy, Airo can give you a fast first draft of your site. I'll show you how to use it well and how to watch those year-two prices.",
     signoff: "Write a great prompt, check everything the AI builds, and mark your renewal date on the calendar. A fast start is only good if the price stays fair.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'Why GoDaddy', kind: 'learn', title: 'Domain and website under one roof', nova: 'One login for your name and your shop. I like simple, boss!',
       text: 'Many sellers already bought their domain at GoDaddy. Its website builder, now powered by an AI called Airo, builds a first draft from your description, then gives you a to-do list for the rest. Reviewers like how fast it is, and warn that designs can look generic unless you add your own photos and voice.',
@@ -29,6 +29,14 @@ const lesson: Lesson = {
         ['Your domain is already at GoDaddy', 'You want thousands of apps (Shopify has more)'],
         ['You want AI to do the first draft', 'You want to edit on your phone (there\'s no mobile editor)'],
         ['A small shop with a few dozen pieces', 'You need to start completely free and publish'],
+      ] },
+      visual: { type: 'flow', caption: 'The whole road, from prompt to first sale.', steps: [
+        { label: 'Prompt', note: 'Describe your shop' },
+        { label: 'Airo draft', note: 'Minutes' },
+        { label: 'Your photos + words', note: 'The real work' },
+        { label: 'Checks', note: 'SEO, security' },
+        { label: 'Payments + domain' },
+        { label: 'Test order, publish' },
       ] } },
     { kind: 'learn', title: 'The plans (November 2026)', text: 'Airo\'s plans run on AI credits each month. The free plan lets you build but not publish. First-year prices are lower than renewal prices, so plan for year two. Check GoDaddy\'s pricing page before you buy; reviewers disagree on which plan you need to take payments, so confirm that the plan you pick says it accepts online payments.',
       table: { head: ['Plan', 'First year', 'Renews at', 'Monthly billing', 'AI credits'], rows: [
@@ -37,7 +45,14 @@ const lesson: Lesson = {
         ['Professional', '$24.99/mo', '$36.99/mo', '$49.99/mo', '300 a month'],
         ['Ultimate', '$99.99/mo', '$149.99/mo', '$199.99/mo', '750 a month'],
       ] },
-      tip: 'GoDaddy Payments charges about 2.7% + 30¢ per online sale. You can also connect Stripe.' },
+      tip: 'GoDaddy Payments charges about 2.7% + 30¢ per online sale. You can also connect Stripe.',
+      visual: { type: 'bars', prefix: '$', caption: 'Monthly price on yearly billing, first year vs renewal (Tech.co, October 2026).', bars: [
+        { label: 'Starter, year one', value: 9.99 },
+        { label: 'Starter, renewal', value: 14.99 },
+        { label: 'Professional, year one', value: 24.99 },
+        { label: 'Professional, renewal', value: 36.99, hl: true, note: 'Plan for this' },
+      ] },
+      term: { word: 'AI credits', meaning: 'A monthly allowance of AI actions in the builder. Each time you ask Airo to build or rewrite something, it spends credits. Hand edits in Edit mode don\'t.' } },
     { queen: "Put your renewal date in your calendar the day you sign up, with a reminder a month before.", kind: 'number', title: 'The year-two jump', q: 'Professional is $24.99 a month the first year and renews at $36.99. How much more will you pay in year two than year one?', prefix: '$', answer: 144, tolerance: 1, hint: '($36.99 − $24.99) × 12.', why: '$12 × 12 = $144 more a year. Put the renewal date on your calendar so it\'s never a surprise.' },
 
     { chapter: 'Build with Airo', queen: "Describe your dream buyer in your prompt, not just your products. The AI builds better when it knows who the site is for.", kind: 'learn', title: 'Step 1: write a great prompt', text: 'Airo builds what you describe, so the more specific you are, the less you fix later. Reviewers found vague prompts gave generic sites. Use this recipe, and split very long prompts into two messages.',
@@ -62,6 +77,15 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Step 3: run the checks', text: 'Airo has one-click checks for search (SEO), security and code quality. Run them before you publish, and use "Ask Airo to fix it" for anything it flags.',
       tip: 'Reviewers note that GoDaddy doesn\'t promise built sites meet card-security standards on their own, so take payments only through GoDaddy Payments or Stripe, never a homemade form.' },
 
+    { kind: 'howto', title: 'Add your first ten products', text: 'Start small. Ten great listings beat fifty rushed ones, and you\'ll learn the editor as you go.',
+      steps: [
+        { title: 'Download your stock list', detail: 'In the app, open Stock, filter to the pieces you want online, then tap More and Download this list. It gives you names, prices and Live #s in a spreadsheet.' },
+        { title: 'Pick your ten', detail: 'Choose pieces you have more than one of, or one-of-a-kind pieces you\'d love to sell between lives.' },
+        { title: 'Photograph them the same way', detail: 'Same window, same background, the five shots on the photos slide. Do all ten in one sitting.' },
+        { title: 'Add each product by hand', detail: 'In the Shop section, add a product: photos, name, price, description and quantity. Hand edits don\'t use AI credits.', example: 'Name: "Tan leather Coach crossbody". Price $68. Quantity 1. SKU: the Live # from the app, so you can find it later.' },
+        { title: 'Use the description recipe', detail: 'Hook, details, condition, style it, close. Let AI draft it if you like, then check every fact against the piece.' },
+        { title: 'Keep stock honest', detail: 'When a piece sells on your live, mark it sold or set its quantity to 0 on the website the same night.' },
+      ] },
     { chapter: 'Money and trust', kind: 'learn', title: 'Step 4: payments, domain and pages', text: 'Now set up the parts that make buyers comfortable paying you.',
       points: ['Connect GoDaddy Payments or Stripe', 'Connect your domain; reviewers disagree on whether a free first-year domain is included, so check at checkout', 'Write Shipping and returns, Privacy and Contact pages', 'Add your live schedule and a link to your Facebook Page', 'Turn on sales tax where you must collect it'] },
     { kind: 'learn', title: 'Watch the add-ons', text: 'GoDaddy\'s checkout offers extras. Some are useful; many aren\'t needed on day one. Prices below are from Tech.co\'s October 2026 review.',
@@ -95,6 +119,15 @@ const lesson: Lesson = {
       'STYLE IT: "Pair it with a wrap dress and gold hoops."',
       'CLOSE: "One of a kind. When she\'s gone, she\'s gone!"',
     ], tip: 'Measure every bag the same way (width x height x depth) and say it the same way every time.' },
+    { kind: 'howto', title: 'Place a test order before you publish', text: 'A test order is a dress rehearsal. Do it once; it catches most problems before a real buyer finds them.',
+      steps: [
+        { title: 'Pick a cheap product', detail: 'Use a $5 piece, or make a hidden test product priced at $1.' },
+        { title: 'Shop it like a stranger', detail: 'On your phone, not logged in, find it, add it to the cart and check out with your own card.' },
+        { title: 'Check every screen', detail: 'Do shipping and sales tax look right? Is your return policy linked? Did the confirmation page say thank you in your voice?' },
+        { title: 'Check your email', detail: 'Did you get the new-order email? Did the buyer\'s confirmation email arrive and look right?' },
+        { title: 'Refund it', detail: 'Refund the test order from the orders area and make sure the refund email goes out.', example: 'She finds shipping set to $0 on the test. She fixes it before publishing, saving a lot of free shipping.' },
+      ],
+      tip: 'Card processors may keep their small fee on a refunded test order. It is the cheapest insurance you\'ll ever buy.' },
     { kind: 'learn', title: 'Your first 30 days after launch', text: 'A new site is quiet until you send people to it. Your lives are your biggest traffic source, so connect the two.',
       table: { head: ['When', 'Do this'], rows: [
         ['Every live', 'Say your web address and pin it in the comments'],
@@ -105,6 +138,14 @@ const lesson: Lesson = {
       ] } },
     { chapter: 'Launch', kind: 'order', title: 'GoDaddy launch, in order', prompt: 'Put these steps in order.', steps: ['Write your prompt', 'Let Airo build the first draft', 'Swap in your photos and your words', 'Run the SEO and security checks', 'Connect payments and your domain', 'Place a test order', 'Publish and share'] },
     { kind: 'checklist', title: 'GoDaddy launch list', prompt: 'Tick these off as you go.', items: ['Prompt written and saved', 'Draft built and every stock photo replaced', 'About page rewritten in my voice', 'Checks run and fixes made', 'Payments and domain connected', 'Policies and contact pages done', 'Test order placed and refunded', 'Renewal date on my calendar'] },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'GoDaddy Airo builds a fast first draft from a detailed prompt about your shop and buyer.',
+      'The free plan can\'t publish; first-year prices go up at renewal. Calendar your renewal date.',
+      'Hand edits save AI credits. Swap every stock photo and rewrite the About page yourself.',
+      'Take payments only through GoDaddy Payments or Stripe, and uncheck add-ons you don\'t need.',
+      'Start with ten great listings and keep stock honest after every live.',
+      'Place a test order before you publish, then send buyers from your lives.',
+    ] },
     { kind: 'reflect', title: 'Your Airo prompt', prompt: 'Write your own Airo prompt using the recipe: who you are, what you sell, who buys, your look, your pages and must-haves.', placeholder: 'Build an online store for…', example: 'Build an online store for Dazzle Finds, a live-selling boutique in Atlanta. We sell pre-loved designer handbags $15 to $120 to stylish women 40+. Warm, classy, gold and green. Pages: Home, Shop, About, Lives, Shipping and returns, Contact. Add online payments and our Facebook live schedule.' },
   ],
 }
