@@ -14,6 +14,17 @@ export type Screen = { title: string; rows?: string[]; buttons: string[]; highli
 /** A small table for worked numbers (prices, profit, timing). */
 export type Table = { head: string[]; rows: string[][] }
 
+/** A picture drawn from the lesson's own data, shown on a learn slide (like the diagrams in a work training).
+    flow: steps joined by arrows. compare: two columns side by side (do/don't, before/after).
+    bars: a simple bar chart. stats: big numbers. split: one bar cut into parts (where each dollar goes). */
+export type Visual = { caption?: string } & (
+  | { type: 'flow'; steps: { label: string; note?: string }[] }
+  | { type: 'compare'; style?: 'dodont' | 'beforeafter' | 'plain'; left: { title: string; items: string[] }; right: { title: string; items: string[] } }
+  | { type: 'bars'; unit?: string; prefix?: string; max?: number; bars: { label: string; value: number; note?: string; hl?: boolean }[] }
+  | { type: 'stats'; stats: { value: string; label: string }[] }
+  | { type: 'split'; total?: string; parts: { label: string; value: number; note?: string }[] }
+)
+
 /** Fields any slide can carry: a chapter heading, Nova's own line for this slide, and a tip in the Queen's own voice.
     QUEEN RULE: the Queen (our CEO) curates every lesson. Give each lesson a `queen` note and at least two slides a `queen` tip:
     practical, warm advice in her voice, the kind she'd tell her own sellers. Never invent facts about her life. */
@@ -21,7 +32,11 @@ type Common = { chapter?: string; nova?: string; queen?: string }
 
 export type Slide = Common & (
   /** Teach: a title, body text, optional bullet points, a worked table, a real-life example and a tip. */
-  | { kind: 'learn'; title: string; text: string; points?: string[]; screen?: Screen; table?: Table; example?: string; tip?: string }
+  | { kind: 'learn'; title: string; text: string; points?: string[]; screen?: Screen; table?: Table; visual?: Visual; term?: { word: string; meaning: string }; example?: string; tip?: string }
+  /** Step by step: a numbered walkthrough, each step with what to do and how (optionally an example). */
+  | { kind: 'howto'; title: string; text?: string; steps: { title: string; detail: string; example?: string }[]; tip?: string }
+  /** Key takeaways: the short summary that closes a module, like a work training. */
+  | { kind: 'recap'; title: string; points: string[] }
   /** A ready-to-use script or template the seller can copy and make her own. */
   | { kind: 'script'; title: string; text?: string; lines: string[]; tip?: string }
   /** Practice: tap the right button on a pretend screen. */

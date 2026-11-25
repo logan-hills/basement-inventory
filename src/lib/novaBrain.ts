@@ -90,6 +90,7 @@ function addLesson(list: Omit<Answer, 'score'>[], l: Lesson) {
     if (s.kind === 'learn') list.push({ id: `${l.id}:${n}`, from: l.title, title: s.title, text: s.text, points: s.points?.slice(0, 4), route, lessonId: l.id })
     else if (s.kind === 'tap') list.push({ id: `${l.id}:${n}`, from: l.title, title: s.prompt, text: `Tap ${s.answer}. ${s.hint}`, route, lessonId: l.id })
     else if (s.kind === 'quiz') list.push({ id: `${l.id}:${n}`, from: l.title, title: s.q, text: `${s.options[s.answer]}. ${s.why}`, route, lessonId: l.id })
+    else if (s.kind === 'howto') list.push({ id: `${l.id}:${n}`, from: l.title, title: s.title, text: s.text ?? s.steps.map(x => x.title).join('. '), points: s.steps.slice(0, 4).map(x => x.title), route, lessonId: l.id })
   })
 }
 
@@ -150,6 +151,7 @@ function tutorial(a: Omit<Answer, 'score'>, q: string[]): string[] {
   const lists: { steps: string[]; score: number }[] = []
   for (const sl of lesson?.slides ?? []) {
     if (sl.kind === 'order') lists.push({ steps: sl.steps, score: overlap(`${sl.title} ${sl.prompt} ${sl.steps.join(' ')}`) + 2 + doable(sl.steps) * 4 })
+    else if (sl.kind === 'howto') lists.push({ steps: sl.steps.map(x => x.title), score: overlap(`${sl.title} ${sl.text ?? ''} ${sl.steps.map(x => `${x.title} ${x.detail}`).join(' ')}`) * 0.6 + (sl.title === a.title ? 3 : 0) + 2 + doable(sl.steps.map(x => x.title)) * 4 })
     else if (sl.kind === 'learn' && (sl.points?.length ?? 0) >= 3) lists.push({ steps: sl.points!, score: overlap(`${sl.title} ${sl.text} ${sl.points!.join(' ')}`) * 0.6 + (sl.title === a.title ? 3 : 0) + doable(sl.points!) * 4 - (doable(sl.points!) < 0.5 ? 4 : 0) })
   }
   lists.sort((x, y) => y.score - x.score)

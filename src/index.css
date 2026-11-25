@@ -3114,3 +3114,66 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .brand-footer p { margin: 2px 0; }
 .brand-footer a { color: inherit; text-decoration: underline; }
 .tm { font-size: .5em; vertical-align: super; margin-left: 1px; font-weight: 400; letter-spacing: 0; font-style: normal; }
+
+/* Lesson pictures, step-by-step walkthroughs and key takeaways (work-training style) */
+.vis { margin: 4px 0 0; padding: 18px; border-radius: 16px; background: var(--raised); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
+.vis figcaption { font-size: .9rem; color: var(--muted); font-style: italic; }
+.vis-num { flex: none; display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--goldgrad); color: #2A1A0C; font-weight: 700; font-size: 1rem; }
+.vis-flow { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 22px; }
+.vis-flow li { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border-strong); }
+.vis-flow li span { display: flex; flex-direction: column; gap: 3px; }
+.vis-flow li span b { font-size: 1rem; line-height: 1.3; }
+.vis-flow li small { color: var(--muted); font-size: .88rem; line-height: 1.4; }
+.vis-flow li + li::before { content: '→'; position: absolute; left: -19px; top: 50%; transform: translateY(-50%); color: var(--gold); font-weight: 700; font-size: 1.1rem; }
+@media (max-width: 760px) {
+  .vis-flow { grid-auto-flow: row; gap: 18px; }
+  .vis-flow li { flex-direction: row; align-items: center; }
+  .vis-flow li + li::before { content: '↓'; left: 26px; top: -17px; transform: none; }
+}
+.vis-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+@media (max-width: 560px) { .vis-compare { grid-template-columns: minmax(0, 1fr); } }
+.vis-col { padding: 14px 16px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border-strong); display: flex; flex-direction: column; gap: 8px; }
+.vis-col > b { font-size: 1.02rem; }
+.vis-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.vis-col li { display: flex; gap: 10px; line-height: 1.45; }
+.vis-col li i { flex: none; font-style: normal; font-weight: 700; width: 18px; text-align: center; }
+.vis-compare.dodont .vis-col.l, .vis-compare.beforeafter .vis-col.l { border-color: rgba(255, 122, 89, .45); }
+.vis-compare.dodont .vis-col.l > b, .vis-compare.dodont .vis-col.l li i, .vis-compare.beforeafter .vis-col.l li i { color: #FFB49E; }
+.vis-compare .vis-col.r { border-color: rgba(34, 176, 116, .5); }
+.vis-compare.dodont .vis-col.r > b, .vis-compare.beforeafter .vis-col.r > b, .vis-compare .vis-col.r li i { color: #6FD19B; }
+.vis-compare.plain .vis-col li i { color: var(--gold); }
+.vis-bars { display: flex; flex-direction: column; gap: 10px; }
+.vis-bar { display: grid; grid-template-columns: minmax(90px, 30%) minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.vis-bar-label { font-weight: 600; font-size: .95rem; }
+.vis-bar-track { height: 16px; border-radius: 8px; background: var(--surface); overflow: hidden; }
+.vis-bar-track i { display: block; height: 100%; border-radius: 8px; background: rgba(255, 211, 110, .55); animation: grow-bar .8s var(--ease); transform-origin: left; }
+.vis-bar.hl .vis-bar-track i { background: var(--goldgrad); }
+.vis-bar-val { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; display: flex; flex-direction: column; }
+.vis-bar-val small { font-weight: 400; font-size: .8rem; color: var(--muted); }
+@media (max-width: 560px) { .vis-bar { grid-template-columns: minmax(0, 1fr) auto; } .vis-bar-track { grid-column: 1 / -1; grid-row: 2; } }
+@keyframes grow-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.vis-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+.vis-stats div { padding: 16px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border-strong); display: flex; flex-direction: column; gap: 4px; }
+.vis-stats b { font-family: Fraunces, Georgia, serif; font-size: 1.9rem; color: var(--gold); line-height: 1.1; }
+.vis-stats span { color: var(--text-2); font-size: .95rem; line-height: 1.4; }
+.vis-split { display: flex; flex-direction: column; gap: 10px; }
+.vis-split-total { font-size: 1.05rem; }
+.vis-split-bar { display: flex; height: 30px; border-radius: 10px; overflow: hidden; gap: 2px; }
+.vis-split-bar i { display: block; flex-basis: 0; }
+.vis-split ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.vis-split li { line-height: 1.45; padding-left: 22px; position: relative; }
+.vis-split li i { position: absolute; left: 0; top: .35em; width: 12px; height: 12px; border-radius: 3px; }
+.vis-split li small { color: var(--muted); }
+.vis-split .c0 { background: #FFD36E; } .vis-split .c1 { background: #FF7A59; } .vis-split .c2 { background: #E85D8E; }
+.vis-split .c3 { background: #8E3BB8; } .vis-split .c4 { background: #22B074; } .vis-split .c5 { background: #5AA9E6; }
+.lesson-term { padding: 12px 16px; border-radius: 14px; border: 1px dashed rgba(255, 211, 110, .45); display: flex; flex-direction: column; gap: 4px; }
+.howto { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+.howto li { display: flex; gap: 14px; position: relative; padding-bottom: 18px; }
+.howto li:not(:last-child)::after { content: ''; position: absolute; left: 16px; top: 38px; bottom: 4px; width: 2px; background: var(--border-strong); }
+.howto li > div { display: flex; flex-direction: column; gap: 4px; padding-top: 5px; min-width: 0; }
+.howto li > div > b { font-size: 1.08rem; }
+.howto-ex { font-size: .97rem !important; color: var(--text-2); padding: 8px 12px; border-radius: 10px; background: rgba(255, 211, 110, .07); }
+.howto-ex span { color: var(--gold); font-weight: 600; }
+.recap-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.recap-list li { display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: rgba(34, 176, 116, .1); border: 1px solid rgba(34, 176, 116, .3); line-height: 1.45; font-size: 1.05rem; }
+.recap-list li i { flex: none; font-style: normal; font-weight: 700; color: #6FD19B; }

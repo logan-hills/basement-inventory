@@ -1,6 +1,7 @@
 // Dazzle Academy health check. Run: npm run lessons:check
 // 1. Lists lessons whose feature files changed (in git) after the lesson was last updated.
 // 2. Lists lessons that run shorter than the 15 minute target (or longer than 25).
+// 3. Lists lessons that run thin on reading (under DEEP_WORDS), the next ones to deepen.
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { execSync } from 'node:child_process'
 import { register } from 'node:module'
@@ -19,7 +20,7 @@ for (const f of files(dir).filter(f => f.endsWith('.ts') && !/\/(types|index|tim
 
 // Load the real lessons (Node strips the TypeScript; this hook fills in the missing .ts on imports).
 register('data:text/javascript,' + encodeURIComponent(`export async function resolve(s, c, n) { try { return await n(s, c) } catch (e) { if (s.startsWith('.') && !s.endsWith('.ts')) return n(s + '.ts', c); throw e } }`))
-const { ALL_LESSONS, lessonMinutes } = await import('../src/lessons/index.ts')
+const { ALL_LESSONS, lessonMinutes, lessonWords, DEEP_WORDS } = await import('../src/lessons/index.ts')
 let short = 0
 console.log('\nLesson times (target 15 to 20 minutes):')
 for (const l of ALL_LESSONS) {
@@ -34,4 +35,7 @@ for (const l of ALL_LESSONS) {
   const tips = l.slides.filter(s => s.queen).length
   if (!l.queen || tips < 2) { queenless++; console.log(`  👑 ${l.id} needs the Queen's touch (${l.queen ? 'note ok' : 'no note'}, ${tips} tip${tips === 1 ? '' : 's'})`) }
 }
+// Depth: enough real reading (how-tos, worked examples, pictures) that the minutes are earned, not padded by practice.
+const thin = ALL_LESSONS.filter(l => lessonWords(l) < DEEP_WORDS).sort((a, b) => lessonWords(a) - lessonWords(b))
+if (thin.length) console.log(`\nThin lessons, under ${DEEP_WORDS} words to read (add step-by-step how-tos, pictures, worked examples), thinnest first:\n  ${thin.map(l => `${l.id} ${Math.round(lessonWords(l))}`).join(', ')}`)
 console.log(stale || short || queenless ? `\n${stale} lesson(s) to bring up to date, ${short} with a time to fix, ${queenless} missing the Queen's touch.` : '\nAll lessons are up to date, run 15 to 25 minutes, and carry the Queen\'s touch.')
