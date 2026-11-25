@@ -2,6 +2,7 @@ import { useMemo, useState, type ReactNode } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Icon from '../components/Icon'
 import { Nova, NovaSays, burst, pick, NOVA_CHEERS, NOVA_OOPS, type NovaMood } from '../components/Nova'
+import type { NovaMove } from '../components/novaMotion'
 import { LESSONS, COURSES, GRADED, INTERACTIVE, lessonById, lessonMinutes, lessonTone, type Lesson, type Screen, type Slide, type Visual } from '../lessons'
 import { useLessonProgress } from '../lib/lessonProgress'
 import { useSession } from '../lib/session'
@@ -11,6 +12,9 @@ import AcademyLocked from '../components/AcademyLocked'
 import { Certificate, CertificateWindow, Medal } from '../components/Certificate'
 import { awardStatus, type AwardStatus } from '../lessons/awards'
 import { NOT_ADVICE, NOT_ADVICE_HIRING } from '../lessons/resources'
+
+// Finishing a lesson gets a little dance from Nova.
+const FINISH_DANCE: [NovaMove, number] = ['dance', 1]
 
 /** Stable shuffle so practice order doesn't jump around on re-render. */
 function shuffle<T>(arr: T[], seed: string): T[] {
@@ -440,7 +444,7 @@ function Player({ id }: { id?: string }) {
             </>
           ) : (
             <>
-              <Nova mood="cheer" size={120} />
+              <Nova mood="cheer" size={120} act={FINISH_DANCE} />
               <span className="script">{score >= 80 ? 'You did that!' : 'Lesson complete'}</span>
               <h1>{lesson.title}</h1>
             </>
