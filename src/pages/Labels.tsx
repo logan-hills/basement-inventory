@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { Link, useSearchParams } from 'react-router-dom'
 import JsBarcode from 'jsbarcode'
@@ -157,7 +157,16 @@ export default function Labels() {
     })()
   }, [itemId, variantId, itemsParam, tagsParam, variantsParam])
 
-  const f: LabelFormat = FORMATS[format]
+  // Some 4 in printers start printing a little way into each DYMO label, so the end of the tag spills onto the next
+  // label and that label gets skipped. "Starts late by" shortens the tag by that much so it ends right at the label's end.
+  const [late, setLate] = useState(() => { try { return Math.max(0, Math.min(20, Number(localStorage.getItem('dymoLateMm')) || 0)) } catch { return 0 } })
+  useEffect(() => { try { localStorage.setItem('dymoLateMm', String(late)) } catch { /* ignore */ } }, [late])
+  const f: LabelFormat = useMemo(() => {
+    const base: LabelFormat = FORMATS[format]
+    if (format !== 'dymoThermal' || !late) return base
+    const w = +(2.125 - late / 25.4).toFixed(3)
+    return { ...base, page: { w, h: 1 }, label: { w, h: 1 } }
+  }, [format, late])
   const dymo = f.group === 'dymo'
   const turned = !!f.turn && !(dymo && noTurn)
   // DYMO rolls are 1 in wide. In a 4 in printer that sits the roll in the middle, a 1 in page prints on the left edge of the
@@ -165,7 +174,7 @@ export default function Labels() {
   const [rollMiddle, setRollMiddle] = useState(() => { try { return localStorage.getItem('dymoRollMiddle') === '1' } catch { return false } })
   useEffect(() => { try { localStorage.setItem('dymoRollMiddle', rollMiddle ? '1' : '0') } catch { /* ignore */ } }, [rollMiddle])
   const head4 = format === 'dymoThermal' && rollMiddle
-  const printed = head4 ? { w: 4, h: 2.125 } : printedPage(f, turned)
+  const printed = head4 ? { w: 4, h: f.page.w } : printedPage(f, turned)
   const perPage = f.cols * f.rows
   const single = perPage === 1
   const n = Number(saleVal.replace(/[$,%\s]/g, ''))
@@ -193,7 +202,7 @@ export default function Labels() {
 
   return (
     <div className="labels-page stack">
-      <style>{head4 ? '@page { size: 4in 2.125in; margin: 0; }' : pageCss(f, turned)}</style>
+      <style>{head4 ? `@page { size: 4in ${f.page.w}in; margin: 0; }` : pageCss(f, turned)}</style>
       <h1 className="no-print">{style === 'sale' ? 'Sale tags' : tagsParam ? 'Reprint tags' : 'Print tags'}{title ? `: ${title}` : ''}</h1>
       {loading ? <p className="muted">Loading…</p> : tags.length === 0 ? (
         <p className="muted">No tags to print. <Link to="/inventory" className="link-text">Back to inventory</Link></p>
@@ -278,6 +287,15 @@ export default function Labels() {
                   <li>Layout <b>Portrait</b>, margins <b>None</b>, scale <b>100</b> (never Fit to page), headers and footers off.</li>
                   <li>One whole tag on one label? You're set. The computer remembers the paper size, so after this just tap Print.</li>
                 </ol>
+                <div className="roll-spot">
+                  <b>Tag spills onto the next label, and one gets skipped?</b> Your printer starts a little way into each label. Measure how far the first letter sits from the label's edge, set it here, then print 1 test tag again:
+                  <div className="late-pad" role="group" aria-label="Printer starts late by">
+                    <button className="btn ghost" onClick={() => setLate(v => Math.max(0, v - 1))} disabled={!late} aria-label="Less">−</button>
+                    <b>{late ? `Starts ${late} mm late` : 'Starts on time'}</b>
+                    <button className="btn ghost" onClick={() => setLate(v => Math.min(20, v + 1))} disabled={late >= 20} aria-label="More">+</button>
+                  </div>
+                  {late > 0 && <p>The tag is now {Math.round(54 - late)} mm long, so it ends right at the label's end. If your print window asks for a paper size, make the custom size {rollMiddle ? '4' : '1'} in wide by <b>{(2.125 - late / 25.4).toFixed(2)} in</b> long ({rollMiddle ? '101.6' : '25'} x {Math.round(54 - late)} mm).</p>}
+                </div>
                 <div className="roll-spot">
                   <b>Test tag came out blank?</b> Your printer probably holds the roll in the <b>middle</b>, so the tag printed off to the side of it. Pick where your roll sits, then print 1 test tag again:
                   <div className="seg" role="group" aria-label="Where the roll sits">
