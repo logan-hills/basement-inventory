@@ -21,7 +21,7 @@ const lesson: Lesson = {
     welcome: "This course is close to my heart. Women, and Black women especially, are building businesses at a pace the world has never seen. I want you to walk into every room, every vendor meeting and every live like you belong there, because you do.",
     signoff: "Price with confidence, ask for what you're worth, and tell your story proudly. Every time you go live, you're changing the picture for the women watching. Take your seat.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'The real story', kind: 'learn', title: 'Look how far we have come', nova: "Sis, this one is personal. Sit up tall. You belong in every room you walk into.",
       text: "For generations, women couldn't easily get a business loan or credit card in their own name. That changed in the U.S. only in 1974, with the Equal Credit Opportunity Act. Look where women are now. The 2025 Wells Fargo report on women-owned businesses counted about 14.5 million women-owned firms in 2024, nearly 4 in 10 U.S. businesses.",
@@ -30,6 +30,12 @@ const lesson: Lesson = {
         ['Revenue', '$3.3 trillion'],
         ['Growth in firms, 2019 to 2024', '+17.1% (men-owned: +11.9%)'],
         ['Growth in revenue, 2019 to 2024', '+53.8%'],
+      ] },
+      visual: { type: 'bars', unit: '%', caption: 'Growth from 2019 to 2024, from the 2025 Wells Fargo report.', bars: [
+        { label: 'Men-owned firms', value: 11.9 },
+        { label: 'Women-owned firms', value: 17.1 },
+        { label: 'Women-owned revenue', value: 53.8 },
+        { label: 'Black women-owned revenue', value: 81, hl: true },
       ] } },
     { kind: 'learn', title: 'Black women are building', text: "The same report counted about 2 million businesses owned by Black women in 2024, with their revenue up about 81% since 2019. Black women-owned businesses with employees grew about 51% in number, roughly three times the rate for all women-owned employer firms.",
       points: ['The gap is real too: the average Black, Hispanic or Asian American woman-owned employer firm brings in about half what a white woman-owned one does', 'The report estimates that closing that gap would add $832 billion to the economy', 'That gap is about access to money, networks and buyers, not ability'],
@@ -37,6 +43,7 @@ const lesson: Lesson = {
     { kind: 'quiz', q: 'According to the 2025 Wells Fargo report, about what share of U.S. businesses are women-owned?', options: ['About 1 in 10', 'About 2 in 10', 'Nearly 4 in 10', 'More than 7 in 10'], answer: 2, why: 'Women own 39.2% of U.S. firms, about 14.5 million businesses. You are in very good company.' },
 
     { chapter: "It's not you", kind: 'learn', title: 'Rethink "imposter syndrome"', text: "In a widely read Harvard Business Review article, Ruchika Tulshyan and Jodi-Ann Burey pointed out that the idea of imposter syndrome was first studied in high-achieving women, and that it tends to blame the woman for feeling out of place, instead of looking at rooms that were never built for her. Feeling unsure in a new role is normal. Feeling unwelcome is often about the room, not you.",
+      visual: { type: 'compare', style: 'beforeafter', caption: 'Same feeling, a truer way to say it.', left: { title: 'Old story', items: ['"I\'m a fraud"', '"I got lucky"', '"Who am I to charge that?"'] }, right: { title: 'New story', items: ['"This is new, and I\'m learning fast"', '"I worked for this, here\'s my proof"', '"My price pays for my eye and my service"'] } },
       points: ['Name it: "This is new," not "I\'m a fraud"', 'Notice the room: who built it, and who it was built for?', 'Collect proof: your sales, kind messages and finished courses', 'Find your people: rooms where women like you lead'] },
     { kind: 'scenario', title: 'The vendor meeting', situation: "At a wholesale market, a vendor keeps talking to your husband about pricing, even though it's your business and he's just carrying boxes.",
       options: [
@@ -61,7 +68,18 @@ const lesson: Lesson = {
     { kind: 'number', title: 'What the discount costs', q: 'You habitually knock $3 off pieces that cost you $10 and sell for $25. You sell 40 a month. How much profit do the "just because" discounts cost you each month?', prefix: '$', answer: 120, hint: '$3 × 40.', why: "$120 a month is $1,440 a year, from habit alone. That's a new ring light, a month of supplies, or money in YOUR pocket." },
 
     { queen: "Always ask for one more thing: better terms, free shipping, first pick. The worst they can say is no, and they often say yes.", kind: 'learn', title: 'Negotiate like you mean it', text: "Negotiating isn't being pushy. It's business. Vendors expect it, and a few dollars per piece adds up fast.",
+      term: { word: 'Walk-away point', meaning: 'The highest price you can pay (or the lowest you can accept) and still make the deal worth it. Decide it before the conversation starts, so you never decide under pressure.' },
       points: ['Know your number before you walk in: the most you can pay and still keep your profit', 'Ask for case or volume pricing, free shipping over a set amount, or a first-order discount', 'Be quiet after you ask. Let them answer.', 'Get the deal in writing (an email or invoice)', 'Be ready to walk away kindly: "Thank you, that doesn\'t work for me this time."'] },
+    { kind: 'howto', title: 'Prepare for a vendor negotiation', text: 'Fifteen minutes of homework turns a nervous ask into a calm business conversation. Here is a real example: 200 handbags from a wholesale vendor.',
+      steps: [
+        { title: 'Know your selling price', detail: 'What will each piece sell for on your live? Use your sales history in Reports if you\'ve sold similar pieces.', example: 'Bags like these sell for $28 on her lives.' },
+        { title: 'Set your target cost', detail: 'Many boutique sellers aim to pay about a third of the selling price. That leaves room for shipping, fees and profit.', example: '$28 ÷ 3 is about $9.33, so she aims for $9 a bag.' },
+        { title: 'Set your walk-away point', detail: 'The most you\'ll pay before the deal stops making sense.', example: 'Her walk-away point is $11 a bag.' },
+        { title: 'Pick your asks', detail: 'Choose two or three: a lower per-piece price, free shipping over a set amount, a first-order discount, or a smaller minimum.' },
+        { title: 'Write your opening line', detail: 'Short, warm, owner to owner.', example: '"I\'m ready to order 200 today. At $9 a bag with free shipping, we have a deal."' },
+        { title: 'Ask, then stay quiet', detail: 'Let them answer first. If they counter above your walk-away point, thank them and say you\'ll think it over.' },
+        { title: 'Get it in writing', detail: 'Confirm the agreed price, shipping and timing by email or on the invoice before you pay.' },
+      ] },
     { kind: 'number', title: 'A small ask, a big result', q: 'You negotiate $1.50 off each piece on a vendor order of 200 pieces. How much do you save?', prefix: '$', answer: 300, hint: '$1.50 × 200.', why: "$300 saved on one order, just by asking. Do that on four orders a year and that's $1,200 back in your business." },
     { kind: 'scenario', title: 'The comment on your live', situation: 'A stranger comments on your live: "Who told you that you could run a business? Stick to cooking." Your regulars see it.',
       options: [
@@ -86,6 +104,23 @@ const lesson: Lesson = {
         ['Time with the Queen (in the app)', 'One-on-one strategy from a seasoned woman founder'],
       ] },
       tip: 'Be careful with grant offers that ask you to pay a fee to apply. Real grants rarely charge to apply.' },
+    { kind: 'howto', title: 'Find your nearest Women\'s Business Center', text: 'Women\'s Business Centers are funded in part by the SBA and offer free or low-cost help. Here is how to find yours and make the most of the first visit.',
+      steps: [
+        { title: 'Go to sba.gov', detail: 'Type sba.gov yourself, then look for Local assistance (or search "Women\'s Business Centers"). Enter your ZIP code to see the centers and SCORE chapters near you.' },
+        { title: 'Check what they offer', detail: 'Most list classes, one-on-one counseling and online sessions. Many have evening or virtual options for working women.' },
+        { title: 'Book a first meeting', detail: 'Call or fill in their intake form. Ask for a counselor who works with retail or online sellers.' },
+        { title: 'Bring three things', detail: 'Your last three months of sales from Reports, your 4-sentence story, and your biggest question.', example: '"I\'m doing about $2,000 a month. I want to know whether to form an LLC and how to get my first small loan."' },
+        { title: 'Leave with one next step', detail: 'Before you go, ask: "What is the one thing you\'d do next in my shoes?" Write it down and put it on your calendar.' },
+      ],
+      queen: "Walk into that center like the owner you are. Bring your numbers and your questions, and let them help you. Asking for help is a business skill." },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Women own nearly 4 in 10 U.S. businesses, and Black women-owned businesses are growing fastest.',
+      'Feeling out of place is often about the room, not you. Collect your proof.',
+      'Say "I\'m the owner" and price without apologizing.',
+      'Prepare every negotiation: target cost, walk-away point, your asks, then silence.',
+      'Your story is your brand. Tell it proudly.',
+      'Use the free help built for women owners, and lift other women as you rise.',
+    ] },
     { kind: 'checklist', title: 'Take your seat', prompt: 'Tick what you will do this month.', items: ['Practice my owner lines out loud', 'Stop discounting without a reason for one month', 'Write my 4-sentence story and pin it to my Page', 'Find my nearest Women\'s Business Center', 'Join one women\'s business group or network', 'Tell one woman about my journey and encourage her to start hers'] },
   ],
 }

@@ -18,11 +18,12 @@ const lesson: Lesson = {
     welcome: "Social media is your storefront window, and it can fill your lives while you sleep. I'll show you what to post, how often, and how to stay out of trouble.",
     signoff: "Keep your Page fresh, post videos people want to watch, and answer every 'price?' comment kindly. Your window is open for business.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'Pick your platforms', kind: 'learn', title: 'Go where your buyers are', nova: "You don't need to be everywhere. You need to be where SHE is.",
       text: "Pick one home base and one helper. Do those two well for 90 days before you add anything else. Spreading thin across six apps is the fastest way to burn out and grow nowhere.",
-      points: ['Home base: where you go live and sell (for most of our sellers, Facebook)', 'Helper: where new people discover you (Facebook Reels, Instagram Reels or TikTok)', 'Everything else: only after the first two are steady'] },
+      points: ['Home base: where you go live and sell (for most of our sellers, Facebook)', 'Helper: where new people discover you (Facebook Reels, Instagram Reels or TikTok)', 'Everything else: only after the first two are steady'],
+      visual: { type: 'compare', style: 'plain', caption: 'Two jobs, two places.', left: { title: 'Home base', items: ['Where you go live and sell', 'Your regulars live here', 'Post here most'] }, right: { title: 'Helper', items: ['Where strangers find you', 'Short videos and Reels', 'Every post invites to the live'] } } },
     { kind: 'quiz', q: "You're just starting. How many platforms should you post on daily?", options: ['All of them', 'One or two, done well', 'None until you\'re famous'], answer: 1, why: 'Consistency on two beats burnout on six.' },
 
     { chapter: 'A Page that works for you', queen: "Update your cover photo for every season or big live. A fresh window tells people the shop is open.", kind: 'learn', title: 'Your Page is your storefront', text: "When someone new taps your name, you have about five seconds to tell them what you sell, when you go live, and why they should follow. Check these four spots today.",
@@ -41,12 +42,26 @@ const lesson: Lesson = {
       '4. Orders ship within 3 business days with tracking.',
       'Questions? Message me any time. I answer within a day."',
     ], tip: 'Your pinned post answers the questions you get asked 20 times a week. It saves you hours.' },
+    { kind: 'howto', title: 'Fix up your Page in 30 minutes', text: 'Do this on a computer if you can; it is easier to see. Facebook moves its buttons now and then, so look for the closest match.',
+      steps: [
+        { title: 'Look at it like a stranger', detail: 'Log out, or ask a friend to send you a screenshot of your Page on her phone. What does she see in the first five seconds?' },
+        { title: 'Swap the profile photo', detail: 'A bright, smiling photo of you or a clear logo, cropped close. Use the same one on every app so people recognize you.' },
+        { title: 'Make a cover with your live times', detail: 'In Canva, search "Facebook cover", add your live days and times in big letters, and upload it. Check it on a phone; edges get cut off.', example: '"LIVE Tue & Thu · 7 PM ET · Bags & bling under $20"' },
+        { title: 'Rewrite your intro', detail: 'Use the bio formula: who it\'s for, what you sell, price range, when you\'re live, how fast you ship.' },
+        { title: 'Post and pin "How to shop"', detail: 'Post the pinned post from the last slide, then use the three dots on the post to pin or feature it at the top of your Page.' },
+        { title: 'Check it again on a phone', detail: 'Open your Page on your phone as a visitor would. Can you tell what you sell and when you are live in five seconds?' },
+      ] },
 
     { chapter: 'Content that converts', kind: 'learn', title: 'Show, tell, sell', text: "If every post is \"buy, buy, buy,\" people tune out. Mix three kinds through the week. A good ratio is 3 show, 1 tell, 1 sell.",
       table: { head: ['Kind', 'What it is', 'Examples'], rows: [
         ['Show (3)', 'The pieces, in action', 'Try-ons, "3 ways to wear this scarf," close-ups, unboxing a new haul'],
         ['Tell (1)', 'You and your story', 'Why you started, packing orders, your grandkids helping, a win'],
         ['Sell (1)', 'The invitation', 'The poster, the countdown, the "last chance" before the live'],
+      ] },
+      visual: { type: 'split', total: '5 posts a week', caption: 'The show, tell, sell mix.', parts: [
+        { label: 'Show', value: 3, note: 'The pieces in action' },
+        { label: 'Tell', value: 1, note: 'You and your story' },
+        { label: 'Sell', value: 1, note: 'The invitation' },
       ] } },
     { kind: 'learn', title: 'Five video ideas that work for live sellers', text: 'Never stare at a blank screen again. Rotate these.',
       points: [
@@ -67,11 +82,28 @@ const lesson: Lesson = {
         ['2 to 8', 'Close-up', 'Hardware, stitching, inside pockets. Slow and steady.'],
         ['8 to 14', 'On you', 'Over your shoulder, walk two steps, turn.'],
         ['14 to 18', 'The invite', 'On screen: "$12 · Live Thursday 7 PM ET"'],
+      ] },
+      visual: { type: 'flow', caption: 'Eighteen seconds, four beats.', steps: [
+        { label: 'Hook', note: '0 to 2 s' },
+        { label: 'Close-up', note: '2 to 8 s' },
+        { label: 'On you', note: '8 to 14 s' },
+        { label: 'Invite', note: '14 to 18 s' },
       ] } },
+    { kind: 'howto', title: 'Batch a week of Reels in one hour', text: 'Filming one Reel a day means setting up seven times. Filming four at once means setting up once.',
+      steps: [
+        { title: 'Pick four pieces and four ideas', detail: 'Match each piece to one of the five video ideas.', example: 'Emerald bag: style it 3 ways. Pearl set: under-$20 challenge. New haul box: the haul. A regular\'s order: pack with me.' },
+        { title: 'Set up once by the window', detail: 'Mid-morning light, phone on a tripod, lens wiped, one outfit that goes with everything.' },
+        { title: 'Film each Reel in its four beats', detail: 'Hook, close-up, on you, invite. Film each beat two or three times; you\'ll pick the best later.' },
+        { title: 'Edit in the app', detail: 'Trim, add on-screen text for the hook and invite, turn on captions, and choose a sound from the app\'s library.' },
+        { title: 'Save as drafts or schedule', detail: 'Save them as drafts, or schedule them in Meta Business Suite for the week\'s posting days.' },
+        { title: 'Plan your comment hour', detail: 'Put a 20-minute reminder on your phone for after each post goes up, so you can answer the first comments.' },
+      ],
+      queen: "Pick one outfit for your filming hour so your week looks put-together. Change your jewelry between clips and nobody will notice." },
     { kind: 'order', title: 'Reel recipe', prompt: 'Put the Reel in order.', steps: ['Hook: "This bag looks like $120…"', 'Close-up of the piece', 'Show it styled on you', 'Live day, time and price'] },
     { kind: 'quiz', q: 'Why add captions to your videos?', options: ['Most people scroll with the sound off', 'It\'s required by law', 'It makes the video longer'], answer: 0, why: 'Captions keep silent scrollers watching.' },
 
     { chapter: 'Talk back and stay safe', kind: 'learn', title: 'The first hour matters', text: "Answer comments in the first hour after you post. Every reply tells the app people care about the post, so it shows it to more people. It also tells buyers you're real and paying attention.",
+      term: { word: 'Engagement', meaning: 'Everything people do with your post besides scrolling past: comments, shares, saves, reactions and replies. Apps tend to show posts with more engagement to more people.' },
       points: ['Reply to every comment with a question back ("Which color would you pick?")', '"Price?" gets the price AND the live time, every time', 'Thank people by name. It costs nothing and they remember.'] },
     { queen: "Answer every price comment warmly and invite them to the live. That comment is a buyer raising her hand.", kind: 'scenario', title: 'The "price?" comment', situation: 'Someone you\'ve never seen before comments "price?" on your Reel of a pearl set.',
       options: [
@@ -100,6 +132,14 @@ const lesson: Lesson = {
         ['Thu', 'Sneak peek Reel + live', 'Show + Sell'],
         ['Sat', 'Under-$20 challenge Reel', 'Show'],
       ] } },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Pick one home base and one helper. Do them well for 90 days.',
+      'Your Page tells a stranger what you sell and when you\'re live in five seconds.',
+      'Mix three show, one tell and one sell post a week.',
+      'Reels follow four beats: hook, close-up, on you, invite.',
+      'Batch-film once, post all week, and answer comments in the first hour.',
+      'No brand names, no "inspired", no copyrighted music.',
+    ] },
     { kind: 'reflect', title: 'Your posting week', prompt: 'Which days will you post, and what kind of post (show, tell or sell) goes on each?', placeholder: 'Mon: …', example: 'Mon try-on (show), Tue poster + live (sell), Thu packing video (tell), Sat sneak peek (show).' },
   ],
 }
