@@ -22,7 +22,7 @@ const lesson: Lesson = {
     welcome: "In 'Build a brand they remember' we found your promise and your dream buyer. Now let's put it in a box you can hand to anybody: your logo, your colors, your fonts and the line your buyers will say back to you. This is where your shop starts to look as good as it feels.",
     signoff: "Put your brand kit in one folder, use it on everything for 90 days without changing a thing, and check that your name is yours to keep. Consistency is what turns a cute shop into a brand.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'What\'s in the kit', kind: 'learn', title: 'Your brand in one folder', nova: "Let's pack your brand's suitcase. Everything you need, nothing you don't.",
       text: "A brand kit is a simple folder (and a Canva Brand Kit) with everything that makes your shop look and sound like you. When it's in one place, every poster, label and post matches, even when a helper makes it.",
@@ -35,18 +35,36 @@ const lesson: Lesson = {
         ['Voice words (3)', 'Warm, bold, playful'],
       ] } },
     { kind: 'learn', title: 'Why consistency pays', text: "Marketing scientist Jenni Romaniuk of the Ehrenberg-Bass Institute calls things like colors, logos, characters and taglines 'distinctive brand assets.' Her research shows they help buyers spot and remember a brand quickly, but only once people have seen them consistently, over and over. Changing your colors every month resets that memory.",
+      term: { word: 'Distinctive brand asset', meaning: 'Anything that makes people think of your shop without reading the name: a color, a logo, a sound, a character, a catchphrase.' },
       example: "Think of a famous coffee shop's green, or a home store's red bullseye. You know them without reading a word. Your shop can have that on a smaller scale with your buyers.",
       queen: "Pick your colors and stick with them for at least a year. You'll get bored of them long before your buyers even notice them." },
     { kind: 'quiz', q: 'According to brand research, what makes a logo or color work as a brand asset?', options: ['Being trendy this season', 'Being seen consistently, over and over, with your brand', 'Being very detailed', 'Changing it often to stay fresh'], answer: 1, why: "Repetition builds recognition. A simple logo used everywhere for years beats a clever one you keep changing." },
 
     { chapter: 'Logo and colors', kind: 'learn', title: 'A logo that works tiny and big', text: "Your logo has to work on a 2-inch label, a phone screen and a banner. Simple wins.",
       points: ['Test it at the size of a postage stamp: can you still read it?', 'Make sure it works in one color (black on white, white on dark)', 'Have two versions: the full logo and a simple icon or initials', 'Avoid thin script fonts for the main word; they disappear when small', 'Get the files as PNG with a clear background, and SVG if you can'],
-      tip: 'Canva and AI tools can draft logo ideas. Use them for ideas, then make sure the final design is simple, original and not copied from another brand.' },
+      tip: 'Canva and AI tools can draft logo ideas. Use them for ideas, then make sure the final design is simple, original and not copied from another brand.',
+      visual: { type: 'compare', style: 'dodont', caption: 'Shrink your logo to the size of a 2-inch label before you fall in love with it.',
+        left: { title: 'Trouble when small', items: ['Thin, curly script for the shop name', 'Five colors and a gradient', 'A detailed drawing with tiny lines', 'Words too long to fit a label'] },
+        right: { title: 'Works everywhere', items: ['A bold, readable main word', 'Looks right in one color', 'A simple shape or initials as the icon', 'Short enough for a label and a profile picture'] } } },
+    { kind: 'howto', title: 'Brief a designer (or an AI tool) for your logo', text: 'A clear one-page brief gets you a better logo faster, whether you hire a designer, ask a friend, or use Canva or an AI tool.',
+      steps: [
+        { title: 'Say who you serve and how it should feel', detail: 'Paste your mission and your three voice words.', example: '"Live boutique for women 40 and up. Warm, bold, playful."' },
+        { title: 'Give your colors and fonts', detail: 'Your hex codes and the two fonts you picked, so the logo matches the rest of your kit.' },
+        { title: 'List where it must work', detail: 'A 2-inch thermal label in black only, a round Facebook profile picture, a banner, a sticker on a mailer.' },
+        { title: 'Show two you like and one you don\'t', detail: 'Explain why. "I like how simple this is." "This one is too busy." Never ask to copy another brand\'s logo.' },
+        { title: 'Ask for the right files', detail: 'Full logo and simple icon, each as a PNG with a clear background and, if possible, an SVG. Ask in writing that you own the final design.' },
+        { title: 'Test before you pay the final bill', detail: 'Print it on a real tag and look at it on your phone from across the room.' },
+      ] },
     { kind: 'learn', title: 'Colors with a job', text: "Give each color a job, so your designs always look balanced.",
       table: { head: ['Job', 'How much', 'Example'], rows: [
         ['Main color', 'About 60% (backgrounds, big areas)', 'Cream'],
         ['Second color', 'About 30% (headings, frames)', 'Deep plum'],
         ['Accent', 'About 10% (buttons, prices, sparkle)', 'Champagne gold'],
+      ] },
+      visual: { type: 'split', total: 'A balanced design', caption: 'The 60/30/10 rule: one main color, one supporting color, one little bit of sparkle.', parts: [
+        { label: 'Main color: cream backgrounds', value: 60 },
+        { label: 'Second color: plum headings and frames', value: 30 },
+        { label: 'Accent: champagne gold prices and sparkle', value: 10 },
       ] },
       example: "Save your colors as hex codes (like #4A1D3F) in your Canva Brand Kit and in a note on your phone. Then 'my plum' is exactly the same everywhere." },
     { kind: 'scenario', title: 'The rainbow shop', situation: "Jasmine uses a different color scheme for every live poster because she loves variety. Her regulars say her posts 'all look like different shops.'",
@@ -59,6 +77,7 @@ const lesson: Lesson = {
 
     { chapter: 'Your catchphrase', kind: 'learn', title: 'A line they say back to you', text: "A signature catchphrase is a brand asset you can hear. The best ones are short, fun to say, and tied to a moment in your live.",
       points: ['3 to 6 words', 'Easy to type in a comment', 'Tied to a moment: the opener, a sold piece, the sign-off', 'Sounds like you, not a corporation', 'Not already a famous slogan'],
+      tip: 'Say it at the same moment every time. A catchphrase tied to a moment (every claim, every sign-off) sticks much faster than one you drop in now and then.',
       example: "One seller ends every claim with 'Bagged and tagged, baby!' Within a month, buyers were typing it in the comments before she could say it." },
     { kind: 'script', title: 'Catchphrase ideas to remix', text: 'Use these to spark your own. The best one will sound like something you already say.', lines: [
       '"Claim it, queen!"',
@@ -72,6 +91,14 @@ const lesson: Lesson = {
 
     { chapter: 'Protect your name', kind: 'learn', title: 'Check your name before you build on it', text: "Before you print 500 stickers, make sure nobody else already owns your name for the same kind of business. The SBA suggests checking your state's business records, and the USPTO has a free trademark search.",
       points: ['Search the USPTO trademark database for your shop name and catchphrase', 'Search your state business registry', 'Search Facebook, Instagram and TikTok for the handle', 'Check if the website domain is free', 'Google your name plus "boutique" or "shop"'] },
+    { kind: 'howto', title: 'Search the USPTO in 10 minutes', text: 'The U.S. Patent and Trademark Office search is free at tmsearch.uspto.gov. You don\'t need an account to look.',
+      steps: [
+        { title: 'Search your exact name', detail: 'Type your shop name in the search box. Then try it without spaces, and with common misspellings.' },
+        { title: 'Look at live marks only', detail: 'Results show whether a mark is live (active) or dead (abandoned or canceled). Focus on the live ones.' },
+        { title: 'Check what they sell', detail: 'A mark covers certain goods and services, grouped in classes. For a boutique, the usual ones are Class 14 (jewelry), Class 18 (handbags and leather goods), Class 25 (clothing) and Class 35 (retail store services).', example: 'A live "Glam Basement" mark for plumbing services is less worrying than one for clothing or retail.' },
+        { title: 'Search your catchphrase too', detail: 'If you plan to print your catchphrase on merch, search it the same way.' },
+        { title: 'Screenshot what you find', detail: 'Save the date and the results in your brand kit folder. If anything looks close in your classes, talk to a trademark attorney before you spend more on the name.' },
+      ] },
     { kind: 'learn', title: 'Trademark basics, in plain words', text: "A trademark protects a name, logo or slogan that identifies who sells a product. You get some rights just by using a name in business in your area, but a federal registration with the USPTO gives nationwide protection and makes it much easier to stop copycats. Filing costs money per class of goods, and the USPTO encourages working with a trademark attorney.",
       table: { head: ['', 'Just using it', 'Federal registration'], rows: [
         ['Cost', 'Free', 'USPTO filing fee per class, plus attorney if you use one'],
@@ -84,6 +111,13 @@ const lesson: Lesson = {
         { text: 'Ignore it; you\'re small and they\'ll never notice', feedback: "Risky. If they notice, you could be told to stop using the name after investing even more in it." },
         { text: 'Talk to a trademark attorney about your options, and start thinking about a new name now while you\'re still small', best: true, feedback: "Wise. Renaming is easier now than later. An attorney can tell you what's really at risk." },
         { text: 'Register the same name yourself in your state', feedback: "A state registration doesn't override their federal trademark." },
+      ] },
+    { kind: 'recap', title: 'Your brand in a box', points: [
+        'A brand kit is one folder: logo (full and simple), 3 to 5 colors with hex codes, 2 fonts, a catchphrase, photo style and voice words.',
+        'Recognition comes from repetition. Use the same kit for at least a year.',
+        'A logo must work tiny, in one color. Brief clearly and ask to own the final files.',
+        'Give colors jobs: 60% main, 30% second, 10% accent.',
+        'Search the USPTO, your state and the social handles before you build on a name. ™ any time; ® only once registered.',
       ] },
     { kind: 'checklist', title: 'Build your brand kit', prompt: 'Tick each one as you finish it.', items: ['Make a "Brand kit" folder on my phone and computer', 'Save my logo in full and simple versions', 'Save my colors as hex codes', 'Pick my two fonts', 'Choose my catchphrase and when I say it', 'Set up my Canva Brand Kit', 'Search USPTO and social handles for my name'] },
   ],
