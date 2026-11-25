@@ -18,11 +18,22 @@ const lesson: Lesson = {
     welcome: "Delays happen in every shop. Silence is what loses customers. In this course I'll give you the words to speak up early, calmly and kindly.",
     signoff: "Set expectations up front, own mistakes quickly, and never ghost a buyer. Clear, kind words keep your shop's good name.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'Why it matters', queen: "When in doubt, send the message. Buyers forgive delays; they don't forgive being ignored.", kind: 'learn', title: 'Silence is the real problem', nova: 'Real talk: a late package rarely loses a customer. Ghosting her does.',
       text: "When something goes wrong, buyers mostly want two things: to know you see it, and to know you're handling it. Speak up first and most will happily wait and come back. Go quiet and even a small problem feels like a scam.",
-      points: ['Speaking up first shows respect', 'A date calms worry, even if it\'s a later date', 'Every public reply is watched by future buyers'] },
+      points: ['Speaking up first shows respect', 'A date calms worry, even if it\'s a later date', 'Every public reply is watched by future buyers'],
+      term: { word: 'Ghosting', meaning: 'Going silent on someone who is waiting to hear from you: not answering messages, not sending tracking, not saying anything. In a shop it is the fastest way to turn a small delay into a bad review.' } },
+    { kind: 'learn', title: 'The six moments buyers wait for', text: 'Between a claim on your live and a box on her porch, every buyer goes through the same six moments. At each one she is quietly wondering, "Did she forget me?" A short message at each moment answers that question before she asks it. Most of these messages take under a minute once you have them saved.',
+      visual: { type: 'flow', caption: 'One buyer, one order, six short messages.', steps: [
+        { label: 'She claims', note: 'Live shout-out' },
+        { label: 'Invoice sent', note: 'Same night' },
+        { label: 'Reminder', note: 'At 12 hours' },
+        { label: 'Paid, thank you', note: 'Within the day' },
+        { label: 'Shipped', note: 'With tracking' },
+        { label: 'Check-in', note: 'A few days later' },
+      ] },
+      example: 'Denise sold 40 pieces to 22 buyers on Sunday. With saved replies she sent the thank-yous on Monday morning in 15 minutes and the tracking messages on Wednesday in another 15. She had zero "where is my order?" messages that week, which used to cost her an hour or more.' },
     { kind: 'quiz', q: 'A box will ship two days late. When do you tell the buyer?', options: ['When she asks', 'As soon as you know', 'Never, it\'s only two days'], answer: 1, why: 'Telling her first shows respect and stops the worry before it starts.' },
 
     { chapter: 'Rules prevent problems', kind: 'learn', title: 'Set expectations up front', text: 'Most "problems" are surprises. Say your rules at the start and end of every live, put them in your pinned post, and put them on your invoice.',
@@ -39,6 +50,16 @@ const lesson: Lesson = {
 
     { chapter: 'The update formula', kind: 'learn', title: 'Own it, explain it, fix it, love it', text: 'Every update has four short parts. Two or three sentences is plenty.',
       points: ['Own it: "Hey Keisha, I want to give you a heads-up."', 'Explain simply: "My label printer went down." (One sentence. No long story.)', 'Give the new plan with a date: "Your box ships Thursday with tracking."', 'Add a little love: "I tucked in a surprise for your patience."'] },
+    { kind: 'howto', title: 'Write a delay message in two minutes', text: 'Let\'s write a real one together. Your label printer broke on Tuesday and five boxes will go out Thursday instead of Wednesday.',
+      steps: [
+        { title: 'Make your list first', detail: 'Write down every buyer affected before you write a word. Nobody should hear about it from a friend first.', example: 'Keisha, Monique, Brenda, Tasha and Pam, all from Sunday\'s live.' },
+        { title: 'Own it', detail: 'Open with her name and a plain heads-up. No "unfortunately due to circumstances beyond our control".', example: '"Hi Keisha, I want to give you a heads-up."' },
+        { title: 'Explain in one sentence', detail: 'One short, true reason. A long story sounds like an excuse.', example: '"My label printer gave out this morning."' },
+        { title: 'Give a date you can keep', detail: 'Pick the day you are sure of, not the day you hope for. Under-promise by a day if you have to.', example: '"Your box ships Thursday, and I\'ll send tracking that afternoon."' },
+        { title: 'Add a little love', detail: 'A thank-you, a small extra, or a free shipping code for next time. Keep it small and real.', example: '"I tucked a little surprise in for your patience 💛"' },
+        { title: 'Send it, then do what you said', detail: 'Send to each buyer by name, then put a reminder in your phone for Thursday. The message only builds trust if Thursday really happens.' },
+      ],
+      queen: "Never promise a date you're not sure of. Say Thursday and ship Wednesday, and she'll remember you as the seller who beats her word." },
     { kind: 'order', title: 'Build the message', prompt: 'Put the update in order.', steps: ['Greet her by name', 'Own the delay', 'Explain in one sentence', 'Give the new date', 'Add a thank-you or small extra'] },
     { kind: 'learn', title: 'Words that calm, words that burn', text: 'Small word choices change how the whole message feels.',
       table: { head: ['Instead of', 'Say'], rows: [
@@ -47,7 +68,8 @@ const lesson: Lesson = {
         ['"That\'s our policy."', '"Here\'s what I can do for you."'],
         ['"I\'ll try."', '"I\'ll have an answer for you by Friday."'],
         ['(no reply)', '"Got your message! Checking now, I\'ll update you by tomorrow."'],
-      ] } },
+      ] },
+      visual: { type: 'compare', style: 'beforeafter', caption: 'The same news, told two ways.', left: { title: 'Before', items: ['"Shipping is slow, not my fault."', 'No date', 'No name, no thank-you'] }, right: { title: 'After', items: ['"Hi Monique! Your order is 2 days behind."', '"It ships Friday with tracking."', '"I tucked in a little thank-you."'] } } },
     { kind: 'quiz', q: 'Which message keeps a customer?', options: ['"Shipping is slow, not my fault."', '"Hi Monique! Your order is running 2 days behind. It ships Friday with tracking, and I tucked in a little thank-you."', 'No message'], answer: 1, why: 'Name, honesty, a date, and some love.' },
 
     { chapter: 'Ready-made messages', kind: 'script', title: 'Payment reminder and thank-you', text: 'Save these in Messenger or Meta Business Suite as saved replies, so you can send them in one tap.',
@@ -56,6 +78,15 @@ const lesson: Lesson = {
         'THANK-YOU (after payment): "Got it, [name], thank you! Your order ships by [day] and I\'ll send tracking as soon as it\'s on the way."',
         'SHIPPED: "Your box is on the way! 📦 Tracking: [number]. Can\'t wait for you to see it. Post a pic and tag us for a shout-out!"',
       ] },
+    { kind: 'howto', title: 'Set up saved replies once, use them forever', text: 'A saved reply is a message you write once and send again with a tap. On Facebook, saved replies live in the Inbox of Meta Business Suite for your Page. The steps below are general, because Meta moves its buttons from time to time.',
+      steps: [
+        { title: 'Open your Page inbox', detail: 'On a computer, open Meta Business Suite and choose Inbox. On a phone, use the Meta Business Suite app.' },
+        { title: 'Find saved replies', detail: 'Open any conversation and look for the saved replies button near the typing box, or check the Inbox settings. If you can\'t find it, search Meta\'s Help Center for "saved replies".' },
+        { title: 'Make one reply per moment', detail: 'Create the reminder, thank-you, shipped, delay and final notice messages from this course. Give each a short name you will recognize.', example: 'Names like 1 Reminder, 2 Paid thanks, 3 Shipped, 4 Delay, 5 Final notice keep them in order.' },
+        { title: 'Use the name placeholder', detail: 'Where Meta offers a first-name placeholder, use it so each message starts with her name. Otherwise, type her name over [name] before you send.' },
+        { title: 'Test it on yourself', detail: 'Send one to a friend or a second account to see how it looks on a phone. Fix anything that reads stiff.' },
+      ],
+      tip: 'Keep a copy of all your saved replies in a note on your phone too, so you can paste them in Instagram, TikTok or a text message.' },
     { kind: 'script', title: 'Delay, wrong item, and damage', lines: [
       'DELAY: "Hi [name], I want to give you a heads-up: your order is running [1 or 2] days behind because [one short reason]. It ships [day] with tracking, and I added a little something for your patience. Thank you!"',
       'WRONG ITEM: "[Name], I am so sorry, that\'s my mistake! I\'m shipping the right piece today, and here\'s a prepaid label for the other one. Keep an eye out for tracking."',
@@ -67,6 +98,12 @@ const lesson: Lesson = {
     ], tip: 'Keep a simple note of non-payers. Two strikes, and you can ask them to pay right away on future claims, or stop accepting their claims. Say this rule in your pinned post.' },
 
     { chapter: 'When someone is upset', kind: 'learn', title: 'L.A.S.T.: the four steps', text: "When a buyer is upset, don't defend. Walk through L.A.S.T. It works on the phone, in messages, and in public comments.",
+      visual: { type: 'flow', caption: 'Walk through all four, in order, every time.', steps: [
+        { label: 'Listen', note: 'Read it twice' },
+        { label: 'Apologize', note: 'For how she feels' },
+        { label: 'Solve', note: 'A fix or two choices' },
+        { label: 'Thank', note: 'For telling you' },
+      ] },
       points: ['Listen: let her finish. Read the whole message twice.', 'Apologize: for how she feels, even if you did nothing wrong. "I\'m so sorry this happened."', 'Solve: offer a clear fix, or two choices', 'Thank: "Thank you for telling me. It helps me do better."'] },
     { kind: 'scenario', title: 'The angry message', situation: 'At 10 PM you get: "This is the THIRD time I\'ve asked where my order is!!! I want my money back." You check: it shipped yesterday, and you never sent tracking.',
       options: [
@@ -83,6 +120,21 @@ const lesson: Lesson = {
 
     { chapter: 'Boundaries and habits', kind: 'learn', title: 'Never ghost, but have hours', text: 'Answer messages within a day, even if it\'s "I\'m checking and will get back to you by tomorrow." But you\'re a person, not a 24-hour call center.',
       points: ['Pick message hours (for example 9 AM to 8 PM, Monday to Saturday) and say them in your pinned post', 'Set an away message for after hours', 'Block two short message times a day instead of answering all day long', 'On Dynamic Dazzle, sellers reported for ghosting customers can lose their booking privileges'] },
+    { kind: 'learn', title: 'Why keeping her is worth the effort', text: 'Research on customer churn from Harvard Business School makes a simple point: losing customers costs more than most businesses think, because the buyers who stay tend to buy more over time and tell friends. For a live seller, a regular who comes to every live for a year is worth far more than any single sale. A kind, fast message is the cheapest way there is to keep her.',
+      visual: { type: 'bars', prefix: '$', caption: 'Example only: what one buyer can be worth to a small live shop.', bars: [
+        { label: 'One order', value: 35 },
+        { label: 'A buyer who comes back monthly for a year', value: 420, hl: true },
+      ] },
+      example: 'Keisha spends about $35 a live. If a ghosted delay makes her leave, you didn\'t lose $35. If she would have shopped once a month all year, you lost about $420, plus the friends she would have brought.' },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'Delays rarely lose buyers. Silence does.',
+      'Put your rules in your pinned post, your lives and your invoices.',
+      'Updates have four parts: own it, explain in one sentence, give a date, add love.',
+      'Save your messages once so each one takes a tap.',
+      'Upset buyer? Listen, Apologize, Solve, Thank.',
+      'Answer public complaints once, kindly, then move to private messages.',
+      'Have message hours and an away message. Never ghost.',
+    ] },
     { kind: 'checklist', title: 'Your communication setup', prompt: 'Tick what you\'ll do this week.', items: [
       'Write my shop rules and pin them',
       'Read my rules at the start and end of every live',
