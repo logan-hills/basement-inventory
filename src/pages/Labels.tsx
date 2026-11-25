@@ -7,7 +7,8 @@ import { money } from '../lib/data'
 import CrispBarcode from '../components/CrispBarcode'
 import SaveForPrinterApp from '../components/SaveForPrinterApp'
 import PrintNudge from '../components/PrintNudge'
-import { LabelPreview, LabelSheet, LabelSizePicker, pageCss, printedPage, type LabelFormat } from '../components/LabelKit'
+import DirectPrint from '../components/DirectPrint'
+import { LabelPreview, LabelSheet, LabelSizePicker, pageCss, printedPage, sizeText, type LabelFormat } from '../components/LabelKit'
 
 type Tag = { tag_code: string; live_number: string; name: string; variant: string; price: number | null; sale: number | null }
 type Style = 'regular' | 'sale'
@@ -259,6 +260,13 @@ export default function Labels() {
 
           <section className="card stack no-print">
             <h2 className="preview-title">2. Looks good? Print</h2>
+            {f.group === 'thermal' && (() => {
+              const bf: LabelFormat = FORMATS[format]
+              const base = printedPage(bf, !!bf.turn)
+              return <DirectPrint w={base.w} h={base.h} turn={!!bf.turn} count={pages.length} sizeName={sizeText(bf.label.w, bf.label.h)}
+                prepare={() => { if (late) setLate(0) }} />
+            })()}
+            {f.group === 'thermal' && <p className="small muted print-window-head">Or use your computer's print window:</p>}
             {format === 'roll2x1' && (
               <div className="printer-tip small">
                 <b>Thermal printer setup (one time)</b>
@@ -272,8 +280,8 @@ export default function Labels() {
               </div>
             )}
             {format === 'dymoThermal' && (
-              <div className="printer-tip small dymo-thermal-tip">
-                <b>DYMO labels in your thermal printer: one-time setup</b>
+              <details className="printer-tip small dymo-thermal-tip">
+                <summary><b>Using the print window instead? One-time setup</b></summary>
                 <p>Your printer feeds these labels the long way: <b>1 inch across, 2⅛ inches long</b>. The print window has to know that size, or one tag gets stretched over two labels.</p>
                 <ol>
                   <li>Load the DYMO roll so the labels come out one after another, the long way. Slide the roll guides in snug so it can't wander. Hold the feed button until a label feeds out, so the printer finds the gaps.</li>
@@ -305,7 +313,7 @@ export default function Labels() {
                   {rollMiddle && <p>With the roll in the middle, set Paper size to <b>4 x 2.125 in</b> (101.6 x 54 mm) instead, Portrait. Add it once the same way as above. The app puts the tag right in the middle, under your roll.</p>}
                 </div>
                 <span className="muted">On a phone, tap <b>Save for printer app</b> and print the picture in the printer's app at 25 x 54 mm. Still a little off to one side? Use <b>Nudge it</b> below.</span>
-              </div>
+              </details>
             )}
             {dymo && (
               <div className="printer-tip small">

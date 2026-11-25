@@ -2,11 +2,12 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode }
 import { Link, useSearchParams } from 'react-router-dom'
 import SaveForPrinterApp from '../components/SaveForPrinterApp'
 import PrintNudge from '../components/PrintNudge'
+import DirectPrint from '../components/DirectPrint'
 import JsBarcode from 'jsbarcode'
 import { loadBins, type Bin } from '../lib/locations'
 import { useSession } from '../lib/session'
 import CrispBarcode from '../components/CrispBarcode'
-import { LabelPreview, LabelSheet, LabelSizePicker, pageCss, printedPage, type LabelFormat } from '../components/LabelKit'
+import { LabelPreview, LabelSheet, LabelSizePicker, pageCss, printedPage, sizeText, type LabelFormat } from '../components/LabelKit'
 
 function LandscapeBin({ b, shop }: { b: Bin; shop: string }) {
   const parts: [string, string | number | null][] = [['Aisle', b.aisle], ['Section', b.section], ['Level', b.level], ['Bin', b.bin_no]]
@@ -151,6 +152,8 @@ export default function BinLabels() {
 
         <section className="card stack no-print">
           <h2 className="preview-title">2. Looks good? Print</h2>
+          {f.group === 'thermal' && <DirectPrint w={printed.w} h={printed.h} turn={turned} count={pages.length} sizeName={sizeText(printed.w, printed.h)} />}
+          {f.group === 'thermal' && <p className="small muted print-window-head">Or use your computer's print window:</p>}
           <p className="muted small">{paperTip[format]} Print at <b>100%</b> (Actual size) with margins set to <b>None</b>.</p>
           {dymo && <label className="check-line"><input type="checkbox" checked={noTurn} onChange={e => setNoTurn(e.target.checked)} />Label came out sideways or cut off? Tick this to let the printer turn it instead, then print again.</label>}
           <button className="btn primary big" disabled={!list.length} onClick={() => window.print()}>Print {list.length} label{list.length === 1 ? '' : 's'}</button>
