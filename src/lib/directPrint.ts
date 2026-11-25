@@ -91,13 +91,15 @@ export async function connectBluetooth() {
     if (ch) break
   }
   if (!ch) throw new Error('That Bluetooth device has no place to send print jobs.')
-  const fast = !!ch.properties.writeWithoutResponse
+  // Prefer writes the printer confirms: the printer then sets the pace, so nothing gets lost while it's busy printing.
+  const confirmed = !!ch.properties.write
   conn = {
     kind: 'bluetooth', name: device.name || 'Bluetooth printer',
     write: async (data) => {
       for (let i = 0; i < data.length; i += 180) {
         const part = data.slice(i, i + 180)
-        if (fast) { await ch.writeValueWithoutResponse(part); await sleep(8) } else await ch.writeValueWithResponse(part)
+        if (confirmed) await ch.writeValueWithResponse(part)
+        else { await ch.writeValueWithoutResponse(part); await sleep(25) }
       }
     },
     close: async () => { try { device.gatt.disconnect() } catch { /* ignore */ } },
@@ -209,6 +211,9 @@ export async function printDirect(job: DirectJob, onProgress?: (done: number, to
       ])
       await conn.write(data)
       onProgress?.(i + 1, sheets.length)
+      // Let the printer finish this label before the next one arrives (speed 3 is about 76 mm a second),
+      // so a small printer's memory never overflows and every label in a batch prints like the test label.
+      if (i < sheets.length - 1) await sleep(Math.round((hMm + (job.gapMm ?? 3)) / 76 * 1000) + 400)
     }
   } finally {
     areas.forEach(a => a.classList.remove('capturing'))
