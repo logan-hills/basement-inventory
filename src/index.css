@@ -3068,3 +3068,11 @@ button.uni-class-time { text-align: left; border: 1px solid color-mix(in srgb, v
 .tip5 .btn { white-space: normal; text-align: left; height: auto; line-height: 1.3; }
 .printer-tip ul { margin: 6px 0 2px 16px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .printer-tip p { margin: 6px 0; }
+
+/* DYMO roll held in the middle of a 4 in thermal printer: print a 4 in wide page with the turned tag centered under the roll */
+@media print {
+  .print-area.head4 .turn-sheet { width: 4in; }
+  .print-area.head4 .turn-rot { left: 1.5in; }
+}
+.roll-spot { margin: 10px 0 6px; padding: 10px 12px; border-radius: 12px; border: 1px dashed var(--border-strong); display: flex; flex-direction: column; gap: 8px; }
+.roll-spot p { margin: 0; }
