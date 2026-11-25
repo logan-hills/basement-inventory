@@ -35,6 +35,13 @@ const lesson: Lesson = {
         ['Your page name and shop link', 'Clip art and busy backgrounds'],
         ['A QR code', 'Prices, which change'],
       ] },
+      visual: { type: 'flow', caption: 'The whole life of a good business card.', steps: [
+        { label: 'Handed over', note: 'With one sentence' },
+        { label: 'Kept', note: 'Purse, wallet or fridge' },
+        { label: 'Found again', note: 'When she needs a gift' },
+        { label: 'Scanned or typed', note: 'Your page or shop' },
+        { label: 'New buyer', note: 'On your next live' },
+      ] },
       tip: "Read your card at arm's length in normal light. If you squint, your type is too small." },
     { kind: 'learn', title: 'Make both sides work', text: "Most sellers print one side and waste the other. The back is free real estate.",
       table: { head: ['Front', 'Back'], rows: [
@@ -53,6 +60,7 @@ const lesson: Lesson = {
         'Leave white space around it or phones will not read it',
         'Test it with two different phones before you order a hundred',
       ],
+      term: { word: 'QR code', meaning: 'A square barcode that a phone camera reads to open a web link. QR stands for quick response. A static QR code always points to the same link, so choose a link that will not change.' },
       tip: "Print the web address in words underneath too. Some folks will type it instead, and that is fine." },
     { kind: 'reflect', title: 'Your card, in words', prompt: 'Write exactly what will go on the front and the back of your card.', placeholder: 'Front… Back…', example: 'Front: logo, Dynamic Dazzle, handbags and jewelry, @dynamicdazzle. Back: Live Thursdays 8pm, QR code to my shop, "Dazzle on, ladies."' },
 
@@ -79,6 +87,16 @@ const lesson: Lesson = {
         'Keep your print file in your brand kit folder so a reprint takes five minutes',
       ],
       queen: "Do not order a thousand cards with your first design. Order a hundred, hand them out, and see what people ask you about." },
+    { kind: 'howto', title: 'Design your card in Canva in 30 minutes', text: 'Canva has business card templates sized for printers. Here is the fastest path from blank to a file you can order.',
+      steps: [
+        { title: 'Start from a business card template', detail: 'In Canva, search "business card" and pick a simple template with lots of white space. Ignore the busy ones.', example: 'A clean template with the logo on the left and text on the right.' },
+        { title: 'Swap in your brand kit', detail: 'Change the colors to your main, second and pop colors, and the fonts to your fancy and easy fonts. Upload your logo with a transparent background.', example: 'Black background, emerald name, gold logo.' },
+        { title: 'Type your front and back', detail: 'Use the words you wrote in the reflect slide. Keep body text at about 9 point or bigger so older buyers can read it.', example: 'Front: logo, shop name, "Handbags and jewelry," your name. Back: live schedule and QR.' },
+        { title: 'Add the QR code', detail: 'Use Canva\'s QR code app or a free generator, pointed at a link that will not change. Make it at least thumbprint-sized, with white space around it.', example: 'QR to your Facebook Page, with the web address in words underneath.' },
+        { title: 'Check the safe zone', detail: 'Turn on Canva\'s print bleed and margins view. Keep all words and the QR code inside the safe area so nothing gets trimmed.', example: 'Moved the phone number in a little from the edge.' },
+        { title: 'Test and download for print', detail: 'Scan the QR code from your screen with two phones. Then download as a PDF for print, with crop marks and bleed if your printer asks for them.', example: 'Both phones opened the Page. File saved as "Business card v1.pdf".' },
+      ],
+      queen: "Have a friend over 50 read your card before you order. If she reaches for her glasses, make the type bigger." },
     { kind: 'order', title: 'Ordering your first batch', prompt: 'Put the steps of getting cards made in order.', steps: ['Decide what goes on the front and the back', 'Build it in Canva with your brand colors and fonts', 'Test your QR code on two phones', 'Check your spelling and your phone number twice', 'Order a small batch or ask for a proof', 'Hold the printed card, then order the bigger batch'] },
 
     { chapter: 'Handing them out', kind: 'learn', title: 'Hand it out so it gets kept', text: "A card that is handed over with a sentence gets kept. A card dropped on a table gets swept up at the end of the day.",
@@ -104,6 +122,7 @@ const lesson: Lesson = {
         ['Next-live reminder', 'Brings her back on a set night'],
         ['Small discount code', 'Second order, and it tells you the insert worked'],
       ] },
+      term: { word: 'Package insert', meaning: 'Anything extra you put in a shipped box besides the order: a business card, a thank-you note, a care card or a coupon. It is the one ad you know the buyer will hold in her hands.' },
       tip: "Write the buyer's first name on the thank-you. One word turns a form letter into a gift.",
       nova: "Nothing fancy, boss. A card, a line in your own handwriting, and her name." },
 
@@ -120,6 +139,16 @@ const lesson: Lesson = {
         'Boring heroes: tape, scissors, zip ties, a pen, change, water, a chair',
       ],
       queen: "Lighting and a mirror sell more than a bigger table ever will. People buy what they can see clearly and picture on themselves." },
+    { kind: 'howto', title: 'Set up a market table that stops people', text: 'Arrive an hour early and set up in this order. Each step answers a question shoppers ask in the two seconds they glance at your table.',
+      steps: [
+        { title: 'Cover and height first', detail: 'Put on a floor-length table cover in your brand color. Add height at the back with risers, a crate or a small shelf, so pieces are at eye level, not flat on the table.', example: 'Emerald cover, two wooden crates at the back for bags.' },
+        { title: 'Sign where the aisle can see it', detail: 'Hang your sign at the front or above the table, big enough to read from across the aisle. That answers "what is this?"', example: '"Dynamic Dazzle · Bags and Bling" banner on the front of the table.' },
+        { title: 'Price everything you can see', detail: 'Use simple price signs by group. Shoppers who have to ask often walk away instead.', example: '"All earrings $8" card in a little stand.' },
+        { title: 'Light and mirror', detail: 'Clip a lamp or set battery lights so your colors look true. Put a mirror at the end where people can try things.', example: 'Clip lamp on the back crate, mirror on the right corner.' },
+        { title: 'Cards and checkout ready', detail: 'Card holder at the front, a stack in your pocket, card reader charged and tested, bags with a card tucked in each.', example: 'Ran a $1 test sale on the card reader before doors opened.' },
+        { title: 'Stand, smile, say hello', detail: 'Stand beside the table, not behind it. Greet people who slow down with a simple line, and hand cards with your live night.', example: '"Hi! Everything up front is $8. I go live Thursdays, it\'s on the back."' },
+      ],
+      tip: 'Take a photo of your finished table. Next time, set it up the same way in half the time.' },
     { kind: 'scenario', title: 'Your first market table', situation: "You have a six foot table at a church market on Saturday. Your pieces are good, but people keep walking by without stopping.",
       options: [
         { text: 'Drop your prices by half to get attention', feedback: "Price is rarely the problem when nobody is even stopping. You will give away your margin and still be ignored." },
@@ -130,12 +159,26 @@ const lesson: Lesson = {
     { kind: 'number', title: 'What a card has to earn', q: 'You order 250 cards for $38 and spend $12 on a card holder. If about 1 in 25 cards brings a buyer who spends $45 with you, how much do those 250 cards bring in?', prefix: '$', answer: 450, hint: '250 divided by 25 is how many buyers. Multiply by $45.', why: '250 ÷ 25 = 10 buyers, and 10 × $45 = $450 from $50 spent. Even 2 buyers would have paid for the whole batch.' },
     { kind: 'learn', title: 'Track which cards bring business', text: "You cannot improve what you do not watch. There are easy ways to tell where somebody came from.",
       table: { head: ['Trick', 'What it tells you'], rows: [
-        ['Ask "how did you find me?" and note it in Customers', 'Your best source, in her own words'],
+        ['Ask "how did you find me?" and jot it in a notebook or a simple sheet', 'Your best source, in her own words'],
         ['A code on inserts, like THANKYOU10', 'How many package inserts bring a second order'],
         ['A different code on market cards, like MARKET10', 'Which events are worth the booth fee'],
         ['A link-page view count', 'Whether people are scanning your QR code at all'],
       ] },
-      example: "Nicole used MARKET10 at three events. Two brought almost nothing and one brought eleven new buyers, so now she books that one twice a year and skips the others." },
+      example: "Nicole used MARKET10 at three events. Two brought almost nothing and one brought eleven new buyers, so now she books that one twice a year and skips the others.",
+      visual: { type: 'bars', caption: "New buyers from Nicole's MARKET10 code at three events.", bars: [
+        { label: 'Spring craft fair', value: 1 },
+        { label: 'Church market', value: 11, hl: true, note: 'Book it twice a year' },
+        { label: 'Downtown pop-up', value: 2 },
+      ] } },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'A card has one job: help people find you again. Leave the clutter off and keep type readable.',
+      'Use both sides: your live schedule and a tested QR code on the back.',
+      'Matte for writing on, soft touch to impress. Order a small batch or a proof first.',
+      'Hand cards over with a sentence and a note, and give two.',
+      'Put a card and a handwritten thank-you in every package.',
+      'Keep a packed market kit with a sign, price cards, light, mirror and card reader.',
+      'Use different codes for inserts and markets so you know what brings business.',
+    ] },
     { kind: 'checklist', title: 'Your card and kit plan', prompt: 'Tick what you will get done.', items: ['Write the front and back of my card', 'Build it in Canva with my brand colors and fonts', 'Make a QR code and test it on two phones', 'Order a small batch and hold it before the big one', 'Put a card and a thank-you in every package', 'Pack my market tub and keep it by the door', 'Add a code so I can see what the cards bring', 'Ask every new buyer how she found me'] },
   ],
 }

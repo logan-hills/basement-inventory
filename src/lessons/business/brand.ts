@@ -18,7 +18,7 @@ const lesson: Lesson = {
     welcome: "People forget a price, but they remember how you made them feel. Your brand is that feeling, on purpose. This course helps you put words, colors and rituals to the shop you already love.",
     signoff: "Keep your promise everywhere: on camera, in the box and in the comments. A brand is built one consistent moment at a time.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'What a brand really is', kind: 'learn', title: 'A brand is a promise', nova: "Let's start with the heart of it. Your brand is not your logo, sis.",
       text: "Your brand is what people expect every single time they deal with you. The logo and colors only remind them of it. Big companies spend millions on this. You can build it with nothing but intention and consistency.",
@@ -27,6 +27,12 @@ const lesson: Lesson = {
         'Personality: how you sound, look and show up on camera',
         'Proof: every live, every box and every message that keeps the promise',
       ],
+      visual: { type: 'flow', caption: 'How a brand is built, one kept promise at a time.', steps: [
+        { label: 'Promise', note: 'What buyers can count on' },
+        { label: 'Personality', note: 'How you look and sound' },
+        { label: 'Proof', note: 'Every live, box and message' },
+        { label: 'Trust', note: 'They come back and bring friends' },
+      ] },
       tip: "If you only remember one thing: a brand is a promise, kept over and over." },
     { kind: 'learn', title: 'Why it pays you real money', text: "A clear brand turns one-time buyers into regulars. Regulars buy more often, spend more per live, tell their friends, and forgive the occasional slow week. That's the difference between starting from zero every live and walking into a room full of people who already love you.",
       table: { head: ['', 'Seller with no clear brand', 'Seller with a clear brand'], rows: [
@@ -42,7 +48,8 @@ const lesson: Lesson = {
       points: ['Age and stage of life', 'Budget for a night of shopping', 'Style: classic, bold, church-ready, everyday', 'What a typical Tuesday night looks like for her', 'What makes her trust a seller, and what makes her leave'] },
     { kind: 'learn', title: 'A dream buyer, worked out', text: "Here's what a strong dream-buyer sketch looks like. Notice how specific it is. Specific is what makes it useful.",
       example: "Denise is 52, a school secretary in Memphis. She has about $40 to spend on a Tuesday after payday. She loves statement earrings and a good structured bag for church. She watches lives in bed on her phone with the sound up, and she trusts sellers who show the piece up close and answer her by name. She leaves when the seller is rude in the comments or takes three weeks to ship.",
-      tip: "Look at your top five buyers in Customers. Your dream buyer is probably already there." },
+      term: { word: 'Dream buyer', meaning: 'One specific, made-up person who stands for the buyers you most want to serve. Marketers often call her a buyer persona. You write every caption and pick every piece with her in mind.' },
+      tip: "Look at your top five buyers in Customers (sort by Top spenders). Your dream buyer is probably already there." },
     { kind: 'scenario', title: 'Who are you talking to?', situation: "You're writing the caption for Friday's live. You sell a mix of $5 to $25 jewelry and bags, and most of your buyers are women 40 and up.",
       options: [
         { text: "\"Shop for everyone! Something for all ages and styles!\"", feedback: "It sounds friendly, but it speaks to nobody in particular, so nobody feels invited." },
@@ -69,6 +76,7 @@ const lesson: Lesson = {
         ['"Shop with us!"', '"$2 Tuesday: the best two dollars you\'ll spend all week."'],
         ['"Quality jewelry"', '"Gold-tone that doesn\'t turn, or I make it right."'],
       ] },
+      term: { word: 'Brand promise', meaning: 'A short public sentence that tells buyers what they can always count on from you. It has to be specific, believable and kept every time, or it hurts more than it helps.' },
       tip: 'A strong promise is specific, believable, and something you can actually keep every single time.' },
     { kind: 'reflect', title: 'Your brand promise', prompt: 'Finish this sentence: "When you shop with me, you can always count on…"', placeholder: 'When you shop with me…', example: "When you shop with me, you can always count on quality pieces under $20 and a live that feels like girls' night." },
 
@@ -81,7 +89,22 @@ const lesson: Lesson = {
         ['Fancy font (headlines)', 'An elegant serif', '______'],
         ['Easy font (details)', 'A clean, plain font', '______'],
       ] },
+      visual: { type: 'split', total: 'The 60-30-10 rule', caption: 'How much of each color to use on a poster, a Page or a box.', parts: [
+        { label: 'Main color', value: 60, note: 'Black' },
+        { label: 'Second color', value: 30, note: 'Emerald' },
+        { label: 'Pop color', value: 10, note: 'Gold accents' },
+      ] },
       tip: "The Live Planner's palettes and Poster maker keep every flyer on-brand without a designer." },
+    { kind: 'howto', title: 'Make an on-brand live poster in the app', text: 'Every live in the Live Planner has its own poster maker. Here is how to make a poster that looks like your brand in about ten minutes.',
+      steps: [
+        { title: 'Open the live\'s plan', detail: 'Open the Live Planner, tap your upcoming live, then tap Planner and poster. Scroll to Your poster.', example: 'Thursday\'s "Holiday Party Sparkle" live.' },
+        { title: 'Write the words first', detail: 'Fill in the Headline, Tagline and Day and time. Use your voice words: if you are warm and funny, let the tagline sound like you.', example: 'Headline: Party Sparkle. Tagline: Every piece under $20, checked by me. Thursday 7 PM ET.' },
+        { title: 'Add your best photo', detail: 'Tap Upload a photo and use a bright, real photo of a star piece or of you holding it.', example: 'Gold clutch on a black velvet cloth.' },
+        { title: 'Pick lettering that matches', detail: 'Choose Lettering that fits your fancy font. Try Gold foil headline if gold is your pop color. Tap Surprise me if you want ideas, then keep only what fits your brand.', example: 'Elegant lettering with gold foil on the headline.' },
+        { title: 'Download every size', detail: 'Tap All four sizes so you have the right shape for your Page post, Stories and more. Copy the Caption to paste with it.', example: 'Four files saved to your phone, caption copied.' },
+        { title: 'Check it against your brand', detail: 'Put it next to your last two posters. Same colors? Same feel? If a stranger saw all three, would she know they are the same shop?', example: 'Yes: black, emerald and gold on all three.' },
+      ],
+      queen: "Your poster is the first handshake. Make it look like the same woman every week, and buyers will know it's you before they read a word." },
     { kind: 'learn', title: 'Your voice in three words', text: "Pick three words for how you want buyers to describe you. Then let them decide how you write and talk. Here's how two different voices handle the same moment:",
       table: { head: ['Moment', 'Warm, funny, real', 'Elegant, calm, classy'], rows: [
         ['Opening the live', '"Heyyy family! Grab your tea, we\'ve got BARGAINS tonight!"', '"Good evening, ladies. Tonight\'s collection is something special."'],
@@ -109,13 +132,32 @@ const lesson: Lesson = {
 
     { chapter: 'Proof everywhere', kind: 'learn', title: 'Every touchpoint tells the story', text: "Your buyer meets your brand in a lot of places. If the live is warm and fun but the box is a crumpled bag with no note, the promise breaks. Line them up so they all say the same thing.",
       points: ['Facebook Page: profile photo, cover photo with your live schedule, a pinned "How to shop" post', 'Posters and Reels: same colors, same fonts', 'The live: same opening, same background, good light', 'The box: a thank-you card with your live day, tissue in your color', 'Messages and invoices: same voice, same kindness'],
-      example: "LaVerne's buyers know $2 Tuesday by the name alone: same night, same time, same energy, every week. That's years of proof adding up." },
+      example: "LaVerne's buyers know $2 Tuesday by the name alone: same night, same time, same energy, every week. That's years of proof adding up.",
+      visual: { type: 'compare', style: 'beforeafter', left: { title: 'Promise broken', items: ['Fun, warm live', 'Crumpled bag, no note', 'Short, cold invoice message', 'Poster in random colors'] }, right: { title: 'Promise kept', items: ['Fun, warm live', 'Tissue in your color and a thank-you card', 'Invoice message in your voice', 'Poster in your 3 colors'] } } },
     { kind: 'scenario', title: 'Protect the brand in public', situation: "Mid-live, a buyer comments: \"My earrings from last week broke after one wear. Not happy.\" Fifty people can see it.",
       options: [
         { text: 'Delete the comment and keep selling', feedback: 'People saw it before it vanished. Deleting looks like hiding, and that breaks trust fast.' },
         { text: "Reply on camera: \"Oh no, Tasha, I'm so sorry! Message me after the live and I'll make it right.\" Then follow up tonight.", best: true, feedback: "That's the brand in action. Everyone watching just learned you stand behind what you sell." },
         { text: "Explain on camera that it was probably how she wore them", feedback: 'Even if it\'s true, arguing in public makes every viewer wonder how you\'d treat them.' },
       ] },
+    { kind: 'howto', title: 'Run your brand audit in one hour', text: 'Look at your shop the way a new buyer would, one touchpoint at a time. Keep a notebook open and write every fix you find. Do this once now, then each season.',
+      steps: [
+        { title: 'Start with your Page', detail: 'Open your Facebook Page on your phone while logged out, or ask a friend to screenshot it. Check the profile photo, cover photo, About section and pinned post.', example: 'Cover photo still says "Summer lives". Fix: new cover with live days and times.' },
+        { title: 'Line up your last five posters', detail: 'Put them side by side. Are the colors and fonts the same? Do they sound like your three voice words?', example: 'Two posters are pink. Fix: stick to black, emerald and gold.' },
+        { title: 'Watch your last live opening', detail: 'Play back the first two minutes. Did you use your signature opening, say the rules and tease the star piece?', example: 'Skipped the rules. Fix: tape the opening script next to the camera.' },
+        { title: 'Unbox one of your own orders', detail: 'Pack an order for yourself and open it like a buyer. How does it look, smell and feel? Is there a card with your next live day?', example: 'No card. Fix: print 100 thank-you cards with my live schedule.' },
+        { title: 'Pick three fixes for this week', detail: 'You will find more than three. Pick the three a buyer sees first and do those this week. Save the rest for next week.', example: 'Cover photo, thank-you cards, invoice wording.' },
+      ],
+      queen: "Your brand lives in the small things. A buyer who feels cared for in the box will be back on Thursday." },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'A brand is a promise, kept over and over. The logo only reminds people of it.',
+      'Picture one dream buyer and talk to her. Specific beats general.',
+      'Write a private "only I" statement and a short public brand promise you can keep every time.',
+      'Pick colors with the 60-30-10 rule, two fonts and three voice words, and use them everywhere.',
+      'Build two or three signature moments into every live and repeat them until buyers say them with you.',
+      'Every touchpoint, from Page to box to message, has to tell the same story.',
+      'Protect the brand in public: own problems kindly and follow up.',
+    ] },
     { kind: 'checklist', title: 'Your brand audit', prompt: 'Tick each one that already matches your brand. Anything left unticked is your to-do list for this week.', items: [
       'My profile photo is clear, bright and the same everywhere',
       'My cover photo shows my live days and times',
