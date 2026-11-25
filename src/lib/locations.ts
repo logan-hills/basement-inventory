@@ -21,8 +21,30 @@ export function binName(aisle: number, section: number, level: string, bin: numb
 
 export const BIN_CODE_RE = /^A\d+-S\d+-[A-Z]-\d+$/
 
+/** Scanners set to a non-US keyboard can turn the dashes into other symbols (A1?S1?B?02), and some add
+    spaces or prefixes. This reads the bin out of whatever came through and gives back the clean code. */
+const LOOSE_BIN_RE = /^\W*A\s*(\d+)\W*S\s*(\d+)\W*([A-Z])\W*(\d+)\W*$/
+function parseBin(code: string) {
+  const m = code.trim().toUpperCase().match(LOOSE_BIN_RE)
+  return m ? { aisle: Number(m[1]), section: Number(m[2]), level: m[3], bin: Number(m[4]) } : null
+}
+export function normalizeBinCode(code: string): string | null {
+  const p = parseBin(code)
+  return p ? binCode(p.aisle, p.section, p.level, p.bin) : null
+}
+
 export function isBinCode(code: string) {
-  return BIN_CODE_RE.test(code.trim().toUpperCase())
+  return normalizeBinCode(code) != null
+}
+
+/** A printed bin label whose bin isn't in this shop yet (say, it was cleared out): add it so the label works. */
+export async function createBinFromCode(shopId: string, code: string): Promise<Bin | null> {
+  const p = parseBin(code)
+  if (!p) return null
+  const row = { shop_id: shopId, kind: 'bin', aisle: p.aisle, section: p.section, level: p.level, bin_no: p.bin, code: binCode(p.aisle, p.section, p.level, p.bin), name: binName(p.aisle, p.section, p.level, p.bin) }
+  const { data, error } = await supabase.from('locations').insert(row).select('id,code,name,aisle,section,level,bin_no').single()
+  if (error) return findBin(row.code)
+  return data as Bin
 }
 
 export async function loadBins(): Promise<Bin[]> {
@@ -35,7 +57,7 @@ export async function loadBins(): Promise<Bin[]> {
 }
 
 export async function findBin(code: string): Promise<Bin | null> {
-  const { data } = await supabase.from('locations').select('id,code,name,aisle,section,level,bin_no').eq('code', code.trim().toUpperCase()).maybeSingle()
+  const { data } = await supabase.from('locations').select('id,code,name,aisle,section,level,bin_no').eq('code', normalizeBinCode(code) ?? code.trim().toUpperCase()).maybeSingle()
   return (data as Bin) ?? null
 }
 
