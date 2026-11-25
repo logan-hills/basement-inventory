@@ -33,6 +33,10 @@ export default function Scan() {
   const [activeBin, setActiveBin] = useState<Bin | null>(null)
   const binRef = useRef<Bin | null>(null)
   binRef.current = activeBin
+  // A tag with no bin yet waits here for the next bin scan: scan the tag, then the bin, and they're linked.
+  const [pending, setPending] = useState<UnitInfo | null>(null)
+  const pendingRef = useRef<UnitInfo | null>(null)
+  pendingRef.current = pending
 
   // "Try it now" on Recommended gear opens Scan with the camera on.
   useEffect(() => { if (params.get('camera') === 'on') setCamera(true) }, [params])
@@ -61,7 +65,23 @@ export default function Scan() {
       hit = order ? { kind: 'order', code, order } : { kind: 'miss', code }
     } else if (isBinCode(code)) {
       const bin = await findBin(code)
-      if (bin) { setActiveBin(bin); hit = { kind: 'bin', code, bin } } else hit = { kind: 'miss', code }
+      const waiting = pendingRef.current
+      if (bin && waiting && shop) {
+        // The bin answers the put-away prompt: link the waiting tag to it, then keep the bin open for more tags.
+        try {
+          const from = await moveUnit(shop.id, waiting.id, bin.id)
+          toast(`${waiting.tag_code} is put away in ${bin.code}`, { undo: async () => { await moveUnit(shop.id, waiting.id, from) } })
+          const placed = { ...waiting, location: { code: bin.code, name: bin.name } }
+          setHits(h => h.map(x => (x.kind === 'unit' && x.unit.id === waiting.id ? { ...x, unit: placed } : x)))
+          setPending(null)
+          setActiveBin(bin)
+          hit = { kind: 'bin', code, bin }
+        } catch {
+          toast('That didn\'t save. Check your internet and scan the bin again.')
+          feedbackBad()
+          return
+        }
+      } else if (bin) { setActiveBin(bin); hit = { kind: 'bin', code, bin } } else hit = { kind: 'miss', code }
     } else if (/^\d{4}$/.test(code)) {
       const v = await findByLiveNumber(code)
       hit = v ? { kind: 'variant', code, v } : { kind: 'miss', code }
@@ -77,7 +97,10 @@ export default function Scan() {
         unit = { ...unit, location: { code: bin.code, name: bin.name } }
       }
       hit = unit ? { kind: 'unit', code, unit } : { kind: 'miss', code }
+      // No bin open and this tag has no home yet: ask for a bin (they can skip and just look).
+      setPending(unit && !bin && unit.status === 'in_stock' && !unit.location ? unit : null)
     }
+    if (hit.kind === 'order' || hit.kind === 'variant') setPending(null)
     if (hit.kind === 'miss') feedbackBad()
     else feedbackOk()
     setHits(h => [hit, ...h].slice(0, 30))
@@ -115,7 +138,26 @@ export default function Scan() {
           <button className="btn gold" onClick={() => setActiveBin(null)}>Done</button>
         </div>
       ) : (
-        <p className="muted small">Scan a bin label first to put items away into it. Scan an item tag on its own to look it up.</p>
+        <p className="muted small">Scan a bin label first to put items away into it. Scan an item tag on its own to look it up. If the tag has no bin yet, we'll ask you to scan one.</p>
+      )}
+
+      {pending && (
+        <div className="putaway-ask" role="alert">
+          <span className="putaway-ask-badge">No bin yet</span>
+          <div className="putaway-ask-item">
+            <span className="live-num">#{pending.variant.live_number}</span>
+            <div className="hit-text">
+              <b>{pending.variant.item.name}</b>
+              <span className="muted">{pending.variant.label} · tag <span className="mono">{pending.tag_code}</span></span>
+            </div>
+          </div>
+          <h2 className="putaway-ask-title">Scan a bin to put this away</h2>
+          <p className="muted">Scan the bin label where this piece will live, and they're linked. Just looking? Skip it.</p>
+          <div className="putaway-ask-actions">
+            <button className="btn ghost big" onClick={() => setPending(null)}>Skip</button>
+            <Link className="btn outline-gold big" to={`/item/${pending.variant.item.id}`}>Review product</Link>
+          </div>
+        </div>
       )}
 
       {!camera && <FreeCameraTip onUse={() => setCamera(true)} />}
@@ -172,6 +214,7 @@ export default function Scan() {
                 </div>
                 <div className="row-gap">
                   <Link className="btn ghost" to={`/item/${h.unit.variant.item.id}`}>Open</Link>
+                  {h.unit.status === 'in_stock' && !h.unit.location && pending?.id !== h.unit.id && <button className="btn outline-gold" onClick={() => setPending(h.unit)}>Put away</button>}
                   {h.unit.status === 'in_stock' && <button className="btn ghost danger-text" onClick={() => setDamage(h.unit)}>Damage out</button>}
                 </div>
               </>
