@@ -1,0 +1,162 @@
+import type { Lesson } from '../types'
+import { NOT_ADVICE } from '../resources'
+
+const lesson: Lesson = {
+  id: 'onboard', kind: 'course', school: 'Build your team', title: 'Onboarding your first employee', track: 'Business', icon: 'users',
+  why: "Hiring someone is only the start. The first thirty days decide whether she becomes the helper who gives you your evenings back, or one more thing you have to manage.",
+  outcomes: [
+    'Run a first day that makes your new hire proud to be there',
+    'Handle day-one paperwork and payday without scrambling',
+    'Give her her own sign-in and know what she can and cannot see',
+    'Write your jobs down so training is a document, not your memory',
+    'Train her in a week, then correct kindly when something slips',
+    'Run a 30-day check-in and know what to do if it is not working',
+  ],
+  route: { to: '/settings/team', label: 'Open Team members' },
+  sources: [
+    { org: 'U.S. Small Business Administration', title: 'Hire and manage employees', url: 'https://www.sba.gov/counseling/manage-your-business/' },
+    { org: 'IRS', title: 'Employment taxes', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/employment-taxes' },
+    { org: 'IRS', title: 'Recordkeeping', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/recordkeeping' },
+    { org: 'U.S. Citizenship and Immigration Services', title: 'Form I-9, Employment Eligibility Verification', url: 'https://www.uscis.gov/i-9' },
+    { org: 'U.S. Department of Labor', title: 'Fair Labor Standards Act', url: 'https://www.dol.gov/agencies/whd/flsa' },
+    { org: 'Google re:Work', title: 'Hiring and onboarding guides', url: 'https://rework.withgoogle.com/intl/en/subjects/hiring' },
+  ],
+  queen: {
+    welcome: "You hired somebody. Feel that for a second, because it means your shop outgrew one pair of hands. Now let's start her the right way. A good first day and a written way of working will save you months of frustration.",
+    signoff: "Welcome her warmly, write the work down, train her patiently and pay her on time. Do those four things and you won't just have a helper. You'll have somebody who protects your shop like it's her own.",
+  },
+  covers: [], updated: '2026-11-25',
+  slides: [
+    { chapter: 'Day one', kind: 'learn', title: 'The first day sets the tone', nova: "First days are nerve-racking, love. Let's make hers easy.",
+      text: "Your new hire decides how she feels about this job in the first few hours. Give her three things: a warm welcome, the story of what your shop is about, and a plain picture of what doing well looks like in thirty days.",
+      points: [
+        'Have her table space and her name on something ready before she walks in',
+        'Tell her who your buyers are and why they keep coming back',
+        'End the day with one small job she finished herself',
+      ],
+      example: "Renita left a tote on the table with a tape gun, a Sharpie and a note: 'Welcome to the team, Angel.'" },
+    { kind: 'script', title: 'Your welcome message', text: 'Send this the night before she starts.',
+      lines: [
+        '"Hi [name]! I am so glad you are joining [shop name]. We start at [time] at [address]."',
+        '"Bring your ID and your bank info so I can set up your paperwork and direct deposit."',
+        '"I will show you around and we will tag a few pieces together. You are not expected to know anything yet."',
+        '"One thing to know going in: our buyers trust us to be careful and kind. That is the whole job."',
+      ],
+      queen: "Say her name in that message and mean it. People work harder for somebody who treats them like a person on day one than for anybody paying a dollar more." },
+
+    { chapter: 'Paperwork and pay', kind: 'learn', title: 'Day-one paperwork checklist', text: "Do the paperwork on the first day, not someday. It takes half an hour. Print the forms before she arrives and put them in one folder with her name on it.",
+      table: { head: ['What', 'Why'], rows: [
+        ['Offer letter she signs', 'Pay rate, hours and start date'],
+        ['Form W-4', 'So you withhold the right income tax'],
+        ['Form I-9', 'Verifies she can legally work in the U.S.'],
+        ['Direct deposit form or voided check', 'So payday is automatic'],
+        ['Emergency contact', 'Somebody to call if she gets hurt'],
+        ['Signed shop rules', 'Hours, phones, privacy, mistakes'],
+      ] },
+      tip: NOT_ADVICE },
+    { kind: 'learn', title: 'Pay on time, every time', text: "A payroll service handles withholding, tax deposits and year-end forms for a small monthly fee. The IRS expects employment taxes deposited on schedule and your records kept, and federal wage and hour rules expect hours tracked for hourly workers.",
+      points: [
+        'Set up payroll before her first hour, not after',
+        'Keep a timesheet, even for six hours a week',
+        'Check your own state rules for minimum wage, overtime and new-hire reporting',
+      ],
+      tip: NOT_ADVICE,
+      queen: "Late pay breaks trust faster than anything else you can do. If money is tight, cut somewhere else and pay your people first." },
+    { kind: 'quiz', q: 'Your helper starts Thursday. When should her W-4, I-9 and direct deposit be done?', options: ['Whenever you get around to it', 'On her first day, before she starts working', 'At the end of her first month', 'Only if she asks'], answer: 1, why: "Day one, in one folder with her name on it. The I-9 has a short deadline, and doing it all at once means you never chase a signature later." },
+
+    { chapter: 'Her own sign-in', kind: 'learn', title: 'Give her her own way in', text: "Never hand over your password. In Settings, then Team members, make an invite code and text it to her. She signs up with her own email, taps 'I am joining a team' and types the code. Her scans and picks are then saved under her name, and you can remove her in one tap.",
+      screen: { title: 'Team members', rows: ['1 of 2 team spots used', 'Angel · Team member'], buttons: ['Make an invite code', 'Copy invite to send', 'Remove'], highlight: 'Make an invite code' },
+      table: { head: ['', 'You', 'Her'], rows: [
+        ['Receiving, tagging, bins, picking, packing, shipping', 'Yes', 'Yes'],
+        ['Orders, customers and reports', 'Yes', 'Yes'],
+        ['Dazzle University and Time with the Queen', 'Yes', 'No'],
+        ['Booking Shared Page lives and your Go Live key', 'Yes', 'No'],
+        ['Adding or removing team members', 'Yes', 'No'],
+      ] } },
+    { kind: 'order', title: 'Put day one in order', prompt: 'Tap the steps of a good first day in order.', steps: [
+      'Welcome her and show her around',
+      'Tell her who your buyers are and what 30 days of doing well looks like',
+      'Fill out the paperwork folder together',
+      'Make her invite code in Settings, then Team members',
+      'Let her finish one small job on her own',
+    ] },
+
+    { chapter: 'Write the work down', kind: 'learn', title: 'Training is a document, not your memory', nova: "If it only lives in your head, you have to be there every time.",
+      text: "A standard operating procedure, an SOP, is the steps of one job written plainly on one page. Write the jobs you are handing off, and training becomes reading, doing and checking instead of you repeating yourself for three weeks.",
+      points: [
+        'One page per job, numbered steps, short sentences',
+        'Write it while you do the job, not from memory',
+        'Tape it up where the work happens, and change it when she finds a better way',
+      ],
+      table: { head: ['The five pages to write first', 'The steps that matter'], rows: [
+        ['Receiving', 'Count against the invoice, note damage, log cost'],
+        ['Tagging', 'Print the tag, attach it the same way, check the price'],
+        ['Put-away', 'Scan into the right bin, nothing left on the floor'],
+        ['Picking', 'Pick in bin order, scan every piece, flag what is missing'],
+        ['Packing', 'Wrap this way, this box for this size, card in the order'],
+      ] },
+      example: "Denise wrote her packing page in twenty minutes. Her next two helpers trained themselves from it." },
+    { kind: 'reflect', title: 'Write one page today', prompt: 'Pick the job you most want off your plate and write its steps, numbered, in plain words.', placeholder: '1… 2… 3… Done right looks like…', example: 'Packing: 1. Pull the pick list. 2. Scan every piece into the box. 3. Wrap jewelry, two pieces of tape. 4. Card in the order. 5. Label and scan to close. Done right: every box out by noon.' },
+
+    { chapter: 'Week one', kind: 'learn', title: 'Shadow, do, check', text: "Nobody learns a warehouse from a lecture. She watches you, then does it with you watching, then works alone while you check behind her.",
+      table: { head: ['Day', 'What she does'], rows: [
+        ['1', 'Welcome, paperwork, sign-in, watch you receive and tag'],
+        ['2', 'Receive and tag beside you, reading the SOP page'],
+        ['3', 'Put away and pick alone; you check every pick'],
+        ['4', 'Pack a live alone; you check every box before it ships'],
+        ['5', 'Full run alone; you spot-check five boxes'],
+      ] },
+      tip: 'Tell her plainly: "I check everything for two weeks, then we move to spot-checks." Now the checking feels like support, not suspicion.',
+      queen: "Teach her your standard out loud in the first week, before any mistake happens. People cannot meet a standard nobody told them about." },
+
+    { chapter: 'Correcting kindly', kind: 'script', title: 'The correction conversation', text: 'Private, same day, short, about the work and not the person.',
+      lines: [
+        'Name it plainly: "Angel, three boxes went out yesterday with no thank-you card."',
+        'Ask first: "Walk me through what happened on your end." Nine times out of ten it is the process, not her.',
+        'Say the standard: "Every order gets a card. Our regulars come back for that."',
+        'Fix the cause: "Let\'s keep the cards in a bin on the packing table."',
+        'Close warm: "I am not worried about you, you are doing well. Anything you need from me?"',
+      ],
+      tip: 'Praise in front of people, correct in private, never on your live.' },
+    { kind: 'scenario', title: 'Late three mornings running', situation: "Your helper has come in twenty minutes late three days this week. The packing still gets done, but you have been covering the start of the shift.",
+      options: [
+        { text: 'Say nothing and hope it settles down', feedback: "Silence tells her 10 o'clock means 10:20, and builds resentment in you." },
+        { text: 'Ask her privately what is going on, restate the start time, and write down what you agree', best: true, feedback: "Right. There may be a school drop-off you can work around, and either way she leaves knowing the real expectation." },
+        { text: 'Dock her pay for the lost time without telling her', feedback: "Quietly changing pay can break wage rules and it certainly breaks trust. Talk first." },
+      ] },
+
+    { chapter: 'Thirty days', kind: 'learn', title: 'The 30-day check-in', text: "Put it on the calendar on her first day and keep it. Twenty minutes and a simple scorecard. Do not save up a month of small things for it.",
+      table: { head: ['What you look at', 'Doing well looks like'], rows: [
+        ['Shows up on time', 'Every shift, no reminders'],
+        ['Follows the SOP pages', 'Scans everything, asks instead of guessing'],
+        ['Speed', 'Packs a live without you waiting on her'],
+        ['Mistakes', 'Rare, and she tells you before you find them'],
+      ] },
+      example: "Ask two questions: 'What part of this job do you like best?' and 'What slows you down that I could fix?' The second answer is worth money.",
+      queen: "Tell her what she is doing well out loud, with an example. Most people have never heard it, and it will buy you a year of loyalty." },
+    { kind: 'number', title: 'What she bought you back', q: 'Angel now does 8 hours a week of the packing you used to do. You spend that time selling, which is worth $40 an hour to your shop, and you pay her $16 an hour. How much is your shop ahead each week?', prefix: '$', answer: 192, hint: '8 hours of selling value, minus 8 hours of her pay.', why: '8 × $40 = $320, minus 8 × $16 = $128, leaves $192 a week, about $9,900 a year. And that is before the evenings you got back.' },
+    { kind: 'scenario', title: 'It is not working out', situation: "At thirty days she is kind and she tries, but picks are wrong twice a week and she still will not scan unless reminded. You have retrained her twice.",
+      options: [
+        { text: 'Keep her and quietly recheck all her work yourself', feedback: "Now you pay for help and still do the job. That will wear you out." },
+        { text: 'Give one written warning with the standard, a date to meet it and support, then part ways kindly if nothing changes', best: true, feedback: "Fair to her and to your shop: a real chance, no surprises, and a record. Ask a payroll or HR pro how to document it where you live." },
+        { text: 'Stop giving her hours without saying why', feedback: "Unkind, and it can create legal problems. If it is over, say so plainly and settle her final pay." },
+      ] },
+    { kind: 'learn', title: 'Keeping your culture past one', text: "How you treat your first hire becomes how your whole team works, because she trains the next one.",
+      points: [
+        'Write down the three rules you will never bend on',
+        'Fix processes before you blame people',
+        'Let her own something fully, so she has pride and not just tasks',
+        'Keep buyers private: no names, no addresses, no screenshots, ever',
+      ] },
+    { kind: 'checklist', title: 'Your onboarding plan', prompt: 'Tick each one as you do it.', items: [
+      'Send the welcome message the night before',
+      'Print the day-one paperwork folder',
+      'Set up payroll and pick a payday',
+      'Make her invite code in Settings, then Team members',
+      'Write SOP pages for receiving, tagging, put-away, picking and packing',
+      'Print the week-one shadow plan',
+      'Put the 30-day check-in on my calendar',
+    ] },
+  ],
+}
+export default lesson

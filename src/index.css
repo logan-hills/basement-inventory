@@ -1901,6 +1901,7 @@ input, select, textarea { min-height: 48px; font-size: 17px; }
 .uni .tone-sky, .uni-tab.tone-sky, .bag-wrap.tone-sky, .uni-cover.tone-sky, .cert.tone-sky, .medal.tone-sky { --t1: #0A7BD1; --t2: #4FC8F5; --t3: #053F6E; }
 .uni .tone-rose, .uni-tab.tone-rose, .bag-wrap.tone-rose, .uni-cover.tone-rose, .cert.tone-rose, .medal.tone-rose { --t1: #C2185B; --t2: #F48FB1; --t3: #6D0E33; }
 .uni .tone-garnet, .uni-tab.tone-garnet, .bag-wrap.tone-garnet, .uni-cover.tone-garnet, .cert.tone-garnet, .medal.tone-garnet { --t1: #8E1B3A; --t2: #E0607E; --t3: #4A0A1C; }
+.uni .tone-cognac, .uni-tab.tone-cognac, .bag-wrap.tone-cognac, .uni-cover.tone-cognac, .cert.tone-cognac, .medal.tone-cognac { --t1: #9A4A1C; --t2: #E8945A; --t3: #4A1E08; }
 
 /* Hero */
 .uni-hero { position: relative; display: flex; gap: 28px; align-items: center; padding: 34px; border-radius: 24px; overflow: hidden; color: #fff;
