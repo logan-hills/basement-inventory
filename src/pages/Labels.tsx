@@ -8,6 +8,7 @@ import CrispBarcode from '../components/CrispBarcode'
 import SaveForPrinterApp from '../components/SaveForPrinterApp'
 import PrintNudge from '../components/PrintNudge'
 import DirectPrint from '../components/DirectPrint'
+import { printPage } from '../lib/airPrint'
 import { LabelPreview, LabelSheet, LabelSizePicker, pageCss, printedPage, sizeText, type LabelFormat } from '../components/LabelKit'
 
 type Tag = { tag_code: string; live_number: string; name: string; variant: string; price: number | null; sale: number | null }
@@ -193,7 +194,7 @@ export default function Labels() {
   // "Print 1 test tag": prints only the first tag, so a new printer setting costs one label, not a whole batch.
   const [testOne, setTestOne] = useState(false)
   useEffect(() => { const off = () => setTestOne(false); window.addEventListener('afterprint', off); return () => window.removeEventListener('afterprint', off) }, [])
-  const printTest = () => { flushSync(() => setTestOne(true)); window.print(); setTimeout(() => setTestOne(false), 1500) }
+  const printTest = async () => { flushSync(() => setTestOne(true)); await printPage(); setTimeout(() => setTestOne(false), 1500) }
   const shownPages = testOne ? pages.slice(0, 1) : pages
 
 
