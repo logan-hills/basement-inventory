@@ -25,7 +25,7 @@ const lesson: Lesson = {
     welcome: "Taxes feel big because nobody explains them. I want tax time to be one calm afternoon for you, not a week of panic. Good records all year are the whole secret.",
     signoff: "Save your receipts, set aside a share of every payout, and gather your tax packet by February. And remember, this is education, not tax advice, so find a good tax pro for your situation.",
   },
-  covers: ['src/lessons/resources.ts'], updated: '2026-11-24',
+  covers: ['src/lessons/resources.ts'], legal: 'tax', updated: '2026-11-25',
   slides: [
     { chapter: 'How you\'re taxed', kind: 'learn', title: 'Profit, not sales', nova: 'Deep breath. Taxes feel big because nobody explains them. I\'ll keep it plain. And remember: this is education, not tax advice.',
       text: 'As a sole proprietor or single-member LLC, you\'re generally taxed on your profit: sales minus business costs. That profit goes on Schedule C with your personal return. You pay regular income tax on it, plus self-employment tax.',

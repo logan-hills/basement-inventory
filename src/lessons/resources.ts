@@ -59,3 +59,5 @@ export const IRS_NUMBERS: { label: string; value: string }[] = [
 ]
 
 export const NOT_ADVICE = 'This is general education, not legal or tax advice. Rules change and every situation is different, so check the official source or ask a tax professional before you act.'
+/** For hiring, pay and employment slides: these laws change by state, city and business size. */
+export const NOT_ADVICE_HIRING = 'This is general education, not legal advice. Hiring and pay laws change often and differ by state, city and how many people you employ, so check your state labor department or ask an employment lawyer or HR professional before you act.'

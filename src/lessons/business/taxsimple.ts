@@ -24,7 +24,7 @@ const lesson: Lesson = {
     welcome: "I want tax season to feel boring for you, and I mean that as a compliment. Boring means organized, paid on time and no surprises. This course picks up where 'Taxes made calm' leaves off and gets into the forms and dates that trip people up. As always, this is education, not tax advice, so bring your questions to a tax pro.",
     signoff: "Put the four estimate dates in your phone tonight, reconcile your 1099-K the week it arrives, and keep your receipts in one place. Do that, and April is just another month in your shop.",
   },
-  covers: ['src/lessons/resources.ts'], updated: '2026-11-24',
+  covers: ['src/lessons/resources.ts'], legal: 'tax', updated: '2026-11-25',
   slides: [
     { chapter: 'The 1099-K, decoded', kind: 'learn', title: 'What the 1099-K really reports', nova: "Okay, let's open the envelope that scares everybody. It's less scary once you know what it counts.",
       text: "Payment apps and marketplaces send Form 1099-K when your payments through them pass the federal threshold: over $20,000 AND over 200 transactions in the year. The number on it is your GROSS payments. That means it includes things that aren't profit at all.",

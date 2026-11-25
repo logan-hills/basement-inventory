@@ -13,7 +13,7 @@ const lesson: Lesson = {
   ],
   sources: [
     { org: 'Anthropic', title: 'Meet Claude', url: 'https://www.anthropic.com/claude' },
-    { org: 'Anthropic', title: 'Anthropic Help Center', url: 'https://support.anthropic.com/en/' },
+    { org: 'Anthropic', title: 'Anthropic Help Center', url: 'https://support.claude.com/en' },
     { org: 'Anthropic', title: 'Privacy Policy', url: 'https://www.anthropic.com/legal/privacy' },
     { org: 'Anthropic', title: 'Usage Policy', url: 'https://www.anthropic.com/legal/aup' },
     { org: 'Federal Trade Commission', title: 'Disclosures 101 for social media influencers', url: 'https://www.ftc.gov/business-guidance/resources/disclosures-101-social-media-influencers' },

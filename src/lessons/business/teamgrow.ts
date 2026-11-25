@@ -1,5 +1,5 @@
 import type { Lesson } from '../types'
-import { NOT_ADVICE } from '../resources'
+import { NOT_ADVICE_HIRING } from '../resources'
 
 const lesson: Lesson = {
   id: 'teamgrow', kind: 'course', school: 'Build your team', title: 'From solo to a real team: the growth ladder', track: 'Business', icon: 'trend',
@@ -24,7 +24,7 @@ const lesson: Lesson = {
     welcome: "Every seller I know hits the same wall: the shop could grow, but she cannot work another hour. This course is about climbing out of that, one rung at a time, with numbers instead of hope. Take your time with it. This is CEO work.",
     signoff: "Hand off one job, write it down, pay people well and treat them right. That is the whole ladder. Keep climbing it and one day your shop will run a live night without you, and you will watch it from your own kitchen table.",
   },
-  covers: [], updated: '2026-11-25',
+  covers: [], legal: 'hiring', updated: '2026-11-25',
   slides: [
     { chapter: 'The ladder', kind: 'learn', title: 'Five rungs, one at a time', nova: "Nobody jumps from solo to a staff of five, love. You climb.",
       text: "Most shops that grow follow the same path. Knowing the rungs means you stop asking 'should I hire somebody' and start asking 'which rung am I on, and what does the next one need.'",
@@ -120,7 +120,7 @@ const lesson: Lesson = {
         'Pay for training time and for the huddle',
         'Small things that cost little: a set schedule, gas money, her birthday off',
       ],
-      tip: NOT_ADVICE },
+      tip: NOT_ADVICE_HIRING },
     { kind: 'learn', title: 'The boss worth working for', text: "Gallup's workplace research has found for years that how somebody feels about a job comes largely down to the person they work for. You cannot outbid a big warehouse on benefits. You can beat them on how people are treated.",
       points: [
         'Clear expectations: she knows what doing well looks like without guessing',

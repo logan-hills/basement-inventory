@@ -23,7 +23,7 @@ const lesson: Lesson = {
     welcome: "Sales tax isn't your money. You're holding it for the state. Get this right, and you stay out of trouble and buy wholesale tax-free. Let's make it simple.",
     signoff: "Register, set up your categories, file on time and keep your resale certificates handy. Remember: this is general education, so check with your state or a tax pro for your situation.",
   },
-  covers: ['src/lessons/resources.ts'], updated: '2026-11-24',
+  covers: ['src/lessons/resources.ts'], legal: 'tax', updated: '2026-11-25',
   slides: [
     { chapter: 'How sales tax works', queen: "Move the sales tax into its own bucket the day you collect it. Then it's never in your spending money.", kind: 'learn', title: 'You\'re the collector', nova: 'Sales tax sounds scary, but it\'s really just: collect it, keep it safe, send it in. Let\'s make it simple.',
       text: 'The buyer pays sales tax. You collect it at checkout, hold it, and send it to the state on a schedule. It was never your money, so don\'t spend it.',
