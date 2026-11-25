@@ -15,7 +15,7 @@ const lesson: Lesson = {
     welcome: "Before we go anywhere, I want you to see the whole road, from the box at your door to the buyer's doorstep. Once you see the flow, every button in this app will make sense.",
     signoff: "Now you know the path. Every piece you own follows it. Come back to this lesson any time you feel lost, and remember Nova is one tap away.",
   },
-  covers: ['src/App.tsx', 'src/components/SubNav.tsx', 'src/components/ActionSheet.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/novaArt.tsx', 'src/components/AskNova.tsx', 'src/lib/novaBrain.ts', 'src/pages/Lessons.tsx', 'src/components/Certificate.tsx', 'src/lessons/awards.ts', 'src/lessons/tips.ts', 'src/lib/shareCert.ts'], updated: '2026-11-24',
+  covers: ['src/App.tsx', 'src/components/SubNav.tsx', 'src/components/ActionSheet.tsx', 'src/pages/Home.tsx', 'src/components/Nova.tsx', 'src/components/novaArt.tsx', 'src/components/AskNova.tsx', 'src/lib/novaBrain.ts', 'src/pages/Lessons.tsx', 'src/components/Certificate.tsx', 'src/lessons/awards.ts', 'src/lessons/tips.ts', 'src/lib/shareCert.ts'], updated: '2026-11-25',
   slides: [
     { chapter: 'Why a system', kind: 'learn', title: 'From "where is it?" to "got it"', nova: "Welcome, boss! Let's make sure you never dig through a box before a live again.",
       text: "Most live sellers start the same way: pieces in tubs, a notebook of who bought what, and two hours of searching before every show. It works until it doesn't. One lost earring, one wrong box, one buyer who never got her order, and the stress starts eating the fun.",

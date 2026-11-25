@@ -1,7 +1,10 @@
 // DRAFT legal text. Have a lawyer review before launch.
 export const LEGAL_UPDATED = 'November 25, 2026'
-export const COMPANY = 'Logan Hills'
-export const CONTACT = 'info@inkandembersociety.com'
+export const COMPANY = 'LaVerne Quarles, doing business as Dynamic Dazzle Bargain Basement'
+/** Contact for the Terms, Privacy Policy and ownership questions (the owner's email). */
+export const CONTACT = 'LaVerne_q@hotmail.com'
+/** Where class sign-ups and coaching requests go today. Separate from the legal contact. */
+export const TEAM_CONTACT = 'info@inkandembersociety.com'
 /** Who owns the brand, Nova, the App and its content. */
 export const IP_OWNER = 'LaVerne Quarles, owner of Dynamic Dazzle Bargain Basement'
 export const COPYRIGHT_LINE = `© ${new Date().getFullYear()} LaVerne Quarles, Dynamic Dazzle Bargain Basement. All rights reserved.`

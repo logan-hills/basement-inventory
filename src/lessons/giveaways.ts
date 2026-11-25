@@ -18,7 +18,7 @@ const lesson: Lesson = {
     welcome: "A giveaway is a thank-you to your community and a reason for new folks to stay. Done fairly and legally, it grows your live. Let's do it right.",
     signoff: "Keep it fair, say the rules out loud, follow Facebook's rules, and never charge for a chance to win. Then have fun with it.",
   },
-  covers: ['src/pages/Giveaways.tsx', 'src/components/GiveawayStage.tsx', 'src/lib/giveaway.ts', 'src/pages/Overlay.tsx'], updated: '2026-11-24',
+  covers: ['src/pages/Giveaways.tsx', 'src/components/GiveawayStage.tsx', 'src/lib/giveaway.ts', 'src/pages/Overlay.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'Why giveaways work', kind: 'learn', title: 'The fun part of the live', nova: 'Ooh, this is my favorite part of the night. Let\'s make it sparkle!',
       text: 'Facebook shows a live to more people when viewers stay and comment. Nothing keeps people watching like a prize they could win at the end. A giveaway turns watchers into talkers, and talkers into buyers.',
