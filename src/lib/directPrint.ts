@@ -145,14 +145,16 @@ function turnCanvas(src: HTMLCanvasElement) {
 }
 
 /** Fits a capture to the exact label size in printer dots (whole dots, no stretching surprises). */
-function fit(src: HTMLCanvasElement, wDots: number, hDots: number) {
-  if (src.width === wDots && src.height === hDots) return src
+function fit(src: HTMLCanvasElement, wDots: number, hDots: number, safe = 1) {
+  if (src.width === wDots && src.height === hDots && safe === 1) return src
   const c = document.createElement('canvas')
   c.width = wDots; c.height = hDots
   const ctx = c.getContext('2d')!
   ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, wDots, hDots)
   ctx.imageSmoothingEnabled = false
-  ctx.drawImage(src, 0, 0, wDots, hDots)
+  // A little white margin all round, so nothing lands on a label's rounded edge.
+  const dw = Math.round(wDots * safe), dh = Math.round(hDots * safe)
+  ctx.drawImage(src, Math.round((wDots - dw) / 2), Math.round((hDots - dh) / 2), dw, dh)
   return c
 }
 
@@ -175,6 +177,8 @@ export type DirectJob = {
   flip?: boolean
   /** Gap between labels, in mm. */
   gapMm?: number
+  /** Move the print across the label, in mm (+ toward the top of a turned tag). */
+  shiftMm?: number
   selector?: string
 }
 
@@ -186,14 +190,14 @@ export async function printDirect(job: DirectJob, onProgress?: (done: number, to
   const wMm = +(job.w * 25.4).toFixed(1), hMm = +(job.h * 25.4).toFixed(1)
   const headMm = 104
   const sizeW = job.middle ? headMm : wMm
-  const x = job.middle ? Math.max(0, Math.round(((headMm - wMm) / 2) * DOTS_PER_MM)) : 0
+  const x = Math.max(0, Math.round(((job.middle ? (headMm - wMm) / 2 : 0) + (job.shiftMm ?? 0)) * DOTS_PER_MM))
   const areas = [...document.querySelectorAll<HTMLElement>('.print-area')]
   areas.forEach(a => a.classList.add('capturing'))
   try {
     for (let i = 0; i < sheets.length; i++) {
       let c = await toCanvas(sheets[i], { pixelRatio: DPI / 96, backgroundColor: '#ffffff', style: { boxShadow: 'none', zoom: '1' } })
       if (job.turn) c = turnCanvas(c)
-      c = fit(c, wDots, hDots)
+      c = fit(c, wDots, hDots, 0.92)
       const { wb, h, bits } = toBits(c)
       const data = join([
         `SIZE ${sizeW} mm,${hMm} mm\r\n`,
