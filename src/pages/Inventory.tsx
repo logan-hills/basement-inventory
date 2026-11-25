@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { money, photoUrls } from '../lib/data'
 import { useSession } from '../lib/session'
 import { loadStock, margin, type StockRow } from '../lib/stock'
@@ -12,6 +12,9 @@ import DamageQtySheet, { type DamageLine } from '../components/DamageQtySheet'
 import BulkEditSheet from '../components/BulkEditSheet'
 import MoreActions from '../components/ActionSheet'
 import Icon from '../components/Icon'
+import StockQuickView from '../components/StockQuickView'
+import CameraScanner from '../components/CameraScanner'
+import { isBinCode, normalizeBinCode } from '../lib/locations'
 
 type Sort = 'newest' | 'oldest' | 'name' | 'live' | 'price_hi' | 'price_lo' | 'stock_hi' | 'stock_lo' | 'value' | 'margin'
 const SORTS: { key: Sort; label: string }[] = [
@@ -38,11 +41,23 @@ const FILTER_LABEL: Record<keyof Filters, string> = { brand: 'Brand', tag: 'Tag'
 
 const remember = <T extends string>(key: string, fallback: T): T => { try { return (localStorage.getItem(key) as T) || fallback } catch { return fallback } }
 const save = (key: string, v: string) => { try { localStorage.setItem(key, v) } catch { /* private mode */ } }
+/** True on phone-size screens, and keeps up when the window is resized. */
+function usePhone() {
+  const q = '(max-width: 640px)'
+  const [on, setOn] = useState(() => typeof window !== 'undefined' && !!window.matchMedia?.(q).matches)
+  useEffect(() => {
+    const m = window.matchMedia?.(q); if (!m) return
+    const fn = () => setOn(m.matches); m.addEventListener('change', fn); return () => m.removeEventListener('change', fn)
+  }, [])
+  return on
+}
+/** A scanned tag like 2447-003 searches for its Live # (2447). */
+const searchText = (raw: string) => { const t = raw.trim().toLowerCase(); const m = t.match(/^(\d{4})-\d{1,4}$/); return m ? m[1] : t }
 const distinct = (xs: (string | null | undefined)[]) => [...new Set(xs.filter(Boolean) as string[])].sort((a, b) => a.localeCompare(b))
 
 export default function Inventory() {
-  const navigate = useNavigate()
   const { settings } = useSession()
+  const phone = usePhone()
   const [rows, setRows] = useState<StockRow[] | null>(null)
   const [urls, setUrls] = useState<Record<string, string>>({})
   const [err, setErr] = useState('')
@@ -56,6 +71,9 @@ export default function Inventory() {
   const [sel, setSel] = useState<Set<string>>(new Set())
   const [damage, setDamage] = useState<DamageLine[] | null>(null)
   const [edit, setEdit] = useState<StockRow[] | null>(null)
+  const [quickId, setQuickId] = useState<string | null>(null)
+  const [scanning, setScanning] = useState(false)
+  const [openOne, setOpenOne] = useState(false)
 
   useEffect(() => save('invStock', stockView), [stockView])
   useEffect(() => save('invSort', sort), [sort])
@@ -85,7 +103,7 @@ export default function Inventory() {
 
   const oldDays = settings.oldStockDays
   const shown = useMemo(() => {
-    const s = q.trim().toLowerCase()
+    const s = searchText(q)
     const hay = (r: StockRow) => [r.item.name, r.item.brand, r.item.category, r.live_number, r.label, r.sku, r.upc, r.item.color, r.item.material, r.item.supplier, r.item.season, r.item.condition, r.item.description, ...r.item.tags, ...r.bins].filter(Boolean).join(' ').toLowerCase()
     const list = all.filter(r =>
       (stockView === 'all' || (stockView === 'in' ? r.inStock > 0 : r.inStock === 0)) &&
@@ -123,6 +141,18 @@ export default function Inventory() {
     return [...m].map(([name, v]) => ({ name, ...v }))
   }, [all, settings.categories, urls])
 
+  const quick = quickId ? all.find(r => r.id === quickId) ?? null : null
+  // After a scan (or Enter) that finds exactly one piece, open it straight away.
+  useEffect(() => { if (openOne && rows) { if (shown.length === 1) setQuickId(shown[0].id); setOpenOne(false) } }, [openOne, rows, shown])
+  const tidy = useMemo(() => {
+    const live = all.filter(r => r.inStock > 0)
+    return { bin: live.filter(r => r.bins.length === 0).length, price: live.filter(r => r.price == null).length }
+  }, [all])
+  function onScanned(code: string) {
+    setScanning(false)
+    if (isBinCode(code)) { setQ(''); setF(x => ({ ...x, bin: normalizeBinCode(code) ?? code })); setStockView('in') }
+    else { setQ(code); setOpenOne(true) }
+  }
   const toggle = (id: string) => { tap(); setSel(s => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n }) }
   const allShownOn = shown.length > 0 && shown.every(r => sel.has(r.id))
   const selectShown = (on: boolean) => setSel(s => { const n = new Set(s); shown.forEach(r => (on ? n.add(r.id) : n.delete(r.id))); return n })
@@ -150,20 +180,24 @@ export default function Inventory() {
       <div className="page-head">
         <div><h1>Inventory</h1></div>
         <div className="page-actions">
-          <MoreActions title="More for your stock" items={[
+          <MoreActions label={phone ? '' : 'More'} className={phone ? 'btn ghost icon-only' : 'btn ghost'} title="More for your stock" items={[
             { label: 'Scan a tag or bin', hint: 'Look up an item, or put items away', icon: 'scan', to: '/scan' },
             { label: 'Bulk upload a CSV', hint: 'Add lots of items at once from a spreadsheet', icon: 'upload', to: '/receive/bulk' },
             { label: 'Download this list', hint: `A spreadsheet of the ${shown.length} variation${shown.length === 1 ? '' : 's'} showing now`, icon: 'download', onClick: exportCsv, disabled: !shown.length },
             { label: 'Print bin labels', hint: 'Labels for your shelves and bins', icon: 'print', to: '/bin-labels' },
           ]} />
-          <Link to="/intake" className="btn primary"><Icon name="plus" size={18} />Add item</Link>
+          <Link to="/intake" className="btn primary"><Icon name="plus" size={18} />{phone ? 'Add' : 'Add item'}</Link>
         </div>
       </div>
-      {all.length > 0 && <CategoryRail cats={catStats} active={cat} onPick={setCat} money={money} />}
+      {all.length > 0 && <CategoryRail cats={catStats} active={cat} onPick={setCat} money={money} compact={phone} />}
 
       <div className="toolbar-simple">
-        <input type="search" className="search" placeholder="Search name, Live #, brand, color, bin…" value={q} onChange={e => setQ(e.target.value)} aria-label="Search inventory" />
-        <button className={`btn ${active.length || stockView !== 'in' ? 'gold' : 'ghost'}`} onClick={() => setShowFilters(true)}><Icon name="filter" size={18} />Sort and filter{active.length ? ` · ${active.length}` : ''}</button>
+        <div className="search-scan">
+          <input type="search" className="search" placeholder={phone ? 'Search or scan a tag' : 'Search name, Live #, brand, color, bin… or scan a tag'} value={q}
+            onChange={e => setQ(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') setOpenOne(true) }} aria-label="Search inventory" enterKeyHint="search" />
+          <button type="button" className="search-scan-btn" onClick={() => setScanning(true)} aria-label="Scan a tag with the camera"><Icon name="scan" size={22} /></button>
+        </div>
+        <button className={`btn ${active.length || stockView !== 'in' ? 'gold' : 'ghost'}`} onClick={() => setShowFilters(true)}><Icon name="filter" size={18} />{phone ? 'Filter' : 'Sort and filter'}{active.length ? ` · ${active.length}` : ''}</button>
       </div>
 
       {(active.length > 0 || cat || stockView !== 'in') && (
@@ -172,6 +206,14 @@ export default function Inventory() {
           {cat && <button className="chip-mini removable" onClick={() => setCat('')}>Category: {cat} ×</button>}
           {active.map(k => <button key={k} className="chip-mini removable" onClick={() => setF(x => ({ ...x, [k]: '' }))}>{chipText(k)} ×</button>)}
           <button className="link-btn small" onClick={() => { setF(NO_FILTERS); setCat(''); setStockView('in') }}>Clear all</button>
+        </div>
+      )}
+
+      {!anyFilter && (tidy.bin > 0 || tidy.price > 0) && (
+        <div className="tidy-line">
+          <span className="tidy-label"><Icon name="sparkle" size={18} />Tidy up</span>
+          {tidy.bin > 0 && <button className="tidy-chip" onClick={() => setF(x => ({ ...x, missing: 'bin' }))}>{tidy.bin} need{tidy.bin === 1 ? 's' : ''} a bin</button>}
+          {tidy.price > 0 && <button className="tidy-chip" onClick={() => setF(x => ({ ...x, missing: 'price' }))}>{tidy.price} need{tidy.price === 1 ? 's' : ''} a price</button>}
         </div>
       )}
 
@@ -186,10 +228,27 @@ export default function Inventory() {
         <>
           <div className="row-between inv-summary">
             <label className="check-line"><input type="checkbox" checked={allShownOn} onChange={e => selectShown(e.target.checked)} /> Select all {shown.length}</label>
-            <span className="muted small">{shown.length} variation{shown.length === 1 ? '' : 's'} · {pieces} piece{pieces === 1 ? '' : 's'} · {money(value)} on the shelf</span>
+            <span className="muted small">{pieces} piece{pieces === 1 ? '' : 's'} · {money(value)}{phone ? '' : ' on the shelf'}</span>
           </div>
 
-          {view === 'list' ? (
+          {view === 'list' && phone ? (
+            <ul className="inv-cards">
+              {shown.map(r => (
+                <li key={r.id} className={`inv-rowcard${sel.has(r.id) ? ' selected' : ''}${r.inStock ? '' : ' out'}`}>
+                  <button className="inv-rowcard-check" aria-pressed={sel.has(r.id)} aria-label={`Select #${r.live_number}`} onClick={() => toggle(r.id)}>{sel.has(r.id) ? '✓' : ''}</button>
+                  <button className="inv-rowcard-main" onClick={() => setQuickId(r.id)}>
+                    <span className="inv-rowcard-photo">{r.item.photo && urls[r.item.photo] ? <img src={urls[r.item.photo]} alt="" /> : <Icon name="tag" size={22} />}</span>
+                    <span className="inv-rowcard-text">
+                      <span className="inv-rowcard-top"><span className="inv-rowcard-live">#{r.live_number}</span><span className="inv-rowcard-price">{r.price == null ? <span className="no-price">No price</span> : price(r)}</span></span>
+                      <b>{r.item.name}</b>
+                      {([r.label !== 'One size' ? r.label : '', r.item.brand].filter(Boolean).join(' · ')) && <span className="muted small">{[r.label !== 'One size' ? r.label : '', r.item.brand].filter(Boolean).join(' · ')}</span>}
+                      <span className="inv-rowcard-meta"><span className={`stock-pill${r.inStock ? '' : ' out'}`}>{r.inStock ? `${r.inStock} in stock` : 'Sold out'}</span><span className={`bin-pill${r.bins.length ? '' : ' none'}`}>{r.bins.length ? r.bins[0] + (r.bins.length > 1 ? ` +${r.bins.length - 1}` : '') : r.inStock ? 'No bin' : ''}</span></span>
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : view === 'list' ? (
             <div className="table-box">
               <table className="data-table clickable inv-table">
                 <thead><tr>
@@ -198,7 +257,7 @@ export default function Inventory() {
                 </tr></thead>
                 <tbody>
                   {shown.map(r => (
-                    <tr key={r.id} className={sel.has(r.id) ? 'selected' : ''} onClick={() => navigate(`/item/${r.item.id}`)} tabIndex={0} onKeyDown={e => { if (e.key === 'Enter') navigate(`/item/${r.item.id}`) }}>
+                    <tr key={r.id} className={sel.has(r.id) ? 'selected' : ''} onClick={() => setQuickId(r.id)} tabIndex={0} onKeyDown={e => { if (e.key === 'Enter') setQuickId(r.id) }}>
                       <td className="check-col" onClick={e => { e.stopPropagation(); toggle(r.id) }}><input type="checkbox" aria-label={`Select #${r.live_number}`} checked={sel.has(r.id)} onChange={() => {}} /></td>
                       <td>
                         <div className="cell-item">
@@ -213,7 +272,7 @@ export default function Inventory() {
                       <td className="gold strong">{r.live_number}</td>
                       <td className="hide-xs">{price(r)}</td>
                       <td className={r.inStock ? '' : 'muted'}>{r.inStock}</td>
-                      <td className="hide-sm muted">{r.bins.join(', ') || '—'}</td>
+                      <td className="hide-sm">{r.bins.length ? <span className="muted">{r.bins.join(', ')}</span> : r.inStock ? <span className="bin-pill none">No bin</span> : <span className="muted">—</span>}</td>
                       <td className={`hide-sm ${r.ageDays >= oldDays && r.inStock ? 'warn-text' : 'muted'}`}>{r.ageDays}d</td>
                     </tr>
                   ))}
@@ -225,13 +284,13 @@ export default function Inventory() {
               {shown.map(r => (
                 <div key={r.id} className={`inv-card ${sel.has(r.id) ? 'selected' : ''}`}>
                   <button className="inv-card-check" aria-pressed={sel.has(r.id)} aria-label={`Select #${r.live_number}`} onClick={() => toggle(r.id)}>{sel.has(r.id) ? '✓' : ''}</button>
-                  <Link to={`/item/${r.item.id}`} className="inv-card-link">
+                  <button type="button" onClick={() => setQuickId(r.id)} className="inv-card-link">
                     <span className="inv-card-photo">{r.item.photo && urls[r.item.photo] ? <img src={urls[r.item.photo]} alt="" /> : <span className="muted small">No photo</span>}</span>
                     <span className="inv-card-live">#{r.live_number}</span>
                     <b className="inv-card-name">{r.item.name}</b>
                     <span className="muted small">{r.label !== 'One size' ? r.label : (r.item.brand ?? '')}</span>
                     <span className="row-between"><span>{price(r)}</span><span className={r.inStock ? 'small' : 'muted small'}>{r.inStock} in stock</span></span>
-                  </Link>
+                  </button>
                 </div>
               ))}
             </div>
@@ -314,6 +373,14 @@ export default function Inventory() {
       </Sheet>
       <DamageQtySheet lines={damage} onClose={() => setDamage(null)} onChanged={() => { setSel(new Set()); load() }} />
       <BulkEditSheet rows={edit} onClose={() => setEdit(null)} onChanged={load} />
+      <StockQuickView row={quick} photo={quick?.item.photo ? urls[quick.item.photo] : undefined} onClose={() => setQuickId(null)} onChanged={load}
+        onDamage={r => { setQuickId(null); setDamage([{ variantId: r.id, itemId: r.item.id, name: r.item.name, label: r.label, live: r.live_number, inStock: r.inStock }]) }} />
+      <Sheet open={scanning} onClose={() => setScanning(false)} title="Scan a tag or bin">
+        <div className="stack">
+          <p className="muted">Point your camera at a Live # tag to open it, or at a bin label to see what's inside.</p>
+          {scanning && <CameraScanner onCode={onScanned} />}
+        </div>
+      </Sheet>
     </div>
   )
 }

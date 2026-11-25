@@ -53,7 +53,7 @@ function popFor(cat: string, i: number) {
 }
 
 /** Shop-by-category tiles: bright, bubbly and easy to tap. Tap again to go back to everything. */
-export default function CategoryRail({ cats, active, onPick, money, allLabel = 'Everything' }: { cats: CatStat[]; active: string; onPick: (c: string) => void; money?: (n: number) => string; allLabel?: string }) {
+export default function CategoryRail({ cats, active, onPick, money, allLabel = 'Everything', compact }: { cats: CatStat[]; active: string; onPick: (c: string) => void; money?: (n: number) => string; allLabel?: string; /** Slim one-line tiles on phones, so the list shows sooner. */ compact?: boolean }) {
   const total = cats.reduce((s, c) => s + c.pieces, 0)
   const tile = (key: string, name: string, tone: string, icon: ReactElement, meta: string, sub: string, on: boolean, empty: boolean, pickValue: string) => (
     <button key={key} className={`pop-tile pop-${tone}${on ? ' on' : ''}${empty ? ' empty' : ''}`} onClick={() => onPick(pickValue)} aria-pressed={on}>
@@ -66,7 +66,7 @@ export default function CategoryRail({ cats, active, onPick, money, allLabel = '
     </button>
   )
   return (
-    <div className="pop-rail" role="group" aria-label="Shop by category">
+    <div className={`pop-rail${compact ? ' compact' : ''}`} role="group" aria-label="Shop by category">
       {tile('__all', allLabel, POP.all.tone, POP.all.icon, `${total.toLocaleString()} pieces`, '', active === '', false, '')}
       {cats.map((c, i) => {
         const a = popFor(c.name, i)

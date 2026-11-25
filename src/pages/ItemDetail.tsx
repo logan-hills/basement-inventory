@@ -24,7 +24,8 @@ export default function ItemDetail() {
   const [bulk, setBulk] = useState<{ units: { id: string; tag_code: string; label: string }[]; choose: boolean } | null>(null)
   const toggleReprint = (code: string) => setReprint(s => { const n = new Set(s); if (n.has(code)) n.delete(code); else n.add(code); return n })
   const [damage, setDamage] = useState<{ id: string; tag_code: string; label: string } | null>(null)
-  const [addQty, setAddQty] = useState<Record<string, string>>({})
+  const [addQty, setAddQty] = useState<Record<string, number>>({})
+  const [newTags, setNewTags] = useState<Record<string, string[]>>({})
 
   const load = useCallback(async () => {
     const { data, error } = await supabase
@@ -96,11 +97,12 @@ export default function ItemDetail() {
 
   async function addMore(v: VariantRow) {
     if (!shop) return
-    const n = parseInt(addQty[v.id] ?? '', 10)
-    if (!n) return
-    await addUnits(shop.id, v, n)
-    setAddQty(q => ({ ...q, [v.id]: '' }))
-    toast(`Added ${n} tag${n === 1 ? '' : 's'} to #${v.live_number}`, { kind: 'ok' })
+    const n = addQty[v.id] ?? 1
+    if (n < 1) return
+    const codes = await addUnits(shop.id, v, n)
+    setAddQty(q => ({ ...q, [v.id]: 1 }))
+    setNewTags(t => ({ ...t, [v.id]: codes }))
+    toast(`Added ${n} to #${v.live_number}. Now print ${n === 1 ? 'its tag' : 'their tags'}.`, { kind: 'ok' })
     load()
   }
 
@@ -192,13 +194,17 @@ export default function ItemDetail() {
                   {v.price != null && v.cost != null ? <b className={v.price - v.cost >= 0 ? 'ok-text' : 'danger-text'}>{money(v.price - v.cost)}{v.price > 0 ? ` · ${Math.round(((v.price - v.cost) / v.price) * 100)}%` : ''}</b> : <span className="muted">Add a cost</span>}
                 </div>
               </div>
-              <div className="row2">
-                <label>Add more tags
-                  <span className="input-suffix">
-                    <input inputMode="numeric" value={addQty[v.id] ?? ''} onChange={e => setAddQty(q => ({ ...q, [v.id]: e.target.value.replace(/\D/g, '') }))} placeholder="Qty" />
-                    <button className="btn ghost small" onClick={() => addMore(v)}>Add</button>
-                  </span>
-                </label>
+              <div className="add-pieces">
+                <b>Got more of these?</b>
+                <div className="qv-stepper-row">
+                  <div className="stepper" role="group" aria-label={`How many to add to #${v.live_number}`}>
+                    <button type="button" onClick={() => setAddQty(q => ({ ...q, [v.id]: Math.max(1, (q[v.id] ?? 1) - 1) }))} disabled={(addQty[v.id] ?? 1) <= 1} aria-label="One less">−</button>
+                    <input inputMode="numeric" value={addQty[v.id] ?? 1} aria-label="How many to add" onChange={e => setAddQty(q => ({ ...q, [v.id]: Math.min(500, Math.max(1, parseInt(e.target.value.replace(/\D/g, '') || '1', 10))) }))} />
+                    <button type="button" onClick={() => setAddQty(q => ({ ...q, [v.id]: Math.min(500, (q[v.id] ?? 1) + 1) }))} aria-label="One more">+</button>
+                  </div>
+                  <button className="btn primary" onClick={() => addMore(v)}>Add {addQty[v.id] ?? 1}</button>
+                </div>
+                {(newTags[v.id]?.length ?? 0) > 0 && <Link className="btn gold" to={`/labels?tags=${newTags[v.id].join(',')}`}>Print the {newTags[v.id].length} new tag{newTags[v.id].length === 1 ? '' : 's'}</Link>}
               </div>
               <details className="variant-more" open={v.sale_price != null || !!v.sku || !!v.upc}>
                 <summary>More details <span className="muted small">weight, sale price, SKU, UPC</span></summary>
@@ -222,7 +228,7 @@ export default function ItemDetail() {
               </details>
               <div className="unit-list">
                 <div className="row-between">
-                  <span className="eyebrow">Tags · tick to reprint or damage out</span>
+                  <span className="eyebrow">Each piece's tag · tick to reprint or damage out</span>
                   {inStock.length > 1 && (
                     <div className="row-gap">
                       <button className="link-btn" onClick={() => setReprint(r => { const n = new Set(r); const all = inStock.every(u => n.has(u.tag_code)); inStock.forEach(u => (all ? n.delete(u.tag_code) : n.add(u.tag_code))); return n })}>{inStock.every(u => reprint.has(u.tag_code)) ? 'Unselect all' : 'Select all'}</button>
@@ -235,13 +241,14 @@ export default function ItemDetail() {
                     <div className="unit-row">
                       <input type="checkbox" aria-label={`Reprint ${u.tag_code}`} checked={reprint.has(u.tag_code)} onChange={() => toggleReprint(u.tag_code)} />
                       <span className="mono">{u.tag_code}</span>
-                      <span className="muted">{u.location?.name ?? 'No location'}</span>
+                      <span className="muted">{u.location?.name ?? 'No bin yet'}</span>
                       <button className="link-btn danger-text" onClick={() => setDamage({ id: u.id, tag_code: u.tag_code, label: `${item.name} · ${v.label}` })}>Damage out</button>
                     </div>
                   </SwipeRow>
                 ))}
                 {removed.map(u => (
                   <div key={u.id} className="unit-row removed">
+                    <span aria-hidden="true" />
                     <span className="mono">{u.tag_code}</span>
                     <span className="danger-text">{u.removed_reason ?? u.status}</span>
                     <button className="link-btn" onClick={async () => { if (shop) { await restoreUnit(shop.id, u.id); toast(`${u.tag_code} is back in stock`, { kind: 'ok' }); load() } }}>Put back</button>

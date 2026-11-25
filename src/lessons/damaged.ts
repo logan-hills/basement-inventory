@@ -16,13 +16,13 @@ const lesson: Lesson = {
     welcome: "Broken pieces happen in every shop. What matters is that you take them out of stock fast and learn why they broke. That's how you protect your buyers and your profit.",
     signoff: "Damage it out, note the reason, and fix the cause. Then ask your supplier for credit. Every piece you save is profit you keep.",
   },
-  covers: ['src/pages/Damaged.tsx', 'src/components/DamageSheet.tsx', 'src/components/DamageQtySheet.tsx', 'src/pages/Inventory.tsx', 'src/pages/ItemDetail.tsx'], updated: '2026-11-24',
+  covers: ['src/pages/Damaged.tsx', 'src/components/DamageSheet.tsx', 'src/components/DamageQtySheet.tsx', 'src/pages/Inventory.tsx', 'src/pages/ItemDetail.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'Why it matters', kind: 'learn', title: 'The piece you can\'t ship', nova: 'Nobody likes this part, but it saves you from a bad night.',
       text: 'If a broken piece stays "in stock," it shows up in Get ready for live, someone claims it, and you find out at the packing table. Now you\'re messaging a buyer to cancel, and she\'s disappointed. Damaging it out the moment you spot it prevents all of that.' },
     { kind: 'learn', title: 'Shrink: the quiet profit leak', text: 'Stores call everything that disappears from stock without being sold "shrink": broken, stained, lost, or never arrived. Every shrunk piece is money you spent and will never get back. Most sellers have no idea how much they lose, because they never write it down.' },
 
-    { chapter: 'Damage out', kind: 'learn', title: 'One, several, or a number', text: 'On an item page, swipe a tag left or tap Damage out. To do several at once, tick tags (or Select all) and Damage out, or say how many.',
+    { chapter: 'Damage out', kind: 'learn', title: 'One, several, or a number', text: 'On an item page, swipe a tag left or tap Damage out. To do several at once, tick tags (or Select all) and Damage out, or say how many. On Stock you can also tap a piece and choose Some are damaged or missing in its pop-up, then say how many.',
       screen: { title: 'Gold hoop set', rows: ['☑ 4821-002', '☑ 4821-005'], buttons: ['Damage out 2'], highlight: 'Damage out 2' } },
     { kind: 'learn', title: 'Many items at once, with a quantity each', text: 'After a leak or a bad shipment, you may have damage across lots of items. In Inventory, tick every row that has damage (or Select all), then tap More and choose Damage out. You\'ll see each item with a − and + so you can say exactly how many of each are damaged: 2 of the hoops, 1 of the sunglasses, 0 of the scarf. Pick one reason and an optional note for the batch.',
       screen: { title: 'Damage out 3 items', rows: ['Gold hoop set #4810 · 2 on the shelf   [ − 2 + ]', 'Cat-eye sunglasses #4817 · 4 on the shelf   [ − 1 + ]', 'Silk scarf #4822 · 3 on the shelf   [ − 0 + ]'], buttons: ['1 of each', 'All of each', 'Remove 3 from stock'], highlight: 'Remove 3 from stock' },
