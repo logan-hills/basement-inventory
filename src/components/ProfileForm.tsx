@@ -57,7 +57,7 @@ export default function ProfileForm({ userId, email: loginEmail, initial, mode, 
           <span className="eyebrow">How will you use the app?</span>
           <div className="type-pick">
             <button type="button" className={`type-card ${type === 'stream' ? 'on' : ''}`} onClick={() => setType('stream')}>
-              <b>Just stream</b><span>Free. Book your hour on the shared Page and go live.</span>
+              <b>Just stream</b><span>Free. Book a 1.5-hour slot on the shared Page and go live.</span>
             </button>
             <button type="button" className={`type-card ${type === 'seller' ? 'on' : ''}`} onClick={() => setType('seller')}>
               <b>Full seller app</b><span>Inventory, labels, live prep, picking and shipping, plus streaming.</span>

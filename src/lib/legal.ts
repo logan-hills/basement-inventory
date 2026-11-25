@@ -1,5 +1,5 @@
 // DRAFT legal text. Have a lawyer review before launch.
-export const LEGAL_UPDATED = 'November 23, 2026'
+export const LEGAL_UPDATED = 'November 25, 2026'
 export const COMPANY = 'Logan Hills'
 export const CONTACT = 'info@inkandembersociety.com'
 
@@ -28,10 +28,10 @@ export const TERMS: LegalDoc = {
     {
       h: '3. The shared live calendar',
       p: [
-        'Live time on the shared Facebook Page is booked in whole-hour blocks. Only one seller can hold a time. Booking is first come, first served unless a host sets other rules.',
+        'Live time on the shared Facebook Page is booked in 1.5-hour slots that start on the hour or the half hour. Only one seller can hold a time. Booking is first come, first served unless a host sets other rules.',
         'Start and stop times are hard. Your live is started at your start time and ended automatically at your stop time, even mid-sentence. You get a wrap-up warning before the end. Please finish on time out of respect for the next seller.',
         'Each shared Page has seller guidelines (for the Dynamic Dazzle Bargain Basement Page, the "Vendor Live Selling Guidelines"). They are shown every time you open the live calendar, and you must agree to them before booking. We save the date and time of each agreement. The guidelines are part of these Terms. Booking live time is free.',
-        'If you are more than the allowed number of minutes late (10 minutes on the Dynamic Dazzle Page), your live is canceled automatically and the hour is lost.',
+        'If you are more than the allowed number of minutes late (10 minutes on the Dynamic Dazzle Page), your live is canceled automatically and the slot is lost.',
         'The Page owner and hosts may cancel or move bookings, remove sellers from the calendar, and end a live early to protect the Page, its followers or other sellers. If you cannot make your time, cancel it in the App so someone else can use it.',
       ],
     },

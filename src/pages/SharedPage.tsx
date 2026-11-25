@@ -18,8 +18,12 @@ const pad = (n: number) => String(n).padStart(2, '0')
 const dateStr = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
 const startOfDay = (d: Date) => { const x = new Date(d); x.setHours(0, 0, 0, 0); return x }
 const addDays = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n)
-const HOURS = Array.from({ length: 24 }, (_, h) => h)
-const hourText = (h: number) => new Date(2000, 0, 1, h).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })
+/** Every shared Page live is one 1.5-hour slot. Slots can start on the hour or the half hour. */
+export const SLOT_MIN = 90
+const SLOT_MS = SLOT_MIN * 60000
+const STARTS = Array.from({ length: 48 }, (_, i) => i * 30)
+const startText = (m: number) => new Date(2000, 0, 1, Math.floor(m / 60), m % 60).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })
+const startAt = (date: string, m: number) => new Date(`${date}T${pad(Math.floor(m / 60))}:${pad(m % 60)}`)
 
 function Welcome({ onDone }: { onDone: () => void }) {
   const toast = useToast()
@@ -188,8 +192,7 @@ function HostPanel({ stage, members, onChange }: { stage: Stage; members: StageM
 function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolean; onClose: () => void; stage: Stage; day: Date | null; slots: Slot[]; onSaved: () => void }) {
   const toast = useToast()
   const [date, setDate] = useState('')
-  const [hour, setHour] = useState(19)
-  const [hours, setHours] = useState(1)
+  const [startMin, setStartMin] = useState(19 * 60)
   const [title, setTitle] = useState('')
   const [liveId, setLiveId] = useState('')
   const [lives, setLives] = useState<Live[]>([])
@@ -197,14 +200,14 @@ function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolea
 
   useEffect(() => {
     if (!open) return
-    setDate(dateStr(day ?? new Date())); setHour(19); setHours(1); setTitle(''); setLiveId('')
+    setDate(dateStr(day ?? new Date())); setStartMin(19 * 60); setTitle(''); setLiveId('')
     loadLives(startOfDay(new Date())).then(l => setLives(l.filter(x => x.status === 'planned'))).catch(() => setLives([]))
   }, [open, day])
 
   const taken = useMemo(() => slots.filter(s => date && dateStr(new Date(s.starts_at)) === date), [slots, date])
-  const start = date ? new Date(`${date}T${pad(hour)}:00`) : null
-  const end = start ? new Date(start.getTime() + hours * 3600000) : null
-  const hourTaken = (h: number) => { const a = new Date(`${date}T${pad(h)}:00`).getTime(); return taken.some(s => Date.parse(s.starts_at) < a + 3600000 && Date.parse(s.ends_at) > a) || a < Date.now() }
+  const start = date ? startAt(date, startMin) : null
+  const end = start ? new Date(start.getTime() + SLOT_MS) : null
+  const startTaken = (m: number) => { const a = startAt(date, m).getTime(); return taken.some(s => Date.parse(s.starts_at) < a + SLOT_MS && Date.parse(s.ends_at) > a) || a < Date.now() }
   const clash = start && end ? taken.find(s => new Date(s.starts_at) < end && new Date(s.ends_at) > start) : undefined
 
   function pickLive(id: string) {
@@ -212,7 +215,7 @@ function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolea
     const l = lives.find(x => x.id === id)
     if (l) {
       const s = new Date(l.starts_at)
-      setDate(dateStr(s)); setHour(s.getHours()); setHours(Math.min(4, Math.max(1, Math.round(l.duration_min / 60)))); setTitle(l.title)
+      setDate(dateStr(s)); setStartMin(s.getHours() * 60 + (s.getMinutes() >= 30 ? 30 : 0)); setTitle(l.title)
     }
   }
 
@@ -229,7 +232,7 @@ function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolea
   }
 
   return (
-    <Sheet open={open} onClose={onClose} title="Book your live hour">
+    <Sheet open={open} onClose={onClose} title="Book your 1.5-hour live">
       <form className="stack" onSubmit={save}>
         {lives.length > 0 && (
           <label>Use one of my planned lives (optional)
@@ -240,15 +243,15 @@ function BookSheet({ open, onClose, stage, day, slots, onSaved }: { open: boolea
           </label>
         )}
         <label>Title<input value={title} onChange={e => setTitle(e.target.value)} placeholder="$2 Tuesday" /></label>
-        <div className="row3">
+        <div className="row2">
           <label>Date<input type="date" required value={date} onChange={e => setDate(e.target.value)} /></label>
           <label>Start
-            <select value={hour} onChange={e => setHour(parseInt(e.target.value, 10))}>
-              {HOURS.map(h => <option key={h} value={h} disabled={!!date && hourTaken(h)}>{hourText(h)}{date && hourTaken(h) ? ' (taken)' : ''}</option>)}
+            <select value={startMin} onChange={e => setStartMin(parseInt(e.target.value, 10))}>
+              {STARTS.map(m => <option key={m} value={m} disabled={!!date && startTaken(m)}>{startText(m)}{date && startTaken(m) ? ' (taken)' : ''}</option>)}
             </select>
           </label>
-          <label>Hours<select value={hours} onChange={e => setHours(parseInt(e.target.value, 10))}>{[1, 2, 3, 4].map(n => <option key={n} value={n}>{n} hour{n > 1 ? 's' : ''}</option>)}</select></label>
         </div>
+        <p className="muted small">Every live slot is 1.5 hours.</p>
         {taken.length > 0 && (
           <div className="stack tight-gap">
             <span className="muted small">Already taken that day:</span>
@@ -327,11 +330,11 @@ export default function SharedPage() {
         <div>
           <span className="eyebrow">Sell · Shared Page</span>
           <h1>{stage.name}</h1>
-          <p className="muted small">{stage.fb_page_id ? <>Goes live on <b>{stage.fb_page_name}</b></> : <span className="danger-text">Facebook Page not connected yet</span>} · one seller per hour · hard start and stop · times in your time zone</p>
+          <p className="muted small">{stage.fb_page_id ? <>Goes live on <b>{stage.fb_page_name}</b></> : <span className="danger-text">Facebook Page not connected yet</span>} · 1.5-hour slots, one seller at a time · hard start and stop · times in your time zone</p>
         </div>
         <div className="row-gap">
           {mine.length > 1 && <select value={pick} onChange={e => setPick(parseInt(e.target.value, 10))}>{mine.map((m, i) => <option key={m.stage.id} value={i}>{m.stage.name}</option>)}</select>}
-          <button className="btn primary" onClick={() => setBook({ day: null })}>+ Book your hour</button>
+          <button className="btn primary" onClick={() => setBook({ day: null })}>+ Book your slot</button>
         </div>
       </div>
       {err && <p className="danger-text">{err}</p>}

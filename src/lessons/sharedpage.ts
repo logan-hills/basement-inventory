@@ -2,9 +2,9 @@ import type { Lesson } from './types'
 
 const lesson: Lesson = {
   id: 'sharedpage', title: 'Go live on the shared Page', track: 'Sell', icon: 'clock',
-  why: 'Book your hour on the big shared Page, get your own stream key, and go live to thousands of followers without anyone sharing a password.',
+  why: 'Book your 1.5-hour slot on the big shared Page, get your own stream key, and go live to thousands of followers without anyone sharing a password.',
   outcomes: [
-    'Book an hour and follow the Vendor Live Selling Guidelines with confidence',
+    'Book a 1.5-hour slot and follow the Vendor Live Selling Guidelines with confidence',
     'Set up your phone or computer to stream with your private Go Live key',
     'Run a 5-minute test so your live starts on time, every time',
     'Show products on your stream and read claims as they come in',
@@ -16,14 +16,14 @@ const lesson: Lesson = {
     signoff: "Read the guidelines every time, start on time, end on time, and thank the next seller on your way out. That's how we keep the Page strong for everyone.",
   },
   covers: ['src/components/GuidelinesGate.tsx', 'src/lib/guidelines.ts', 'src/pages/SharedPage.tsx', 'src/pages/OnAir.tsx', 'src/components/StreamSetup.tsx', 'src/components/OnAirBar.tsx', 'src/lib/stage.ts', 'src/components/LiveControl.tsx', 'src/pages/Overlay.tsx'],
-  updated: '2026-11-24',
+  updated: '2026-11-25',
   slides: [
-    { chapter: 'Book your hour', kind: 'learn', title: 'One calendar, one seller per hour', text: 'Everyone shares one live calendar for the Facebook Page. Time is booked in whole hours, and once an hour is taken nobody else can book it.', points: ['Your name shows next to the hours you book', 'Tap any name to see that seller\'s profile', 'Cancel early if plans change, so someone else can use the hour'] },
+    { chapter: 'Book your slot', kind: 'learn', title: 'One calendar, one seller at a time', text: 'Everyone shares one live calendar for the Facebook Page. Every live is one 1.5-hour slot, and it can start on the hour or the half hour, like 7:00 or 7:30. Once a time is taken, nobody else can book over it.', points: ['Your name shows next to the slots you book', 'Tap any name to see that seller\'s profile', 'Cancel early if plans change, so someone else can use the time'] },
     { queen: "Those guidelines protect every seller on the Page, including you. Take them seriously, every visit.", kind: 'learn', title: 'The house rules, every time', text: 'Each time you open the live calendar, the Vendor Live Selling Guidelines pop up. Read to the end and tap I have read and agree. The app saves the date and time you agreed.', points: ['Log in 5 to 10 minutes early', 'More than 10 minutes late means the live is canceled automatically', 'No music, TV or designer names on your live'], tip: 'Breaking the guidelines can get your account revoked with no refund, so give them a real read.' },
     {
-      kind: 'tap', title: 'Book your hour', prompt: 'You want Thursday at 7 PM. What do you tap?',
-      screen: { title: 'Shared Page lives', rows: ['Thu · 6 PM Bee Boutique', 'Thu · 7 PM wide open'], buttons: ['+ Book your hour', 'Host tools', 'All slots'] },
-      answer: '+ Book your hour', hint: 'Booking starts with the gold-and-green Book button at the top.',
+      kind: 'tap', title: 'Book your slot', prompt: 'You want Thursday at 7 PM. What do you tap?',
+      screen: { title: 'Shared Page lives', rows: ['Thu · 5:30 to 7 PM Bee Boutique', 'Thu · 7 PM wide open'], buttons: ['+ Book your slot', 'Host tools', 'All slots'] },
+      answer: '+ Book your slot', hint: 'Booking starts with the gold-and-green Book button at the top.',
     },
     { kind: 'learn', title: 'The guidelines, explained', text: 'The rules aren\'t there to trip you up. Each one protects your live, the next seller\'s live, and the Page everyone shares.',
       table: { head: ['Rule', 'Why it matters'], rows: [
@@ -52,9 +52,9 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'A setup that doesn\'t fail', text: 'Most bad lives aren\'t about the pieces. They\'re about light, sound and signal. Get these right once and stop worrying.',
       points: ['Wi-Fi: sit close to the router, or use a wired connection on a computer. Ask others at home to pause big downloads and streaming.', 'Power: phone plugged in the whole time, and a ring light or window light on your face', 'Sound: a quiet room, TV and radio off, phone on Do Not Disturb so calls don\'t cut your stream', 'Camera: phone on a stand at eye level, lens wiped, upright', 'Table: pieces laid out in run-of-show order, within arm\'s reach'] },
     { chapter: 'Go live', kind: 'learn', title: 'Your Go Live key unlocks on time', text: 'Nobody gets the Page login. 5 minutes before your start time, on the night you booked, your private Go Live key appears on the On Air screen for a hidden test. You go public at exactly your start time. Paste it into Prism or Larix on your phone, or OBS or Streamlabs on a computer, and start streaming. It only works for your hour.', tip: 'Set up your streaming app earlier in the day so at start time you just paste and go.' },
-    { kind: 'order', title: 'Going live, step by step', prompt: 'Put these in order.', steps: ['Book your hour', 'Set up your streaming app ahead of time', '5 minutes before, open On Air and copy your key', 'Paste the key and start a private test stream', 'Go public automatically at your start time', 'Wrap up when the 5-minute warning chimes'] },
-    { queen: "End on time even when sales are hot. The next seller is counting on that hour, just like you count on yours.", kind: 'learn', title: 'Hard start, hard stop', text: 'The app puts you live at your start time and ends the live on Facebook at your stop time, even mid-sentence. A chime and a gold banner give you a 5-minute warning, and the countdown shows on every screen of the app.' },
-    { kind: 'checklist', title: 'Your 10-minutes-before routine', prompt: 'Tick these every time, starting 10 minutes before your hour.', items: [
+    { kind: 'order', title: 'Going live, step by step', prompt: 'Put these in order.', steps: ['Book your 1.5-hour slot', 'Set up your streaming app ahead of time', '5 minutes before, open On Air and copy your key', 'Paste the key and start a private test stream', 'Go public automatically at your start time', 'Wrap up when the 5-minute warning chimes'] },
+    { queen: "End on time even when sales are hot. The next seller is counting on her slot, just like you count on yours.", kind: 'learn', title: 'Hard start, hard stop', text: 'The app puts you live at your start time and ends the live on Facebook at your stop time, even mid-sentence. A chime and a gold banner give you a 5-minute warning, and the countdown shows on every screen of the app.' },
+    { kind: 'checklist', title: 'Your 10-minutes-before routine', prompt: 'Tick these every time, starting 10 minutes before your slot.', items: [
       'Phone plugged in, Do Not Disturb on, TV and music off',
       'Light on my face, camera at eye level',
       'Pieces laid out in order, run of show where I can see it',
@@ -62,11 +62,11 @@ const lesson: Lesson = {
       'On Air open, Go Live key copied',
       'Private test stream started: I can see and hear myself',
     ] },
-    { kind: 'scenario', title: 'The stream drops', situation: 'Twenty minutes into your hour, your Wi-Fi hiccups and your stream stops.',
+    { kind: 'scenario', title: 'The stream drops', situation: 'Twenty minutes into your slot, your Wi-Fi hiccups and your stream stops.',
       options: [
-        { text: 'Panic and give up on the rest of the hour', feedback: 'Your viewers are probably still on the Page waiting. You still have time.' },
-        { text: 'Stay calm, restart the stream in your app with the same key, and when you\'re back say "We\'re back, family! Where were we?" Then repeat the last Live Number.', best: true, feedback: 'Your key works for your whole hour. A calm comeback keeps the room, and repeating the number keeps the claims clean.' },
-        { text: 'Ask the next seller if you can borrow some of her hour', feedback: 'Her hour is hers, and stop times are hard. Make the most of what\'s left of yours.' },
+        { text: 'Panic and give up on the rest of your slot', feedback: 'Your viewers are probably still on the Page waiting. You still have time.' },
+        { text: 'Stay calm, restart the stream in your app with the same key, and when you\'re back say "We\'re back, family! Where were we?" Then repeat the last Live Number.', best: true, feedback: 'Your key works for your whole 1.5 hours. A calm comeback keeps the room, and repeating the number keeps the claims clean.' },
+        { text: 'Ask the next seller if you can borrow some of her time', feedback: 'Her slot is hers, and stop times are hard. Make the most of what\'s left of yours.' },
       ] },
     { chapter: 'Sell on stream', kind: 'learn', title: 'Show products on your stream', text: 'Like the big live apps, you can put a product card on the bottom of your video: the photo, a big Live Number and the price. Set it up once: open Set up the on-stream card on the On Air screen, copy your Overlay link, and paste it into Prism (Widget, then Web) or OBS (Browser source). The same link also pops up your giveaway wheel, lucky number, countdown and mystery boxes from the Giveaways screen.', points: ['Type the 4-digit Live Number and tap Show', 'Or tap a quick pick from your planned live', 'Or tap Say it and just say the number out loud', 'Hide card takes it off the screen', 'Your card is private: other sellers on the calendar never see what you queued up, only your viewers do once it\'s on your stream'], tip: 'Your phone is the camera, so open On Air on a second device (tablet, laptop or spare phone) to pick numbers and read comments.' },
     {
@@ -77,9 +77,10 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Read comments as they come in', text: 'Facebook comments show on the On Air screen in real time while you are live. Comments that look like claims (sold, a 4-digit Live Number, or DD words) light up in gold so you never miss a buyer. The Loyal Shops bot keeps reading claims from the Page like always.' },
     { kind: 'reflect', title: 'Your streaming setup', prompt: 'Which app will you stream with, what\'s your camera and light setup, and what device will you use for On Air and comments?', placeholder: 'I\'ll stream with…', example: 'Prism on my iPhone on a stand with my ring light. My old iPad runs On Air for the product card and comments.' },
     { chapter: 'Rules check', kind: 'quiz', q: 'Where do you paste your Overlay link so the product card shows on your live?', options: ['In a Facebook comment', 'In your streaming app, as a Web widget or Browser source', 'In your stream key box'], answer: 1, why: 'The Overlay link goes in Prism as a Web widget (or OBS as a Browser source). Keep it private, and tap Make a new link if it ever gets shared.' },
+    { kind: 'quiz', q: 'You book a slot that starts at 7:00 PM. When does the app end your live?', options: ['8:00 PM', '8:30 PM', '9:00 PM'], answer: 1, why: 'Every shared Page slot is 1.5 hours, so a 7:00 start ends at 8:30. Your 5-minute warning chimes at 8:25.' },
     { kind: 'quiz', q: 'The 5-minute warning just chimed. What do you do?', options: ['Keep selling, the next seller can wait', 'Do your last call, thank buyers, and say goodbye', 'Restart the stream to get more time'], answer: 1, why: 'Stop time is hard. The live ends on its own, so finish strong and leave the stage for the next seller.' },
-    { kind: 'quiz', q: 'Your hour starts at 7:00. It is 7:11 and you are not streaming yet. What happens?', options: ['Nothing, you still have the whole hour', 'The live is canceled automatically and the hour is lost'], answer: 1, why: 'More than 10 minutes late = live canceled. Log in 5 to 10 minutes early.' },
-    { kind: 'quiz', q: 'A friend asks for your stream key so they can go live in your hour. Okay?', options: ['Yes, it is just a code', 'No, keys are only for the seller who booked'], answer: 1, why: 'Keys are personal and tied to your booking. Sharing one breaks the Terms of Use.' },
+    { kind: 'quiz', q: 'Your slot starts at 7:00. It is 7:11 and you are not streaming yet. What happens?', options: ['Nothing, you still have the whole slot', 'The live is canceled automatically and the slot is lost'], answer: 1, why: 'More than 10 minutes late = live canceled. Log in 5 to 10 minutes early.' },
+    { kind: 'quiz', q: 'A friend asks for your stream key so they can go live in your slot. Okay?', options: ['Yes, it is just a code', 'No, keys are only for the seller who booked'], answer: 1, why: 'Keys are personal and tied to your booking. Sharing one breaks the Terms of Use.' },
   ],
 }
 export default lesson

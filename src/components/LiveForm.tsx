@@ -41,7 +41,7 @@ export default function LiveForm({ open, onClose, live, day, preset, onSaved }: 
     if (!shop || !date) return
     setBusy(true)
     const start = new Date(`${date}T${time || '19:00'}`)
-    const base = { shop_id: shop.id, title: title.trim() || theme || 'Live sale', theme: theme || null, host: host || null, duration_min: Math.max(1, parseInt(duration, 10) || 60), notes: notes.trim() || null }
+    const base = { shop_id: shop.id, title: title.trim() || theme || 'Live sale', theme: theme || null, host: host || null, duration_min: Math.max(1, parseInt(duration, 10) || 90), notes: notes.trim() || null }
     let id = live?.id ?? ''
     if (live) {
       const { error } = await supabase.from('lives').update({ ...base, starts_at: start.toISOString() }).eq('id', live.id)
