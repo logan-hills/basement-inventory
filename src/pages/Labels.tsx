@@ -271,7 +271,7 @@ export default function Labels() {
               const bf: LabelFormat = FORMATS[format]
               const base = printedPage(bf, !!bf.turn)
               return <DirectPrint w={base.w} h={base.h} turn={!!bf.turn} count={pages.length} sizeName={sizeText(bf.label.w, bf.label.h)}
-                prepare={() => { if (late) setLate(0) }} defaultShiftMm={format === 'dymoThermal' ? -4 : 0} />
+                prepare={() => { if (late) setLate(0) }} />
             })()}
             {f.group === 'thermal' && <p className="small muted print-window-head">Or use your computer's print window:</p>}
             {format === 'roll2x1' && (
