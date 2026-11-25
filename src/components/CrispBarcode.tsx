@@ -6,7 +6,7 @@ import JsBarcode from 'jsbarcode'
  * (203 dots per inch on most shipping label printers), so bars print crisp and scan first time,
  * instead of being stretched to fill the label.
  */
-export default function CrispBarcode({ value, heightIn, maxWidthIn, dpi = 203, maxDots = 3 }: { value: string; heightIn: number; maxWidthIn: number; dpi?: number; maxDots?: number }) {
+export default function CrispBarcode({ value, heightIn, maxWidthIn, dpi = 203, maxDots = 3, minDotsToThin = 2 }: { value: string; heightIn: number; maxWidthIn: number; dpi?: number; maxDots?: number; minDotsToThin?: number }) {
   const ref = useRef<SVGSVGElement>(null)
   useLayoutEffect(() => {
     const svg = ref.current
@@ -16,7 +16,7 @@ export default function CrispBarcode({ value, heightIn, maxWidthIn, dpi = 203, m
     const dots = Math.max(1, Math.min(maxDots, Math.floor((maxWidthIn * dpi) / modules)))
     // Thermal printers spread a little heat into the gaps, which can close the thin white spaces.
     // So each bar is drawn one printer dot narrower (bar width reduction, the standard fix); spaces get that dot.
-    if (dots >= 2) svg.querySelectorAll('rect').forEach(r => {
+    if (dots >= minDotsToThin) svg.querySelectorAll('rect').forEach(r => {
       const w = parseFloat(r.getAttribute('width') || '0')
       if (w > 0 && w < modules) r.setAttribute('width', String(w - 1 / dots))
     })
@@ -27,6 +27,6 @@ export default function CrispBarcode({ value, heightIn, maxWidthIn, dpi = 203, m
     svg.style.height = `${heightIn}in`
     svg.removeAttribute('width')
     svg.removeAttribute('height')
-  }, [value, heightIn, maxWidthIn, dpi, maxDots])
+  }, [value, heightIn, maxWidthIn, dpi, maxDots, minDotsToThin])
   return <svg ref={ref} className="crisp-barcode" shapeRendering="crispEdges" />
 }

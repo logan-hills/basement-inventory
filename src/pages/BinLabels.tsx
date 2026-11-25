@@ -91,7 +91,7 @@ export default function BinLabels() {
     if (f.label.h <= 1.25) return (
       <div className={`bin21 ${f.label.w >= 3 ? 'wide' : ''}`}>
         <div className="bin21-code">{b.code}</div>
-        <CrispBarcode value={b.code} heightIn={0.42} maxWidthIn={Math.min(3, f.label.w - 0.2)} dpi={dymo ? 300 : 203} maxDots={dymo ? 4 : 3} />
+        <CrispBarcode value={b.code} heightIn={0.42} maxWidthIn={Math.min(3, f.label.w - 0.2)} dpi={dymo ? 300 : 203} maxDots={dymo ? 4 : 3} minDotsToThin={3} />
         <div className="bin21-name">Aisle {b.aisle} · Sec {b.section} · Lvl {b.level} · Bin {b.bin_no}</div>
       </div>
     )
