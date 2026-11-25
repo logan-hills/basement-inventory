@@ -67,6 +67,14 @@ const lesson: Lesson = {
       tip: 'A resize is a starting point, not a finished design. Open each new size and nudge the text, every time.' },
     { kind: 'learn', title: 'Bulk create from a spreadsheet', nova: 'Forty product graphics while your coffee cools. My favorite trick in here.',
       text: 'Bulk create takes one design and one spreadsheet and makes a copy for every row, swapping in the name, the price and the photo. It is how a shop with a hundred pieces still posts a graphic for each one.',
+      term: { word: 'Template', meaning: 'A finished design with spots left open for the parts that change. You make it once and fill it many times, so every graphic matches your brand.' },
+      visual: { type: 'flow', steps: [
+        { label: 'One template', note: 'Name, price and photo spots' },
+        { label: 'One spreadsheet', note: 'A row per piece' },
+        { label: 'Connect the data', note: 'Match each column to a spot' },
+        { label: 'Generate', note: 'One design per row' },
+        { label: 'Check and download', note: 'Fix any long names' },
+      ], caption: 'Your Stock export from the app already has Item name, Price and Live #, so the spreadsheet is mostly done.' },
       points: [
         'Build one design and leave a spot for each thing that changes: the item name, the price, the size run.',
         'Make a sheet with one column per changing thing and one row per piece. Headers named Item, Price, Size.',

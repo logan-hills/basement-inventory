@@ -84,7 +84,8 @@ const lesson: Lesson = {
       ] },
     { kind: 'order', title: 'Build a Reel', prompt: 'Put the Reel in order.', steps: ['Hook in the first 2 seconds', 'Show the piece close up', 'Show it styled on you', 'Say the price or the deal', 'Call to action: live day, time and where'] },
 
-    { chapter: 'Read the numbers', kind: 'learn', title: 'What to watch', text: 'Open your Reel insights 2 days after posting.',
+    { chapter: 'Read the numbers', kind: 'learn', title: 'What to watch', text: 'Open your Reel insights 2 days after posting. Two days gives the Reel time to reach the people it is going to reach, and checking every hour before then mostly makes you anxious. Read the numbers in the order below, because each one tells you which part of the Reel to fix: the opening, the middle, or the ending.',
+      term: { word: 'Watch rate', meaning: 'The share of people who kept watching your Reel instead of scrolling past. A strong hook raises it in the first two seconds, and a tight edit keeps it up to the end.' },
       table: { head: ['Number', 'What it tells you', 'If it\'s low'], rows: [
         ['Views', 'How far it traveled', 'Stronger hook, post when your buyers are online'],
         ['Average watch time', 'Whether people stayed', 'Cut it shorter, faster cuts'],

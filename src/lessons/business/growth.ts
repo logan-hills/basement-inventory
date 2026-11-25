@@ -87,7 +87,8 @@ const lesson: Lesson = {
     ] },
     { kind: 'number', title: 'Buy rate', q: 'You had 150 viewers and 27 buyers. What\'s your buy rate in percent?', answer: 18, tolerance: 0.2, suffix: '%', hint: '27 ÷ 150 × 100.', why: '27 ÷ 150 = 18%. Track it every live. Clearer claiming and better showing can push it past 20%.' },
 
-    { chapter: 'Bigger orders', kind: 'learn', title: 'Bundles and add-ons', text: 'It\'s easier to sell one more piece to someone already buying than to find a new buyer.',
+    { chapter: 'Bigger orders', kind: 'learn', title: 'Bundles and add-ons', text: 'It\'s easier to sell one more piece to someone already buying than to find a new buyer. She has already decided she trusts you, she is already paying for shipping, and one more small piece in the same box costs you almost nothing to send. That is why grocery stores put gum by the register.',
+      visual: { type: 'compare', style: 'beforeafter', left: { title: 'Before add-ons', items: ['40 buyers', '1.4 pieces each', '$27 average order', '$1,080 for the night'] }, right: { title: 'With a $5 add-on table', items: ['40 buyers', '1.9 pieces each', '$31 average order', '$1,240 for the night'] }, caption: 'An example live. Same buyers, same night, $160 more from one small habit.' },
       table: { head: ['Idea', 'Example', 'Why it works'], rows: [
         ['Bundle', 'Earrings + matching necklace, $35 instead of $40', 'One decision, a better deal'],
         ['Add-on table', '$5 pieces shown between big items', 'Easy yes for someone already buying'],

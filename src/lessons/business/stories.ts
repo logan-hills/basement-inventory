@@ -34,7 +34,9 @@ const lesson: Lesson = {
       example: "'This bracelet' gets a shrug. 'My aunt wore a bracelet just like this to every church anniversary, and she always said gold should jingle when you wave' gets 'SOLD!'" },
     { kind: 'quiz', q: 'What was the big lesson of the Significant Objects project?', options: ['Thrift stores underprice everything', 'Meaning and story can make people value the same item much more', 'You should make up stories about your stock', 'Only antiques have stories'], answer: 1, why: "The same objects sold for many times more once they carried a story. For us, that means finding the TRUE story, the moment and the meaning, in every piece." },
 
-    { chapter: 'The recipe', kind: 'learn', title: 'Senses, moment, person', text: "Every good description has three ingredients. Use one or all three.",
+    { chapter: 'The recipe', kind: 'learn', title: 'Senses, moment, person', text: "Every good description has three ingredients. Use one or all three. You do not need all three for every piece. A $6 pair of earrings might only need one sense word and a moment. A $60 coat deserves all three, because the buyer needs more help picturing it in her life before she spends that much.",
+      term: { word: 'Benefit', meaning: 'What a feature does for the buyer. "Leather strap" is a feature. "Soft on your shoulder all day at work" is the benefit she is really buying.' },
+      example: 'Plain: "Black wool coat, size 2X, $60." With all three: "Heavy, soft wool that blocks the wind at the bus stop. The coat for the first cold Sunday, buttoned up over your church dress. Made for the woman who is always cold and still wants to look put together. Size 2X, $60."',
       table: { head: ['Ingredient', 'Ask yourself', 'Example'], rows: [
         ['Senses', 'How does it feel, sound, smell, move?', '"Butter-soft, and the fringe swishes when you walk."'],
         ['Moment', 'Where will she be when she wears or uses it?', '"Picture the first cool morning at the football game."'],

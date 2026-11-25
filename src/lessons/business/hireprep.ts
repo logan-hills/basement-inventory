@@ -27,7 +27,7 @@ const lesson: Lesson = {
   },
   covers: [], legal: 'hiring', updated: '2026-11-25',
   slides: [
-    { chapter: 'The job on paper', kind: 'learn', title: 'Write the job before you write the ad', nova: "Hi love, it's Nova. We're not finding a person yet. We're deciding exactly what she'll do.",
+    { chapter: 'The job on paper', kind: 'learn', title: 'Write the job before you write the ad', term: { word: 'Job description', meaning: 'A short written page that names the role, its main tasks, the hours, the pay range and what doing it well looks like. It comes before the ad, the interview and the offer.' }, example: 'Role: Packing helper. Tasks: pick, pack and ship after each live. Hours: Wednesday and Friday, 10 AM to 2 PM. Pay: $16 an hour. Done well: every order out within two days, nothing mispicked.', nova: "Hi love, it's Nova. We're not finding a person yet. We're deciding exactly what she'll do.",
       text: "Most bad hires start with a fuzzy job. If you can't say the tasks, the hours and the pay out loud, no ad will save you. One page, four lines, and the whole hire gets easier.",
       points: ['Tasks: the five things she will actually do each shift', 'Hours: which days, what time, how many hours a week', 'Pay range: the lowest and highest you can truly afford', 'Must-haves versus nice-to-haves, written separately'] },
     { kind: 'learn', title: 'Must-haves and nice-to-haves', text: "Must-haves are the things you cannot train in a week. Nice-to-haves are the extras. Mixing them up is how good people get skipped and wrong people get hired.",
