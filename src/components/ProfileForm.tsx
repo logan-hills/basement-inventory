@@ -105,7 +105,7 @@ export default function ProfileForm({ userId, email: loginEmail, initial, mode, 
       {mode === 'signup' && (
         <label className="check-row">
           <input type="checkbox" checked={agree} onChange={e => setAgree(e.target.checked)} />
-          <span>I am 18 or older and agree to the <Link to="/terms" target="_blank">Terms of Use</Link> and <Link to="/privacy" target="_blank">Privacy Policy</Link>, including that my calendar name is shown to other members.</span>
+          <span>I am 18 or older and agree to the <Link to="/terms" target="_blank">Terms of Use</Link> and <Link to="/privacy" target="_blank">Privacy Policy</Link>, including that my calendar name is shown to other members, and that I run my own giveaways and am responsible for them and for how I use the App.</span>
         </label>
       )}
       <button className="btn primary big" disabled={busy || (mode === 'signup' && !agree)}>{busy ? 'Saving…' : mode === 'signup' ? 'Finish sign-up' : 'Save profile'}</button>

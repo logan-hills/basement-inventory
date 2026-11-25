@@ -99,6 +99,8 @@ const lesson: Lesson = {
       ] },
     { queen: "Never make anyone pay for a chance to win. That turns a giveaway into a lottery, and that's not a risk worth taking.", kind: 'learn', title: 'Paid slots and the law', text: 'A prize, picked by chance, that people paid to enter can count as a lottery, and private lotteries aren\'t allowed in most states. Rules are different in every state, so check yours. Many sellers make every slot a purchase: each slot comes with an item the buyer keeps, and the wheel picks who gets the bonus prize. Another common way is a free way to enter, like commenting, that counts the same as a slot.',
       tip: 'This isn\'t legal advice. When you\'re growing, a short call with a local business lawyer is worth it.' },
+    { kind: 'learn', title: 'Your giveaway, your promise', text: 'When you signed up you agreed to our Terms of Use, and they spell this out: you set the prize, the rules and the winner, and you deliver the prize. The wheel, lucky numbers and overlay only help you run what you decided. If a winner or buyer is ever cheated, the Dynamic Dazzle team will pull the app\'s records of that giveaway or order to support their refund.',
+      points: ['Say the prize and the rules out loud before you spin', 'Ship every prize, the same as a paid order', 'Your name is on it, so keep it fair'] },
     { kind: 'scenario', title: 'A viewer says it\'s rigged', situation: 'After the spin, a viewer comments: "Rigged! Tasha always wins."',
       options: [
         { text: 'Delete the comment and keep going', feedback: 'Others saw it. Deleting it can look like you have something to hide.' },

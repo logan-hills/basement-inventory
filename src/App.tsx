@@ -1,4 +1,6 @@
 import { HashRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import TermsUpdate from './components/TermsUpdate'
+import { TERMS_VERSION } from './lib/profile'
 import BrandFooter from './components/BrandFooter'
 import AskNova from './components/AskNova'
 import { useEffect, useState } from 'react'
@@ -179,6 +181,8 @@ function Shell() {
   if (recovering) return <NewPassword />
   // profile === undefined means the profiles table isn't set up yet; carry on as before.
   if (profile === null) return <FinishSignup />
+  // Important Terms change: existing members agree once more (the Terms pages stay readable).
+  if (profile && profile.terms_version !== TERMS_VERSION && pathname !== '/terms' && pathname !== '/privacy') return <TermsUpdate />
   if (!shop && profile?.account_type === 'stream') return <StreamShell />
   if (!shop) return <CreateShop />
 

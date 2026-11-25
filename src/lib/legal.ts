@@ -59,7 +59,16 @@ export const TERMS: LegalDoc = {
       ],
     },
     {
-      h: '6. Subscriptions, free accounts and onboarding fees',
+      h: '6. Giveaways and how you use the App',
+      p: [
+        'You, the seller, create and run your own giveaways. You choose the prize, the rules, who can enter, how the winner is picked, and when and how the prize is delivered. The giveaway tools (the wheel, lucky numbers and on-stream overlays) only help you run what you decided. You must follow Facebook\'s promotion rules and the giveaway, sweepstakes and contest laws where you and your viewers live, and you must never charge anyone for a chance to win.',
+        `${COMPANY} does not sponsor or organize any seller\'s giveaway and is not responsible if a seller does not deliver a prize, runs a giveaway unfairly, or breaks the law. The same goes for every other tool in the App: you are responsible for how you use it, and we are not responsible for a seller\'s misuse of the App.`,
+        'If a buyer or giveaway winner tells us a seller cheated them, we will work with them. When asked, we will pull the records the App holds about that sale or giveaway (such as the live, the order, the giveaway result and the times they happened) to support their refund request with the seller, their payment provider or the authorities, as the law allows.',
+        'If a seller misuses giveaways or cheats buyers, we may suspend or remove their account (see section 11).',
+      ],
+    },
+    {
+      h: '7. Subscriptions, free accounts and onboarding fees',
       p: [
         'Paid features are billed by subscription at the prices shown when you sign up. Subscriptions renew until you cancel. Cancelling stops the next renewal; we do not refund partial periods unless the law requires it.',
         'Sellers new to the shared Page may need to take a live orientation before booking time. An onboarding fee may apply; the amount is shown before you pay. Sellers who joined before the shared calendar launched may be offered free onboarding.',
@@ -67,13 +76,13 @@ export const TERMS: LegalDoc = {
       ],
     },
     {
-      h: '7. Facebook and other services',
+      h: '8. Facebook and other services',
       p: [
         'The App connects to services we do not control, such as Facebook, Apple, Square, shipping services and our hosting provider. They can change or stop working, and their own terms apply. We are not responsible for them.',
       ],
     },
     {
-      h: '8. Who owns the App and its content',
+      h: '9. Who owns the App and its content',
       p: [
         `Dynamic Dazzle, Dazzle Warehouse, Dazzle University, Time with the Queen, Nova, the DD crown logo and related names, logos and characters are trademarks of ${IP_OWNER}. The App, including its software, screen designs, layouts, graphics, lessons, courses, certificates and text, is owned by ${IP_OWNER} and protected by copyright, trademark and other laws. All rights reserved.`,
         'We give you a personal, limited right to use the App for your own selling business while your account is active. You may not copy, sell, rent, rebrand or share the App, its lessons or its designs; copy its look, screens, workflows or content to build or market a similar product; take apart, reverse engineer or scrape the App, or use bots to collect its content; use our names, logos or Nova without written permission; or remove our copyright or trademark notices.',
@@ -82,21 +91,21 @@ export const TERMS: LegalDoc = {
       ],
     },
     {
-      h: '9. No guarantees',
+      h: '10. No guarantees',
       p: [
         'We work hard to keep the App running, but it is provided "as is". We do not promise it will always be available or error-free, that a live will start or end exactly on time if Facebook or your internet has trouble, or that you will make any amount of sales.',
         'To the fullest extent the law allows, we are not liable for lost sales, lost profits or indirect damages, and our total liability is limited to what you paid us in the 3 months before the claim.',
       ],
     },
     {
-      h: '10. Ending your account',
+      h: '11. Ending your account',
       p: [
         'You can stop using the App and ask us to delete your account at any time.',
         'If you break these Terms or the seller guidelines you agreed to, we may suspend or revoke your account. If your account is revoked for a violation, you will not get a refund for the month or year you have already paid for, unless the law requires one. We may also remove you from the shared live calendar.',
       ],
     },
     {
-      h: '11. Changes and contact',
+      h: '12. Changes and contact',
       p: [
         'We may update these Terms. If the change is important we will tell you in the App and ask you to agree again. These Terms are governed by the laws of the Commonwealth of Pennsylvania.',
         `Questions: ${CONTACT}.`,
@@ -134,6 +143,7 @@ export const PRIVACY: LegalDoc = {
       h: 'How we use it',
       p: [
         'To run the App: show the calendar, start and end your lives, give you your stream key, keep your inventory and orders, and send account emails. We do not sell your personal information and we do not use your customers\' details for our own marketing.',
+        'To help buyers who were cheated: if a buyer or giveaway winner reports that a seller did not deliver, we may review the records the App holds about that sale or giveaway (for example the order, the giveaway result and the times they happened) and share them with the buyer, the seller, a payment provider or the authorities, only as needed to support a refund or as the law requires.',
       ],
     },
     {
