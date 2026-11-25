@@ -14,6 +14,12 @@ export default function CrispBarcode({ value, heightIn, maxWidthIn, dpi = 203, m
     JsBarcode(svg, value, { format: 'CODE128', displayValue: false, margin: 0, height: 100, width: 1 })
     const modules = parseFloat(svg.getAttribute('width') || '0') || 1
     const dots = Math.max(1, Math.min(maxDots, Math.floor((maxWidthIn * dpi) / modules)))
+    // Thermal printers spread a little heat into the gaps, which can close the thin white spaces.
+    // So each bar is drawn one printer dot narrower (bar width reduction, the standard fix); spaces get that dot.
+    if (dots >= 2) svg.querySelectorAll('rect').forEach(r => {
+      const w = parseFloat(r.getAttribute('width') || '0')
+      if (w > 0 && w < modules) r.setAttribute('width', String(w - 1 / dots))
+    })
     // One blank module each side, so rounding at the picture's edge can never shave the first or last bar.
     svg.setAttribute('viewBox', `-1 0 ${modules + 2} 100`)
     svg.setAttribute('preserveAspectRatio', 'none')
