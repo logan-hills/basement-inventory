@@ -65,10 +65,10 @@ function Barcode({ value }: { value: string }) {
 
 /** One-tag-per-label tag (2×1 thermal, DYMO). Pure black so it prints sharp on white or yellow rolls.
     DYMO LabelWriters print at 300 dots per inch, thermal shipping printers at 203. */
-function RollTag({ t, sale, widthIn = 2, dpi = 203 }: { t: Tag; sale: number | null; widthIn?: number; dpi?: number }) {
+function RollTag({ t, sale, widthIn = 2, dpi = 203, roomy = false }: { t: Tag; sale: number | null; widthIn?: number; dpi?: number; roomy?: boolean }) {
   const name = `${t.name}${t.variant && t.variant !== 'One size' ? ` · ${t.variant}` : ''}`
   return (
-    <div className={`tag21 ${sale != null ? 'is-sale' : ''} ${widthIn >= 3 ? 'wide' : ''}`}>
+    <div className={`tag21 ${sale != null ? 'is-sale' : ''} ${widthIn >= 3 ? 'wide' : ''} ${roomy ? 'roomy' : ''}`}>
       <div className="tag21-top">
         {sale != null && <span className="tag21-sale">SALE</span>}
         <span className="tag21-live">#{t.live_number}</span>
@@ -78,7 +78,7 @@ function RollTag({ t, sale, widthIn = 2, dpi = 203 }: { t: Tag; sale: number | n
         <span>{name}</span>
         {sale != null && t.price != null && <s>{money(t.price)}</s>}
       </div>
-      <CrispBarcode value={t.tag_code} heightIn={sale != null ? 0.32 : 0.36} maxWidthIn={Math.min(2.6, widthIn - 0.2)} dpi={dpi} maxDots={dpi > 250 ? 4 : 3} />
+      <CrispBarcode value={t.tag_code} heightIn={roomy ? (sale != null ? 0.24 : 0.27) : sale != null ? 0.32 : 0.36} maxWidthIn={Math.min(2.6, widthIn - 0.2)} dpi={dpi} maxDots={dpi > 250 ? 4 : 3} />
       <div className="tag21-code">{t.tag_code}</div>
     </div>
   )
@@ -199,7 +199,7 @@ export default function Labels() {
 
 
   const tagFor = (t: Tag) => (single
-    ? <RollTag t={t} sale={saleFor(t)} widthIn={f.label.w} dpi={dymo ? 300 : 203} />
+    ? <RollTag t={t} sale={saleFor(t)} widthIn={f.label.w} dpi={dymo ? 300 : 203} roomy={format === 'dymoThermal'} />
     : <TagLabel t={t} sale={saleFor(t)} />)
 
   return (
@@ -272,7 +272,7 @@ export default function Labels() {
               const bf: LabelFormat = FORMATS[format]
               const base = printedPage(bf, !!bf.turn)
               return <DirectPrint w={base.w} h={base.h} turn={!!bf.turn} count={pages.length} sizeName={sizeText(bf.label.w, bf.label.h)}
-                prepare={() => { if (late) setLate(0) }} defaultShiftMm={format === 'dymoThermal' ? -7.5 : 0} />
+                prepare={() => { if (late) setLate(0) }} defaultShiftMm={format === 'dymoThermal' ? -6 : 0} />
             })()}
             {f.group === 'thermal' && <p className="small muted print-window-head">Or use your computer's print window:</p>}
             {format === 'roll2x1' && (

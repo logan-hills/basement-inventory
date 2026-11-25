@@ -1762,6 +1762,13 @@ input, select, textarea { min-height: 48px; font-size: 17px; }
 .tag21-code { font-size: 6pt; font-weight: 700; letter-spacing: .6px; line-height: 1; }
 .tag21.is-sale .tag21-price { font-size: 12.5pt; }
 .tag21.wide { padding: .06in .14in .05in; }
+/* A narrow roll in a wide shipping printer can wander a few mm sideways, so this tag keeps a wide blank band
+   top and bottom and packs the lines a little tighter. Everything still fits; the barcode still scans. */
+.tag21.roomy { padding: .13in .1in .12in; justify-content: space-evenly; }
+.tag21.roomy .tag21-live { font-size: 12pt; }
+.tag21.roomy .tag21-price { font-size: 10pt; }
+.tag21.roomy.is-sale .tag21-price { font-size: 11pt; }
+.tag21.roomy .tag21-name { font-size: 6pt; line-height: 1; }
 .tag21.wide .tag21-live { font-size: 17pt; }
 .tag21.wide .tag21-price { font-size: 14pt; }
 .tag21.wide .tag21-name { font-size: 8pt; }

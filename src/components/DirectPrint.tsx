@@ -22,7 +22,7 @@ export default function DirectPrint({ w, h, turn, count, sizeName, prepare, gapM
   useEffect(() => { try { const v = localStorage.getItem(key); setMiddleState(v == null ? w < 3.5 : v === '1') } catch { /* ignore */ } }, [key, w])
   const setMiddle = (v: boolean) => { setMiddleState(v); try { localStorage.setItem(key, v ? '1' : '0') } catch { /* ignore */ } }
   // v2: starts fresh from the tested defaults below.
-  const shiftKey = `directShift3:${w}x${h}`
+  const shiftKey = `directShift4:${w}x${h}`
   const readShift = () => { try { const v = localStorage.getItem(shiftKey); return v == null ? defaultShiftMm : Number(v) || 0 } catch { return defaultShiftMm } }
   const [shift, setShiftState] = useState(readShift)
   const setShift = (v: number) => { const n = Math.max(-15, Math.min(15, v)); setShiftState(n); try { localStorage.setItem(shiftKey, String(n)) } catch { /* ignore */ } }
