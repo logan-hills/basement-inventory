@@ -1,5 +1,5 @@
 import type { Lesson } from '../types'
-import { NOT_ADVICE } from '../resources'
+import { NOT_ADVICE_HIRING } from '../resources'
 
 const lesson: Lesson = {
   id: 'interview', kind: 'course', school: 'Build your team', title: 'Interviewing as the hiring manager', track: 'Business', icon: 'users',
@@ -24,7 +24,7 @@ const lesson: Lesson = {
     welcome: "In Hiring your first helper you learned when to hire. Now you have to sit down across from a grown woman and decide. Don't let that make you shrink. You are the one who built this shop, and the questions in this course will carry you through the whole conversation.",
     signoff: "Same questions, same order, a trial shift and an offer in writing. Do it that way and you will not just hire better, you will be the kind of boss people tell their friends about.",
   },
-  covers: [], updated: '2026-11-25',
+  covers: [], legal: 'hiring', updated: '2026-11-25',
   slides: [
     { chapter: 'You are the boss now', kind: 'learn', title: 'You are the one asking', nova: "Nerves are normal, love. Remember she came to you.",
       text: "You have probably been interviewed more times than you have interviewed. The flip feels backwards, so give yourself a frame: you are not judging a person, you are checking whether this job and this person fit.",
@@ -72,11 +72,10 @@ const lesson: Lesson = {
     { kind: 'learn', title: 'Red flags', text: "One of these is a question to ask. Two or three together is your answer.",
       points: ['Late with no word and no apology', 'Vague about hours or why she left her last job', 'Blames every past boss and coworker', 'Asks mostly about free or discounted merchandise', 'Will not give any work reference', 'Pushes back on the trial shift or the checklist'] },
     { chapter: 'A paid trial shift', kind: 'learn', title: 'Try her out, and pay her', text: "A trial shift is one real evening of the actual job, paid at the real rate. Watching somebody pack six orders tells you more than any answer she gives sitting down. Pay for every hour she works: wage and hour law covers work you benefit from, so an unpaid tryout is not a favor you can accept.",
-      points: ['One real shift, two or three hours, your normal checklist', 'Tell her ahead: paid, and not yet a job offer', 'Watch pace, care, and whether she asks when unsure', 'Check her work afterwards without her standing there'],
-      tip: NOT_ADVICE },
+      points: ['One real shift, two or three hours, your normal checklist', 'Tell her ahead: paid, and not yet a job offer', 'Watch pace, care, and whether she asks when unsure', 'Check her work afterwards without her standing there'] },
     { kind: 'number', title: 'What a bad hire costs', q: 'You hire on a gut feeling. She works 10 hours a week at $15 and quits after 3 weeks. You spent 6 of your own hours training her instead of selling, and your selling hour earns $35 of profit. Two orders went out wrong and cost you $60 to fix. What did that hire cost you?', prefix: '$', answer: 720, tolerance: 20, hint: 'Her wages, plus your lost selling hours, plus the fixes.', why: 'Wages $450, plus 6 × $35 = $210 of profit you did not earn, plus $60 in fixes, is $720. A paid trial shift would have cost you about $45.' },
     { kind: 'order', title: 'Your hiring week', prompt: 'Put your hiring steps in order.', steps: ['Print one scorecard per candidate', 'Phone screen everybody for ten minutes', 'Interview your top three in person, same questions', 'Score each answer as she gives it', 'Run a paid trial shift with your top one or two', 'Call two references', 'Send the offer in writing', 'Text the others a kind no'] },
-    { chapter: 'Lines you do not cross', kind: 'learn', title: 'Questions you must not ask', text: "The Equal Employment Opportunity Commission says you may not base a hiring decision on race, color, religion, sex, pregnancy, national origin, age (40 and over), disability or genetic information. So you do not ask about them, not even as friendly small talk, because the question itself is what gets remembered.",
+    { chapter: 'Lines you do not cross', kind: 'learn', title: 'Questions you must not ask', text: "The Equal Employment Opportunity Commission says you may not base a hiring decision on race, color, religion, sex, pregnancy, national origin, age (40 and over), disability or genetic information. So you do not ask about them, not even as friendly small talk, because the question itself is what gets remembered. Some federal rules only kick in at 15 or 20 employees, but many state laws cover a shop with one helper, so ask every candidate as if they all apply.",
       table: { head: ['Do not ask', 'Ask instead'], rows: [
         ['"Do you have kids? Who watches them?"', '"Can you work Tuesday and Friday evenings every week?"'],
         ['"How old are you?"', '"Are you 18 or over?" if the job requires it'],
@@ -85,7 +84,7 @@ const lesson: Lesson = {
         ['"Are you pregnant or planning to be?"', '"Can you commit to these hours through [month]?"'],
         ['"Where are you from originally?"', '"Are you legally able to work in the U.S.?"'],
       ] },
-      tip: NOT_ADVICE },
+      tip: NOT_ADVICE_HIRING },
     { kind: 'quiz', q: 'A candidate mentions on her own that she has three small children. What is the right move?', options: ['Ask who will watch them on your packing nights', 'Thank her, say nothing more about it, and ask your written availability question', 'Write "childcare risk" on her scorecard', 'Pass on her to be safe'], answer: 1, why: "She can share whatever she likes, but you cannot follow it or score it. Go back to your written question about the hours, which you ask everybody." },
     { kind: 'learn', title: 'Check references, properly', text: "Two short calls to real work references, not her cousin. Most people will tell you the truth if you ask simple questions and listen to the pauses.",
       points: ['"What did she do for you, and for how long?"', '"Did she show up on time and on the days she was scheduled?"', '"Would you hire her again?"', 'A long pause on the last one is an answer; ask "anything I should know going in?"'] },

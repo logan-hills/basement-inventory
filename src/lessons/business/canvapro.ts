@@ -13,8 +13,6 @@ const lesson: Lesson = {
   ],
   sources: [
     { org: 'Canva', title: 'Canva Help Center', url: 'https://www.canva.com/help/' },
-    { org: 'Canva', title: 'Bulk create', url: 'https://www.canva.com/help/bulk-create/' },
-    { org: 'Canva', title: 'Share and collaborate on designs', url: 'https://www.canva.com/help/share-collaborate/' },
     { org: 'Canva', title: 'Canva Design School', url: 'https://www.canva.com/designschool/' },
     { org: 'U.S. Small Business Administration', title: 'Marketing and sales', url: 'https://www.sba.gov/business-guide/manage-your-business/marketing-sales' },
   ],

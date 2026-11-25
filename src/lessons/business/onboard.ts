@@ -1,5 +1,5 @@
 import type { Lesson } from '../types'
-import { NOT_ADVICE } from '../resources'
+import { NOT_ADVICE_HIRING } from '../resources'
 
 const lesson: Lesson = {
   id: 'onboard', kind: 'course', school: 'Build your team', title: 'Onboarding your first employee', track: 'Business', icon: 'users',
@@ -25,7 +25,7 @@ const lesson: Lesson = {
     welcome: "You hired somebody. Feel that for a second, because it means your shop outgrew one pair of hands. Now let's start her the right way. A good first day and a written way of working will save you months of frustration.",
     signoff: "Welcome her warmly, write the work down, train her patiently and pay her on time. Do those four things and you won't just have a helper. You'll have somebody who protects your shop like it's her own.",
   },
-  covers: [], updated: '2026-11-25',
+  covers: [], legal: 'hiring', updated: '2026-11-25',
   slides: [
     { chapter: 'Day one', kind: 'learn', title: 'The first day sets the tone', nova: "First days are nerve-racking, love. Let's make hers easy.",
       text: "Your new hire decides how she feels about this job in the first few hours. Give her three things: a warm welcome, the story of what your shop is about, and a plain picture of what doing well looks like in thirty days.",
@@ -48,21 +48,22 @@ const lesson: Lesson = {
       table: { head: ['What', 'Why'], rows: [
         ['Offer letter she signs', 'Pay rate, hours and start date'],
         ['Form W-4', 'So you withhold the right income tax'],
-        ['Form I-9', 'Verifies she can legally work in the U.S.'],
+        ['Form I-9', 'She does her part by day one; you check her documents within 3 business days'],
+        ['New-hire report to your state', 'Required within 20 days of hire, sooner in some states'],
         ['Direct deposit form or voided check', 'So payday is automatic'],
         ['Emergency contact', 'Somebody to call if she gets hurt'],
         ['Signed shop rules', 'Hours, phones, privacy, mistakes'],
       ] },
-      tip: NOT_ADVICE },
+      tip: NOT_ADVICE_HIRING },
     { kind: 'learn', title: 'Pay on time, every time', text: "A payroll service handles withholding, tax deposits and year-end forms for a small monthly fee. The IRS expects employment taxes deposited on schedule and your records kept, and federal wage and hour rules expect hours tracked for hourly workers.",
       points: [
         'Set up payroll before her first hour, not after',
         'Keep a timesheet, even for six hours a week',
         'Check your own state rules for minimum wage, overtime and new-hire reporting',
       ],
-      tip: NOT_ADVICE,
+      tip: NOT_ADVICE_HIRING,
       queen: "Late pay breaks trust faster than anything else you can do. If money is tight, cut somewhere else and pay your people first." },
-    { kind: 'quiz', q: 'Your helper starts Thursday. When should her W-4, I-9 and direct deposit be done?', options: ['Whenever you get around to it', 'On her first day, before she starts working', 'At the end of her first month', 'Only if she asks'], answer: 1, why: "Day one, in one folder with her name on it. The I-9 has a short deadline, and doing it all at once means you never chase a signature later." },
+    { kind: 'quiz', q: 'Your helper starts Thursday. When should her W-4, I-9 and direct deposit be done?', options: ['Whenever you get around to it', 'On her first day, before she starts working', 'At the end of her first month', 'Only if she asks'], answer: 1, why: "Day one, in one folder with her name on it. Her part of the I-9 is due by her first day and yours within 3 business days, so doing it all at once means you never miss a deadline or chase a signature." },
 
     { chapter: 'Her own sign-in', kind: 'learn', title: 'Give her her own way in', text: "Never hand over your password. In Settings, then Team members, make an invite code and text it to her. She signs up with her own email, taps 'I am joining a team' and types the code. Her scans and picks are then saved under her name, and you can remove her in one tap.",
       screen: { title: 'Team members', rows: ['1 of 2 team spots used', 'Angel · Team member'], buttons: ['Make an invite code', 'Copy invite to send', 'Remove'], highlight: 'Make an invite code' },

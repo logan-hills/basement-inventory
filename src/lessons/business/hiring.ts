@@ -1,5 +1,5 @@
 import type { Lesson } from '../types'
-import { NOT_ADVICE } from '../resources'
+import { NOT_ADVICE_HIRING } from '../resources'
 
 const lesson: Lesson = {
   id: 'hiring', kind: 'course', school: 'Build your team', title: 'Hiring your first helper', track: 'Business', icon: 'users',
@@ -18,13 +18,17 @@ const lesson: Lesson = {
     { org: 'IRS', title: 'Family employees', url: 'https://www.irs.gov/businesses/small-businesses-self-employed/family-employees' },
     { org: 'U.S. Department of Labor', title: 'Minimum wage', url: 'https://www.dol.gov/agencies/whd/minimum-wage' },
     { org: 'U.S. Citizenship and Immigration Services', title: 'Form I-9, Employment Eligibility Verification', url: 'https://www.uscis.gov/i-9' },
+    { org: 'U.S. Department of Labor', title: 'State labor offices', url: 'https://www.dol.gov/agencies/whd/state/contacts' },
+    { org: 'U.S. Department of Labor', title: 'Child labor', url: 'https://www.dol.gov/agencies/whd/child-labor' },
+    { org: 'U.S. Office of Child Support Services', title: 'New hire reporting', url: 'https://www.acf.hhs.gov/css/employers/employer-responsibilities/new-hire-reporting' },
+    { org: 'U.S. Equal Employment Opportunity Commission', title: 'Small business resource center', url: 'https://www.eeoc.gov/employers/small-business' },
     { org: 'Google re:Work', title: 'Hiring and onboarding guides', url: 'https://rework.withgoogle.com/intl/en/subjects/hiring' },
   ],
   queen: {
     welcome: "Hiring your first helper is a big step, and I'm proud of you for thinking about it. It means your shop is growing. In this course I'll walk you through it the way I'd want you to do it: with your numbers, a fair tryout, the right paperwork and a real training plan.",
     signoff: "Start with one job, hire slowly, train patiently, and give your helper their own sign-in. Your first hire is the first brick in the team that will carry your business further than you could alone.",
   },
-  covers: ['src/components/TeamSettings.tsx'], updated: '2026-11-25',
+  covers: ['src/components/TeamSettings.tsx'], legal: 'hiring', updated: '2026-11-25',
   slides: [
     { chapter: 'Are you ready?', kind: 'learn', title: 'Signs it\'s time', nova: "Feeling stretched thin? That might be a growth signal, not a failure. Let's check.",
       text: "You don't need to be a big business to hire. You need a clear job, enough profit to pay for it, and a little time to train.",
@@ -73,10 +77,21 @@ const lesson: Lesson = {
         ['Employee', 'W-4 for taxes, I-9 to verify they can work in the U.S.', 'W-2'],
         ['Contractor', 'W-9', '1099-NEC if you paid them $2,000 or more (2026 rule)'],
       ] },
-      tip: NOT_ADVICE },
-    { kind: 'learn', title: 'Make payroll easy', text: "If your helper is an employee, a payroll service does the hard parts: withholding, tax deposits and year-end forms. Many cost about $40 to $60 a month plus a few dollars per person. Also check your state's minimum wage (it may be higher than the federal $7.25), new-hire reporting and whether you need workers' compensation insurance.",
+      tip: NOT_ADVICE_HIRING },
+    { kind: 'learn', title: 'Make payroll easy', text: "If your helper is an employee, a payroll service does the hard parts: withholding, tax deposits and year-end forms. Most charge a monthly fee plus a little per person; prices change, so compare their current pricing pages. Also check your state's minimum wage (it may be higher than the federal $7.25), new-hire reporting and whether you need workers' compensation insurance.",
       points: ['Pick a payroll service (Square Payroll, Gusto and others)', 'Check your state minimum wage on the Department of Labor site', 'Ask your insurance agent about workers\' comp', 'Keep a simple timesheet, even for a few hours a week'],
       queen: "Pay your helper on time, every time, even when the week was slow. Trust on payday is the foundation of a good team." },
+    { kind: 'learn', title: 'Rules that change by state and size', text: "Federal law sets the floor. Your state and city can add more, and some federal rules only start once you have a certain number of employees. Treat the strictest rule as yours, even with one helper.",
+      table: { head: ['Rule', 'What to know', 'Where to check'], rows: [
+        ['Fair hiring', 'Federal EEOC laws mostly start at 15 employees (20 for age), but the Equal Pay Act covers almost everyone and many states cover you from employee one', 'eeoc.gov and your state civil rights office'],
+        ['New-hire reporting', 'Report each new employee to your state within 20 days of hire (some states want it sooner)', 'Your state new-hire site'],
+        ['Form I-9', 'She fills Section 1 by her first day; you check her documents within 3 business days. Let her choose which documents to show', 'uscis.gov/i-9'],
+        ['Teens', 'Child labor rules limit hours and jobs for workers under 18, and many states require a work permit', 'dol.gov and your state labor department'],
+        ['Pay and posters', 'State minimum wage, overtime, paid sick leave and required workplace posters differ by state and city', 'Your state labor department'],
+        ['Workers\' comp', 'Most states require it once you have employees', 'Your insurance agent or state workers\' comp office'],
+      ] },
+      queen: "When a rule confuses you, don't guess. Call your state labor department, ask a SCORE mentor, or pay an employment lawyer for an hour. That hour is cheap next to a mistake.",
+      tip: NOT_ADVICE_HIRING },
     { kind: 'learn', title: 'Hiring family', text: "The IRS has special rules for family help. For example, wages you pay your own child under 18 in a sole proprietorship generally aren't subject to Social Security and Medicare taxes, and a child can earn some money without owing income tax. The work must be real and the pay reasonable for the job.",
       example: "Your 15-year-old tags and photographs stock 5 hours a week for $12 an hour. You keep a timesheet, pay from the business account, and the work is real. Ask a tax pro to set it up right." },
     { kind: 'quiz', q: 'Your packer works in your basement, on your schedule, using your packing checklist. How is she most likely classified?', options: ['Contractor, because she\'s part-time', 'Employee, because you control when, where and how she works', 'Neither, if you pay in cash', 'Volunteer'], answer: 1, why: "Part-time doesn't matter, and cash doesn't change the rules. Control over the work is what the IRS looks at." },

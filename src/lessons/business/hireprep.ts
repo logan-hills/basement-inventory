@@ -1,5 +1,5 @@
 import type { Lesson } from '../types'
-import { NOT_ADVICE } from '../resources'
+import { NOT_ADVICE_HIRING } from '../resources'
 
 const lesson: Lesson = {
   id: 'hireprep', kind: 'course', school: 'Build your team', title: 'Build your hiring process before you need it', track: 'Business', icon: 'users',
@@ -25,7 +25,7 @@ const lesson: Lesson = {
     welcome: "You took the first course, Hiring your first helper, so you already know when it's time and who to look for. This one is the homework nobody tells you about: the job on paper, the money that has to work, the forms, and a place to keep the people who answer. Do it on a calm Sunday and the hiring week will feel easy.",
     signoff: "A hiring process is a gift you give your future self. When the busy season hits, you won't be guessing. You'll open your folder, press post, and welcome the right person into a shop that was ready for her.",
   },
-  covers: [], updated: '2026-11-25',
+  covers: [], legal: 'hiring', updated: '2026-11-25',
   slides: [
     { chapter: 'The job on paper', kind: 'learn', title: 'Write the job before you write the ad', nova: "Hi love, it's Nova. We're not finding a person yet. We're deciding exactly what she'll do.",
       text: "Most bad hires start with a fuzzy job. If you can't say the tasks, the hours and the pay out loud, no ad will save you. One page, four lines, and the whole hire gets easier.",
@@ -59,7 +59,7 @@ const lesson: Lesson = {
         ['Whose method?', 'Your checklist', 'Her own way'],
         ['Other customers?', 'No, just you', 'Yes, several'],
       ] },
-      tip: NOT_ADVICE },
+      tip: NOT_ADVICE_HIRING },
     { kind: 'learn', title: 'Paperwork to line up first', text: "None of this takes long, and most of it is free, but it takes days to come back. Start it before you need the person. Check the Small Business Administration's hire and manage pages and your own state's labor and revenue sites, because state rules differ.",
       table: { head: ['What', 'Why', 'Where'], rows: [
         ['EIN', 'Your business tax number, free from the IRS', 'irs.gov, one sitting'],
@@ -68,11 +68,9 @@ const lesson: Lesson = {
         ['Form I-9', 'Proof she can work in the U.S., kept on file', 'uscis.gov/i-9'],
         ['Workers\' comp answer', 'Many states require it from the first employee', 'Your insurance agent'],
         ['Payroll app', 'Does withholding, deposits and year-end forms', 'Square Payroll, Gusto and others'],
-      ] },
-      tip: NOT_ADVICE },
+      ] } },
     { kind: 'learn', title: 'Know your floor and your real cost', text: "Check the federal minimum wage on the Department of Labor site, then your state and city, because the highest one wins.",
-      points: ['Federal minimum is $7.25 an hour; many states and cities are much higher', 'Budget roughly 10% to 15% on top of wages for taxes and insurance', 'Overtime rules start over 40 hours in a week, so watch busy seasons'],
-      tip: NOT_ADVICE },
+      points: ['Federal minimum is $7.25 an hour; many states and cities are much higher', 'Budget roughly 10% to 15% on top of wages for taxes and insurance', 'Overtime rules start over 40 hours in a week, so watch busy seasons'] },
     { kind: 'quiz', q: 'You have the job written and the money worked out. What should already be in hand before you post the ad?', options: ['A logo for the job post', 'Your EIN, state employer registration and a payroll app picked out', 'Three finished interviews', 'A second basement'], answer: 1, why: "The boring numbers take days or weeks to come back. Having them ready is what lets you hire in a week instead of a month." },
 
     { chapter: 'Write the ad', kind: 'script', title: 'A job post you can copy', text: 'Fill in the brackets and it is ready. Keep it short, warm and honest about the hours.', lines: [
@@ -106,7 +104,7 @@ const lesson: Lesson = {
 
     { chapter: 'Take in the people', kind: 'learn', title: 'A simple application, and the questions you may not ask', text: "Ask every applicant the same few written questions, so you compare like for like. And know the lines you cannot cross: the Equal Employment Opportunity Commission says employers may not base hiring on race, color, religion, sex, pregnancy, national origin, age (40 and over), disability or genetic information. So no questions about her family, her children, her age, her church, her health or where she was born.",
       points: ['Ask: name, phone, the exact days and hours she can work every week', 'Ask: a job where you had to be careful with details, in one example', 'Ask: do you have a reliable way to get here for a 5pm start?', 'Never ask: kids, marriage, age, religion, health, disability, pregnancy, where you are from'],
-      tip: NOT_ADVICE },
+      tip: NOT_ADVICE_HIRING },
     { kind: 'learn', title: 'An intake system that fits on one screen', text: "The fastest way to look unprofessional is to lose somebody's message. Keep one tracker, in a notebook or a spreadsheet, and touch it every day you are hiring.",
       table: { head: ['Column', 'What goes in it'], rows: [
         ['Name and phone', 'From her message'],

@@ -91,6 +91,8 @@ export type Lesson = {
   covers: string[]
   /** The Queen's personal note: `welcome` opens the lesson on its cover, `signoff` sends the seller off on the finish page. */
   queen?: { welcome: string; signoff: string }
+  /** Courses that touch law or taxes show a not-advice note on the cover and finish page: 'tax' for taxes and licenses, 'hiring' for hiring, pay and employees. */
+  legal?: 'tax' | 'hiring'
   /** Date the lesson was last brought up to date (YYYY-MM-DD). */
   updated: string
   slides: Slide[]

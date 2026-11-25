@@ -24,7 +24,7 @@ const lesson: Lesson = {
     welcome: "Being official isn't about paperwork for its own sake. It protects you, opens doors with vendors and banks, and makes tax time calm. Let's take it one step at a time.",
     signoff: "Do the steps in order, keep your money separate, and file everything in one folder. You're not a side hustle anymore. You're a business.",
   },
-  covers: ['src/lessons/resources.ts'], updated: '2026-11-24',
+  covers: ['src/lessons/resources.ts'], legal: 'tax', updated: '2026-11-25',
   slides: [
     { chapter: 'Why go official', kind: 'learn', title: 'From side hustle to business', nova: 'Quick note, love: I\'m a handbag, not a lawyer. This is education to get you started. Check the official sites or a pro before you file.',
       text: 'Lots of live sellers start informally. That\'s normal. But once you\'re selling every week, going official protects you and opens doors.',

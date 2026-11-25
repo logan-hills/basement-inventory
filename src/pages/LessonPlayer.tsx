@@ -10,6 +10,7 @@ import { feedbackBad, feedbackOk, tap } from '../lib/feedback'
 import AcademyLocked from '../components/AcademyLocked'
 import { Certificate, CertificateWindow, Medal } from '../components/Certificate'
 import { awardStatus, type AwardStatus } from '../lessons/awards'
+import { NOT_ADVICE, NOT_ADVICE_HIRING } from '../lessons/resources'
 
 /** Stable shuffle so practice order doesn't jump around on re-render. */
 function shuffle<T>(arr: T[], seed: string): T[] {
@@ -377,6 +378,7 @@ function Player({ id }: { id?: string }) {
             </div>
           )}
           {lesson.queen && <QueenNote title="Before you go, from the Queen" text={lesson.queen.signoff} />}
+          <LegalNote lesson={lesson} />
           <p className="big-text">{total ? <>You got <b className="gold">{right} of {total}</b> right on the first try.</> : 'All done.'}</p>
           {score < 80 && <p className="muted">Take it again any time. Practice makes it second nature.</p>}
           <div className="row-gap center-row no-print">
@@ -406,6 +408,7 @@ function Player({ id }: { id?: string }) {
           <span className="cert-kicker">{isCourse ? 'A course' : 'A lesson'} curated by the Queen · taught by Nova · about {minutes} minutes</span>
           <h1>{lesson.title}</h1>
           {lesson.queen && <QueenNote title="A note from the Queen" text={lesson.queen.welcome} />}
+          <LegalNote lesson={lesson} />
           {lesson.outcomes && <div className="stack tight-gap"><span className="eyebrow">By the end you'll be able to</span><ul className="lesson-points">{lesson.outcomes.map(o => <li key={o}>{o}</li>)}</ul></div>}
           {chapters.length > 0 && <div className="chapter-list">{chapters.map((c, n) => <span key={c}><b>{String(n + 1).padStart(2, '0')}</b>{c}</span>)}</div>}
           <Sources lesson={lesson} title="Built on trusted sources" />
@@ -444,4 +447,10 @@ function Player({ id }: { id?: string }) {
       </div>
     </div>
   )
+}
+
+/** The not-advice note for courses that touch law, taxes or hiring. Shown on the cover and the finish page. */
+function LegalNote({ lesson }: { lesson: Lesson }) {
+  if (!lesson.legal) return null
+  return <p className="uni-note"><Icon name="lessons" size={18} /> {lesson.legal === 'hiring' ? NOT_ADVICE_HIRING : NOT_ADVICE}</p>
 }
