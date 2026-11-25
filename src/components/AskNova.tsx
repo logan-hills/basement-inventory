@@ -95,7 +95,7 @@ export default function AskNova() {
     if (chat) {
       setAnswers(null)
       setSaid({ mood: 'cheer', line: chat })
-      if (/ka-?ching|dance|spin|curtsy/i.test(t)) setAct(a => [/curtsy/i.test(t) ? 'curtsy' : /spin/i.test(t) ? 'spin' : 'kaching', (a?.[1] ?? 0) + 1])
+      if (/ka-?ching|dance|boogie|groove|shimmy|\bwave\b|spin|curtsy/i.test(t)) setAct(a => [/curtsy/i.test(t) ? 'curtsy' : /spin/i.test(t) ? 'spin' : /shimmy/i.test(t) ? 'shimmy' : /\bwave\b/i.test(t) ? 'wave' : /dance|boogie|groove/i.test(t) ? 'dance' : 'kaching', (a?.[1] ?? 0) + 1])
       return
     }
     const found = ask(t)

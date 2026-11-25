@@ -29,6 +29,8 @@ const Img = ({ n }: { n: keyof typeof LAYERS }) => {
 
 export const VIEW = '-40 -40 690 800'
 export const ORIGIN = { feet: '305px 712px', bow: '196px 162px', arm: '175px 380px', mouth: '386px 352px' }
+/** Pivot points in the art, as numbers, for the motion loop. */
+export const PIVOT = { feet: [318, 712], bow: [196, 162], arm: [175, 380], mouth: [386, 352], eyes: [350, 252], shadow: [330, 712] } as const
 const INK = '#0d0d0d', LID = '#0a5a1c', BROW = '#07340f'
 const EYE_R = [427, 244], EYE_L = [273, 258], BROW_R = [424, 176], BROW_L = [270, 212], MOUTH = [386, 352]
 
@@ -120,9 +122,10 @@ const EyePatch = ({ id }: { id: string }) => (
 )
 const MouthPatch = ({ id }: { id: string }) => <g filter={`url(#${id}soft)`}><ellipse cx="386" cy="350" rx="58" ry="34" fill="#14920a" transform="rotate(-14 386 350)" /></g>
 
-/** Eyes, brows and mouth for a face. `blink` closes her eyes for a moment. */
-export function FaceArt({ id, face, blink }: { id: string; face: Face; blink: boolean }): { eyes: ReactNode; mouth: ReactNode; glasses: string } {
-  const e = (k: string, cx: number, cy: number, o: EyeOpts) => <OpenEye id={`${id}-${k}`} cx={cx} cy={cy} o={o} />
+/** Eyes, brows and mouth for a face. `blink` draws her eyes shut (the motion loop does smooth blinks).
+    `tag` keeps clip ids unique when two faces are on screen during a crossfade. */
+export function FaceArt({ id, face, blink = false, tag = '' }: { id: string; face: Face; blink?: boolean; tag?: string }): { eyes: ReactNode; mouth: ReactNode; glasses: string } {
+  const e = (k: string, cx: number, cy: number, o: EyeOpts) => <OpenEye id={`${id}-${k}${tag}`} cx={cx} cy={cy} o={o} />
   const shut = <><EyePatch id={id} /><ClosedEye cx={EYE_L[0]} cy={EYE_L[1] + 6} happy={false} side={-1} /><ClosedEye cx={EYE_R[0]} cy={EYE_R[1] + 6} happy={false} /></>
   const happy = <><EyePatch id={id} /><Brows l={8} r={10} /><ClosedEye cx={EYE_L[0]} cy={EYE_L[1] + 2} w={40} side={-1} /><ClosedEye cx={EYE_R[0]} cy={EYE_R[1] + 2} /></>
   const painted = <MouthImg />

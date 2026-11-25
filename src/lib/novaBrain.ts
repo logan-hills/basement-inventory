@@ -130,7 +130,7 @@ export function smallTalk(q: string): string | null {
   if (/^(hi|hey|hello|good (morning|afternoon|evening))\b/.test(t)) return 'Hey love! Ask me anything about the app, like "how do I print tags?"'
   if (/who are you|your name|what are you/.test(t)) return "I'm Nova, Head of Dazzle University and your shop's right-hand bag. Ask me how to do anything in the app."
   if (/thank/.test(t)) return 'Anytime, boss. Go sell something fabulous!'
-  if (/ka-?ching|dance|spin|curtsy/.test(t)) return 'You asked for it!'
+  if (/ka-?ching|dance|boogie|groove|shimmy|\bwave\b|spin|curtsy/.test(t)) return 'You asked for it!'
   return null
 }
 
