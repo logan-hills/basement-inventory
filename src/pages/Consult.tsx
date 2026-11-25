@@ -74,7 +74,7 @@ export default function Consult() {
       <header className="uni-queen consult-hero">
         <div className="uni-queen-copy">
           <span className="uni-class-day">{Q.tagline}</span>
-          <h1 className="consult-title">{Q.title}</h1>
+          <h1 className="consult-title">{Q.title}<span className="tm">™</span></h1>
           <p>{Q.what}</p>
           <span className="uni-queen-cred">♛ {Q.credential}</span>
         </div>

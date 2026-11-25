@@ -1,4 +1,5 @@
 import { Capacitor } from '@capacitor/core'
+import { SITE_URL } from '../lib/site'
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import GiveawayStage from '../components/GiveawayStage'
 import Sheet from '../components/Sheet'
@@ -12,7 +13,7 @@ import {
 
 // The overlay link must point at the website, even when copied from inside the iPhone app.
 const OVERLAY_BASE = () => Capacitor.isNativePlatform()
-  ? 'https://logan-hills.github.io/basement-inventory/#/overlay/'
+  ? `${SITE_URL}#/overlay/`
   : `${window.location.origin}${window.location.pathname}#/overlay/`
 
 const when = (t: number) => new Date(t).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })

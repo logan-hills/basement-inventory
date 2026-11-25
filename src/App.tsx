@@ -1,4 +1,5 @@
 import { HashRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import BrandFooter from './components/BrandFooter'
 import AskNova from './components/AskNova'
 import { useEffect, useState } from 'react'
 import Sheet from './components/Sheet'
@@ -132,13 +133,13 @@ function StreamShell() {
     <div className="shell">
       <ScrollTop />
       <header className="topnav no-print" aria-label="Main menu">
-        <NavLink to="/" className="topnav-brand" aria-label="Home"><span className="dock-logo small"><Crown size={20} /></span><b>Dynamic Dazzle</b></NavLink>
+        <NavLink to="/" className="topnav-brand" aria-label="Home"><span className="dock-logo small"><Crown size={20} /></span><b>Dynamic Dazzle<span className="tm">™</span></b></NavLink>
         <nav className="topnav-links">
           {STREAM_NAV.map(n => <NavLink key={n.to} to={n.to} end={n.end} className="topnav-link"><Icon name={n.icon} size={20} /><span>{n.label}</span></NavLink>)}
         </nav>
       </header>
       <header className="mobile-top no-print">
-        <NavLink to="/" className="brand"><span className="dock-logo small"><Crown size={20} /></span><span className="brand-text"><b>Dynamic Dazzle</b></span></NavLink>
+        <NavLink to="/" className="brand"><span className="dock-logo small"><Crown size={20} /></span><span className="brand-text"><b>Dynamic Dazzle<span className="tm">™</span></b></span></NavLink>
         <NavLink to="/profile" className="btn ghost small">My profile</NavLink>
       </header>
       <main className="content">
@@ -151,6 +152,7 @@ function StreamShell() {
           <Route path="/privacy" element={<Legal which="privacy" />} />
           <Route path="*" element={<SharedPage />} />
         </Routes>
+        <BrandFooter />
       </main>
       <nav className="tabbar no-print">
         {STREAM_NAV.map(n => <NavLink key={n.to} to={n.to} end={n.end}><Icon name={n.icon} size={22} /><span>{n.label}</span></NavLink>)}
@@ -170,7 +172,7 @@ function Shell() {
   // The on-stream product card for Prism / OBS: public, no sign-in, nothing else on the page.
   if (pathname.startsWith('/overlay/')) return <Routes><Route path="/overlay/:token/:part?" element={<Overlay />} /></Routes>
   if (pathname === '/terms' || pathname === '/privacy') {
-    if (!session || !shop) return <main className="content solo"><Legal which={pathname === '/terms' ? 'terms' : 'privacy'} /></main>
+    if (!session || !shop) return <main className="content solo"><Legal which={pathname === '/terms' ? 'terms' : 'privacy'} /><BrandFooter /></main>
   }
   if (loading) return <div className="center-page"><div className="brand-mark pulse"><Crown size={40} /></div></div>
   if (!session) return <Login />
@@ -184,7 +186,7 @@ function Shell() {
     <div className="shell">
       <ScrollTop />
       <header className="topnav no-print" aria-label="Main menu">
-        <NavLink to="/" className="topnav-brand" aria-label="Home"><span className="dock-logo small"><Crown size={20} /></span><b>Dynamic Dazzle</b></NavLink>
+        <NavLink to="/" className="topnav-brand" aria-label="Home"><span className="dock-logo small"><Crown size={20} /></span><b>Dynamic Dazzle<span className="tm">™</span></b></NavLink>
         <nav className="topnav-links">
           {TOP.filter(n => !(isTeam && OWNER_ONLY.has(n.to))).map(n => (
             <NavLink key={n.to} to={n.to} end={n.to === '/'} className={() => `topnav-link${n.fit ? ` fit-${n.fit}` : ''}${top === n.area ? ' active' : ''}`}>
@@ -199,7 +201,7 @@ function Shell() {
       </header>
 
       <header className="mobile-top no-print">
-        <NavLink to="/" className="brand"><span className="dock-logo small"><Crown size={20} /></span><span className="brand-text"><b>Dynamic Dazzle</b></span></NavLink>
+        <NavLink to="/" className="brand"><span className="dock-logo small"><Crown size={20} /></span><span className="brand-text"><b>Dynamic Dazzle<span className="tm">™</span></b></span></NavLink>
         <button className="btn ghost small" onClick={() => setMenu(true)} aria-label="Open menu"><Icon name="menu" size={18} /> Menu</button>
       </header>
       <Sheet open={menu} onClose={() => setMenu(false)} title="Everything">

@@ -2,6 +2,10 @@
 export const LEGAL_UPDATED = 'November 25, 2026'
 export const COMPANY = 'Logan Hills'
 export const CONTACT = 'info@inkandembersociety.com'
+/** Who owns the brand, Nova, the App and its content. */
+export const IP_OWNER = 'LaVerne Quarles, owner of Dynamic Dazzle Bargain Basement'
+export const COPYRIGHT_LINE = `© ${new Date().getFullYear()} LaVerne Quarles, Dynamic Dazzle Bargain Basement. All rights reserved.`
+export const TRADEMARK_LINE = 'Dynamic Dazzle™, Dazzle Warehouse™, Dazzle University™, Time with the Queen™, Nova™ and the DD crown logo are trademarks of LaVerne Quarles.'
 
 export type LegalDoc = { title: string; intro: string; sections: { h: string; p: string[] }[] }
 
@@ -66,21 +70,30 @@ export const TERMS: LegalDoc = {
       ],
     },
     {
-      h: '8. No guarantees',
+      h: '8. Who owns the App and its content',
+      p: [
+        `Dynamic Dazzle, Dazzle Warehouse, Dazzle University, Time with the Queen, Nova, the DD crown logo and related names, logos and characters are trademarks of ${IP_OWNER}. The App, including its software, screen designs, layouts, graphics, lessons, courses, certificates and text, is owned by ${IP_OWNER} and protected by copyright, trademark and other laws. All rights reserved.`,
+        'We give you a personal, limited right to use the App for your own selling business while your account is active. You may not copy, sell, rent, rebrand or share the App, its lessons or its designs; copy its look, screens, workflows or content to build or market a similar product; take apart, reverse engineer or scrape the App, or use bots to collect its content; use our names, logos or Nova without written permission; or remove our copyright or trademark notices.',
+        'Your own inventory, photos, customer lists and posts stay yours. You let us store and show them only as needed to run the App for you. If you send us ideas or feedback, we may use them freely without paying you.',
+        `To report something you believe copies your work, or ours, email ${CONTACT}.`,
+      ],
+    },
+    {
+      h: '9. No guarantees',
       p: [
         'We work hard to keep the App running, but it is provided "as is". We do not promise it will always be available or error-free, that a live will start or end exactly on time if Facebook or your internet has trouble, or that you will make any amount of sales.',
         'To the fullest extent the law allows, we are not liable for lost sales, lost profits or indirect damages, and our total liability is limited to what you paid us in the 3 months before the claim.',
       ],
     },
     {
-      h: '9. Ending your account',
+      h: '10. Ending your account',
       p: [
         'You can stop using the App and ask us to delete your account at any time.',
         'If you break these Terms or the seller guidelines you agreed to, we may suspend or revoke your account. If your account is revoked for a violation, you will not get a refund for the month or year you have already paid for, unless the law requires one. We may also remove you from the shared live calendar.',
       ],
     },
     {
-      h: '10. Changes and contact',
+      h: '11. Changes and contact',
       p: [
         'We may update these Terms. If the change is important we will tell you in the App and ask you to agree again. These Terms are governed by the laws of the Commonwealth of Pennsylvania.',
         `Questions: ${CONTACT}.`,
