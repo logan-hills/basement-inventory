@@ -92,13 +92,15 @@ import cards from './business/cards'
 import resume from './business/resume'
 import dropsteady from './business/dropsteady'
 import dropreach from './business/dropreach'
+import plan90 from './business/plan90'
+import planlong from './business/planlong'
 import launch from './launch'
 import printer from './printer'
 import gear from './gear'
 import giveaways from './giveaways'
 
 export const LESSONS: Lesson[] = [launch, tour, profile, team, settings, gear, receive, inventory, bulk, printer, labels, warehouse, scan, damaged, planner, calendar, sharedpage, liveprep, giveaways, bot, sale, upload, pick, shipping, customers, reports, consult]
-export const COURSES: Lesson[] = [mindset, moneymindset, passion, persistence, herpower, familybalance, selfcare, wealth, launchbiz, strategy1, strategy2, growth, resume, hiring, liveplan, industry, official, salestax, taxes, taxsimple, finance, sourcing, loads, preorder, livedrop, shipprice, vendors, brand, brandkit, networking, cards, camera, stories, marketing, community, aimarketing, webstart, websquare, webshopify, webgodaddy, webai, social, reels, content, canva, canvapro, excel, word, apps, aicalm, ai, claudeuse, chatgptuse, aiedge, aistaff, aitrust, creatorpay, tiktok, secondplatform, dropship, dropsteady, dropreach, storage, picking, packlive, lean, shipfast, retention, communication, nopays]
+export const COURSES: Lesson[] = [mindset, moneymindset, passion, persistence, herpower, familybalance, selfcare, wealth, launchbiz, strategy1, strategy2, plan90, planlong, growth, resume, hiring, liveplan, industry, official, salestax, taxes, taxsimple, finance, sourcing, loads, preorder, livedrop, shipprice, vendors, brand, brandkit, networking, cards, camera, stories, marketing, community, aimarketing, webstart, websquare, webshopify, webgodaddy, webai, social, reels, content, canva, canvapro, excel, word, apps, aicalm, ai, claudeuse, chatgptuse, aiedge, aistaff, aitrust, creatorpay, tiktok, secondplatform, dropship, dropsteady, dropreach, storage, picking, packlive, lean, shipfast, retention, communication, nopays]
 export const ALL_LESSONS: Lesson[] = [...LESSONS, ...COURSES]
 export const lessonById = (id?: string) => ALL_LESSONS.find(l => l.id === id)
 export * from './types'
