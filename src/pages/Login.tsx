@@ -1,4 +1,6 @@
 import { Capacitor } from '@capacitor/core'
+import { COPYRIGHT_LINE } from '../lib/legal'
+import { SITE_URL } from '../lib/site'
 import { useEffect, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react'
 import { supabase } from '../lib/supabase'
 import { friendly, setRecovering, smsAvailable, toE164 } from '../lib/recovery'
@@ -7,7 +9,6 @@ import { Crown } from '../App'
 // In the iPhone app, email links must open the website (the app's own address only exists inside the app).
 // Sign in with Apple needs Apple's native sign-in there, so the app shows email sign-in only for now.
 const NATIVE = Capacitor.isNativePlatform()
-const SITE_URL = 'https://logan-hills.github.io/basement-inventory/'
 const HOME_URL = () => NATIVE ? SITE_URL : window.location.origin + window.location.pathname
 
 const SPARKS = Array.from({ length: 14 }, (_, i) => i)
@@ -23,11 +24,11 @@ export function SignInShell({ children }: { children: ReactNode }) {
       <div className="signin-wrap">
         <header className="signin-brand">
           <span className="auth-crown"><Crown size={30} /></span>
-          <h1 className="signin-title">Dynamic <em>Dazzle</em></h1>
+          <h1 className="signin-title">Dynamic <em>Dazzle</em><span className="tm">™</span></h1>
           <span className="signin-sub">Bargain Basement</span>
         </header>
         {children}
-        <p className="signin-legal">By continuing you agree to our <a href="#/terms">Terms of Use</a> and <a href="#/privacy">Privacy Policy</a>.</p>
+        <p className="signin-legal">By continuing you agree to our <a href="#/terms">Terms of Use</a> and <a href="#/privacy">Privacy Policy</a>.<br />{COPYRIGHT_LINE}</p>
       </div>
     </div>
   )

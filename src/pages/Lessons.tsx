@@ -139,7 +139,7 @@ export default function Lessons() {
       <header className="uni-bar-head">
         <button type="button" className="uni-brand" onClick={() => go('home')} aria-label="Dazzle University home">
           <span className="uni-brand-mark">DU</span>
-          <span><b>Dazzle <em>University</em></b><small>Taught by Nova · Est. by Dynamic Dazzle</small></span>
+          <span><b>Dazzle <em>University</em><span className="tm">™</span></b><small>Taught by Nova · Est. by Dynamic Dazzle</small></span>
         </button>
         <span className="uni-mini-ring"><Ring value={(done + coursesDone) / (LESSONS.length + COURSES.length)} label="University progress"><small>done</small></Ring></span>
       </header>

@@ -1,4 +1,5 @@
 import { Capacitor } from '@capacitor/core'
+import { SITE_URL } from '../lib/site'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
 import { useSession } from '../lib/session'
@@ -9,7 +10,7 @@ type Comment = { id: string; message: string; created_time: string; from?: { id:
 
 // The on-stream card link must point at the website, even when copied from inside the iPhone app.
 const OVERLAY_BASE = () => Capacitor.isNativePlatform()
-  ? 'https://logan-hills.github.io/basement-inventory/#/overlay/'
+  ? `${SITE_URL}#/overlay/`
   : `${window.location.origin}${window.location.pathname}#/overlay/`
 
 /** Claim-looking comments: "sold", 4-digit Live Numbers, or DD-style claim words. */

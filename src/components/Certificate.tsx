@@ -121,7 +121,7 @@ export function Certificate({ a, shopName, shopId }: { a: AwardStatus; shopName:
       <div className={`cert cert-diploma tone-${a.tone}${diploma ? ' foil' : ''}`}>
         <svg className="cert-corner tl" viewBox="-50 -50 100 100" aria-hidden="true"><Guilloche id={a.id} r={46} rings={3} jewel /></svg>
         <svg className="cert-corner br" viewBox="-50 -50 100 100" aria-hidden="true"><Guilloche id={`${a.id}x`} r={46} rings={3} jewel /></svg>
-        <span className="cert-crest">Dazzle University</span>
+        <span className="cert-crest">Dazzle University™</span>
         <span className="cert-kick">{diploma ? 'Diploma' : 'With honors from the School of'}</span>
         <h2 className="cert-title">{a.title}</h2>
         <div className="cert-wreath">
@@ -155,7 +155,7 @@ export function Certificate({ a, shopName, shopId }: { a: AwardStatus; shopName:
       <div className="cert-frame">
         <svg className="cert-corner tl" viewBox="-50 -50 100 100" aria-hidden="true"><Guilloche id={a.id} r={46} rings={2} jewel /></svg>
         <svg className="cert-corner tr" viewBox="-50 -50 100 100" aria-hidden="true"><Guilloche id={a.id} r={46} rings={2} jewel /></svg>
-        <span className="cert-crest">Dazzle University</span>
+        <span className="cert-crest">Dazzle University™</span>
         <span className="cert-kick">Certificate of completion · {a.line}</span>
         <span className="cert-kick soft">This certifies that</span>
         <span className="cert-name">{name}</span>
