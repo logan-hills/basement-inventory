@@ -20,7 +20,7 @@ const lesson: Lesson = {
     welcome: "When you book time with me, I want you to walk away with a real plan. This lesson shows you how to come prepared so we can use every minute on what matters most to your business.",
     signoff: "Bring your snapshot, bring your three sharpest questions, and bring your open mind. I'll bring the rest. I can't wait to work with you.",
   },
-  covers: ['src/pages/Consult.tsx', 'src/lessons/classes.ts'], updated: '2026-11-24',
+  covers: ['src/pages/Consult.tsx', 'src/lessons/classes.ts'], updated: '2026-11-25',
   slides: [
     { chapter: 'What a consult is', kind: 'learn', title: 'Your business, her expertise, one hour', nova: 'Boss, this is the closest thing to having a CEO in your corner. Let\'s make every minute count.',
       text: 'Time with the Queen is a private 1:1 business consult. She holds an MBA in business project planning from Capella University, and she works through your challenges with you on any business topic, then gives you tools to tackle them. When a question needs more digging, she can follow up with research and written solutions.',

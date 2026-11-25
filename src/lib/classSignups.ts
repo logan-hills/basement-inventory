@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from './supabase'
 import { useSession } from './session'
-import { CONTACT } from './legal'
+import { TEAM_CONTACT as CONTACT } from './legal'
 import { CLASS_TZ_ID, type LiveClass } from '../lessons/classes'
 import { getLiveClasses } from './classSchedule'
 

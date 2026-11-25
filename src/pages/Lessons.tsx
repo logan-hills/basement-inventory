@@ -19,7 +19,7 @@ import { awardStatus, type AwardStatus } from '../lessons/awards'
 import { CLASS_TZ, ONE_ON_ONE, QUEEN_SESSION } from '../lessons/classes'
 import { useLiveClasses } from '../lib/classSchedule'
 import ClassScheduleEditor from '../components/ClassScheduleEditor'
-import { CONTACT } from '../lib/legal'
+import { TEAM_CONTACT as CONTACT } from '../lib/legal'
 import novaLaverne from '../assets/nova-laverne.webp'
 
 const NOVA_TIPS: [NovaMood, string][] = [
