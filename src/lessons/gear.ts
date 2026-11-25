@@ -21,7 +21,7 @@ const lesson: Lesson = {
     welcome: "Good tools make hard work feel easy, but you don't need the most expensive tools to run a great shop. Here's the gear I'd pick for you, and how to set it up so it works the first time.",
     signoff: "Start with what you need today, test everything before a big night, and upgrade when your sales tell you to. Now go make those happy beeps.",
   },
-  covers: ['src/pages/Gear.tsx', 'src/lib/gear.ts', 'src/lib/scanner.ts', 'src/lib/printImage.ts', 'src/pages/Receipt.tsx', 'src/lib/printNudge.ts'], updated: '2026-11-24',
+  covers: ['src/pages/Gear.tsx', 'src/lib/gear.ts', 'src/lib/scanner.ts', 'src/lib/printImage.ts', 'src/pages/Receipt.tsx', 'src/lib/printNudge.ts'], updated: '2026-11-25',
   slides: [
     { chapter: 'Your starter kit', kind: 'learn', title: 'Three things run the whole warehouse', nova: 'Shopping for gear is the fun part. Let\'s spend smart so every dollar pays you back.',
       text: 'You need three things to run Dazzle Warehouse like the big stores do: a scanner, one thermal label printer, and the right rolls of labels. Everything on the Recommended gear page has been picked to work smoothly with the app, so you\'re not guessing on Amazon at midnight.',
@@ -63,7 +63,7 @@ const lesson: Lesson = {
         ['ROLLO-size 2×1 (yellow)', '2 × 1 in', 'Sale tags', 'Print tags, Sale style'],
         ['MUNBYN 4×4', '4 × 4 in', 'Bin labels', 'Bin labels, 4×4 roll'],
         ['MFLABEL 4×6 roll or MUNBYN fan-fold', '4 × 6 in', 'Shipping and box labels', 'Box labels, Shipping'],
-        ['DYMO 30336 (Staples)', '1 × 2⅛ in', 'Item tags on a DYMO LabelWriter', 'Print tags, DYMO 30336'],
+        ['DYMO 30336 (Staples)', '1 × 2⅛ in', 'Item tags on a DYMO, or in your 4 in thermal printer', 'Print tags, DYMO 30336'],
       ] },
       tip: 'Keep each roll in its own labeled bag. Grabbing the wrong roll is the number one printing mix-up.' },
     { kind: 'tap', title: 'Practice: the bin label size', prompt: 'You\'re labeling 40 new shelf spots. Which label do you tap on Bin labels?', screen: { title: 'Bin labels · 1. Pick your label size', buttons: ['2 × 1 in roll, one bin per label', '4 × 4 in roll, one bin per label', 'Letter sheet, 10 per page'] }, answer: '4 × 4 in roll, one bin per label', hint: '4×4 is our bin label size: big enough to read across the room.' },

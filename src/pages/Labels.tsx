@@ -29,8 +29,13 @@ const FORMATS = {
     page: { w: 4, h: 6 }, cols: 2, rows: 6,
     label: { w: 2, h: 1 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 },
   },
+  dymoThermal: {
+    name: 'DYMO 1 × 2⅛ in (30336) in a 4 in thermal printer', sub: 'DYMO labels in the Core Innovations, Nelko and similar', group: 'thermal',
+    page: { w: 2.125, h: 1 }, cols: 1, rows: 1,
+    label: { w: 2.125, h: 1 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 }, turn: true,
+  },
   dymo30336: {
-    name: 'DYMO 1 × 2⅛ in (30336)', sub: 'Multi-purpose labels from Staples. One tag per label', group: 'dymo',
+    name: 'DYMO 1 × 2⅛ in (30336)', sub: 'For a DYMO LabelWriter printer. Labels from Staples', group: 'dymo',
     page: { w: 2.125, h: 1 }, cols: 1, rows: 1,
     label: { w: 2.125, h: 1 }, margin: { top: 0, left: 0 }, gap: { x: 0, y: 0 }, turn: true,
   },
@@ -246,6 +251,18 @@ export default function Labels() {
                 <span className="muted">Each tag prints on its own label. White roll for regular tags, yellow roll for sale tags.</span>
               </div>
             )}
+            {format === 'dymoThermal' && (
+              <div className="printer-tip small">
+                <b>DYMO labels in your thermal printer (one time)</b>
+                <ol>
+                  <li>Load the DYMO roll so the labels come out <b>one after another, the long way</b>, with the holes between labels lined up in the middle. Slide the roll guides in snug against the backing so it can't wander.</li>
+                  <li>Set the label size to <b>1 x 2.125 in</b> (25 x 54 mm): <b>1 in wide, 2⅛ in long</b>. In the printer's phone app that's width 25 mm, height 54 mm, label type <b>Gap</b> (sometimes called Label with gaps). On a computer, add a custom paper size of 1 x 2.125 in, Portrait.</li>
+                  <li>Hold the feed button until a label or two feeds out, so the printer finds the holes between labels.</li>
+                  <li>Phone: tap <b>Save for printer app</b> and print the picture at 100%, no fit to page. Computer: tap Print, scale <b>100%</b>, margins <b>None</b>.</li>
+                </ol>
+                <span className="muted">The app turns each tag to run along the label, so one whole tag lands on each label. Still sitting off to one side? Use <b>Nudge it</b> below.</span>
+              </div>
+            )}
             {dymo && (
               <div className="printer-tip small">
                 <b>DYMO LabelWriter setup (one time)</b>
@@ -256,12 +273,13 @@ export default function Labels() {
                   <li>Scale <b>100%</b> (or Actual size), margins <b>None</b>, headers and footers off.</li>
                 </ol>
                 <label className="check-line"><input type="checkbox" checked={noTurn} onChange={e => setNoTurn(e.target.checked)} />Tag came out sideways or cut off? Tick this to let the printer turn it instead, then print again.</label>
+                <span className="muted">DYMO labels loaded in a Core Innovations, Nelko or other shipping label printer? <button className="link-btn" onClick={() => setFormat('dymoThermal')}>Use the thermal printer setting</button> instead.</span>
               </div>
             )}
             {!single && <p className="muted small">In the print window, set scale to 100% (or "Actual size") and margins to None.</p>}
             <button className={`btn big ${style === 'sale' ? 'sale-btn' : 'primary'}`} onClick={() => window.print()}>Print {tags.length} tag{tags.length === 1 ? '' : 's'}</button>
-            <SaveForPrinterApp name={style === 'sale' ? 'sale-tags' : 'tags'} />
-            <PrintNudge w={printed.w} h={printed.h} label={dymo ? `DYMO ${format === 'dymo30336' ? '30336' : '30252'} labels` : undefined} />
+            <SaveForPrinterApp name={style === 'sale' ? 'sale-tags' : 'tags'} turn={turned && f.group === 'thermal'} />
+            <PrintNudge w={printed.w} h={printed.h} label={dymo ? `DYMO ${format === 'dymo30336' ? '30336' : '30252'} labels` : format === 'dymoThermal' ? 'DYMO labels in your thermal printer' : undefined} />
             <p className="muted small">Need a printer or labels? See <Link to="/gear">Recommended gear</Link>.</p>
           </section>
         </div>

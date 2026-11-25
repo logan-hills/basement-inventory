@@ -154,7 +154,7 @@ export default function BinLabels() {
           <p className="muted small">{paperTip[format]} Print at <b>100%</b> (Actual size) with margins set to <b>None</b>.</p>
           {dymo && <label className="check-line"><input type="checkbox" checked={noTurn} onChange={e => setNoTurn(e.target.checked)} />Label came out sideways or cut off? Tick this to let the printer turn it instead, then print again.</label>}
           <button className="btn primary big" disabled={!list.length} onClick={() => window.print()}>Print {list.length} label{list.length === 1 ? '' : 's'}</button>
-          <SaveForPrinterApp name="bin-labels" disabled={!list.length} />
+          <SaveForPrinterApp name="bin-labels" disabled={!list.length} turn={turned && f.group === 'thermal'} />
           <PrintNudge w={printed.w} h={printed.h} />
           <p className="muted small">Need a printer or labels? See <Link to="/gear">Recommended gear</Link>.</p>
         </section>
