@@ -2,7 +2,7 @@ import type { Lesson } from '../types'
 import { NOT_ADVICE } from '../resources'
 
 const lesson: Lesson = {
-  id: 'hiring', kind: 'course', school: 'Strategy and growth', title: 'Hiring your first helper', track: 'Business', icon: 'users',
+  id: 'hiring', kind: 'course', school: 'Build your team', title: 'Hiring your first helper', track: 'Business', icon: 'users',
   why: "There comes a point where the only way to grow is to stop doing everything yourself. The right first helper gives you back hours every week. The wrong hire, or the right person hired the wrong way, costs money and peace.",
   outcomes: [
     'Know when you\'re ready to hire, using your own numbers',
@@ -24,7 +24,7 @@ const lesson: Lesson = {
     welcome: "Hiring your first helper is a big step, and I'm proud of you for thinking about it. It means your shop is growing. In this course I'll walk you through it the way I'd want you to do it: with your numbers, a fair tryout, the right paperwork and a real training plan.",
     signoff: "Start with one job, hire slowly, train patiently, and give your helper their own sign-in. Your first hire is the first brick in the team that will carry your business further than you could alone.",
   },
-  covers: ['src/components/TeamSettings.tsx'], updated: '2026-11-24',
+  covers: ['src/components/TeamSettings.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'Are you ready?', kind: 'learn', title: 'Signs it\'s time', nova: "Feeling stretched thin? That might be a growth signal, not a failure. Let's check.",
       text: "You don't need to be a big business to hire. You need a clear job, enough profit to pay for it, and a little time to train.",
