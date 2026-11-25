@@ -4,6 +4,7 @@ import { useSession } from './session'
 import { TEAM_CONTACT as CONTACT } from './legal'
 import { CLASS_TZ_ID, type LiveClass } from '../lessons/classes'
 import { getLiveClasses } from './classSchedule'
+import { getRoom } from './meetings'
 
 /* Live class sign-ups. Saved to Supabase (016_class_signups.sql) so hosts can see who's coming.
    Until that table exists, a seat is kept on this device and the seller is offered an email
@@ -63,12 +64,18 @@ function sessionOf(s: Signup) {
   return { c, sess }
 }
 
+/** What a calendar invite says about joining: the link if the Queen has saved one. */
+const joinLine = (classId: string) => {
+  const link = getRoom(classId)
+  return link ? `Join here: ${link} (or tap Join class now on the Dazzle University home, 15 minutes before).` : 'Tap Join class now on the Dazzle University home, 15 minutes before class.'
+}
+
 /** A Google Calendar link for this seat. */
 export function googleCalLink(s: Signup): string {
   const { c, sess } = sessionOf(s)
   if (!c || !sess) return '#'
   const start = timeToMinutes(sess.time)
-  const q = new URLSearchParams({ action: 'TEMPLATE', text: `Dazzle University: ${c.title}`, dates: `${stamp(s.class_date, start)}/${stamp(s.class_date, start + c.minutes)}`, ctz: CLASS_TZ_ID, details: `${c.what}\n\nThe Dynamic Dazzle team will send the join link. Questions? ${CONTACT}` })
+  const q = new URLSearchParams({ action: 'TEMPLATE', text: `Dazzle University: ${c.title}`, dates: `${stamp(s.class_date, start)}/${stamp(s.class_date, start + c.minutes)}`, ctz: CLASS_TZ_ID, details: `${c.what}\n\n${joinLine(c.id)} Questions? ${CONTACT}`, ...(getRoom(c.id) ? { location: getRoom(c.id)! } : {}) })
   return `https://calendar.google.com/calendar/render?${q}`
 }
 
@@ -86,7 +93,8 @@ export function icsFile(s: Signup): string {
     `DTSTART;TZID=${CLASS_TZ_ID}:${stamp(s.class_date, start)}`,
     `DTEND;TZID=${CLASS_TZ_ID}:${stamp(s.class_date, start + c.minutes)}`,
     `SUMMARY:${esc(`Dazzle University: ${c.title}`)}`,
-    `DESCRIPTION:${esc(`${c.what} The Dynamic Dazzle team will send the join link. Questions? ${CONTACT}`)}`,
+    `DESCRIPTION:${esc(`${c.what} ${joinLine(c.id)} Questions? ${CONTACT}`)}`,
+    ...(getRoom(c.id) ? [`LOCATION:${esc(getRoom(c.id)!)}`, `URL:${getRoom(c.id)}`] : []),
     'BEGIN:VALARM', 'TRIGGER:-PT30M', 'ACTION:DISPLAY', 'DESCRIPTION:Your live class starts in 30 minutes', 'END:VALARM',
     'END:VEVENT', 'END:VCALENDAR',
   ]

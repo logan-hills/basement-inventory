@@ -13,6 +13,7 @@ import { hasAcademy } from '../lib/plan'
 import Sheet from '../components/Sheet'
 import { DAILY_TIPS, tipIndexFor, type DailyTip } from '../lessons/tips'
 import { lessonById } from '../lessons'
+import { JoinNowBanner } from '../components/JoinNow'
 
 /** Nova's 5-minute tip in a pop-up: tiny steps to tick off, and the course that goes deeper. */
 function FiveMinuteTip({ tip, open, onClose, showCourse }: { tip: DailyTip; open: boolean; onClose: () => void; showCourse: boolean }) {
@@ -163,6 +164,8 @@ export default function Home() {
         </div>
         <Link to="/intake" className="btn gold"><Icon name="plus" size={18} />Add stock</Link>
       </div>
+
+      <JoinNowBanner />
 
       {/* Nova greets you at the top with today's 5-minute tip. Tap her for another one, or open it to do it now. */}
       <section className="nova-strip home-nova" aria-label="Nova's 5-minute tip">

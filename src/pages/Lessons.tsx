@@ -19,6 +19,7 @@ import { awardStatus, type AwardStatus } from '../lessons/awards'
 import { CLASS_TZ, ONE_ON_ONE, QUEEN_SESSION } from '../lessons/classes'
 import { useLiveClasses } from '../lib/classSchedule'
 import ClassScheduleEditor from '../components/ClassScheduleEditor'
+import { SeatJoin } from '../components/JoinNow'
 import { TEAM_CONTACT as CONTACT } from '../lib/legal'
 import novaLaverne from '../assets/nova-laverne.webp'
 
@@ -218,6 +219,7 @@ export default function Lessons() {
                   </span>
                   <button type="button" className="uni-live-more" onClick={() => go('classes')}>Class details and 1:1 coaching ›</button>
                   {signups.isHost && <button type="button" className="uni-live-more uni-edit-times" onClick={() => setEditTimes(true)}>✎ Edit class times</button>}
+                  {signups.isHost && <Link className="uni-live-more uni-edit-times" to="/host">♛ Host desk: start a class</Link>}
                 </span>
               </div></li>
               <li><button type="button" className="uni-step tone-gold" onClick={() => go('business')}>
@@ -474,6 +476,7 @@ function MySeats({ c, signups }: { c: LiveClass; signups: ReturnType<typeof useC
       {mine.map((m: Signup) => (
         <span key={m.id} className="uni-myseat">
           <b>✓ You're in: {prettyDate(m.class_date)} · {c.sessions.find(x => x.label === m.session_label)?.time}</b>
+          <SeatJoin seat={m} c={c} />
           <span>
             <button type="button" onClick={() => downloadIcs(m)}>Add to calendar</button>
             <button type="button" onClick={() => { if (window.confirm('Cancel this seat?')) signups.cancel(m) }}>Cancel</button>
@@ -519,6 +522,7 @@ function LiveClasses({ classes, isDone, signups, onSeat, onEditTimes }: { classe
         <h3>Live orientation classes</h3>
         <p>Learn it with us, on camera, with time for your questions. Pick daytime or evening. All times are {CLASS_TZ}.</p>
         {signups.isHost && <button type="button" className="btn uni-ghost-dark uni-edit-times" onClick={onEditTimes}>✎ Edit class times <small>Hosts only</small></button>}
+        {signups.isHost && <Link className="btn uni-ghost-dark uni-edit-times" to="/host">♛ Host desk <small>Start a class</small></Link>}
       </div>
       <div className="uni-class-grid">
         {classes.map(c => (
