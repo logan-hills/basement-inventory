@@ -1,8 +1,9 @@
 import { supabase } from './supabase'
 import type { Plan } from './plan'
 
-/** Team members each plan includes (the owner doesn't count). Matches team_limit() in supabase/018. */
-export const TEAM_LIMIT: Record<Plan, number> = { stream: 0, gem: 1, crown: 2, empire: 5 }
+/** Team members each plan includes (the owner doesn't count). Matches team_limit() in supabase/020. */
+export const TEAM_LIMIT: Record<Plan, number> = { stream: 0, gem: 1, crown: 2, empire: 5, founder: 10 }
+/** A shop from before plans (null) is the founder shop; until supabase/020 runs, the database still allows it 5. */
 export const teamLimit = (plan: Plan | null | undefined) => (plan ? TEAM_LIMIT[plan] : 5)
 
 export type TeamMember = { user_id: string; role: 'owner' | 'staff'; display_name: string; email: string | null; joined_at: string }
