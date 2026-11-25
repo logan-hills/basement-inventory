@@ -14,9 +14,10 @@ export default function CrispBarcode({ value, heightIn, maxWidthIn, dpi = 203, m
     JsBarcode(svg, value, { format: 'CODE128', displayValue: false, margin: 0, height: 100, width: 1 })
     const modules = parseFloat(svg.getAttribute('width') || '0') || 1
     const dots = Math.max(1, Math.min(maxDots, Math.floor((maxWidthIn * dpi) / modules)))
-    svg.setAttribute('viewBox', `0 0 ${modules} 100`)
+    // One blank module each side, so rounding at the picture's edge can never shave the first or last bar.
+    svg.setAttribute('viewBox', `-1 0 ${modules + 2} 100`)
     svg.setAttribute('preserveAspectRatio', 'none')
-    svg.style.width = `${(modules * dots) / dpi}in`
+    svg.style.width = `${((modules + 2) * dots) / dpi}in`
     svg.style.height = `${heightIn}in`
     svg.removeAttribute('width')
     svg.removeAttribute('height')

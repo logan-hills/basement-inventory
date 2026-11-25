@@ -146,17 +146,17 @@ function turnCanvas(src: HTMLCanvasElement) {
   return c
 }
 
-/** Fits a capture to the exact label size in printer dots (whole dots, no stretching surprises). */
-function fit(src: HTMLCanvasElement, wDots: number, hDots: number, safe = 1) {
-  if (src.width === wDots && src.height === hDots && safe === 1) return src
+/** Puts a capture on a canvas of the exact label size in printer dots, dot for dot. Nothing is scaled, because
+    rescaling a picture by even a little makes some barcode bars thicker than others and the barcode stops scanning.
+    The capture is already at the printer's 203 dpi, so it only ever differs by a dot or so from rounding. */
+function fit(src: HTMLCanvasElement, wDots: number, hDots: number) {
+  if (src.width === wDots && src.height === hDots) return src
   const c = document.createElement('canvas')
   c.width = wDots; c.height = hDots
   const ctx = c.getContext('2d')!
   ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, wDots, hDots)
   ctx.imageSmoothingEnabled = false
-  // A little white margin all round, so nothing lands on a label's rounded edge.
-  const dw = Math.round(wDots * safe), dh = Math.round(hDots * safe)
-  ctx.drawImage(src, Math.round((wDots - dw) / 2), Math.round((hDots - dh) / 2), dw, dh)
+  ctx.drawImage(src, Math.round((wDots - src.width) / 2), Math.round((hDots - src.height) / 2))
   return c
 }
 
@@ -199,13 +199,13 @@ export async function printDirect(job: DirectJob, onProgress?: (done: number, to
     for (let i = 0; i < sheets.length; i++) {
       let c = await toCanvas(sheets[i], { pixelRatio: DPI / 96, backgroundColor: '#ffffff', style: { boxShadow: 'none', zoom: '1' } })
       if (job.turn) c = turnCanvas(c)
-      c = fit(c, wDots, hDots, 0.92)
+      c = fit(c, wDots, hDots)
       const { wb, h, bits } = toBits(c)
       const data = join([
         `SIZE ${sizeW} mm,${hMm} mm\r\n`,
         `GAP ${job.gapMm ?? 3} mm,0 mm\r\n`,
         `DIRECTION ${job.flip ? 1 : 0}\r\n`,
-        'REFERENCE 0,0\r\nDENSITY 10\r\nSPEED 3\r\nCLS\r\n',
+        'REFERENCE 0,0\r\nDENSITY 8\r\nSPEED 3\r\nCLS\r\n',
         `BITMAP ${x},0,${wb},${h},0,`, bits, '\r\n',
         'PRINT 1,1\r\n',
       ])
