@@ -1,7 +1,7 @@
 import { supabase } from './supabase'
 
 /** Bump when the Terms or Privacy Policy change in a way people must agree to again. */
-export const TERMS_VERSION = '2026-11-23b'
+export const TERMS_VERSION = '2026-11-25'
 
 export type Profile = {
   user_id: string; display_name: string; photo_path: string | null; bio: string | null

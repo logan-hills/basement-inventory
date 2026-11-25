@@ -58,7 +58,7 @@ const lesson: Lesson = {
       points: ['Shown: other sellers in the app can see it', 'Hidden: only you and the app team'],
       screen: { title: 'My profile', rows: ['Name on the live calendar', 'Email  ·  Hidden', 'Phone  ·  Hidden'], buttons: ['Shown', 'Hidden', 'Save profile'], highlight: 'Hidden' } },
     { kind: 'tap', title: 'Hide your phone number', prompt: 'You want other sellers to see your bio, but not your phone. On the Phone line, tap…', screen: { title: 'My profile', rows: ['Bio  ·  Shown', 'Phone  ·  Shown'], buttons: ['Shown', 'Hidden', 'Remove photo'] }, answer: 'Hidden', hint: 'Each detail has its own Shown / Hidden switch.' },
-    { kind: 'learn', title: 'Your business stays yours', text: 'Inventory, prices, costs, customers and orders are never shown to other sellers, only to you and the staff you add to your shop.' },
+    { kind: 'learn', title: 'Your business stays yours', text: 'Inventory, prices, costs, customers and orders are never shown to other sellers, only to you and the staff you add to your shop. When you finish sign-up you tick one box to agree to the Terms of Use and Privacy Policy: you run your own giveaways, you\'re responsible for how you use the app, and your items and customers stay yours. When the Terms change in a big way, the app asks you once to agree again before you carry on.' },
     { queen: "Never give out your home address for pickups. A public meeting spot or shipping keeps you and your family safe.", kind: 'learn', title: 'Keep your home safe', text: 'Selling online means a lot of strangers see your name and face. A few habits protect you and your family.',
       points: [
         'Don\'t show your house number, street sign or car plate on camera',
