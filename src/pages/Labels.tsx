@@ -260,6 +260,13 @@ export default function Labels() {
 
           <section className="card stack no-print">
             <h2 className="preview-title">2. Looks good? Print</h2>
+            {dymo && (
+              <div className="direct-print stack">
+                <b>Is this DYMO roll in a Core Innovations or other shipping label printer?</b>
+                <span className="small muted">This choice is for DYMO's own LabelWriter printer. For a shipping label printer, switch to the thermal printer setting to get Direct print, with no printer settings needed.</span>
+                <button className="btn gold big" onClick={() => setFormat('dymoThermal')}>Yes, switch to my thermal printer</button>
+              </div>
+            )}
             {f.group === 'thermal' && (() => {
               const bf: LabelFormat = FORMATS[format]
               const base = printedPage(bf, !!bf.turn)
