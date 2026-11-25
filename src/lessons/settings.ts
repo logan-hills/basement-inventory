@@ -15,7 +15,7 @@ const lesson: Lesson = {
     welcome: "Settings is where you make this app speak your language. Ten quiet minutes here saves you hours of typing later, so pour a cup of something nice and let's set it up together.",
     signoff: "Your lists, goals and checklists are set. Revisit them every season, because your shop will grow and your settings should grow with it.",
   },
-  covers: ['src/pages/Settings.tsx', 'src/lib/settings.ts'], updated: '2026-11-24',
+  covers: ['src/pages/Settings.tsx', 'src/lib/settings.ts'], updated: '2026-11-25',
   slides: [
     { chapter: 'Your lists', kind: 'learn', title: 'Your lists, your words', nova: 'Ten minutes here saves you hours later. Promise.',
       text: 'Settings holds the lists the whole app uses. It opens as a short list; tap a row to open just that page, and ‹ Settings brings you back. Add, rename or remove anything.',
@@ -48,6 +48,7 @@ const lesson: Lesson = {
       ] },
       tip: 'Your average order and buyers per live are on Reports once you have a few lives in.' },
     { kind: 'number', title: 'Work out your goal', q: 'You go live 4 times a month, average 12 buyers per live, and each spends about $20. What\'s your monthly pace, before any stretch?', prefix: '$', answer: 960, hint: 'Lives × buyers × average order.', why: '4 × 12 × $20 = $960. Add 10% and your goal is about $1,056. To grow, you can raise any of the three: more lives, more buyers, or a bigger average order.' },
+    { kind: 'learn', title: 'Default live length', text: 'Default live length fills in the length every time you schedule a live. It starts at 90 minutes, because shows on the shared Page are 1.5-hour slots. Change it if your own shows usually run shorter or longer.' },
     { kind: 'learn', title: 'Choosing your old-stock age', text: 'Old stock is cash stuck on a shelf. The number of days you pick decides when the app starts nudging you to run a sale.',
       table: { head: ['Days', 'Good for'], rows: [
         ['30', 'Fast fashion, trends, holiday pieces'],
