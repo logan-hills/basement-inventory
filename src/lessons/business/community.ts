@@ -21,7 +21,7 @@ const lesson: Lesson = {
     welcome: "Followers can scroll past you, but a community shows up. In this course, I want to help you build the kind of shop people feel they belong to.",
     signoff: "Start your rituals, let your members shine, and protect your group with kind house rules. A community is the strongest business asset you'll ever own.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'Audience vs community', kind: 'learn', title: 'Two very different things', nova: "Followers are nice, boss. But a community? That's family. Family shows up.",
       text: "An audience watches you. A community is connected to you AND to each other. Researchers Susan Fournier and Lara Lee, writing in Harvard Business Review, found that strong brand communities are built around what members get from each other, not just from the brand. People stay for the people.",
@@ -30,9 +30,15 @@ const lesson: Lesson = {
         ['Leaves when a cheaper seller shows up', 'Stays because they belong'],
         ['Needs a new post to remember you', 'Reminds each other about your live'],
         ['Measured in followers', 'Measured in people who come back and take part'],
-      ] } },
+      ] },
+      term: { word: 'Brand community', meaning: 'A group of people who are connected by a shop or brand they love, and also to each other. They share tips, cheer each other on and keep coming back because they belong.' } },
     { kind: 'learn', title: 'You need fewer people than you think', text: "Writer Kevin Kelly's well-known \"1,000 true fans\" idea says a creator can earn a living from a modest number of people who love what they do and buy most of what they make. For a live seller, the number can be even smaller.",
-      example: "If 150 regulars each spend $40 a month, that is $6,000 a month in sales. You don't need 50,000 followers. You need 150 people who would be sad if you stopped." },
+      example: "If 150 regulars each spend $40 a month, that is $6,000 a month in sales. You don't need 50,000 followers. You need 150 people who would be sad if you stopped.",
+      visual: { type: 'bars', prefix: '$', caption: 'Example: monthly sales from a small, loyal community.', bars: [
+        { label: '50 regulars at $40', value: 2000 },
+        { label: '100 regulars at $40', value: 4000 },
+        { label: '150 regulars at $40', value: 6000, hl: true },
+      ] } },
     { kind: 'number', title: 'Your true fan math', q: 'You want $4,500 a month in sales. Your regulars spend about $30 a month each. How many regulars do you need?', answer: 150, hint: '$4,500 ÷ $30.', why: '$4,500 ÷ $30 = 150 regulars. That is a room full of friends, not a stadium. Very doable.' },
 
     { chapter: 'The ladder', kind: 'learn', title: 'From stranger to superfan', text: "Everyone starts at the bottom. Your job is to give people an easy next step up.",
@@ -43,12 +49,26 @@ const lesson: Lesson = {
         ['Buyer', 'Bought once', 'Fast shipping and a thank-you message'],
         ['Regular', 'Buys most months', 'Invite to the VIP group, early looks'],
         ['Superfan', 'Shares, defends, brings friends', 'Spotlight them, ask their opinion, say thank you publicly'],
-      ] } },
+      ] },
+      visual: { type: 'flow', caption: 'Give every person one easy step up.', steps: [
+        { label: 'Stranger' }, { label: 'Follower' }, { label: 'Viewer' }, { label: 'Buyer' }, { label: 'Regular' }, { label: 'Superfan' },
+      ] },
+      example: 'Gloria noticed lots of followers but few viewers. She started posting "Live tonight at 7, Bag Night!" at noon on every live day and tagging three regulars who love bags. In a month her viewers went from about 40 to about 65, and most of the new faces were followers who had simply never known when she was on.' },
     { kind: 'tap', title: 'Next step up', prompt: 'Monique bought for the first time last night. Which move fits her step on the ladder?', screen: { title: 'Pick a move', buttons: ['Invite to VIP group', 'Fast shipping + thank-you', 'Ask her to co-host', 'Nothing yet'] }, answer: 'Fast shipping + thank-you', hint: 'She is a first-time buyer. Earn the second order first. The VIP invite comes when she becomes a regular.' },
     { kind: 'reflect', title: 'Your ladder today', prompt: 'Roughly how many people do you have at each step: followers, viewers, buyers, regulars, superfans? Where is the biggest drop?', placeholder: 'Followers… Viewers… Buyers… Regulars… Superfans…', example: '900 followers, 60 viewers, 18 buyers a live, 25 regulars, 5 superfans. Biggest drop: followers to viewers.' },
 
     { chapter: 'Rituals', kind: 'learn', title: 'Rituals make people belong', text: "Communities run on things that happen the same way every time. Rituals give people something to look forward to and something to talk about.",
       points: ['A live opener: the same greeting and song every time ("Hey hey, Dazzle Fam!")', 'Roll call: "Type where you\'re watching from!"', 'A weekly theme night (Tuesday Bling, Friday Bag Night)', 'A first-timer welcome: "First time here? Type FIRST and I\'ll say hi!"', 'A monthly thank-you giveaway for regulars (follow platform rules)', 'A name for your people (Dazzle Fam, Bling Sisters)'] },
+    { kind: 'howto', title: 'Launch a weekly ritual in four weeks', text: 'Let\'s build one together: Friday Bag Night. Swap in whatever fits your shop.',
+      steps: [
+        { title: 'Pick the night and the name', detail: 'Choose a night you can keep every week for at least three months. Give it a name people can say.', example: 'Friday Bag Night, 7 PM, every Friday.' },
+        { title: 'Pick one thing that always happens', detail: 'A ritual needs a signature moment. Keep it simple and repeatable.', example: 'Every Bag Night opens with a $10 bag, and the first buyer picks the next bag shown.' },
+        { title: 'Announce it three ways', detail: 'Say it at the end of every live, put it in your pinned post, and book it in the calendar with the same title each week.' },
+        { title: 'Week one: just show up', detail: 'Do it exactly as promised, even if only twelve people come. Consistency is the whole point.' },
+        { title: 'Weeks two and three: call people by name', detail: 'Welcome returners: "Pam, you came back for Bag Night!" People return to places where they are noticed.' },
+        { title: 'Week four: let the members own it', detail: 'Ask the group to vote on next week\'s theme bag, or invite a regular to share how she styled hers.', example: '"Ladies, crossbody or tote for next Bag Night? Vote below!" 34 votes, and every voter has a reason to come.' },
+      ],
+      tip: 'Give a ritual at least eight weeks before you judge it. Habits take time to form, for your buyers and for you.' },
     { kind: 'script', title: 'Lines that build belonging', text: 'Use these in every live. Make them sound like you.', lines: [
       '"Hey Dazzle Fam! Drop a heart if you made it, and tell me where you\'re watching from."',
       '"Brenda in Ohio! Girl, you never miss. Thank you."',
@@ -61,6 +81,16 @@ const lesson: Lesson = {
 
     { chapter: 'Your VIP group', queen: "Post your house rules on day one. It's much easier to keep a group kind than to fix one that isn't.", kind: 'learn', title: 'A group with house rules', text: "A Facebook Group for regulars works best when it feels warm and safe. Clear rules keep it that way and make moderating easy.",
       points: ['Be kind. No bashing other members or other sellers.', 'No selling your own items or links without asking', 'Keep personal info (addresses, phone numbers) out of the group; use private messages', 'Problems with an order? Message the Page so we can fix it fast', 'Paid or gifted partners say so clearly (the FTC requires clear disclosure)'] },
+    { kind: 'howto', title: 'Start your VIP group the right way', text: 'Facebook changes its menus from time to time, so look for these settings by name. If one has moved, Facebook\'s Help Center explains where it is now.',
+      steps: [
+        { title: 'Create the group from your Page', detail: 'Create a new Facebook Group and link it to your shop Page, so members see it belongs to your business.' },
+        { title: 'Make it private', detail: 'Set privacy to private, so only members can see posts. Your regulars will share more freely.' },
+        { title: 'Add membership questions', detail: 'Ask two or three short questions before people join. They keep out spam and tell you who is joining.', example: '"Have you bought from us before?" "What do you love to shop for?" "Do you agree to our house rules?"' },
+        { title: 'Post your house rules', detail: 'Add the rules from the last slide in the group\'s rules section, so new members agree to them when they join.' },
+        { title: 'Pin your welcome post', detail: 'Post the welcome below and pin or feature it at the top of the group.' },
+        { title: 'Invite your regulars first', detail: 'Open Customers in the app, sort by Most orders, and personally invite your top 20 or 30 buyers. A group that starts with your best people starts warm.' },
+        { title: 'Turn on post approval for the first month', detail: 'Approving posts while the group finds its feet keeps it kind and on topic. Ease off once the culture is set.' },
+      ] },
     { kind: 'scenario', title: 'Drama in the group', situation: 'Two members start arguing in the VIP group over who claimed a bag first. Others are taking sides.',
       options: [
         { text: 'Ignore it, it will blow over', feedback: "Unmanaged drama makes quiet members leave. A community is only as safe as its host." },
@@ -92,6 +122,14 @@ const lesson: Lesson = {
         ['Group posts by members', 'People talking to each other', 'Group insights'],
       ] } },
     { kind: 'quiz', q: 'Which number tells you the most about your community?', options: ['Total followers', 'How many buyers came back this month', 'How many posts you made', 'How many Reels went viral'], answer: 1, why: 'Repeat buyers show people trust you enough to come back. Followers can be bought or lost overnight; regulars are earned.' },
+    { kind: 'recap', title: 'Key takeaways', points: [
+      'An audience watches you. A community is connected to you and to each other.',
+      'You need a few hundred people who love you, not tens of thousands of followers.',
+      'Give each person one easy step up the ladder, from stranger to superfan.',
+      'Rituals happen the same way every time and give people something to look forward to.',
+      'Let members shine, and protect the group with clear, kind house rules.',
+      'Measure repeat buyers, returning viewers and shares, not just followers.',
+    ] },
     { kind: 'checklist', title: 'Build your community', prompt: 'Tick what you will start this month.', items: ['Give my people a name', 'Pick a live opener and use it every time', 'Add a first-timer welcome to every live', 'Start or tidy my VIP group with house rules', 'Feature one customer photo a week (with permission)', 'Track repeat buyers and shares each month'] },
   ],
 }
