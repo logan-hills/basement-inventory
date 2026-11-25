@@ -32,7 +32,7 @@ export default function DirectPrint({ w, h, turn, count, sizeName, prepare, gapM
   if (Capacitor.isNativePlatform() || !canDirectPrint()) return (
     <div className="direct-print stack">
       <b>Direct print <span className="chip-mini">Beta</span></b>
-      <span className="small muted">Direct print needs Chrome or Edge on a Windows or Mac computer. {Capacitor.isNativePlatform() ? 'In the iPhone app, use Save for printer app below.' : 'Open this page there, or use Print or Save for printer app below.'}</span>
+      <span className="small muted">Direct print needs Chrome or Edge on a Windows or Mac computer. {Capacitor.isNativePlatform() ? 'In the iPhone app, tap Print below to use AirPrint, or Save for printer app for a Bluetooth label printer.' : 'Open this page there, or use Print or Save for printer app below.'}</span>
     </div>
   )
   const sup = directPrintSupport()
