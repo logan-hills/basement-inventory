@@ -19,7 +19,13 @@ const lesson: Lesson = {
   slides: [
     { chapter: 'Items, variations, tags', kind: 'learn', title: 'Three words to know', nova: 'Get this part right and everything else in the app just works.',
       text: 'An item is the product (a gold hoop set). A variation is a size or color, and gets a 4-digit Live Number buyers type in comments. Every single piece gets its own tag, like 4821-003.',
-      points: ['Item: what it is', 'Variation: size or color, with its own Live #', 'Tag: one per piece, so you know exactly which one sold'] },
+      points: ['Item: what it is', 'Variation: size or color, with its own Live #', 'Tag: one per piece, so you know exactly which one sold'],
+      visual: { type: 'flow', caption: 'One leopard wrap top, received in three sizes, two of each.', steps: [
+        { label: 'Item', note: 'Leopard wrap top, long sleeve' },
+        { label: 'Variations', note: 'S = Live #4821, M = #4822, L = #4823' },
+        { label: 'Tags', note: '4821-001 and 4821-002 for the two Smalls, and so on' },
+        { label: 'On live', note: 'buyers type SOLD 4822 for a Medium' },
+      ] } },
     { kind: 'learn', title: 'When is it a new variation?', text: 'Ask one question: would a buyer care which one she gets? If yes, it\'s its own variation with its own Live Number. If no, it\'s more pieces of the same variation.',
       table: { head: ['You have…', 'Set it up as'], rows: [
         ['6 identical gold hoop sets', '1 item, 1 variation, 6 tags'],
@@ -32,6 +38,17 @@ const lesson: Lesson = {
 
     { chapter: 'Add it', kind: 'learn', title: 'Add it', text: 'Stock → Add item. Name it, pick a category and tags, snap photos, then add each variation with its price, what you paid, and how many.',
       screen: { title: 'Receive items', rows: ['Name', 'Category', 'Photos', 'Variations'], buttons: ['Save and print tags'], highlight: 'Save and print tags' } },
+    { kind: 'howto', title: 'Receive one item, field by field', text: 'Here is every box on the Receive items screen, top to bottom, and what to put in it.',
+      steps: [
+        { title: 'Item name', detail: 'Color + material or pattern + what it is + one detail. This is the only box you must fill in to save.', example: 'Emerald quilted crossbody, chain strap' },
+        { title: 'Brand and Category', detail: 'Brand if it has one you\'d mention on live. Category from your list (you can change the list in Settings).' },
+        { title: 'Put in bin (optional)', detail: 'If you already know where it\'s going, pick the bin. Otherwise leave No bin yet and scan it into a bin when you put it away.' },
+        { title: 'Tags, Notes and More details', detail: 'Tags are your own labels, like "church" or "plus size". Notes are for measurements and flaws. More details holds condition, color, material, season, supplier and the date you bought it.' },
+        { title: 'Photos', detail: 'Snap the whole piece, a close-up and any flaw.' },
+        { title: 'Variations', detail: 'One row per size or color: the Variation name, Price, Cost (what you paid) and Qty (how many tags to print). + Add variation adds a row with the last price and cost already filled in.', example: 'Black: $28, cost $9, qty 2. Emerald: $28, cost $9, qty 1.' },
+        { title: 'Save and print', detail: 'The button counts your tags for you, like Save and print 3 tags. Tap it, print, and tag each piece before it leaves the table.' },
+      ],
+      queen: "Put the tag on the piece the minute it prints. A tag on the table and a piece on the shelf is how things get mixed up." },
     { kind: 'order', title: 'Practice', prompt: 'Put the steps in order.', steps: ['Tap Add item', 'Name it and pick a category', 'Snap photos', 'Add variations with price, cost and count', 'Save and print tags'] },
     { kind: 'learn', title: 'Names you can find', text: 'You\'ll search for this name, read it on the pick screen, and say it on live. Use the words you\'d actually type, in the same order every time.',
       table: { head: ['Hard to find', 'Easy to find'], rows: [
@@ -49,6 +66,11 @@ const lesson: Lesson = {
         ['$12 (2×)', '$0.36', '$0.50', '$6', '$5.14'],
         ['$15 (2.5×)', '$0.45', '$0.50', '$6', '$8.05'],
         ['$18 (3×)', '$0.54', '$0.50', '$6', '$10.96'],
+      ] },
+      visual: { type: 'bars', prefix: '$', caption: 'Profit on a $6 bag at three prices. Going from 2× to 3× more than doubles what you keep.', bars: [
+        { label: '$12 (2×)', value: 5.14 },
+        { label: '$15 (2.5×)', value: 8.05 },
+        { label: '$18 (3×)', value: 10.96, hl: true },
       ] },
       tip: 'A $2 Tuesday piece is a different game: you buy in bulk at pennies each so even $2 is real profit. Do the math on those too.' },
     { kind: 'number', title: 'Price it', q: 'You paid $4 for a scarf and want to sell it at 3 times your cost. What\'s the price?', prefix: '$', answer: 12, hint: 'Multiply what you paid by 3.', why: '$4 × 3 = $12. After a 3% fee (36 cents) and 50 cents of packaging, you keep about $7.14 profit.' },
@@ -73,6 +95,15 @@ const lesson: Lesson = {
     { chapter: 'A receiving station', kind: 'learn', title: 'Receive a haul in one sitting', text: 'Big hauls go fastest when you work in batches, not piece by piece from start to finish.',
       points: ['1. Unpack everything and sort like with like', '2. Check for damage and set those aside', '3. Photograph each group in your photo corner', '4. Add the items and print the tags', '5. Tag every piece', '6. Scan them into bins right away'],
       tip: 'Over 30 items? Use Bulk upload from a spreadsheet instead. It has its own lesson.' },
+    { kind: 'learn', title: 'A haul in one sitting, timed', text: 'Here is how a two-hour receiving session went for a seller with a 60-piece mixed lot of bags, jewelry and tops. Working in batches, each step goes fast because her hands repeat the same motion.',
+      table: { head: ['Step', 'Time', 'Result'], rows: [
+        ['Unpack and sort like with like', '20 min', '14 groups, 4 damaged set aside'],
+        ['Photograph each group', '25 min', 'All photos done in one lighting setup'],
+        ['Add items and print tags', '45 min', '22 items, 31 variations, 56 tags'],
+        ['Tag every piece', '15 min', 'Every piece tagged, checked against the stack'],
+        ['Scan into bins', '15 min', 'Everything shelved and findable'],
+      ] },
+      example: 'The same lot done piece by piece, start to finish, used to take her most of a day. Batching cut it to two hours.' },
     { kind: 'number', title: 'Cost per piece in a lot', q: 'You paid $36 for a mixed lot of 48 pieces of jewelry. What should you enter as the cost for each piece?', prefix: '$', answer: 0.75, tolerance: 0.01, hint: 'Divide what you paid for the lot by the number of pieces.', why: '$36 ÷ 48 = $0.75 each. If the lot had shipping, add that to the $36 first.' },
     { queen: "Keep your receiving table clear of anything else. One spot, one job, every time.", kind: 'checklist', title: 'Set up your receiving station', prompt: 'Tick what you have. The rest is your shopping or setup list.', items: [
       'A table where I can sort a whole haul',
@@ -82,6 +113,13 @@ const lesson: Lesson = {
       'A "damaged, check later" bin',
       'Bins labeled and ready for put-away',
     ] },
+    { kind: 'recap', title: 'Receive it right, once', points: [
+        'Item = what it is. Variation = size or color, with its own Live #. Tag = one per piece.',
+        'Name it the way you\'d search it: color, material, what it is, one detail.',
+        'Always enter Cost. Start around 2 to 3 times cost, and price special pieces on their worth.',
+        'Found more of the same? Use Got more of these? so they join the same Live #.',
+        'Batch a haul: sort, photograph, add and print, tag, then scan into bins the same day.',
+      ] },
     { kind: 'reflect', title: 'Your pricing rule', prompt: 'Write the pricing rule you\'ll use for most pieces, and the exception for special ones.', placeholder: 'Most pieces: … Special pieces: …', example: 'Most pieces: 2.5 times what I paid, rounded to a nice number. Special pieces: what it\'s worth, and I feature it on live.' },
   ],
 }

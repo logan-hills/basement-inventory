@@ -22,7 +22,7 @@ const lesson: Lesson = {
     welcome: "The hard customer moments are part of every shop, and they don't mean you're doing anything wrong. What matters is having rules before you need them and staying calm when you use them. This course gives you both, plus the exact words to say.",
     signoff: "Post your rules, keep your records, measure your pieces and answer every hard message with grace. You'll protect your money, and the buyers watching will trust you even more.",
   },
-  covers: [], updated: '2026-11-24',
+  covers: [], updated: '2026-11-25',
   slides: [
     { chapter: 'Rules first', kind: 'learn', title: 'Rules protect everyone', nova: "Rules aren't mean, love. They're kind, because everybody knows what to expect.",
       text: "Write your shop rules once, pin them, link them on every invoice and say the short version on every live. When a problem comes up, you point to the rule instead of arguing.",
@@ -45,6 +45,13 @@ const lesson: Lesson = {
         ['After the deadline', 'Release the piece; offer it to the waitlist'],
         ['Second no-pay', 'Prepay rule kicks in, kindly'],
       ] },
+      visual: { type: 'flow', caption: 'The same steps for every unpaid invoice, so nobody gets special treatment and nobody gets yelled at.', steps: [
+        { label: 'Invoice sent', note: 'due time + thank you' },
+        { label: '12 hours', note: 'friendly reminder' },
+        { label: 'Deadline', note: 'last call with a time' },
+        { label: 'Release', note: 'offer it to the waitlist' },
+        { label: 'Second time', note: 'prepay from now on' },
+      ] },
       queen: "Never call out a no-pay on your live. Handle it privately and kindly. Your whole audience is watching how you treat people." },
     { kind: 'script', title: 'No-pay messages', lines: [
       'Reminder: "Hi [name]! Just a reminder your invoice for the [item] is ready. It\'s due by [time] tomorrow. Can\'t wait to ship it to you!"',
@@ -55,6 +62,7 @@ const lesson: Lesson = {
     { kind: 'number', title: 'What no-pays cost you', q: 'In a month, 6 claims went unpaid. Each piece averaged $25 and you resold only 2 of them at the same price. If your profit on each piece is about 60% of the price, how much profit did no-pays cost you that month?', prefix: '$', answer: 60, hint: '4 pieces didn\'t resell. Each one\'s profit is 60% of $25.', why: '4 × $15 = $60 in lost profit, plus your time. That\'s why a waitlist and a clear payment window matter so much.' },
 
     { chapter: 'Chargebacks', kind: 'learn', title: 'What a chargeback is', text: "A chargeback, or dispute, is when a buyer asks her card company or payment app to take a payment back. The CFPB explains that under federal law, card holders can dispute billing errors, including goods that weren't delivered as agreed. Card networks like Visa have their own dispute rules and deadlines, and payment apps like Square and PayPal have seller protection programs with their own requirements.",
+      term: { word: 'Chargeback', meaning: 'When a buyer asks her bank, card company or payment app to reverse a payment. The money is held while it\'s reviewed, and you answer with proof.' },
       points: ['The most common reasons: "never received it," "not as described," and "I don\'t recognize this charge"', 'The money is usually held while the dispute is reviewed', 'You answer with proof through your payment app, by its deadline', 'Many disputes can be avoided with clear invoices and tracking'] },
     { kind: 'learn', title: 'Prevent most disputes', text: "The best chargeback defense is never getting one.",
       points: [
@@ -65,7 +73,25 @@ const lesson: Lesson = {
         'Answer messages quickly; most disputes start as unanswered messages',
         'Keep your shop rules on every invoice',
       ],
+      example: 'A buyer sees "SQ *GLAMBSMNT 32.00" on her card statement and doesn\'t recognize it, so she disputes it. The fix: the seller sets her business name in her payment app to something buyers know, like "Glam Basement Boutique", and her "I don\'t recognize this charge" disputes stop.',
       queen: "Answer every 'where's my package?' message within a day. A buyer who hears from you doesn't call her bank." },
+    { kind: 'howto', title: 'Keep a proof trail as you go', text: 'Disputes can show up weeks after an order. The sellers who win them saved their proof the day it happened, not the day the dispute arrived. It takes seconds per order.',
+      steps: [
+        { title: 'The claim', detail: 'The live\'s claim list in the app shows who claimed what and when. For a big piece, also screenshot the comment.' },
+        { title: 'The invoice', detail: 'Your payment app keeps it. Make sure your shop rules are on it and the item names match what you said on live.' },
+        { title: 'A packing photo for orders over about $50', detail: 'One quick photo of the piece going into the open box with the label visible.', example: 'Order #1047: photo of the emerald bag in the box, shipping label on the flap, taken at the packing table.' },
+        { title: 'Tracking', detail: 'Paste it on the order in the app and send it to the buyer. Delivery confirmation is your strongest proof for "never received it".' },
+        { title: 'Messages', detail: 'Keep buyer messages in one place. Don\'t delete conversations, even friendly ones.' },
+      ] },
+    { kind: 'howto', title: 'Answer a dispute, step by step', text: 'Square, PayPal and other payment apps each have a disputes area, and they will email you when one opens. Their screens differ, but the steps are the same.',
+      steps: [
+        { title: 'Open the dispute the day it arrives', detail: 'Find the reason code and the response deadline. Deadlines are firm; a missed one usually means you lose automatically.' },
+        { title: 'Decide: challenge or accept', detail: 'If the buyer is right (your mistake, real damage), accepting and apologizing may be the honest and quickest path. If you have proof, challenge it.' },
+        { title: 'Write a short, factual summary', detail: 'Three or four sentences, no emotion: what was ordered, when it shipped, when it was delivered, what the buyer said.', example: '"Customer claimed item #2447 on our Facebook live on 11/4 and paid invoice #1047 the same day. Shipped 11/6 by USPS with tracking ending 8812; delivered to the customer\'s address 11/9. Customer did not contact us before opening this dispute."' },
+        { title: 'Upload the proof', detail: 'Invoice, claim screenshot, tracking with delivery, packing photo, your posted shop rules and your messages.' },
+        { title: 'Submit before the deadline and note it', detail: 'Write the date in the customer\'s notes in Customers, and set the prepay rule for future claims if the dispute wasn\'t fair.' },
+      ],
+      queen: "Write your dispute answer like a judge will read it, because someone like that will. Facts, dates and proof. Leave the feelings for your journal." },
     { kind: 'order', title: 'Answer a dispute', prompt: 'Put the steps of answering a chargeback in order.', steps: ['Read the dispute reason and the deadline', 'Gather the invoice, claim screenshot and your shop rules', 'Add tracking showing delivery (and photos of the item)', 'Add your messages with the buyer', 'Submit everything through your payment app before the deadline', 'Note the buyer in Customers and require prepay going forward'] },
     { kind: 'scenario', title: '"Never received it"', situation: "A buyer files a dispute saying she never received her $65 order. Your tracking shows it was delivered to her address 9 days ago. She never messaged you.",
       options: [
@@ -89,12 +115,20 @@ const lesson: Lesson = {
         ['Not as described (a flaw you missed)', 'Refund or partial refund; it\'s on you'],
         ['Doesn\'t fit, measurements were listed', 'Final sale per your rules; offer to help her resell or a one-time store credit as a kindness'],
         ['Changed her mind', 'Final sale per your rules, said kindly'],
-      ] } },
+      ] },
+      tip: 'Write your answers to these four situations in a note and keep it next to your packing station. When the message comes in at 10 PM, you just follow your own rule.' },
     { kind: 'scenario', title: '"It doesn\'t fit"', situation: "A regular messages that a dress you listed with measurements is too tight. Your rules say final sale. She's upset.",
       options: [
         { text: '"Sorry, all sales final." and nothing more', feedback: "You're within your rules, but that answer can lose a regular over one dress." },
         { text: 'Empathize, point gently to the measurements, and offer a one-time store credit if she sends it back unworn', best: true, feedback: "Fair to your rules, warm to her. A one-time kindness for a good regular usually earns far more than it costs." },
         { text: 'Give a full refund and pay return shipping', feedback: "Generous, but if you do it every time, your 'final sale' rule stops meaning anything." },
+      ] },
+    { kind: 'recap', title: 'Protect your money, keep your grace', points: [
+        'Write your rules before you need them: payment window, no-pays, returns, damage claims, sizing. Pin them and put them on every invoice.',
+        'No-pays get the same calm steps every time, privately: reminder, last call, release, then prepay.',
+        'Most chargebacks are prevented by recognizable invoices, tracking and quick answers.',
+        'Keep a proof trail as you go, and answer any dispute with facts before the deadline.',
+        'Measurements beat "true to size". Decide refund, exchange and credit rules ahead of time.',
       ] },
     { kind: 'checklist', title: 'Protect your shop', prompt: 'Tick what you\'ll put in place.', items: ['Write and pin my shop rules', 'Add my rules to every invoice', 'Save my no-pay reminder messages', 'Ship every order with tracking', 'Add measurements to every clothing piece', 'Decide my refund, exchange and credit rules', 'Make a folder for dispute proof'] },
   ],
