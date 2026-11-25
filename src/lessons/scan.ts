@@ -5,6 +5,7 @@ const lesson: Lesson = {
   why: 'Scanning records where every piece lives without typing a thing.',
   outcomes: [
     'Put a whole tub away in a minute: bin, scan, scan, scan, Done',
+    'Give a tag with no bin a home: scan the tag, then the bin',
     'Look up any tag, bin or order with one scan',
     'Choose and set up a scanner, or use your phone\'s camera',
     'Run a quick weekly count so the app always matches your shelves',
@@ -15,12 +16,18 @@ const lesson: Lesson = {
     welcome: "Scanning is how you stop typing and start flying. Once you get the rhythm, putting away a whole haul feels like a game. Let's learn it together.",
     signoff: "Scan the bin, then the pieces. Do a little count each week. That simple rhythm keeps your whole shop accurate.",
   },
-  covers: ['src/pages/Scan.tsx', 'src/components/FreeCameraTip.tsx', 'src/components/CameraScanner.tsx'], updated: '2026-11-24',
+  covers: ['src/pages/Scan.tsx', 'src/components/FreeCameraTip.tsx', 'src/components/CameraScanner.tsx'], updated: '2026-11-25',
   slides: [
     { chapter: 'Put away', queen: "Say it out loud while you learn: bin first, pieces next. Your hands will learn it in a week.", kind: 'learn', title: 'Scan the bin, then the pieces', nova: 'This is my favorite part. Beep, beep, beep, done.',
       text: 'Scan a bin label and a gold banner shows the bin you\'re putting away into. Every tag you scan next goes in that bin. Tap Done when you move on.',
       screen: { title: 'Scan', rows: ['Putting away into A1-S2-B-03', '✓ 4821-003', '✓ 4821-004'], buttons: ['Done'], highlight: 'Done' } },
     { kind: 'order', title: 'Practice', prompt: 'Put away three pieces. Tap the steps in order.', steps: ['Open Scan', 'Scan the bin label', 'Scan each tag', 'Tap Done'] },
+    { kind: 'learn', title: 'A tag with no bin? The app asks', queen: "Don't let a piece float around homeless. The moment you touch it, give it a bin. Future you will thank you on live night.",
+      text: 'Scan a tag on its own, and if that piece has no bin yet, a gold box pops up: Scan a bin to put this away. Scan the bin label where it will live, and the tag and the bin are linked. That bin then stays open, so the rest of the same tags go right in with a scan each.',
+      points: ['Just looking, or want to fix the price or photo? Tap Skip, or Review product', 'Scanning a different tag also moves on, no harm done', 'Changed your mind? Tap Put away on the tag card to bring the box back', 'Works the same with your phone camera, a USB scanner or a Bluetooth scanner'],
+      screen: { title: 'Scan', rows: ['No bin yet · #2447 · tag 2447-001', 'Scan a bin to put this away'], buttons: ['Skip', 'Review product'], highlight: 'Skip' } },
+    { kind: 'order', title: 'Practice', prompt: 'You have 4 new tags for #2447 and none has a bin. Put them away. Tap the steps in order.', steps: ['Open Scan', 'Scan the first tag', 'Scan the bin label when it asks', 'Scan the other 3 tags', 'Tap Done'] },
+    { kind: 'quiz', q: 'You scan a tag and the app says "Scan a bin to put this away", but you only want to check the price. What do you do?', options: ['Scan any bin so the box goes away', 'Tap Skip, or Review product to open it', 'Close the app'], answer: 1, why: 'Skip leaves the piece just as it was. Scanning a random bin would send you to the wrong shelf later.' },
     { kind: 'learn', title: 'Moving a piece is the same', text: 'Scanning a tag into a new bin moves it there. No need to "take it out" of the old one first. That makes reorganizing easy: scan the new bin, scan everything you moved.' },
     { kind: 'quiz', q: 'You move 4 scarves from A1-S1-A-02 to A1-S2-C-01. What do you scan?', options: ['The old bin, then the scarves', 'The new bin, then the scarves', 'Just the scarves'], answer: 1, why: 'The bin you scan first is where they go. Scanning them into the new bin moves them.' },
 

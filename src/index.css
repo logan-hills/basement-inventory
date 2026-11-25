@@ -337,6 +337,14 @@ button { font: inherit; cursor: pointer; }
 .putaway-banner > div { display: flex; flex-direction: column; gap: 2px; color: #CFE9DA; font-size: .85rem; }
 .putaway-banner b { font-size: 1.3rem; color: var(--text); }
 
+.putaway-ask { display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: var(--radius); background: linear-gradient(160deg, #3A2612, var(--surface) 70%); border: 2px solid var(--gold); max-width: 560px; box-shadow: 0 10px 30px rgba(255, 211, 110, .12); animation: pop-in .25s var(--ease); }
+.putaway-ask-badge { align-self: flex-start; background: var(--goldgrad); color: #2A1A0C; font-weight: 700; font-size: .8rem; letter-spacing: .6px; text-transform: uppercase; border-radius: 999px; padding: 4px 12px; }
+.putaway-ask-item { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.putaway-ask-title { font-family: Fraunces, Georgia, serif; font-size: 1.5rem; line-height: 1.2; color: var(--gold); }
+.putaway-ask p { font-size: 1rem; line-height: 1.45; }
+.putaway-ask-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 420px) { .putaway-ask-actions { grid-template-columns: 1fr; } }
+
 /* ---------- Bin labels ---------- */
 .bin-label { height: 100%; padding: .15in .2in; display: flex; flex-direction: column; justify-content: center; gap: .08in; font-family: Arial, Helvetica, sans-serif; color: #000; text-align: center; }
 .bin-label-code { font-size: 28pt; font-weight: 800; letter-spacing: 1px; line-height: 1; }
